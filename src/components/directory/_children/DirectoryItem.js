@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import { ItemDirectoryDetail } from "./Card";
+import { ItemDirectoryDetail } from "../../global/_children/Card";
 
 const DirectoryItem = (props) => {
   const { otherParam = "" } = props.navigation.state.params || {};

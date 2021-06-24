@@ -1,7 +1,7 @@
 import React from "react";
 import { View, FlatList, StyleSheet } from "react-native";
-import Header from "./_children/Header";
-import { ItemFavorite } from "./_children/Card";
+import Header from "../global/_children/Header";
+import { ItemFavorite } from "../global/_children/Card";
 
 const Favorites = (props) => {
   const data = [

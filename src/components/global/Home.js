@@ -2,11 +2,11 @@ import React from 'react';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Main from './Main';
-import Directory from './Directory';
-import Settings from './Settings';
-import Links from './Links';
-import Favorites from './Favorites';
-import Profile from './Profile';
+import Directory from '../directory';
+import Settings from '../settings';
+import Links from '../links';
+import Favorites from '../favorites';
+import Profile from '../profile';
 
 export default createBottomTabNavigator(
   {

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, TextInput, FlatList } from "react-native";
-import Header from "./_children/Header";
-import { ItemDirectory } from "./_children/Card";
+import Header from "../global/_children/Header";
+import { ItemDirectory } from "../global/_children/Card";
 
 const Directory = (props) => {
   const data = [

@@ -1,13 +1,13 @@
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
-import Splash from "../global/Splash";
-import Login from "../global/Login";
-import Registre from "../global/Registre";
-import Profile from "../global/Profile";
+import Splash from "../splash";
+import Login from "../login";
+import Registre from "../registre";
+import Profile from "../profile";
 import Home from "../global/Home";
-import DirectoryItem from "../global/_children/DirectoryItem";
-import LinkItem from "../global/_children/LinkItem";
-import FilterSetting from "../global/_children/FilterSetting";
+import DirectoryItem from "../directory/_children/DirectoryItem";
+import LinkItem from "../links/_children/LinkItem";
+import FilterSetting from "../settings/_children/FilterSetting";
 
 const AppNavigation = createStackNavigator({
   Splash: {

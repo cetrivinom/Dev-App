@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
-import Header from "./_children/Header";
-import LastUpdate from "./_children/LastUpdate";
+import Header from "../global/_children/Header";
+import LastUpdate from "../global/_children/LastUpdate";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Geolocation from "@react-native-community/geolocation";
+import ServiceContext from "../../../context/service/serviceContext";
 
 const Settings = (props) => {
   const [position, setPosition] = useState(null);
+  const { data, getDataService } = useContext(ServiceContext);
 
   useEffect(() => {
+    getDataService();
     Geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
@@ -24,61 +27,63 @@ const Settings = (props) => {
     );
   }, []);
 
+  console.log("data", data);
+
   const markerFavorites = [
     {
       latitude: 8.0908494233566,
       longitude: -76.727236307375,
-      color: "#902857"
+      color: "#902857",
     },
     {
       latitude: 4.6557516012933,
       longitude: -74.1145247,
-      color: "#902857"
+      color: "#902857",
     },
     {
       latitude: 4.1334319011476,
       longitude: -73.6288308,
-      color: "#902857"
+      color: "#902857",
     },
     {
       latitude: 10.47501611426,
       longitude: -73.281171323194,
-      color: "#00AAAD"
+      color: "#00AAAD",
     },
     {
       latitude: 10.405701,
       longitude: -75.510129,
-      color: "#00AAAD"
+      color: "#00AAAD",
     },
     {
       latitude: 6.2549232017406,
       longitude: -75.5646485,
-      color: "#00AAAD"
+      color: "#00AAAD",
     },
     {
       latitude: 3.4199249005487,
       longitude: -76.491779849633,
-      color: "#00AAAD"
+      color: "#00AAAD",
     },
     {
       latitude: 7.9226194,
       longitude: -72.5205836,
-      color: "#00AAAD"
+      color: "#00AAAD",
     },
     {
       latitude: 5.5301355015375,
       longitude: -73.362832,
-      color: "#00AAAD"
+      color: "#00AAAD",
     },
     {
       latitude: 4.4782683466642,
       longitude: -75.2436045,
-      color: "#00AAAD"
+      color: "#00AAAD",
     },
     {
       latitude: 7.085979277684,
       longitude: -70.758028328419,
-      color: "#00AAAD"
+      color: "#00AAAD",
     },
   ];
 

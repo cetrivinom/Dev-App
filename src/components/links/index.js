@@ -7,9 +7,9 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import Header from "./_children/Header";
+import Header from "../global/_children/Header";
+import { ItemLink } from "../global/_children/Card";
 import FilterLink from "./_children/FilterLink";
-import { ItemLink } from "./_children/Card";
 
 const Links = (props) => {
   const [showFilterOption, setShowFilterOption] = useState(false);
@@ -19,38 +19,66 @@ const Links = (props) => {
   };
   const data = [
     {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      title: 'Primer episodio de podcast "Refugio en pauta"...',
-      date: "01-JUN-2021",
+      Titulo: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+      Resumen: 'Primer episodio de podcast "Refugio en pauta"...',
+      Contenido:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin nulla nec rhoncus blandit. Nunc fringilla scelerisque consequat.",
+      Imagen:
+        "/sites/default/files/contenidos-interes/imagen-moviles/enlace1_0.jpg",
+      Fecha: "01-JUN-2021",
     },
     {
-      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-      title: 'Segundo episodio de podcast "Refugio en pauta"...',
+      Titulo: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+      Resumen: 'Segundo episodio de podcast "Refugio en pauta"...',
+      Contenido:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin nulla nec rhoncus blandit. Nunc fringilla scelerisque consequat.",
+      Imagen:
+        "/sites/default/files/contenidos-interes/imagen-moviles/enlace1_0.jpg",
     },
     {
-      id: "58694a0f-3da1-471f-bd96-145571e29d72",
-      title: 'Tercer episodio de podcast "Refugio en pauta"...',
-      date: "30-JUN-2021",
+      Titulo: "58694a0f-3da1-471f-bd96-145571e29d72",
+      Resumen: 'Tercer episodio de podcast "Refugio en pauta"...',
+      Contenido:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin nulla nec rhoncus blandit. Nunc fringilla scelerisque consequat.",
+      Imagen:
+        "/sites/default/files/contenidos-interes/imagen-moviles/enlace1_0.jpg",
+      Fecha: "30-JUN-2021",
     },
     {
-      id: "58694a0f-3da1-471f-bd96-145571e29d723",
-      title: 'Tercer episodio de podcast "Refugio en pauta"...',
-      date: "30-JUN-2021",
+      Titulo: "58694a0f-3da1-471f-bd96-145571e29d723",
+      Resumen: 'Tercer episodio de podcast "Refugio en pauta"...',
+      Contenido:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin nulla nec rhoncus blandit. Nunc fringilla scelerisque consequat.",
+      Imagen:
+        "/sites/default/files/contenidos-interes/imagen-moviles/enlace1_0.jpg",
+      Fecha: "30-JUN-2021",
     },
     {
-      id: "58694a0f-3da1-471f-bd96-145571e29d724",
-      title: 'Tercer episodio de podcast "Refugio en pauta"...',
-      date: "30-JUN-2021",
+      Titulo: "58694a0f-3da1-471f-bd96-145571e29d724",
+      Resumen: 'Tercer episodio de podcast "Refugio en pauta"...',
+      Contenido:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin nulla nec rhoncus blandit. Nunc fringilla scelerisque consequat.",
+      Imagen:
+        "/sites/default/files/contenidos-interes/imagen-moviles/enlace1_0.jpg",
+      Fecha: "30-JUN-2021",
     },
     {
-      id: "538694a0f-3da1-471f-bd96-145571e29d724",
-      title: 'Tercer episodio de podcast "Refugio en pauta"...',
-      date: "30-JUN-2021",
+      Titulo: "538694a0f-3da1-471f-bd96-145571e29d724",
+      Resumen: 'Tercer episodio de podcast "Refugio en pauta"...',
+      Contenido:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin nulla nec rhoncus blandit. Nunc fringilla scelerisque consequat.",
+      Imagen:
+        "/sites/default/files/contenidos-interes/imagen-moviles/enlace1_0.jpg",
+      Fecha: "30-JUN-2021",
     },
     {
-      id: "548694a0f-3da1-471f-bd96-145571e29d724",
-      title: 'Tercer episodio de podcast "Refugio en pauta"...',
-      date: "30-JUN-2021",
+      Titulo: "548694a0f-3da1-471f-bd96-145571e29d724",
+      Resumen: 'Tercer episodio de podcast "Refugio en pauta"...',
+      Contenido:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin nulla nec rhoncus blandit. Nunc fringilla scelerisque consequat.",
+      Imagen:
+        "/sites/default/files/contenidos-interes/imagen-moviles/enlace1_0.jpg",
+      Fecha: "30-JUN-2021",
     },
   ];
 
@@ -64,9 +92,13 @@ const Links = (props) => {
         <FlatList
           data={data}
           renderItem={(item) => (
-            <ItemLink {...props} title={item.item.title} date={item.item.date} />
+            <ItemLink
+              {...props}
+              title={item.item.Resumen}
+              date={item.item.Fecha}
+            />
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.Titulo}
         />
       </View>
       {showFilterOption && (

@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { ItemProfile } from "./_children/Card";
+import { ItemProfile } from "../global/_children/Card";
 
 const Profile = (props) => {
   const { navigation } = props;
