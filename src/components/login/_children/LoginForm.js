@@ -34,8 +34,7 @@ const LoginForm = (props) => {
   const { email, password } = user;
 
   const onPressLogin = () => {
-    //console.log(validateEmail(email));
-    if (!validateEmail(email) || password.length < 8) {
+    if (!validateEmail(email)) {
     } else {
       signIn(user);
     }

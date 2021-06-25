@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>70900825873-a6dj5hpifh5f8eg9k2233h8237taq00c.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.70900825873-a6dj5hpifh5f8eg9k2233h8237taq00c</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD_O322xMKtkuQE4OEivn37-0CDa-XVN4Y</string>
+	<key>GCM_SENDER_ID</key>
+	<string>70900825873</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.IOM</string>
+	<key>PROJECT_ID</key>
+	<string>oimcol</string>
+	<key>STORAGE_BUCKET</key>
+	<string>oimcol.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:70900825873:ios:7655edd78b8cec4de396b0</string>
+	<key>DATABASE_URL</key>
+	<string>https://oimcol-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

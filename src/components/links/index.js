@@ -19,39 +19,40 @@ const Links = (props) => {
   };
   const data = [
     {
-      Titulo: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      Resumen: 'Primer episodio de podcast "Refugio en pauta"...',
+      Titulo: "Enlace de interés 4",
+      Resumen: 'Proin vulputate pharetra justo, nec venenatis eros commodo vitae. Sed semper nunc vitae ante dignissim ullamcorper',
       Contenido:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin nulla nec rhoncus blandit. Nunc fringilla scelerisque consequat.",
+        "Proin vulputate pharetra justo, nec venenatis eros commodo vitae. Sed semper nunc vitae ante dignissim ullamcorper. Aenean mauris dolor, rhoncus eu tempor vel, commodo at metus. Ut aliquam gravida elit, iaculis pulvinar tortor viverra sed. Nam dictum pharetra rutrum. Aliquam egestas enim tortor, eget porttitor dui bibendum vitae. Nulla fringilla, augue ut sodales semper, tortor mauris maximus mauris, ac malesuada turpis augue sit amet tellus. Donec vel nisi maximus, hendrerit felis fringilla, pellentesque massa. Donec rhoncus, massa at convallis finibus, dolor massa dictum magna, a convallis lorem elit sed risus. Aenean vitae leo rutrum, egestas diam in, condimentum ipsum. Duis commodo diam mollis semper finibus. Nulla id pharetra augue. Nullam libero massa, varius eu blandit quis, fermentum sed augue. Morbi hendrerit rhoncus ligula nec consectetur. Etiam mattis tempor purus, ac fermentum mi. Ut et lacus elementum, lacinia leo in, pharetra tellus. Duis viverra erat et felis dignissim, in porta erat mattis. In mi diam, accumsan et dui a, ullamcorper pulvinar mi. Sed iaculis magna magna. Ut a lobortis orci. Praesent pulvinar, neque at lacinia auctor, odio diam rhoncus arcu, a rutrum nibh nulla in est. Suspendisse interdum imperdiet diam, vitae mattis purus ornare in. Duis ac leo scelerisque, dictum quam eu, scelerisque magna. Proin ut turpis semper lorem molestie eleifend. Aenean ultricies vitae est a consectetur. Aliquam erat volutpat. Ut dictum viverra diam, quis tempus lorem molestie id. Vestibulum ullamcorper ex est, in porttitor sem mollis eget. Cras justo neque, faucibus sed venenatis non, auctor in nulla.",
       Imagen:
-        "/sites/default/files/contenidos-interes/imagen-moviles/enlace1_0.jpg",
-      Fecha: "01-JUN-2021",
+        "/sites/default/files/contenidos-interes/imagen-moviles/enlace4.jpg",
+      Fecha: "21-JUN-2021",
     },
     {
-      Titulo: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-      Resumen: 'Segundo episodio de podcast "Refugio en pauta"...',
+      Titulo: "Enlace de interés 3",
+      Resumen: 'Proin vulputate pharetra justo, nec venenatis eros commodo vitae. Sed semper nunc vitae ante dignissim ullamcorper',
       Contenido:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin nulla nec rhoncus blandit. Nunc fringilla scelerisque consequat.",
+        "Proin vulputate pharetra justo, nec venenatis eros commodo vitae. Sed semper nunc vitae ante dignissim ullamcorper. Aenean mauris dolor, rhoncus eu tempor vel, commodo at metus. Ut aliquam gravida elit, iaculis pulvinar tortor viverra sed. Nam dictum pharetra rutrum. Aliquam egestas enim tortor, eget porttitor dui bibendum vitae. Nulla fringilla, augue ut sodales semper, tortor mauris maximus mauris, ac malesuada turpis augue sit amet tellus. Donec vel nisi maximus, hendrerit felis fringilla, pellentesque massa. Donec rhoncus, massa at convallis finibus, dolor massa dictum magna, a convallis lorem elit sed risus. Aenean vitae leo rutrum, egestas diam in, condimentum ipsum. Duis commodo diam mollis semper finibus. Nulla id pharetra augue. Nullam libero massa, varius eu blandit quis, fermentum sed augue. Morbi hendrerit rhoncus ligula nec consectetur. Etiam mattis tempor purus, ac fermentum mi. Ut et lacus elementum, lacinia leo in, pharetra tellus. Duis viverra erat et felis dignissim, in porta erat mattis. In mi diam, accumsan et dui a, ullamcorper pulvinar mi. Sed iaculis magna magna. Ut a lobortis orci. Praesent pulvinar, neque at lacinia auctor, odio diam rhoncus arcu, a rutrum nibh nulla in est. Suspendisse interdum imperdiet diam, vitae mattis purus ornare in. Duis ac leo scelerisque, dictum quam eu, scelerisque magna. Proin ut turpis semper lorem molestie eleifend. Aenean ultricies vitae est a consectetur. Aliquam erat volutpat. Ut dictum viverra diam, quis tempus lorem molestie id. Vestibulum ullamcorper ex est, in porttitor sem mollis eget. Cras justo neque, faucibus sed venenatis non, auctor in nulla.",
       Imagen:
-        "/sites/default/files/contenidos-interes/imagen-moviles/enlace1_0.jpg",
+        "/sites/default/files/contenidos-interes/imagen-moviles/enlace3.jpg",
+      Fecha: "21-JUN-2021",
     },
     {
-      Titulo: "58694a0f-3da1-471f-bd96-145571e29d72",
-      Resumen: 'Tercer episodio de podcast "Refugio en pauta"...',
+      Titulo: "Enlace de interés 2",
+      Resumen: 'Proin vulputate pharetra justo, nec venenatis eros commodo vitae. Sed semper nunc vitae ante dignissim ullamcorper',
       Contenido:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin nulla nec rhoncus blandit. Nunc fringilla scelerisque consequat.",
+        "Proin vulputate pharetra justo, nec venenatis eros commodo vitae. Sed semper nunc vitae ante dignissim ullamcorper. Aenean mauris dolor, rhoncus eu tempor vel, commodo at metus. Ut aliquam gravida elit, iaculis pulvinar tortor viverra sed. Nam dictum pharetra rutrum. Aliquam egestas enim tortor, eget porttitor dui bibendum vitae. Nulla fringilla, augue ut sodales semper, tortor mauris maximus mauris, ac malesuada turpis augue sit amet tellus. Donec vel nisi maximus, hendrerit felis fringilla, pellentesque massa. Donec rhoncus, massa at convallis finibus, dolor massa dictum magna, a convallis lorem elit sed risus. Aenean vitae leo rutrum, egestas diam in, condimentum ipsum. Duis commodo diam mollis semper finibus. Nulla id pharetra augue. Nullam libero massa, varius eu blandit quis, fermentum sed augue. Morbi hendrerit rhoncus ligula nec consectetur. Etiam mattis tempor purus, ac fermentum mi. Ut et lacus elementum, lacinia leo in, pharetra tellus. Duis viverra erat et felis dignissim, in porta erat mattis. In mi diam, accumsan et dui a, ullamcorper pulvinar mi. Sed iaculis magna magna. Ut a lobortis orci. Praesent pulvinar, neque at lacinia auctor, odio diam rhoncus arcu, a rutrum nibh nulla in est. Suspendisse interdum imperdiet diam, vitae mattis purus ornare in. Duis ac leo scelerisque, dictum quam eu, scelerisque magna. Proin ut turpis semper lorem molestie eleifend. Aenean ultricies vitae est a consectetur. Aliquam erat volutpat. Ut dictum viverra diam, quis tempus lorem molestie id. Vestibulum ullamcorper ex est, in porttitor sem mollis eget. Cras justo neque, faucibus sed venenatis non, auctor in nulla.",
       Imagen:
-        "/sites/default/files/contenidos-interes/imagen-moviles/enlace1_0.jpg",
-      Fecha: "30-JUN-2021",
+        "/sites/default/files/contenidos-interes/imagen-moviles/enlace2.jpg",
+      Fecha: "21-JUN-2021",
     },
     {
-      Titulo: "58694a0f-3da1-471f-bd96-145571e29d723",
-      Resumen: 'Tercer episodio de podcast "Refugio en pauta"...',
+      Titulo: "Enlace de interés 1",
+      Resumen: 'Proin vulputate pharetra justo, nec venenatis eros commodo vitae. Sed semper nunc vitae ante dignissim ullamcorper',
       Contenido:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin nulla nec rhoncus blandit. Nunc fringilla scelerisque consequat.",
+        "Proin vulputate pharetra justo, nec venenatis eros commodo vitae. Sed semper nunc vitae ante dignissim ullamcorper. Aenean mauris dolor, rhoncus eu tempor vel, commodo at metus. Ut aliquam gravida elit, iaculis pulvinar tortor viverra sed. Nam dictum pharetra rutrum. Aliquam egestas enim tortor, eget porttitor dui bibendum vitae. Nulla fringilla, augue ut sodales semper, tortor mauris maximus mauris, ac malesuada turpis augue sit amet tellus. Donec vel nisi maximus, hendrerit felis fringilla, pellentesque massa. Donec rhoncus, massa at convallis finibus, dolor massa dictum magna, a convallis lorem elit sed risus. Aenean vitae leo rutrum, egestas diam in, condimentum ipsum. Duis commodo diam mollis semper finibus. Nulla id pharetra augue. Nullam libero massa, varius eu blandit quis, fermentum sed augue. Morbi hendrerit rhoncus ligula nec consectetur. Etiam mattis tempor purus, ac fermentum mi. Ut et lacus elementum, lacinia leo in, pharetra tellus. Duis viverra erat et felis dignissim, in porta erat mattis. In mi diam, accumsan et dui a, ullamcorper pulvinar mi. Sed iaculis magna magna. Ut a lobortis orci. Praesent pulvinar, neque at lacinia auctor, odio diam rhoncus arcu, a rutrum nibh nulla in est. Suspendisse interdum imperdiet diam, vitae mattis purus ornare in. Duis ac leo scelerisque, dictum quam eu, scelerisque magna. Proin ut turpis semper lorem molestie eleifend. Aenean ultricies vitae est a consectetur. Aliquam erat volutpat. Ut dictum viverra diam, quis tempus lorem molestie id. Vestibulum ullamcorper ex est, in porttitor sem mollis eget. Cras justo neque, faucibus sed venenatis non, auctor in nulla.",
       Imagen:
         "/sites/default/files/contenidos-interes/imagen-moviles/enlace1_0.jpg",
-      Fecha: "30-JUN-2021",
+      Fecha: "21-JUN-2021",
     },
     {
       Titulo: "58694a0f-3da1-471f-bd96-145571e29d724",

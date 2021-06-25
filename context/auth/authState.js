@@ -2,7 +2,10 @@ import React, { useReducer } from "react";
 import { LOG_IN, LOG_IN_ERROR, SIGN_UP } from "../../types";
 import AuthReducer from "./authReducer";
 import AuthContext from "./authContext";
-import { firebase } from "../../config/firebase";
+import database from '@react-native-firebase/database'
+import auth from '@react-native-firebase/auth'
+import analytics from '@react-native-firebase/analytics'
+//import { firebase } from "../../config/firebase";
 
 const AuthState = (props) => {
   const initialState = {
@@ -14,16 +17,17 @@ const AuthState = (props) => {
   const [state, dispatch] = useReducer(AuthReducer, initialState);
 
   const signIn = async (data) => {
-    firebase
-      .auth()
+    auth()
       .signInWithEmailAndPassword(data.email, data.password)
       .then((response) => {
+        analytics().logEvent('signIn',{email:data.email,result:'true'});
         dispatch({
           type: LOG_IN,
           payload: response,
         });
       })
       .catch((error) => {
+        analytics().logEvent('signIn',{email:data.email,result:'false'});
         dispatch({
           type: LOG_IN_ERROR,
           payload: error,
@@ -32,10 +36,11 @@ const AuthState = (props) => {
   };
 
   const signUp = (data) => {
-    firebase
-      .auth()
+    console.log('signUp.1',data)
+    auth()
       .createUserWithEmailAndPassword(data.email, data.password)
       .then((response) => {
+        console.log('signUp.2',response)
         dispatch({
           type: SIGN_UP,
           payload: response,

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "70900825873",
+    "firebase_url": "https://oimcol-default-rtdb.firebaseio.com",
+    "project_id": "oimcol",
+    "storage_bucket": "oimcol.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70900825873:android:9e1ccf3a0f581c7ce396b0",
+        "android_client_info": {
+          "package_name": "com.iom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "70900825873-di6jbsmp871gjqi2m2rq44hfocpm2jhs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCL5qS2fDXWfjMO28xxVA-WvAG_EZHpFlY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "70900825873-di6jbsmp871gjqi2m2rq44hfocpm2jhs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "70900825873-a6dj5hpifh5f8eg9k2233h8237taq00c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.IOM"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

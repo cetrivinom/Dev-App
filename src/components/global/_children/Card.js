@@ -9,6 +9,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
 } from "react-native";
+import { metrics } from "../../../utilities/Metrics"
 
 export const ItemMain = (props) => {
   const { image, title, name } = props;
@@ -210,13 +211,13 @@ const styles = StyleSheet.create({
   },
   wraper: {
     width: "50%",
-    padding: 12,
+    padding: 11,
   },
   cardBody: {
     backgroundColor: "#132A3E",
     flexDirection: "column",
     height: 90,
-    width: 173,
+    width: metrics.WIDTH*0.44,
     borderRadius: 8,
     shadowColor: "#030912",
     shadowOffset: {

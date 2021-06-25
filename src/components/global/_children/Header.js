@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import { metrics } from "../../../utilities/Metrics"
 
 const Header = props => {
   const {
@@ -25,7 +26,7 @@ const Header = props => {
       <View style={styles.containerForm}>
         {showBack && (
           <TouchableOpacity onPress={onPressBack} style={styles.logo}>
-            <Image source={require('../../../resources/images/left.png')} />
+            <Image  source={require('../../../resources/images/left.png')} />
           </TouchableOpacity>
         )}
         <Text style={styles.labelTitle}>{title}</Text>
@@ -59,12 +60,13 @@ const styles = StyleSheet.create({
   },
   logo: {
     position: 'absolute',
-    right: 215,
+    right: metrics.WIDTH*0.53,
+    //marginLeft:50,
   },
   image: {
     position: 'absolute',
-    right: -98,
-    top: -5,
+    right: -metrics.WIDTH*0.22,
+    top: -metrics.HEIGHT*0.007,
   },
 });
 

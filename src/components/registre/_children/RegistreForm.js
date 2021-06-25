@@ -7,7 +7,10 @@ import {
   TouchableHighlight,
   TouchableOpacity,
 } from "react-native";
+import {DatePicker} from "react-native-wheel-datepicker"
 import Styles from "./styles";
+
+import moment from 'moment'
 import AuthContext from "../../../../context/auth/authContext";
 
 export const Footer = (props) => {
@@ -18,6 +21,7 @@ export const Footer = (props) => {
     if (formValue !== 4) {
       setForm(formValue);
     } else {
+      console.log('signup',data);
       signUp(data);
       if (auth) {
         props.navigation.navigate("Home");
@@ -142,6 +146,18 @@ export const RegistreForm3 = ({ setForm, setData, data }) => {
     <View style={Styles.container}>
       <View style={[Styles.box, Styles.box1]}>
         <Text style={Styles.labelTitle}>Ingresa tu fecha de nacimiento</Text>
+        <View style={{ flex: 0.9, justifyContent: 'center' }}>
+          <DatePicker
+            mode="date"
+            date={moment().add(-30, 'years').toDate()}
+            maximumDate={moment().add(-16, 'years').toDate()}
+            minimumDate={moment().add(-120, 'years').toDate()}
+            onDateChange={(date) => {
+              setData({ ...data, birdDate: date })
+            }}
+            style={{ backgroundColor: 'white' }}
+          />
+        </View>
       </View>
       <Footer formValue={3} title="Siguiente" setForm={setForm} />
     </View>

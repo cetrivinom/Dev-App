@@ -10,7 +10,7 @@ export default StyleSheet.create({
   },
   labelInicio: {
     fontSize: 22,
-    fontFamily: "Dosis",
+    //fontFamily: "Dosis",
     fontWeight: "500",
     lineHeight: 28,
     letterSpacing: 0.0015,
@@ -69,7 +69,7 @@ export default StyleSheet.create({
   inputTextBox: {
     height: 56,
     borderColor: "#A1AAB2",
-    fontFamily: "Roboto",
+    //fontFamily: "Roboto",
     borderRadius: 3.5,
     paddingLeft: 15,
     borderWidth: 1,

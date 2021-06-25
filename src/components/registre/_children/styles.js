@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { metrics } from "../../../utilities/Metrics"
 
 export default StyleSheet.create({
   container: {
@@ -50,8 +51,8 @@ export default StyleSheet.create({
   },
   righLine: {
     position: "absolute",
-    top: 10,
-    left: 310,
+    top: metrics.HEIGHT*0.0145,
+    left: metrics.WIDTH*0.83,
   },
   breadcums: {
     marginTop: 30,
@@ -69,18 +70,13 @@ export default StyleSheet.create({
   containerForm2: {
     flexDirection: "row",
   },
-  righLine: {
-    position: "absolute",
-    top: 10,
-    left: 310,
-  },
   righLine2: {
     position: "absolute",
-    left: 270,
+    left: metrics.WIDTH*0.67,
   },
   righLine3: {
     position: "absolute",
-    right: 320,
+    right: metrics.WIDTH*0.8,
   },
   containerForm21: {
     flexDirection: "row",
