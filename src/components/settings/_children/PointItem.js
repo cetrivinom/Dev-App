@@ -7,6 +7,7 @@ import {
   View,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from "react-native";
 import ServiceContext from "../../../../context/service/serviceContext";
 import ServiceItem from "./ServiceItem";
@@ -55,80 +56,83 @@ const PointItem = (props) => {
         </View>
       </View>
       <View style={[styles.box, styles.box2]}>
-        <View style={styles.divider}></View>
-        <View style={styles.box5}>
-          <View style={styles.caja1}>
-            <Text style={styles.caja1Text}>{Nombre_punto}</Text>
-            <TouchableOpacity style={styles.overlay}>
-              <Text style={styles.text}>¿Cómo llegar?</Text>
-            </TouchableOpacity>
+        <ScrollView style={{ flex: 1 }}>
+          <View style={styles.divider}></View>
+          <View style={styles.box5}>
+            <View style={styles.caja1}>
+              <Text style={styles.caja1Text}>{Nombre_punto}</Text>
+              <TouchableOpacity style={styles.overlay}>
+                <Text style={styles.text}>¿Cómo llegar?</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-        <View style={styles.divider}></View>
-        <View style={styles.box5}>
-          <View style={styles.containerForm}>
-            <Image
-              source={require("../../../resources/images/riMapPinFill.png")}
-            />
-            <Text style={styles.textTitle2}>
-              {capitalize(Estado.toLowerCase())}
-            </Text>
+          <View style={styles.divider}></View>
+          <View style={styles.box5}>
+            <View style={styles.containerForm}>
+              <Image
+                source={require("../../../resources/images/riMapPinFill.png")}
+              />
+              <Text style={styles.textTitle2}>
+                {capitalize(Estado.toLowerCase())}
+              </Text>
+            </View>
+            <View style={styles.cajaDireccion}>
+              <Text style={styles.textDireccion}>
+                {Direccion.toUpperCase()}
+              </Text>
+            </View>
+            <View style={styles.containerForm}>
+              <Image
+                source={require("../../../resources/images/riRoadMapFill.png")}
+              />
+              <Text style={styles.textTitle2}>
+                {capitalize(Departamento.toLowerCase()) +
+                  "- " +
+                  capitalize(Municipio.toLowerCase())}
+              </Text>
+            </View>
           </View>
-          <View style={styles.cajaDireccion}>
-            <Text style={styles.textDireccion}>{Direccion.toUpperCase()}</Text>
+          <View style={styles.divider}></View>
+          <View style={styles.box5}>
+            <Text style={styles.textHorario}>Horario de punto</Text>
+            <View style={styles.containerForm}>
+              <Image
+                source={require("../../../resources/images/riTimeFill.png")}
+              />
+              <Text style={styles.textTitle2}>
+                Lunes - Viernes: 9:00 am-12:00 pm, 1:00 pm-4:00 pm
+              </Text>
+            </View>
+            <View style={styles.containerForm}>
+              <Image
+                source={require("../../../resources/images/riTimeFill.png")}
+              />
+              <Text style={styles.textTitle2}>Sábado - Domingo: Cerrado</Text>
+            </View>
           </View>
-          <View style={styles.containerForm}>
-            <Image
-              source={require("../../../resources/images/riRoadMapFill.png")}
-            />
-            <Text style={styles.textTitle2}>
-              {capitalize(Departamento.toLowerCase()) +
-                "- " +
-                capitalize(Municipio.toLowerCase())}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.divider}></View>
-        <View style={styles.box5}>
-          <Text style={styles.textHorario}>Horario de punto</Text>
-          <View style={styles.containerForm}>
-            <Image
-              source={require("../../../resources/images/riTimeFill.png")}
-            />
-            <Text style={styles.textTitle2}>
-              Lunes - Viernes: 9:00 am-12:00 pm, 1:00 pm-4:00 pm
-            </Text>
-          </View>
-          <View style={styles.containerForm}>
-            <Image
-              source={require("../../../resources/images/riTimeFill.png")}
-            />
-            <Text style={styles.textTitle2}>Sábado - Domingo: Cerrado</Text>
-          </View>
-        </View>
-        <View style={styles.divider}></View>
-        <View style={styles.box5}>
-          <Text style={styles.textHorario}>Servicios</Text>
-          <FlatList
-            data={Servicios}
-            renderItem={(item) => (
+          <View style={styles.divider}></View>
+          <View style={styles.box5}>
+            <Text style={styles.textHorario}>Servicios</Text>
+            {Servicios.map((l, i) => (
               <ServiceItem
                 {...props}
-                Servicio={item.item.Servicio}
-                Descripcion_Servicio={item.item.Descripcion_Servicio}
-                Organizacion_es={item.item.Organizacion_es}
+                key={i}
+                Servicio={l.Servicio}
+                Descripcion_Servicio={l.Descripcion_Servicio}
+                Organizacion_es={l.Organizacion_es}
               />
-            )}
-            keyExtractor={(item) => item.Servicio}
-          />
-        </View>
-        <View style={styles.divider}></View>
-        <View style={styles.box5}>
-          <Text style={styles.textComentario}>Tus comentarios</Text>
-          <TouchableOpacity onPress={onPressOpenComents}>
-            <Text style={styles.textAgregarComentario}>Agregar comentario</Text>
-          </TouchableOpacity>
-        </View>
+            ))}
+          </View>
+          <View style={styles.divider}></View>
+          <View style={styles.box5}>
+            <Text style={styles.textComentario}>Tus comentarios</Text>
+            <TouchableOpacity onPress={onPressOpenComents}>
+              <Text style={styles.textAgregarComentario}>
+                Agregar comentario
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </View>
     </View>
   );
