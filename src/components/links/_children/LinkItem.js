@@ -6,37 +6,36 @@ const DirectoryItem = (props) => {
   const onPressClose = () => {
     props.navigation.goBack();
   };
-
+  const {
+    resume = "",
+    date = "",
+    content = "",
+    image = "",
+  } = props.navigation.state.params || {};
+  
   return (
     <View style={styles.wrapper}>
       <View style={[styles.box, styles.box1]}>
         <TouchableOpacity style={styles.image2} onPress={onPressClose}>
           <Image source={require("../../../resources/images/fab.png")} />
         </TouchableOpacity>
-        <View style={styles.boxImage}>
-          <Image
-            source={require("../../../resources/images/pictureExample2.png")}
-          />
-        </View>
+        <Image
+          style={styles.containeImage}
+          source={{
+            uri: `https://dev-mapeo.us.tempcloudsite.com${image}`,
+          }}
+        />
         <View style={styles.boxTitle}>
-          <Text style={styles.textTitle}>
-            Segundo episodio de podcast “Refugio en pauta” concentración
-          </Text>
+          <Text style={styles.textTitle}>{resume}</Text>
           <View style={styles.containerDate}>
             <Image source={require("../../../resources/images/calendar.png")} />
-            <Text style={styles.titleDate}>DD/MM/AAAA</Text>
+            <Text style={styles.titleDate}>{date}</Text>
           </View>
         </View>
       </View>
       <View style={[styles.box, styles.box2]}>
         <View style={styles.boxTitle}>
-          <Text>
-            Consectetur adipiscing elit duis tristique sollicitudin nibh sit
-            amet commodo nulla facilisi nullam vehicula ipsum a arcu cursus
-            vitae congue. adipiscing elit duis tristique sollicitudin nibh sit
-            amet commodo nulla facilisi nullam vehicula ipsum a arcu cursus
-            vitae congue
-          </Text>
+          <Text>{content}</Text>
         </View>
         <View style={styles.boxTitle2}>
           <Text style={styles.textTitle2}>Abrir enlace</Text>
@@ -107,6 +106,12 @@ const styles = StyleSheet.create({
     top: 20,
     left: 20,
     zIndex: 10,
+  },
+  containeImage: {
+    overflow: "hidden",
+    resizeMode: "cover",
+    width: "100%",
+    height: 270,
   },
 });
 

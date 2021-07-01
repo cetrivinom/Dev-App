@@ -27,74 +27,28 @@ const Settings = (props) => {
     );
   }, []);
 
-  console.log("data", data);
-
-  const markerFavorites = [
-    {
-      latitude: 8.0908494233566,
-      longitude: -76.727236307375,
-      color: "#902857",
-    },
-    {
-      latitude: 4.6557516012933,
-      longitude: -74.1145247,
-      color: "#902857",
-    },
-    {
-      latitude: 4.1334319011476,
-      longitude: -73.6288308,
-      color: "#902857",
-    },
-    {
-      latitude: 10.47501611426,
-      longitude: -73.281171323194,
-      color: "#00AAAD",
-    },
-    {
-      latitude: 10.405701,
-      longitude: -75.510129,
-      color: "#00AAAD",
-    },
-    {
-      latitude: 6.2549232017406,
-      longitude: -75.5646485,
-      color: "#00AAAD",
-    },
-    {
-      latitude: 3.4199249005487,
-      longitude: -76.491779849633,
-      color: "#00AAAD",
-    },
-    {
-      latitude: 7.9226194,
-      longitude: -72.5205836,
-      color: "#00AAAD",
-    },
-    {
-      latitude: 5.5301355015375,
-      longitude: -73.362832,
-      color: "#00AAAD",
-    },
-    {
-      latitude: 4.4782683466642,
-      longitude: -75.2436045,
-      color: "#00AAAD",
-    },
-    {
-      latitude: 7.085979277684,
-      longitude: -70.758028328419,
-      color: "#00AAAD",
-    },
-  ];
-
   const mapMarkers = () => {
-    return markerFavorites.map((report, index) => (
-      <Marker
-        key={index}
-        coordinate={{ latitude: report.latitude, longitude: report.longitude }}
-        pinColor={report.color}
-      ></Marker>
-    ));
+    if (data != null) {
+      return data.map((item, index) => {
+        if (item.Coordenadas !== "") {
+          let coor = item.Coordenadas.split(",");
+          return (
+            <Marker
+              key={index}
+              coordinate={{
+                latitude: parseFloat(coor[0]),
+                longitude: parseFloat(coor[1]),
+              }}
+              onPress={()=> onPressOpenPoint(item.ID)}
+            ></Marker>
+          );
+        }
+      });
+    }
+  };
+
+  const onPressOpenPoint = (id) => {
+    props.navigation.navigate("PointItem", {id});
   };
 
   const onPressOpen = () => {

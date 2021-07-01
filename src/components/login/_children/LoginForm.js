@@ -55,7 +55,7 @@ const LoginForm = (props) => {
           onChangeText={(e) => setUser({ ...user, password: e })}
         />
         <Text style={Styles.labelForgetPassword}>
-          ¿Olvidaste tu contraseña?
+          ¿Olvidaste tu contraseña
         </Text>
         <View>
           <TouchableHighlight style={Styles.btnIniciar} onPress={onPressLogin}>

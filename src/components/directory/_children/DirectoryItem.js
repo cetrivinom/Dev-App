@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,51 +9,19 @@ import {
   FlatList,
 } from "react-native";
 import { ItemDirectoryDetail } from "../../global/_children/Card";
+import DirectoryContext from "../../../../context/directory/directoryContext";
 
 const DirectoryItem = (props) => {
+  const { dataItem, getDataDirectoryItem } = useContext(DirectoryContext);
   const { otherParam = "" } = props.navigation.state.params || {};
+
+  useEffect(() => {
+    getDataDirectoryItem(otherParam);
+  }, [otherParam]);
 
   const onPressClose = () => {
     props.navigation.goBack();
   };
-
-  const data = [
-    {
-      title: "Atención psicosocial y Reabilitación discapacitados",
-      id: 0,
-      items: {
-        text: "Acompañamiento y asesoría psicológica de manera virtual, recibimos ydevolvemos la llamada a la persona interesada en el acompañamiento de primeros auxilios psicológicos o proceso terapéutico.",
-      },
-    },
-    {
-      title: "Atención casos de violencia sexual, VBG y trata de personas",
-      id: 1,
-      items: {
-        text: "Al contrario del pensamiento popular, el texto de Lorem Ipsum no es simplemente texto aleatorio. Tiene sus raices en una pieza cl´sica de la literatura del Latin, que data del año 45 antes de Cristo",
-      },
-    },
-    {
-      title: "Atención en medicina general",
-      id: 2,
-      items: {
-        text: "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500",
-      },
-    },
-    {
-      title: "Orientación a victimas",
-      id: 3,
-      items: {
-        text: "Es un hecho establecido hace demasiado tiempo que un lector se distraerá con el contenido del texto de un sitio mientras que mira su diseño.",
-      },
-    },
-    {
-      title: "Orientación jurídica",
-      id: 4,
-      items: {
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi euismod ex dolor. Nullam a urna suscipit augue egestas faucibus ut eget nibh. Donec et tellus est. Pellentesque consequat pharetra libero nec pulvinar. Nullam in dui at ipsum placerat varius. In eu ligula in lacus faucibus vestibulum ut eget augue.",
-      },
-    },
-  ];
 
   return (
     <View style={styles.wrapper}>
@@ -73,15 +41,21 @@ const DirectoryItem = (props) => {
           />
         </View>
       </View>
-      <View style={[styles.box, styles.box2]}>
-        <FlatList
-          data={data}
-          renderItem={(item) => (
-            <ItemDirectoryDetail {...props} title={item.item.title} subTitle={item.item.items.text} />
-          )}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
+      {dataItem !== null && (
+        <View style={[styles.box, styles.box2]}>
+          <FlatList
+            data={dataItem.items}
+            renderItem={(item) => (
+              <ItemDirectoryDetail
+                {...props}
+                title={item.item.title}
+                subTitle={item.item.items.text}
+              />
+            )}
+            keyExtractor={(item) => item.id}
+          />
+        </View>
+      )}
     </View>
   );
 };

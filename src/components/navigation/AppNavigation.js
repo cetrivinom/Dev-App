@@ -7,6 +7,8 @@ import Profile from "../profile";
 import Home from "../global/Home";
 import DirectoryItem from "../directory/_children/DirectoryItem";
 import LinkItem from "../links/_children/LinkItem";
+import PointItem from "../settings/_children/PointItem";
+import PointItemComents from "../settings/_children/PointItemComents";
 import FilterSetting from "../settings/_children/FilterSetting";
 
 const AppNavigation = createStackNavigator({
@@ -48,6 +50,18 @@ const AppNavigation = createStackNavigator({
   },
   LinkItem: {
     screen: LinkItem,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  PointItem: {
+    screen: PointItem,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  PointItemComents: {
+    screen: PointItemComents,
     navigationOptions: {
       headerShown: false,
     },

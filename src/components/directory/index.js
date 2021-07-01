@@ -1,25 +1,19 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, StyleSheet, TextInput, FlatList } from "react-native";
 import Header from "../global/_children/Header";
 import { ItemDirectory } from "../global/_children/Card";
+import DirectoryContext from "../../../context/directory/directoryContext";
 
 const Directory = (props) => {
-  const data = [
-    { name: "Antioquia", id: 0 },
-    { name: "Arauca", id: 1 },
-    { name: "Atlántico", id: 2 },
-    { name: "Bogota D.C", id: 3 },
-    { name: "Bolívar", id: 4 },
-    { name: "Boyacá", id: 5 },
-    { name: "Caldas", id: 6 },
-    { name: "Caquetá", id: 7 },
-    { name: "Casanare", id: 8 },
-    { name: "Cauca", id: 9 },
-    { name: "Cesar", id: 10 },
-    { name: "Chocó", id: 11 },
-    { name: "Córdoba", id: 12 },
-    { name: "Cundinamarca", id: 13 },
-  ];
+  const [searchTerm, setSearchTerm] = useState("");
+  const { dataFilter, getDataDirectory } = useContext(DirectoryContext);
+
+  useEffect(() => {
+    getDataDirectory(searchTerm.trim());
+  }, [searchTerm]);
+
+  console.log("searchTerm", searchTerm);
+  console.log("data", dataFilter);
 
   return (
     <View style={styles.wrapper}>
@@ -31,11 +25,12 @@ const Directory = (props) => {
           <View style={styles.containerSearch}>
             <TextInput
               style={styles.inputTextBox}
+              onChangeText={(e) => setSearchTerm(e)}
               placeholder="Buscar departamento"
             />
           </View>
           <FlatList
-            data={data}
+            data={dataFilter}
             renderItem={(item) => (
               <ItemDirectory {...props} title={item.item.name} />
             )}

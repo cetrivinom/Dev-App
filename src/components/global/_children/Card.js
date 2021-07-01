@@ -9,7 +9,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
 } from "react-native";
-import { metrics } from "../../../utilities/Metrics"
+import { metrics } from "../../../utilities/Metrics";
 
 export const ItemMain = (props) => {
   const { image, title, name } = props;
@@ -82,23 +82,30 @@ export const ItemFavorite = (props) => {
 
 export const ItemLink = (props) => {
   const {
-    title = 'Segundo episodio de podcast "Refugio en pauta"...',
+    title = "",
+    resume = "",
+    content="",
     date = "DD/MM/AAAA",
+    image = "",
   } = props || {};
 
+
   const onPressOpen = () => {
-    props.navigation.navigate("LinkItem");
+    props.navigation.navigate("LinkItem", { resume, date, content, image });
   };
+  let _resume = resume !== "" ? resume.substring(0, 60) : "";
 
   return (
     <TouchableOpacity onPress={onPressOpen}>
       <View style={styles.container2}>
         <Image
           style={styles.containeImage}
-          source={require("../../../resources/images/pictureExample.png")}
+          source={{
+            uri: `https://dev-mapeo.us.tempcloudsite.com${image}`,
+          }}
         />
         <View style={styles.containeImageText}>
-          <Text style={styles.titleSection2}>{title}</Text>
+          <Text style={styles.titleSection2}>{_resume}</Text>
           <View style={styles.containerDate}>
             <Image source={require("../../../resources/images/calendar.png")} />
             <Text style={styles.titleDate}>{date}</Text>
@@ -217,7 +224,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#132A3E",
     flexDirection: "column",
     height: 90,
-    width: metrics.WIDTH*0.44,
+    width: metrics.WIDTH * 0.44,
     borderRadius: 8,
     shadowColor: "#030912",
     shadowOffset: {

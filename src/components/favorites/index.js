@@ -34,7 +34,7 @@ const Favorites = (props) => {
       <View style={[styles.box, styles.box1]}>
         <Header {...props} showBack={false} title="Puntos favoritos" />
       </View>
-      <View style={[styles.box, styles.box2]}>
+      <View style={[styles.box, styles.box2]}>   
         <FlatList
           data={data}
           renderItem={(item) => (
