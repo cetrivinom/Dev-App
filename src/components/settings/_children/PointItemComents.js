@@ -1,6 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useContext } from "react";
-import { StyleSheet, Text, Image, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  Image,
+  View,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
 import ServiceContext from "../../../../context/service/serviceContext";
 
 const PointItemComents = (props) => {
@@ -22,8 +29,35 @@ const PointItemComents = (props) => {
               source={require("../../../resources/images/riCloseLine.png")}
             />
           </TouchableOpacity>
-          <Text style={styles.textTitle}>{Nombre_punto.substring(0, 18) + "..."}</Text>
+          <Text style={styles.textTitle}>
+            {Nombre_punto.substring(0, 18) + "..."}
+          </Text>
           <Text style={styles.textTitlePublicar}>Publicar</Text>
+        </View>
+      </View>
+      <View style={[styles.box, styles.box2]}>
+        <View style={styles.box5}>
+          <View style={styles.cajaDireccion}>
+            <View style={styles.containerForm}>
+              <Image
+                source={require("../../../resources/images/userIco.png")}
+              />
+              <Text style={styles.textTitle2}>email.@email.com</Text>
+            </View>
+            <Text style={styles.textTitle3}>
+              Nos interesa conocer tus opiniones y experiencias para mejorar,
+              pero si tienes inquietudes o solicitudes particulares que
+              necesitas resolver, te sugerimos que visites el punto de servicios
+              más cercano o llames a una de las lineas de atención que se han
+              dispuesto en esta aplicación para ti.
+            </Text>
+            <TextInput
+              multiline={true}
+              numberOfLines={3}
+              style={styles.inputTextBox}
+              placeholder="Describe tu experiencia en este lugar"
+            />
+          </View>
         </View>
       </View>
     </View>
@@ -122,11 +156,17 @@ const styles = StyleSheet.create({
     marginTop: 2,
     marginStart: 10.5,
   },
+  textTitle3: {
+    fontSize: 14,
+    fontWeight: "normal",
+    lineHeight: 16,
+    letterSpacing: 0.0025,
+    color: "#A1AAB2",
+    marginTop: 2,
+    marginStart: 35,
+    textAlign: "justify",
+  },
   cajaDireccion: {
-    backgroundColor: "#132A3E",
-    borderRadius: 4,
-    justifyContent: "center",
-    alignItems: "center",
     paddingVertical: 3,
     paddingHorizontal: 3,
     marginBottom: 10,
@@ -162,6 +202,13 @@ const styles = StyleSheet.create({
     letterSpacing: 0.0125,
     marginStart: 10,
     marginTop: 20,
+  },
+  inputTextBox: {
+    borderColor: "#A1AAB2",
+    //fontFamily: "Roboto",
+    borderRadius: 3.5,
+    paddingLeft: 15,
+    borderWidth: 1,
   },
 });
 

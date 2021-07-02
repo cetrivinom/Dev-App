@@ -39,7 +39,7 @@ const Settings = (props) => {
                 latitude: parseFloat(coor[0]),
                 longitude: parseFloat(coor[1]),
               }}
-              onPress={()=> onPressOpenPoint(item.ID)}
+              onPress={() => onPressOpenPoint(item.ID)}
             ></Marker>
           );
         }
@@ -48,7 +48,7 @@ const Settings = (props) => {
   };
 
   const onPressOpenPoint = (id) => {
-    props.navigation.navigate("PointItem", {id});
+    props.navigation.navigate("PointItem", { id });
   };
 
   const onPressOpen = () => {
@@ -73,17 +73,17 @@ const Settings = (props) => {
             longitudeDelta: 10,
           }}
         >
-          {position && mapMarkers()}
+          {data !== null && mapMarkers()}
         </MapView>
-        <TouchableOpacity style={styles.overlay} onPress={onPressOpen}>
-          <View style={styles.containerForm}>
+        <View style={styles.overlay2}>
+          <TouchableOpacity style={styles.overlay} onPress={onPressOpen}>
             <Image
               source={require("../../resources/images/riMapPinLine.png")}
               style={styles.image}
             />
             <Text style={styles.text}>Filtrar Puntos de servicio</Text>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -108,30 +108,37 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   overlay: {
-    position: "absolute",
-    bottom: 24,
-    height: 48,
-    width: 238,
+    flex: 1,
+    flexDirection: "row",
     backgroundColor: "#132A3E",
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: 87,
+    maxWidth: 238,
+    padding: 10,
+  },
+  overlay2: {
+    position: "absolute",
+    flexDirection: "row",
+    bottom: 24,
+    height: 48,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   text: {
     fontSize: 15,
     lineHeight: 18,
     color: "#FFFFFF",
     letterSpacing: 0.0125,
-    paddingStart: 25,
+    marginLeft: 5,
   },
   containerForm: {
     flexDirection: "row",
   },
   image: {
-    position: "absolute",
-    right: 175,
-    top: -4,
+    width: 30,
+    height: 30,
   },
 });
 

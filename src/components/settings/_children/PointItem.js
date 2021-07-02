@@ -6,7 +6,6 @@ import {
   Image,
   View,
   TouchableOpacity,
-  FlatList,
   ScrollView,
 } from "react-native";
 import ServiceContext from "../../../../context/service/serviceContext";
@@ -263,6 +262,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.0125,
     marginStart: 10,
     marginTop: 20,
+    marginBottom: 50,
   },
 });
 

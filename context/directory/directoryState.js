@@ -219,7 +219,7 @@ const DirectoryState = (props) => {
       },
     ],
     dataItem: null,
-    dataFilter: []
+    dataFilter: [],
   };
 
   const [state, dispatch] = useReducer(DirectoryReducer, initialState);
@@ -230,7 +230,7 @@ const DirectoryState = (props) => {
       payload: item,
     });
     /*try {
-      const response = await API.get("api-lineas-telefonicas.json");
+      const response = await API.get("api-lineas-telefonicas");
       if (response.status === 200) {
         dispatch({
           type: GET_DATA_DIRECTORY,

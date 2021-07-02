@@ -3,7 +3,7 @@ import React from "react";
 import { StyleSheet, Text, Image, View } from "react-native";
 
 const ServiceItem = (props) => {
-    console.log(props.Organizacion_es)
+  console.log(props.Organizacion_es);
   return (
     <View style={styles.cajaDireccion}>
       <View style={styles.containerForm}>
@@ -16,7 +16,7 @@ const ServiceItem = (props) => {
       <View style={styles.containerForm2}>
         <Text style={styles.textTitle3}>Organización(es) principal(es)</Text>
         <View>
-        <Text style={styles.textTitle3}>{props.Organizacion_es}</Text>
+          <Text style={styles.textTitle4}>{props.Organizacion_es}</Text>
         </View>
       </View>
     </View>
@@ -52,6 +52,14 @@ const styles = StyleSheet.create({
   textTitle3: {
     fontSize: 14,
     fontWeight: "bold",
+    lineHeight: 16,
+    letterSpacing: 0.0025,
+    color: "#003031",
+    paddingTop: 8,
+  },
+  textTitle4: {
+    fontSize: 14,
+    fontWeight: "normal",
     lineHeight: 16,
     letterSpacing: 0.0025,
     color: "#003031",

@@ -14,7 +14,7 @@ const ServiceState = (props) => {
 
   const getDataService = async () => {
     try {
-      const response = await API.get("api-mapeo.json");
+      const response = await API.get("mapeo-api");
       if (response.status === 200) {
         dispatch({
           type: GET_DATA_SERVICE,

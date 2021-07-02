@@ -13,7 +13,7 @@ const LinkState = (props) => {
 
   const getDataLink = async () => {
     try {
-      const response = await API.get("api-enlaces-de-interes.json");
+      const response = await API.get("api-enlaces-de-interes");
       if (response.status === 200) {
         dispatch({
           type: GET_DATA_LINK,
