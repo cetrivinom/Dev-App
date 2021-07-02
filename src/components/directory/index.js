@@ -6,14 +6,13 @@ import DirectoryContext from "../../../context/directory/directoryContext";
 
 const Directory = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const { dataFilter, getDataDirectory } = useContext(DirectoryContext);
+  const { data, dataFilter, getDataDirectory } = useContext(DirectoryContext);
 
   useEffect(() => {
-    getDataDirectory(searchTerm.trim());
-  }, [searchTerm]);
+    getDataDirectory();
+  }, []);
 
-  console.log("searchTerm", searchTerm);
-  console.log("data", dataFilter);
+  console.log("data", data);
 
   return (
     <View style={styles.wrapper}>
@@ -30,11 +29,11 @@ const Directory = (props) => {
             />
           </View>
           <FlatList
-            data={dataFilter}
+            data={data}
             renderItem={(item) => (
-              <ItemDirectory {...props} title={item.item.name} />
+              <ItemDirectory {...props} title={item.item.departamento} />
             )}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.departamento_id}
           />
         </View>
       </View>

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { metrics } from "../../../utilities/Metrics";
+import DirectoryContext from "../../../../context/directory/directoryContext";
 
 export const ItemMain = (props) => {
   const { image, title, name } = props;
@@ -84,11 +85,10 @@ export const ItemLink = (props) => {
   const {
     title = "",
     resume = "",
-    content="",
+    content = "",
     date = "DD/MM/AAAA",
     image = "",
   } = props || {};
-
 
   const onPressOpen = () => {
     props.navigation.navigate("LinkItem", { resume, date, content, image });
@@ -148,6 +148,7 @@ export const ItemProfile = (props) => {
 };
 
 export const ItemDirectoryDetail = (props) => {
+  const { dataItemService, getDataDirectoryItemService } = useContext(DirectoryContext);
   const {
     title = "",
     subTitle = "",
@@ -156,9 +157,15 @@ export const ItemDirectoryDetail = (props) => {
     subTitle3 = "Lunes - Viernes: 8:30 a.m. a 4:30 p.m.",
   } = props || {};
   const [open, setOpen] = useState(false);
+
   const onPressOpen = () => {
     setOpen((prev) => !prev);
+    getDataDirectoryItemService(subTitle);
   };
+
+  console.log("dataItemService", dataItemService);
+
+  const { descripcion = "" } = dataItemService || {};
 
   return (
     <>
@@ -183,7 +190,7 @@ export const ItemDirectoryDetail = (props) => {
       </TouchableOpacity>
       {open && (
         <View style={styles.form3}>
-          <Text style={styles.textTitle3}>{subTitle}</Text>
+          <Text style={styles.textTitle3}>{descripcion}</Text>
           <View style={styles.form4}>
             <Text style={styles.textDetail4}>{subTitle1}</Text>
             <View style={styles.form5}>

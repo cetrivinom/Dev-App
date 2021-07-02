@@ -44,15 +44,18 @@ const DirectoryItem = (props) => {
       {dataItem !== null && (
         <View style={[styles.box, styles.box2]}>
           <FlatList
-            data={dataItem.items}
+            data={dataItem.LineasTelefonicas}
             renderItem={(item) => (
               <ItemDirectoryDetail
                 {...props}
-                title={item.item.title}
-                subTitle={item.item.items.text}
+                title={item.item.tipo_de_linea}
+                subTitle1={item.item.NombreOrganizacion}
+                subTitle2={item.item.telefono_}
+                subTitle3={item.item.horario}
+                subTitle={item.item.tipo_de_linea_id}
               />
             )}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.tipo_de_linea_id}
           />
         </View>
       )}
