@@ -8,6 +8,7 @@ import Home from "../global/Home";
 import DirectoryItem from "../directory/_children/DirectoryItem";
 import LinkItem from "../links/_children/LinkItem";
 import PointItem from "../settings/_children/PointItem";
+import PointNavigationApp from "../settings/_children/PointNavigationApp";
 import PointItemComents from "../settings/_children/PointItemComents";
 import FilterSetting from "../settings/_children/FilterSetting";
 
@@ -56,6 +57,12 @@ const AppNavigation = createStackNavigator({
   },
   PointItem: {
     screen: PointItem,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  PointNavigationApp: {
+    screen: PointNavigationApp,
     navigationOptions: {
       headerShown: false,
     },
