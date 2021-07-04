@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { ItemProfile } from "../global/_children/Card";
+import AuthContext from "../../../context/auth/authContext";
 
 const Profile = (props) => {
   const { navigation } = props;
+  const { user,signOut } = useContext(AuthContext);
   const onPressBack = () => {
     navigation.goBack();
   };
 
   const onPressLogOff = () => {
+    signOut();
     navigation.navigate("Login");
   };
 
@@ -26,13 +29,13 @@ const Profile = (props) => {
       </View>
       <View style={[styles.box, styles.box2]}>
         <View style={styles.container}>
-          <ItemProfile title="Correo electrónico" subTitle="email@email.com" />
+          <ItemProfile title="Correo electrónico" subTitle={user?user.email:''} />
           <ItemProfile
             title="Fecha de nacimiento"
-            subTitle="0000/00/00"
+            subTitle={user?user.birdDate:''}
             showImge
           />
-          <ItemProfile title="Género" subTitle="Género" showImge />
+          <ItemProfile title="Género" subTitle={user?user.gender=='H'?'Hombre':user.gender=='M'?'Mujer':'Otro':''} showImge />
           <ItemProfile
             title="Contraseña"
             subTitle="****************"

@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { LOG_IN, LOG_IN_ERROR, SIGN_UP } from "../../types";
+import { LOG_IN, LOG_IN_ERROR, SIGN_UP,SIGN_UP_ERROR,SIGN_OUT,SIGN_OUT_ERROR,UPDATED_USER } from "../../types";
 import AuthReducer from "./authReducer";
 import AuthContext from "./authContext";
 import database from '@react-native-firebase/database'
@@ -17,39 +17,98 @@ const AuthState = (props) => {
   const [state, dispatch] = useReducer(AuthReducer, initialState);
 
   const signIn = async (data) => {
-    auth()
-      .signInWithEmailAndPassword(data.email, data.password)
-      .then((response) => {
-        analytics().logEvent('signIn',{email:data.email,result:'true'});
-        dispatch({
-          type: LOG_IN,
-          payload: response,
+    return new Promise((resolve, reject) => {
+      auth()
+        .signInWithEmailAndPassword(data.email, data.password)
+        .then((response) => {
+          var user = {...data,uid:response.user.uid}
+          analytics().logEvent('signIn',{email:data.email,result:'true'});
+          dispatch({
+            type: LOG_IN,
+            payload: user,
+          });
+          resolve(response.user.uid)
+        })
+        .catch((error) => {
+          analytics().logEvent('signIn',{email:data.email,result:'false'});
+          dispatch({
+            type: LOG_IN_ERROR,
+            payload: error,
+          });
+          resolve(false);
         });
-      })
-      .catch((error) => {
-        analytics().logEvent('signIn',{email:data.email,result:'false'});
-        dispatch({
-          type: LOG_IN_ERROR,
-          payload: error,
-        });
-      });
+    });
   };
 
   const signUp = (data) => {
-    console.log('signUp.1',data)
-    auth()
-      .createUserWithEmailAndPassword(data.email, data.password)
-      .then((response) => {
-        console.log('signUp.2',response)
+    return new Promise((resolve, reject) => {
+      auth()
+        .createUserWithEmailAndPassword(data.email, data.password)
+        .then((response) => {
+          var user = {...data,uid:response.user.uid}
+          dispatch({
+            type: SIGN_UP,
+            payload: {response,user},
+          });
+          resolve(user);
+        })
+        .catch((error) => {
+          dispatch({
+            type: SIGN_UP_ERROR,
+            payload: error,
+          });
+          resolve(null);
+        });
+    });
+  };
+
+  const updateUser = (data) => {
+    database()
+      .ref('/users/' + data.uid)
+      .update({email:data.email,birdDate:data.birdDate,gender:data.gender,oldMen:data.oldMen})
+      .then(()=> {        
         dispatch({
-          type: SIGN_UP,
-          payload: response,
+          type: UPDATED_USER,
+          payload: data,
         });
       })
       .catch((error) => {
         alert(error);
       });
   };
+
+
+  const getUser = (uid) => {
+    database()
+      .ref('/users/' + uid)
+      .once('value',snapshot => {
+        if (snapshot.hasChildren())
+          dispatch({
+            type: UPDATED_USER,
+            payload: snapshot.val(),
+          });
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
+  const signOut = () => {
+    auth()
+      .signOut()
+      .then(() => {
+        console.log('Signed Out');         
+        dispatch({
+          type: SIGN_OUT,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: SIGN_OUT_ERROR,
+          payload: error,
+        });
+      });
+}
 
   return (
     <AuthContext.Provider
@@ -60,6 +119,9 @@ const AuthState = (props) => {
         registre: state.registre,
         signIn,
         signUp,
+        signOut,
+        updateUser,
+        getUser,
       }}
     >
       {props.children}
