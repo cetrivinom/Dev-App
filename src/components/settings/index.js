@@ -4,14 +4,16 @@ import Header from "../global/_children/Header";
 import LastUpdate from "../global/_children/LastUpdate";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Geolocation from "@react-native-community/geolocation";
-import ServiceContext from "../../../context/service/serviceContext";
+import IOMContext from "../../../context/iomData/iomContext";
 
 const Settings = (props) => {
   const [position, setPosition] = useState(null);
-  const { data, getDataService } = useContext(ServiceContext);
+  const { dataPoint, getDataPoint } = useContext(IOMContext);
+
+  console.log("dataPoint", dataPoint);
 
   useEffect(() => {
-    getDataService();
+    getDataPoint();
     Geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
@@ -28,8 +30,8 @@ const Settings = (props) => {
   }, []);
 
   const mapMarkers = () => {
-    if (data != null) {
-      return data.map((item, index) => {
+    if (dataPoint != null) {
+      return dataPoint.map((item, index) => {
         if (item.Coordenadas !== "") {
           let coor = item.Coordenadas.split(",");
           return (
@@ -73,7 +75,7 @@ const Settings = (props) => {
             longitudeDelta: 10,
           }}
         >
-          {data !== null && mapMarkers()}
+          {dataPoint !== null && mapMarkers()}
         </MapView>
         <View style={styles.overlay2}>
           <TouchableOpacity style={styles.overlay} onPress={onPressOpen}>

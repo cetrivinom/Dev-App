@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import ServiceContext from "../../../../context/service/serviceContext";
 
 const PointItemComents = (props) => {
   const { id = "", Nombre_punto = "" } = props.navigation.state.params || {};

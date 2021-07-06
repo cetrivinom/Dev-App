@@ -1,8 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from "react";
-import { StyleSheet, Text, Image, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  Image,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Linking,
+} from "react-native";
 
-const DirectoryItem = (props) => {
+const LinkItem = (props) => {
   const onPressClose = () => {
     props.navigation.goBack();
   };
@@ -12,36 +20,40 @@ const DirectoryItem = (props) => {
     content = "",
     image = "",
   } = props.navigation.state.params || {};
-  
+
+  const regex = /(<([^>]+)>)/gi;
+  const _resume = resume.replace(regex, "");
+  const _content = content.replace(regex, "");
+
   return (
-    <View style={styles.wrapper}>
-      <View style={[styles.box, styles.box1]}>
-        <TouchableOpacity style={styles.image2} onPress={onPressClose}>
-          <Image source={require("../../../resources/images/fab.png")} />
+    <ScrollView style={styles.wrapper}>
+      <TouchableOpacity style={styles.image2} onPress={onPressClose}>
+        <Image source={require("../../../resources/images/fab.png")} />
+      </TouchableOpacity>
+      <Image
+        style={styles.containeImage}
+        source={{
+          uri: `https://dev-mapeo.us.tempcloudsite.com${image}`,
+        }}
+      />
+      <View style={styles.container}>
+        <Text style={styles.textTitle}>{_resume}</Text>
+        <View style={styles.containerDate}>
+          <Image source={require("../../../resources/images/calendar.png")} />
+          <Text style={styles.titleDate}>{date}</Text>
+        </View>
+        <Text style={styles.textContent}>{_content}</Text>
+        <TouchableOpacity
+          style={styles.boxOpenLink}
+          onPress={() => Linking.openURL(`https://www.google.com`)}
+        >
+          <Text style={styles.textOpenLink}>Abrir enlace</Text>
+          <Image
+            source={require("../../../resources/images/riExternalLinkFill.png")}
+          />
         </TouchableOpacity>
-        <Image
-          style={styles.containeImage}
-          source={{
-            uri: `https://dev-mapeo.us.tempcloudsite.com${image}`,
-          }}
-        />
-        <View style={styles.boxTitle}>
-          <Text style={styles.textTitle}>{resume}</Text>
-          <View style={styles.containerDate}>
-            <Image source={require("../../../resources/images/calendar.png")} />
-            <Text style={styles.titleDate}>{date}</Text>
-          </View>
-        </View>
       </View>
-      <View style={[styles.box, styles.box2]}>
-        <View style={styles.boxTitle}>
-          <Text>{content}</Text>
-        </View>
-        <View style={styles.boxTitle2}>
-          <Text style={styles.textTitle2}>Abrir enlace</Text>
-        </View>
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -49,22 +61,9 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
   },
-  box: {
-    flex: 1,
-  },
-  //header
-  box1: {
-    flex: 6,
-  },
-  //content
-  box2: {
-    flex: 6,
-  },
-  boxImage: {
-    overflow: "hidden",
-    resizeMode: "cover",
-    width: "100%",
-    height: 270,
+  container: {
+    marginTop: 24,
+    marginHorizontal: 16,
   },
   textTitle: {
     fontSize: 18,
@@ -73,23 +72,31 @@ const styles = StyleSheet.create({
     lineHeight: 23,
     letterSpacing: 0.0015,
   },
-  boxTitle: {
-    marginTop: 24,
-    marginHorizontal: 16,
+  textContent: {
+    fontSize: 14,
+    fontWeight: "normal",
+    color: "#003031",
+    lineHeight: 16,
+    letterSpacing: 0.0025,
   },
-  boxTitle2: {
-    marginTop: 30,
-    marginStart: 12,
+  boxOpenLink: {
+    justifyContent: "flex-start",
+    paddingVertical: 35,
+    flexDirection: "row",
+    alignItems: "center",
   },
-  textTitle2: {
+  textOpenLink: {
     fontSize: 15,
     fontWeight: "bold",
     color: "#00AAAD",
     lineHeight: 18,
     letterSpacing: 0.00125,
+    marginRight: 10,
+    paddingTop: 5,
   },
   containerDate: {
     marginTop: 10,
+    marginBottom: 20,
     flexDirection: "row",
   },
   titleDate: {
@@ -115,4 +122,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DirectoryItem;
+export default LinkItem;

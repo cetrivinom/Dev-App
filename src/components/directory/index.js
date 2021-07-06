@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { View, StyleSheet, TextInput, FlatList } from "react-native";
 import Header from "../global/_children/Header";
-import { ItemDirectory } from "../global/_children/Card";
-import DirectoryContext from "../../../context/directory/directoryContext";
+import CardItemDirectory from "./_children/CardItemDirectory";
+import IOMContext from "../../../context/iomData/iomContext";
 /**
  * Componente que construye el Directorio, hace el llamado al action que devuelve la informacion del API
  * @param {Object} this.props - objeto de propiedades heredados de la clase padre.
@@ -10,13 +10,11 @@ import DirectoryContext from "../../../context/directory/directoryContext";
  */
 const Directory = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data, dataFilter, getDataDirectory } = useContext(DirectoryContext);
+  const { dataDirectory, getDataDirectory } = useContext(IOMContext);
 
   useEffect(() => {
     getDataDirectory();
   }, []);
-
-  console.log("data", data);
 
   return (
     <View style={styles.wrapper}>
@@ -32,13 +30,15 @@ const Directory = (props) => {
               placeholder="Buscar departamento"
             />
           </View>
-          <FlatList
-            data={data}
-            renderItem={(item) => (
-              <ItemDirectory {...props} title={item.item.departamento} />
-            )}
-            keyExtractor={(item) => item.departamento_id}
-          />
+          {dataDirectory != null && (
+            <FlatList
+              data={dataDirectory}
+              renderItem={(item) => (
+                <CardItemDirectory {...props} title={item.item.departamento} />
+              )}
+              keyExtractor={(item) => item.departamento_id}
+            />
+          )}
         </View>
       </View>
     </View>

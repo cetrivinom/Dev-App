@@ -8,32 +8,31 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { DatePicker } from "react-native-wheel-datepicker";
-import Styles from "./styles";
-
 import moment from "moment";
 import AuthContext from "../../../../context/auth/authContext";
+import Styles from "./styles";
 /**
  * Componente Footer del registro, se llama la accion de signUp al terminar el registro
  * @param {Object} this.props - objeto de propiedades heredados de la clase padre.
  * @return {Object} <View /> Footer del registro.
  */
 export const Footer = (props) => {
-  const { auth,user, message, signUp,updateUser } = useContext(AuthContext);
+  const { auth, user, message, signUp, updateUser } = useContext(AuthContext);
   const { setForm, formValue, title, data } = props;
   console.log("data::Footer", data);
   const onPressNext = () => {
     if (formValue !== 4) {
       setForm(formValue);
     } else {
-      signUp(data)
-      .then((user) => {
-        if(user){
+      signUp(data).then((user) => {
+        if (user) {
           updateUser(user);
           props.navigation.navigate("Home");
         }
       });
-      if (auth) {//nunca se llama, el useEffect predomina
-        console.log('hi');
+      if (auth) {
+        //nunca se llama, el useEffect predomina
+        console.log("hi");
         props.navigation.navigate("Home");
       }
     }
@@ -185,7 +184,7 @@ export const RegistreForm3 = ({ setForm, setData, data }) => {
             maximumDate={moment().add(-16, "years").toDate()}
             minimumDate={moment().add(-120, "years").toDate()}
             onDateChange={(date) => {
-              console.log('date.',date,moment(date).format("YYYY-MM-DD"))
+              console.log("date.", date, moment(date).format("YYYY-MM-DD"));
               setData({ ...data, birdDate: moment(date).format("YYYY-MM-DD") });
             }}
             style={{ backgroundColor: "white" }}

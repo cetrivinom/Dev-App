@@ -15,7 +15,7 @@ const Registre = (props) => {
     email: "",
     password: "",
     gender: "",
-    birdDate: "",
+    birdDate: "", 
     oldMen: "",
   });
 

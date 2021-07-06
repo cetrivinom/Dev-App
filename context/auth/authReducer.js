@@ -1,4 +1,12 @@
-import { LOG_IN, LOG_IN_ERROR, SIGN_UP,SIGN_UP_ERROR,SIGN_OUT,SIGN_OUT_ERROR,UPDATED_USER } from "../../types";
+import {
+  LOG_IN,
+  LOG_IN_ERROR,
+  SIGN_UP,
+  SIGN_UP_ERROR,
+  SIGN_OUT,
+  SIGN_OUT_ERROR,
+  UPDATED_USER,
+} from "../../types";
 /**
  * reducer para la autenticacion, recibe el estado inicial y la accion
  * @param {Object} state estado inicial

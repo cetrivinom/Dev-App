@@ -8,13 +8,15 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Header from "../global/_children/Header";
-import { ItemLink } from "../global/_children/Card";
+import CardItemLink from "./_children/CardItemLink";
 import FilterLink from "./_children/FilterLink";
-import LinkContext from "../../../context/links/linkContext";
+import IOMContext from "../../../context/iomData/iomContext";
 
 const Links = (props) => {
   const [showFilterOption, setShowFilterOption] = useState(false);
-  const { data, getDataLink } = useContext(LinkContext);
+  const { dataLink, getDataLink } = useContext(IOMContext);
+
+  console.log("dataLink", dataLink);
 
   const onPressClose = () => {
     setShowFilterOption((prev) => !prev);
@@ -30,22 +32,24 @@ const Links = (props) => {
         <Header {...props} showBack={false} title="Enlaces de interés" />
         <FilterLink setShowFilterOption={setShowFilterOption} />
       </View>
-      <View style={[styles.box, styles.box2]}>
-        <FlatList
-          data={data}
-          renderItem={(item) => (
-            <ItemLink
-              {...props}
-              title={item.item.Titulo} 
-              resume={item.item.Resumen}
-              content={item.item.Contenido}
-              image={item.item.Imagen}
-              date={item.item.Fecha}
-            />
-          )}
-          keyExtractor={(item) => item.Titulo}
-        />
-      </View>
+      {dataLink !== null && (
+        <View style={[styles.box, styles.box2]}>
+          <FlatList
+            data={dataLink}
+            renderItem={(item) => (
+              <CardItemLink
+                {...props}
+                title={item.item.Titulo}
+                resume={item.item.Resumen}
+                content={item.item.Contenido}
+                image={item.item.Imagen}
+                date={item.item.Fecha}
+              />
+            )}
+            keyExtractor={(item) => item.Titulo}
+          />
+        </View>
+      )}
       {showFilterOption && (
         <View style={styles.box3}>
           <View style={styles.boxImage}>

@@ -28,8 +28,8 @@ const LoginForm = (props) => {
     }
   }, [auth]);
 
-  console.log("user", user);
-  console.log("auth", auth);
+  console.log("user", userData);
+  console.log("message", message);
 
   const { email, password } = user;
 

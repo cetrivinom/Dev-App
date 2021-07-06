@@ -51,7 +51,7 @@ export default StyleSheet.create({
   },
   iconLeft: {
     position: "absolute",
-    right: metrics.WIDTH*0.55,
+    right: metrics.WIDTH * 0.55,
   },
   labelTitle: {
     fontSize: 22,
@@ -63,7 +63,7 @@ export default StyleSheet.create({
   },
   labelSaveButton: {
     fontSize: 22,
-    textAlign: 'center',
+    textAlign: "center",
     fontWeight: "bold",
     lineHeight: 28,
     letterSpacing: 0.0015,
@@ -88,11 +88,9 @@ export default StyleSheet.create({
     position: "absolute",
     right: metrics.WIDTH * 0.8,
   },
-  saveButton: {
-  },
+  saveButton: {},
   containerSaveButton: {
-    flexDirection: 'column',
+    flexDirection: "column",
     flex: 1,
-  }
-
+  },
 });

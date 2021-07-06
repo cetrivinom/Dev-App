@@ -8,19 +8,19 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import { ItemDirectoryDetail } from "../../global/_children/Card";
-import DirectoryContext from "../../../../context/directory/directoryContext";
+import CardItemDirectoryDetail from "./CardItemDirectoryDetail";
+import IOMContext from "../../../../context/iomData/iomContext";
 /**
  * Componente que construye los Items del Directorio, itera sobre el objeto del JSON
  * @param {Object} this.props - objeto de propiedades heredados de la clase padre.
  * @return {Object} <View /> Item del Directorio
  */
 const DirectoryItem = (props) => {
-  const { dataItem, getDataDirectoryItem } = useContext(DirectoryContext);
+  const { dataItem, getDataByDepartId } = useContext(IOMContext);
   const { otherParam = "" } = props.navigation.state.params || {};
 
   useEffect(() => {
-    getDataDirectoryItem(otherParam);
+    getDataByDepartId(otherParam);
   }, [otherParam]);
 
   const onPressClose = () => {
@@ -50,7 +50,7 @@ const DirectoryItem = (props) => {
           <FlatList
             data={dataItem.LineasTelefonicas}
             renderItem={(item) => (
-              <ItemDirectoryDetail
+              <CardItemDirectoryDetail
                 {...props}
                 title={item.item.tipo_de_linea}
                 subTitle1={item.item.NombreOrganizacion}
