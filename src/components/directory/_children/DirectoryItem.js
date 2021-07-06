@@ -10,7 +10,11 @@ import {
 } from "react-native";
 import { ItemDirectoryDetail } from "../../global/_children/Card";
 import DirectoryContext from "../../../../context/directory/directoryContext";
-
+/**
+ * Componente que construye los Items del Directorio, itera sobre el objeto del JSON
+ * @param {Object} this.props - objeto de propiedades heredados de la clase padre.
+ * @return {Object} <View /> Item del Directorio
+ */
 const DirectoryItem = (props) => {
   const { dataItem, getDataDirectoryItem } = useContext(DirectoryContext);
   const { otherParam = "" } = props.navigation.state.params || {};

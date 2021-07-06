@@ -1,5 +1,14 @@
 import { LOG_IN, LOG_IN_ERROR, SIGN_UP,SIGN_UP_ERROR,SIGN_OUT,SIGN_OUT_ERROR,UPDATED_USER } from "../../types";
-
+/**
+ * reducer para la autenticacion, recibe el estado inicial y la accion
+ * @param {Object} state estado inicial
+ * @param {Object} state.auth - objeto que contiene informacion de autenticacion, uid (numero unico de sesion)
+ * @param {Object} state.message - mensaje de error en la autenticacion
+ * @param {Object} state.user - objeto que contiene informacion del usuario, email, sexo, etc
+ * @param {Object} action objeto plano (POJO — Plan Old JavaScript Object) que representa una intención de modificar el estado
+ * @param {String} action.type tipo de accion
+ * @param {Object} action.payload payload con los datos del state
+ */
 export default (state, action) => {
   switch (action.type) {
     case LOG_IN:

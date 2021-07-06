@@ -1,6 +1,8 @@
 import { StyleSheet } from "react-native";
 import { metrics } from "../../../utilities/Metrics";
-
+/**
+ * Hoja de estilos aplicadas a RegisterForm
+ */
 export default StyleSheet.create({
   container: {
     flex: 1,

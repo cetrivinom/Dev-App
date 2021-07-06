@@ -5,7 +5,10 @@ import AuthContext from "./authContext";
 import database from '@react-native-firebase/database'
 import auth from '@react-native-firebase/auth'
 import analytics from '@react-native-firebase/analytics'
-//import { firebase } from "../../config/firebase";
+
+/**
+ * Maneja las operacion de signIn, signOut, signUp, registro y consulta de usuarios contra firebase authentication y firebase real-time
+ */
 
 const AuthState = (props) => {
   const initialState = {
@@ -15,7 +18,13 @@ const AuthState = (props) => {
   };
 
   const [state, dispatch] = useReducer(AuthReducer, initialState);
-
+/**
+ * metodo que hace la autenticacion contra firebase
+ * @param {Object} data datos del login de usuario
+ * @param {String} data.email - email del usuario
+ * @param {String} data.password - password del usuario
+ * @return {Promise} devuelve una promesa al terminar la operacion, se utiliza para controlar un llamado sincrono
+ */
   const signIn = async (data) => {
     return new Promise((resolve, reject) => {
       auth()
@@ -39,7 +48,13 @@ const AuthState = (props) => {
         });
     });
   };
-
+/**
+ * metodo que hace el registro contra firebase
+ * @param {Object} data datos del login de usuario
+ * @param {String} data.email - email del usuario
+ * @param {String} data.password - password del usuario
+ * @return {Promise} devuelve una promesa al terminar la operacion, se utiliza para controlar un llamado sincrono
+ */
   const signUp = (data) => {
     return new Promise((resolve, reject) => {
       auth()
@@ -61,7 +76,14 @@ const AuthState = (props) => {
         });
     });
   };
-
+/**
+ * metodo que actualiza la informacion del usuario contra la base de datos realtime.firebase
+ * @param {Object} data datos del usuario
+ * @param {String} data.email - email del usuario
+ * @param {String} data.birdDate - fecha de nacimiento del usuario
+ * @param {String} data.gender - genero del usuario
+ * @param {String} data.oldMen - si es un menor indica si esta acompañado por un adulto
+ */
   const updateUser = (data) => {
     database()
       .ref('/users/' + data.uid)
@@ -76,8 +98,10 @@ const AuthState = (props) => {
         alert(error);
       });
   };
-
-
+/**
+ * metodo que consulta la informacion del usuario contra la base de datos realtime.firebase
+ * @param {String} uid - identificador unico del usuario
+ */
   const getUser = (uid) => {
     database()
       .ref('/users/' + uid)
@@ -92,7 +116,9 @@ const AuthState = (props) => {
         alert(error);
       });
   };
-
+/**
+ * metodo que hace signOut contra firebase
+ */
   const signOut = () => {
     auth()
       .signOut()

@@ -3,7 +3,11 @@ import { View, StyleSheet, TextInput, FlatList } from "react-native";
 import Header from "../global/_children/Header";
 import { ItemDirectory } from "../global/_children/Card";
 import DirectoryContext from "../../../context/directory/directoryContext";
-
+/**
+ * Componente que construye el Directorio, hace el llamado al action que devuelve la informacion del API
+ * @param {Object} this.props - objeto de propiedades heredados de la clase padre.
+ * @return {Object} <View /> Directorio de lineas telefonicas
+ */
 const Directory = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
   const { data, dataFilter, getDataDirectory } = useContext(DirectoryContext);
@@ -40,7 +44,9 @@ const Directory = (props) => {
     </View>
   );
 };
-
+/**
+ * Hoja de estilos aplicadas a Directory
+ */
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,

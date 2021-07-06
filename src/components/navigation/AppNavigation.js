@@ -12,7 +12,9 @@ import PointItem from "../settings/_children/PointItem";
 import PointNavigationApp from "../settings/_children/PointNavigationApp";
 import PointItemComents from "../settings/_children/PointItemComents";
 import FilterSetting from "../settings/_children/FilterSetting";
-
+/**
+ * Stack de navegacion, esta librería de React Navigation permite configurar la navegación del app
+ */
 const AppNavigation = createStackNavigator({
   Splash: {
     screen: Splash,
