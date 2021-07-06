@@ -4,6 +4,7 @@ import Splash from "../splash";
 import Login from "../login";
 import Registre from "../registre";
 import Profile from "../profile";
+import UpdateProfile from "../profile/_children/UpdateProfileForm";
 import Home from "../global/Home";
 import DirectoryItem from "../directory/_children/DirectoryItem";
 import LinkItem from "../links/_children/LinkItem";
@@ -33,6 +34,12 @@ const AppNavigation = createStackNavigator({
   },
   Profile: {
     screen: Profile,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  UpdateProfile: {
+    screen: UpdateProfile,
     navigationOptions: {
       headerShown: false,
     },

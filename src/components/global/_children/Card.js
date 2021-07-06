@@ -133,9 +133,12 @@ export const ItemDirectory = (props) => {
 };
 
 export const ItemProfile = (props) => {
-  const { title = "", subTitle = "", showImge = false } = props || {};
+  const { title = "", subTitle = "", showImge = false, field = "" } = props || {};
+  const onPressOpen = () => {
+    props.navigation.navigate("UpdateProfile", { field });
+  };
   return (
-    <View style={styles.containerBody}>
+    <TouchableOpacity style={styles.containerBody} onPress={onPressOpen}>
       <View style={styles.containerBody2}>
         <Text style={styles.labelTitle}>{title}</Text>
         {showImge && (
@@ -143,7 +146,7 @@ export const ItemProfile = (props) => {
         )}
       </View>
       <Text style={styles.labelSubTitle}>{subTitle}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

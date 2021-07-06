@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { ItemProfile } from "../global/_children/Card";
 import AuthContext from "../../../context/auth/authContext";
+import { metrics } from "../../utilities/Metrics";
 
 const Profile = (props) => {
   const { navigation } = props;
@@ -31,12 +32,15 @@ const Profile = (props) => {
         <View style={styles.container}>
           <ItemProfile title="Correo electrónico" subTitle={user?user.email:''} />
           <ItemProfile
+            {...props}
             title="Fecha de nacimiento"
+            field='birthdate'
             subTitle={user?user.birdDate:''}
             showImge
           />
-          <ItemProfile title="Género" subTitle={user?user.gender=='H'?'Hombre':user.gender=='M'?'Mujer':'Otro':''} showImge />
+          <ItemProfile {...props} title="Género" field='genero' subTitle={user?user.gender=='H'?'Hombre':user.gender=='M'?'Mujer':'Otro':''} showImge />
           <ItemProfile
+            {...props} 
             title="Contraseña"
             subTitle="****************"
             showImge
@@ -102,7 +106,7 @@ const styles = StyleSheet.create({
   },
   iconLeft: {
     position: "absolute",
-    right: 185,
+    right: metrics.WIDTH*0.45,
   },
 });
 

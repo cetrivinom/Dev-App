@@ -24,7 +24,7 @@ const PointNavigationApp = (props) => {
         iconSize={100}
         viewMode={'view'}
                     address={Direccion} // address to navigate by for all apps 
-                    waze={{address:Direccion,lat:latitude,lon:longitude,action: actions.navigateByAddress}} // specific settings for waze
+                    waze={{address:Direccion,lat:latitude,lon:longitude,action: actions.navigateByLatAndLon}} // specific settings for waze
                     googleMaps={{address:Direccion,lat:latitude,lon:longitude,action: actions.navigateByLatAndLon,travelMode:googleMapsTravelModes.driving}} // specific settings for google maps
                     maps={{address:Direccion,lat:latitude,lon:longitude,action: actions.navigateByLatAndLon,travelMode:mapsTravelModes.driving}} // specific settings for maps
                 />
