@@ -7,6 +7,7 @@ import {
   SIGN_OUT,
   SIGN_OUT_ERROR,
   UPDATED_USER,
+  UPDATED_USER_INPUT_CHANGE,
 } from "../../types";
 import AuthReducer from "./authReducer";
 import AuthContext from "./authContext";
@@ -113,6 +114,17 @@ const AuthState = (props) => {
       });
   };
   /**
+   * metodo que actualiza un campo del usuario
+   * @param {String} field - identificador del campo
+   * @param {String} value - valor del campo
+   */
+  const updateUserInputChange = ({ field, value }) => {
+    dispatch({
+      type: UPDATED_USER_INPUT_CHANGE, 
+      payload: { field, value } 
+    });
+  }
+  /**
    * metodo que consulta la informacion del usuario contra la base de datos realtime.firebase
    * @param {String} uid - identificador unico del usuario
    */
@@ -121,6 +133,7 @@ const AuthState = (props) => {
       .ref("/users/" + uid)
       .once("value", (snapshot) => {
         if (snapshot.hasChildren())
+        console.log('snapshot',snapshot.val())
           dispatch({
             type: UPDATED_USER,
             payload: snapshot.val(),
@@ -162,6 +175,7 @@ const AuthState = (props) => {
         signOut,
         updateUser,
         getUser,
+        updateUserInputChange,
       }}
     >
       {props.children}

@@ -16,7 +16,7 @@ const LoginForm = (props) => {
     email: "",
     password: "",
   });
-  const { auth, message, signIn, user: userData } = useContext(AuthContext);
+  const { auth, message, signIn, getUser, user: userData } = useContext(AuthContext);
 
   const onPressRegistre = () => {
     props.navigation.navigate("Registre");
@@ -36,7 +36,11 @@ const LoginForm = (props) => {
   const onPressLogin = () => {
     if (!validateEmail(email)) {
     } else {
-      signIn(user);
+      signIn(user).then((uid) => {
+        if (uid) {
+          getUser(uid);
+        }
+      });
     }
   };
 

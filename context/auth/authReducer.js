@@ -6,7 +6,9 @@ import {
   SIGN_OUT,
   SIGN_OUT_ERROR,
   UPDATED_USER,
+  UPDATED_USER_INPUT_CHANGE,
 } from "../../types";
+import moment from "moment";
 /**
  * reducer para la autenticacion, recibe el estado inicial y la accion
  * @param {Object} state estado inicial
@@ -51,7 +53,17 @@ export default (state, action) => {
       return {
         ...state,
         auth: true,
-        user: action.payload,
+        user: { ...state.user,
+                birdDate:action.payload?action.payload.birdDate:'',
+                gender:action.payload?action.payload.gender:'O',
+                oldMen:action.payload?action.payload.oldMen:'',
+              },
+      };
+    case UPDATED_USER_INPUT_CHANGE:
+      return {
+        ...state,
+        auth: true,
+        user: {...state.user,[action.payload.field]:action.payload.value},
       };
     case SIGN_OUT:
       return {

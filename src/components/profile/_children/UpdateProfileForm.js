@@ -3,18 +3,19 @@ import {
   View,
   Text,
   Image,
-  TextInput,
   TouchableHighlight,
   TouchableOpacity,
 } from "react-native";
 import { DatePicker } from "react-native-wheel-datepicker";
-import Styles from "./Styles";
+import Styles from "./styles";
 import moment from "moment";
 import AuthContext from "../../../../context/auth/authContext";
 
 export const Footer = (props) => {
+  const {user,  updateUser } = useContext(AuthContext);
   const onPressSave = () => {
-    console.log("hi");
+    updateUser(user);
+    props.navigation.navigate("Profile");
   };
 
   return (
@@ -27,20 +28,14 @@ export const Footer = (props) => {
 };
 
 export const UpdateGender = (props) => {
-  const {
-    title = "Consultorio Jurídico UDEA - ACNUR...",
-    title2 = "",
-    title3 = "",
-    point = 1,
-  } = props || {};
+  const {user,updateUserInputChange } = useContext(AuthContext);
 
   return (
     <View style={[Styles.box, Styles.box2]}>
       <View style={Styles.container}>
         <Text style={Styles.labelTitle}>Selecciona tu género</Text>
-
         <View style={Styles.containerForm1}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => updateUserInputChange({ 'field': 'gender', 'value': 'M'})}>
             <View style={Styles.containerForm}>
               <Image
                 source={require("../../../resources/images/riWomenFill.png")}
@@ -48,15 +43,18 @@ export const UpdateGender = (props) => {
               />
               <Text style={Styles.labelItem}>Mujer</Text>
               <Image
-                source={require("../../../resources/images/checkboxCircle.png")}
+                source={
+                  user.gender === "M"
+                    ? require("../../../resources/images/checkboxCircle.png")
+                    : require("../../../resources/images/unCheckboxCircle.png")
+                }
                 style={Styles.righLine2}
               />
             </View>
           </TouchableOpacity>
         </View>
-
         <View style={Styles.containerForm1}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => updateUserInputChange({ 'field': 'gender', 'value': 'H'})}>
             <View style={Styles.containerForm}>
               <Image
                 source={require("../../../resources/images/riMenFill.png")}
@@ -64,14 +62,18 @@ export const UpdateGender = (props) => {
               />
               <Text style={Styles.labelItem}>Hombre</Text>
               <Image
-                source={require("../../../resources/images/checkboxCircle.png")}
+                source={
+                  user.gender === "H"
+                    ? require("../../../resources/images/checkboxCircle.png")
+                    : require("../../../resources/images/unCheckboxCircle.png")
+                }
                 style={Styles.righLine2}
               />
             </View>
           </TouchableOpacity>
         </View>
         <View style={Styles.containerForm1}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => updateUserInputChange({ 'field': 'gender', 'value': 'O'})}>
             <View style={Styles.containerForm}>
               <Image
                 source={require("../../../resources/images/riGenderlessFill.png")}
@@ -79,7 +81,11 @@ export const UpdateGender = (props) => {
               />
               <Text style={Styles.labelItem}>Otro</Text>
               <Image
-                source={require("../../../resources/images/checkboxCircle.png")}
+                source={
+                  user.gender === "O" || user.gender === undefined
+                    ? require("../../../resources/images/checkboxCircle.png")
+                    : require("../../../resources/images/unCheckboxCircle.png")
+                }
                 style={Styles.righLine2}
               />
             </View>
@@ -91,8 +97,7 @@ export const UpdateGender = (props) => {
 };
 
 export const UpdateBirthDate = (props) => {
-  const { point = 1 } = props || {};
-
+  const {user,updateUserInputChange } = useContext(AuthContext);
   return (
     <View style={[Styles.box, Styles.box2]}>
       <View style={Styles.container}>
@@ -100,12 +105,11 @@ export const UpdateBirthDate = (props) => {
         <View style={{ flex: 0.9, justifyContent: "center" }}>
           <DatePicker
             mode="date"
-            date={moment().add(-30, "years").toDate()}
+            date={new Date(moment(user.birdDate!==''?user.birdDate:moment().add(-18, "years").toDate()))}
             maximumDate={moment().add(-16, "years").toDate()}
             minimumDate={moment().add(-120, "years").toDate()}
             onDateChange={(date) => {
-              console.log("date.", date, moment(date).format("YYYY-MM-DD"));
-              //setData({ ...data, birdDate: moment(date).format("YYYY-MM-DD") });
+              updateUserInputChange({ 'field': 'birdDate', 'value': moment(date).format("YYYY-MM-DD")});
             }}
             style={{ backgroundColor: "white" }}
           />
@@ -116,18 +120,14 @@ export const UpdateBirthDate = (props) => {
 };
 const ShowComponentToUpdate = (props) => {
   const { field = "" } = props.navigation.state.params || {};
-  console.log("field1", field);
-
   if (field == "genero") {
-    return <UpdateGender></UpdateGender>;
+    return <UpdateGender {...props}></UpdateGender>;
   } else if (field == "birthdate") {
-    return <UpdateBirthDate></UpdateBirthDate>;
+    return <UpdateBirthDate {...props}></UpdateBirthDate>;
   } else return null;
 };
 
 const UpdateProfileForm = (props) => {
-  const { field = "" } = props.navigation.state.params || {};
-  console.log("field", field);
   const onPressBack = () => {
     props.navigation.navigate("Profile");
   };
@@ -144,7 +144,7 @@ const UpdateProfileForm = (props) => {
         </View>
       </View>
       <ShowComponentToUpdate {...props}></ShowComponentToUpdate>
-      <Footer />
+      <Footer {...props} />
     </View>
   );
 };
