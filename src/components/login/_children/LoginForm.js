@@ -73,7 +73,7 @@ const LoginForm = (props) => {
           </TouchableOpacity>
         </View>
         <View>
-          <Text style={Styles.labelIngresa}>O ingresa con:</Text>
+          {/* <Text style={Styles.labelIngresa}>O ingresa con:</Text>
           <View style={Styles.containerSocial}>
             <View>
               <TouchableOpacity style={Styles.btnSocialAccountGoogle}>
@@ -91,7 +91,7 @@ const LoginForm = (props) => {
                 <Text style={Styles.labelSocial}>Facebook</Text>
               </TouchableOpacity>
             </View>
-          </View>
+          </View> */}
         </View>
       </View>
     </View>
