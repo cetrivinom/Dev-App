@@ -36,6 +36,22 @@ export default StyleSheet.create({
     borderWidth: 1,
     marginBottom: 30,
   },
+  inputTextBoxError: {
+    height: 56,
+    borderColor: "#DD3338",
+    borderRadius: 3.5,
+    paddingLeft: 15,
+    borderWidth: 1,
+  },
+  labelError: {
+    color: "#DD3338",
+    fontSize: 12,
+    lineHeight: 14,
+    letterSpacing: 0.004,
+    marginTop: 5,
+    marginBottom: 20,
+    paddingLeft: 15,
+  },
   btnNext: {
     backgroundColor: "#132A3E",
     height: 42,

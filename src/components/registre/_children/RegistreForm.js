@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
 import { DatePicker } from "react-native-wheel-datepicker";
 import moment from "moment";
 import AuthContext from "../../../../context/auth/authContext";
+import { validateEmail } from "../../../utilities/helpers";
 import Styles from "./styles";
 /**
  * Componente Footer del registro, se llama la accion de signUp al terminar el registro
@@ -18,10 +19,9 @@ import Styles from "./styles";
  */
 export const Footer = (props) => {
   const { auth, user, message, signUp, updateUser } = useContext(AuthContext);
-  const { setForm, formValue, title, data } = props;
-  console.log("data::Footer", data);
+  const { setForm, formValue, title, data, setError, error } = props;
   const onPressNext = () => {
-    if (formValue !== 4) {
+    if (formValue !== 4 && !error) {
       setForm(formValue);
     } else {
       signUp(data).then((user) => {
@@ -65,27 +65,102 @@ export const Footer = (props) => {
  * @return {Object} <View /> Formulario que captura la informacion.
  */
 export const RegistreForm1 = ({ setForm, setData, data }) => {
+  const [errorEmail, setErrorEmail] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+  const [errorRePassword, setErrorRePassword] = useState("");
+  const { email, password, rePassword } = data;
+
+  const onPressNext = () => {
+    var ok = true;
+    if (ok && password !== rePassword) {
+      setErrorRePassword("Su contraseña no coinciden");
+      ok = false;
+    }
+    if (!validateEmail(email)) {
+      setErrorEmail("Correo electrónico invalido");
+      ok = false;
+    }
+    if (password === "") {
+      setErrorPassword("Contraseña invalida");
+      ok = false;
+    }
+    if (rePassword === "") {
+      setErrorRePassword("Contraseña invalida");
+      ok = false;
+    }
+    if (ok) {
+      setForm(1);
+    }
+  };
+
   return (
     <View style={Styles.container}>
       <View style={[Styles.box, Styles.box1]}>
         <Text style={Styles.labelTitle}>Ingresa los datos de tu cuenta</Text>
         <TextInput
-          style={Styles.inputTextBox}
+          style={
+            errorEmail !== "" ? Styles.inputTextBoxError : Styles.inputTextBox
+          }
           placeholder="Correo electrónico"
-          onChangeText={(e) => setData({ ...data, email: e })}
+          onChangeText={(e) => {
+            setData({ ...data, email: e });
+            setErrorEmail("");
+            setErrorPassword("");
+            setErrorRePassword("");
+          }}
         />
+        {errorEmail !== "" && (
+          <Text style={Styles.labelError}>{errorEmail}</Text>
+        )}
         <TextInput
-          style={Styles.inputTextBox}
+          style={
+            errorPassword !== ""
+              ? Styles.inputTextBoxError
+              : Styles.inputTextBox
+          }
           placeholder="Contraseña"
-          onChangeText={(e) => setData({ ...data, password: e })}
+          onChangeText={(e) => {
+            setData({ ...data, password: e });
+            setErrorEmail("");
+            setErrorPassword("");
+            setErrorRePassword("");
+          }}
         />
+        {errorPassword !== "" && (
+          <Text style={Styles.labelError}>{errorPassword}</Text>
+        )}
         <TextInput
-          style={Styles.inputTextBox}
+          style={
+            errorRePassword !== ""
+              ? Styles.inputTextBoxError
+              : Styles.inputTextBox
+          }
           placeholder="Repetir contraseña"
-          onChangeText={(e) => setData({ ...data, rePassword: e })}
+          onChangeText={(e) => {
+            setData({ ...data, rePassword: e });
+            setErrorEmail("");
+            setErrorPassword("");
+            setErrorRePassword("");
+          }}
         />
+        {errorRePassword !== "" && (
+          <Text style={Styles.labelError}>{errorRePassword}</Text>
+        )}
       </View>
-      <Footer formValue={1} title="Siguiente" setForm={setForm} />
+      <View style={[Styles.box, Styles.box2]}>
+        <TouchableHighlight style={Styles.btnNext} onPress={onPressNext}>
+          <View>
+            <Text style={Styles.labelNext}>Siguiente</Text>
+            <Image
+              source={require("../../../resources/images/arrowRightLine.png")}
+              style={Styles.righLine}
+            />
+          </View>
+        </TouchableHighlight>
+        <View style={Styles.breadcums}>
+          <Image source={require("../../../resources/images/Breadcums1.png")} />
+        </View>
+      </View>
     </View>
   );
 };

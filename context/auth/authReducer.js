@@ -53,17 +53,18 @@ export default (state, action) => {
       return {
         ...state,
         auth: true,
-        user: { ...state.user,
-                birdDate:action.payload?action.payload.birdDate:'',
-                gender:action.payload?action.payload.gender:'O',
-                oldMen:action.payload?action.payload.oldMen:'',
-              },
+        user: {
+          ...state.user,
+          birdDate: action.payload ? action.payload.birdDate : "",
+          gender: action.payload ? action.payload.gender : "O",
+          oldMen: action.payload ? action.payload.oldMen : "",
+        },
       };
     case UPDATED_USER_INPUT_CHANGE:
       return {
         ...state,
         auth: true,
-        user: {...state.user,[action.payload.field]:action.payload.value},
+        user: { ...state.user, [action.payload.field]: action.payload.value },
       };
     case SIGN_OUT:
       return {

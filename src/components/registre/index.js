@@ -14,8 +14,9 @@ const Registre = (props) => {
   const [data, setData] = useState({
     email: "",
     password: "",
+    rePassword: "",
     gender: "",
-    birdDate: "", 
+    birdDate: "",
     oldMen: "",
   });
 

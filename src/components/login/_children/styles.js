@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { white } from "react-native-paper/lib/typescript/styles/colors";
 
 export default StyleSheet.create({
   container: {
@@ -7,6 +8,9 @@ export default StyleSheet.create({
     backgroundColor: "#FFFFFF",
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
+  },
+  s: {
+    marginTop: 40
   },
   labelInicio: {
     fontSize: 22,
@@ -74,6 +78,22 @@ export default StyleSheet.create({
     paddingLeft: 15,
     borderWidth: 1,
     marginBottom: 29,
+  },
+  inputTextBoxError: {
+    height: 56,
+    borderColor: "#DD3338",
+    borderRadius: 3.5,
+    paddingLeft: 15,
+    borderWidth: 1,
+  },
+  labelError: {
+    color: "#DD3338",
+    fontSize: 12,
+    lineHeight: 14,
+    letterSpacing: 0.004,
+    marginTop: 5,
+    marginBottom: 20,
+    paddingLeft: 15,
   },
   btnIniciar: {
     backgroundColor: "#132A3E",
