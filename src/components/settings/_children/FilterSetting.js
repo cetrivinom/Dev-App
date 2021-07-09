@@ -1,78 +1,60 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from "react";
+import HeaderItem from "../../global/_children/HeaderItem";
 import { StyleSheet, Text, Image, View, TouchableOpacity } from "react-native";
 
 const FilterSetting = (props) => {
-  const onPressClose = () => {
-    props.navigation.goBack();
-  };
+
   return (
     <View style={styles.wrapper}>
-      <View style={[styles.box, styles.box1]}>
-        <View style={styles.boxImage}>
-          <Image source={require("../../../resources/images/linkIcon.png")} />
-        </View>
-        <View style={styles.box4}>
-          <TouchableOpacity onPress={onPressClose}>
-            <Image
-              source={require("../../../resources/images/riCloseLine.png")}
-            />
-          </TouchableOpacity>
-          <Text style={styles.textTitle}>Filtrar puntos de servicio</Text>
+      <HeaderItem {...props} title="Filtrar puntos de servicio" />
+      <View style={[styles.box, styles.box2]}>
+        <View style={styles.box6}>
+          <Text style={styles.textBox}>Departamento</Text>
           <Image
-            source={require("../../../resources/images/riBookmarkLine.png")}
+            source={require("../../../resources/images/trailingIcon.png")}
           />
         </View>
-      </View>
-      <View style={[styles.box, styles.box2]}>
-        <View style={styles.box5}>
-          <View style={styles.box6}>
-            <Text style={styles.textBox}>Departamento</Text>
-            <Image
-              source={require("../../../resources/images/trailingIcon.png")}
-            />
+        <View style={styles.box6}>
+          <Text style={styles.textBox}>Municipio</Text>
+          <Image
+            source={require("../../../resources/images/trailingIcon.png")}
+          />
+        </View>
+        <View style={styles.box6}>
+          <Text style={styles.textBox}>Estado de punto</Text>
+          <Image
+            source={require("../../../resources/images/trailingIcon.png")}
+          />
+        </View>
+        <View style={styles.divider}></View>
+        <Text style={styles.textTitle2}>Tipo de servicio</Text>
+        <View style={styles.containerForm2}>
+          <Text style={styles.textTitle2}>Hospitales</Text>
+          <Image
+            source={require("../../../resources/images/unCheckboxCircle.png")}
+          />
+        </View>
+        <View style={styles.containerForm2}>
+          <Text style={styles.textTitle2}>Centro de atención</Text>
+          <Image
+            source={require("../../../resources/images/unCheckboxCircle.png")}
+          />
+        </View>
+        <View style={styles.containerForm2}>
+          <Text style={styles.textTitle2}>Hospedaje</Text>
+          <Image
+            source={require("../../../resources/images/unCheckboxCircle.png")}
+          />
+        </View>
+        <View style={styles.box7}>
+          <View style={[styles.caja1]}>
+            <Text style={styles.textBoxCaja}>Borrar</Text>
           </View>
-          <View style={styles.box6}>
-            <Text style={styles.textBox}>Municipio</Text>
-            <Image
-              source={require("../../../resources/images/trailingIcon.png")}
-            />
-          </View>
-          <View style={styles.box6}>
-            <Text style={styles.textBox}>Estado de punto</Text>
-            <Image
-              source={require("../../../resources/images/trailingIcon.png")}
-            />
-          </View>
-          <View style={styles.divider}></View>
-          <Text style={styles.textTitle2}>Tipo de servicio</Text>
-          <View style={styles.containerForm2}>
-            <Text style={styles.textTitle2}>Hospitales</Text>
-            <Image
-              source={require("../../../resources/images/unCheckboxCircle.png")}
-            />
-          </View>
-          <View style={styles.containerForm2}>
-            <Text style={styles.textTitle2}>Centro de atención</Text>
-            <Image
-              source={require("../../../resources/images/unCheckboxCircle.png")}
-            />
-          </View>
-          <View style={styles.containerForm2}>
-            <Text style={styles.textTitle2}>Hospedaje</Text>
-            <Image
-              source={require("../../../resources/images/unCheckboxCircle.png")}
-            />
-          </View>
-          <View style={styles.box7}>
-            <View style={[styles.caja1]}>
-              <Text style={styles.textBoxCaja}>Borrar</Text>
-            </View>
-            <View style={[styles.caja1, styles.caja2]}>
-              <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
-                Filtrar
-              </Text>
-            </View>
+          <View style={[styles.caja1, styles.caja2]}>
+            <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
+              Filtrar
+            </Text>
           </View>
         </View>
       </View>
@@ -94,26 +76,6 @@ const styles = StyleSheet.create({
   //content
   box2: {
     flex: 10,
-  },
-  boxImage: {
-    marginTop: 10,
-    marginBottom: 8,
-    alignItems: "center",
-  },
-  textTitle: {
-    fontSize: 20,
-    fontWeight: "500",
-    color: "#003031",
-    lineHeight: 28,
-    letterSpacing: 0.0015,
-  },
-  box4: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginHorizontal: 21,
-    marginBottom: 30,
-  },
-  box5: {
     marginTop: 31,
     marginHorizontal: 21,
   },

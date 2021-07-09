@@ -1,8 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useContext } from "react";
-import { StyleSheet, Text, Image, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, Image, View } from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
-import { metrics } from "../../../utilities/Metrics";
 
 const CardItemFavorite = (props) => {
   const { id = "" } = props || {};

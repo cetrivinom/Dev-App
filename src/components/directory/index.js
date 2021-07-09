@@ -22,24 +22,22 @@ const Directory = (props) => {
         <Header {...props} showBack={false} title="Lineas telefónicas" />
       </View>
       <View style={[styles.box, styles.box2]}>
-        <View style={styles.container}>
-          <View style={styles.containerSearch}>
-            <TextInput
-              style={styles.inputTextBox}
-              onChangeText={(e) => setSearchTerm(e)}
-              placeholder="Buscar departamento"
-            />
-          </View>
-          {dataDirectory != null && (
-            <FlatList
-              data={dataDirectory}
-              renderItem={(item) => (
-                <CardItemDirectory {...props} title={item.item.departamento} />
-              )}
-              keyExtractor={(item) => item.departamento_id}
-            />
-          )}
+        <View style={styles.containerSearch}>
+          <TextInput
+            style={styles.inputTextBox}
+            onChangeText={(e) => setSearchTerm(e)}
+            placeholder="Buscar departamento"
+          />
         </View>
+        {dataDirectory != null && (
+          <FlatList
+            data={dataDirectory}
+            renderItem={(item) => (
+              <CardItemDirectory {...props} title={item.item.departamento} />
+            )}
+            keyExtractor={(item) => item.departamento_id}
+          />
+        )}
       </View>
     </View>
   );
@@ -61,21 +59,10 @@ const styles = StyleSheet.create({
   //content
   box2: {
     flex: 10,
-  },
-  container: {
-    marginRight: 15,
-    marginLeft: 16,
-  },
-  card: {
-    justifyContent: "center",
-    height: 56,
-    backgroundColor: "#007681",
-    alignItems: "center",
-    borderRadius: 8,
-    marginBottom: 24,
+    marginHorizontal: 15,
   },
   containerSearch: {
-    marginTop: 21,
+    marginVertical: 20,
   },
   inputTextBox: {
     height: 46,
@@ -83,7 +70,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#E7EAEC",
     borderRadius: 25,
     borderWidth: 1,
-    marginBottom: 25,
     paddingLeft: 15,
   },
 });

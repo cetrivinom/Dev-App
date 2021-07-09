@@ -83,7 +83,7 @@ const Settings = (props) => {
               source={require("../../resources/images/riMapPinLine.png")}
               style={styles.image}
             />
-            <Text style={styles.text}>Filtrar Puntos de servicio</Text>
+            <Text style={styles.textFilter}>Filtrar Puntos de servicio</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -128,15 +128,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  text: {
+  textFilter: {
     fontSize: 15,
     lineHeight: 18,
     color: "#FFFFFF",
     letterSpacing: 0.0125,
     marginLeft: 5,
-  },
-  containerForm: {
-    flexDirection: "row",
   },
   image: {
     width: 30,

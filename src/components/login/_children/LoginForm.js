@@ -22,7 +22,13 @@ const LoginForm = (props) => {
   const [visible, setVisible] = React.useState(false);
 
   const onDismissSnackBar = () => setVisible(false);
-  const { auth, message, signIn, getUser, user: userData } = useContext(AuthContext);
+  const {
+    auth,
+    message,
+    signIn,
+    getUser,
+    user: userData,
+  } = useContext(AuthContext);
 
   const onPressRegistre = () => {
     props.navigation.navigate("Registre");
@@ -96,11 +102,9 @@ const LoginForm = (props) => {
           <Text style={Styles.labelError}>{errorPassword}</Text>
         )}
         <Text style={Styles.labelForgetPassword}>¿Olvidaste tu contraseña</Text>
-        <View>
-          <TouchableHighlight style={Styles.btnIniciar} onPress={onPressLogin}>
-            <Text style={Styles.labelLogin}>Iniciar sesión</Text>
-          </TouchableHighlight>
-        </View>
+        <TouchableHighlight style={Styles.btnIniciar} onPress={onPressLogin}>
+          <Text style={Styles.labelLogin}>Iniciar sesión</Text>
+        </TouchableHighlight>
         <View style={Styles.noCuenta}>
           <Text style={Styles.labelAccount}>¿No tienes una cuenta? </Text>
           <TouchableOpacity onPress={onPressRegistre}>

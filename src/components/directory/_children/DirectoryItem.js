@@ -1,14 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useContext, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  Image,
-  View,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 import CardItemDirectoryDetail from "./CardItemDirectoryDetail";
+import HeaderItem from "../../global/_children/HeaderItem";
 import IOMContext from "../../../../context/iomData/iomContext";
 /**
  * Componente que construye los Items del Directorio, itera sobre el objeto del JSON
@@ -23,28 +17,9 @@ const DirectoryItem = (props) => {
     getDataByDepartId(otherParam);
   }, [otherParam]);
 
-  const onPressClose = () => {
-    props.navigation.goBack();
-  };
-
   return (
     <View style={styles.wrapper}>
-      <View style={[styles.box, styles.box1]}>
-        <View style={styles.boxImage}>
-          <Image source={require("../../../resources/images/linkIcon.png")} />
-        </View>
-        <View style={styles.box4}>
-          <TouchableOpacity onPress={onPressClose}>
-            <Image
-              source={require("../../../resources/images/riCloseLine.png")}
-            />
-          </TouchableOpacity>
-          <Text style={styles.textTitle}>{otherParam}</Text>
-          <Image
-            source={require("../../../resources/images/riBookmarkLine.png")}
-          />
-        </View>
-      </View>
+      <HeaderItem {...props} title={otherParam} />
       {dataItem !== null && (
         <View style={[styles.box, styles.box2]}>
           <FlatList
@@ -81,24 +56,6 @@ const styles = StyleSheet.create({
   //content
   box2: {
     flex: 10,
-  },
-  boxImage: {
-    marginTop: 10,
-    marginBottom: 8,
-    alignItems: "center",
-  },
-  textTitle: {
-    fontSize: 22,
-    fontWeight: "500",
-    color: "#003031",
-    lineHeight: 28,
-    letterSpacing: 0.0015,
-  },
-  box4: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginHorizontal: 21,
-    marginBottom: 30,
   },
 });
 

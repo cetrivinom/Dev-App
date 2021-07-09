@@ -1,20 +1,20 @@
 import { StyleSheet } from "react-native";
-import { white } from "react-native-paper/lib/typescript/styles/colors";
 
 export default StyleSheet.create({
   container: {
-    width: "100%",
-    height: "100%",
+    flex: 1,
     backgroundColor: "#FFFFFF",
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
   },
+  containerForm: {
+    marginHorizontal: 16
+  },
   s: {
-    marginTop: 40
+    marginTop: 40,
   },
   labelInicio: {
     fontSize: 22,
-    //fontFamily: "Dosis",
     fontWeight: "500",
     lineHeight: 28,
     letterSpacing: 0.0015,
@@ -66,14 +66,9 @@ export default StyleSheet.create({
     paddingVertical: 12,
     paddingLeft: 5,
   },
-  containerForm: {
-    marginRight: 15,
-    marginLeft: 17,
-  },
   inputTextBox: {
     height: 56,
     borderColor: "#A1AAB2",
-    //fontFamily: "Roboto",
     borderRadius: 3.5,
     paddingLeft: 15,
     borderWidth: 1,

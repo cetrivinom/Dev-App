@@ -8,15 +8,13 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import HeaderItem from "../../global/_children/HeaderItem";
 import IOMContext from "../../../../context/iomData/iomContext";
 import ServiceItem from "./ServiceItem";
 import { capitalize } from "../../../utilities/helpers";
 
 const PointItem = (props) => {
   const { dataItem, getDataPointById } = useContext(IOMContext);
-  const onPressClose = () => {
-    props.navigation.goBack();
-  };
   const { id = "" } = props.navigation.state.params || {};
 
   const {
@@ -54,22 +52,7 @@ const PointItem = (props) => {
 
   return (
     <View style={styles.wrapper}>
-      <View style={[styles.box, styles.box1]}>
-        <View style={styles.boxImage}>
-          <Image source={require("../../../resources/images/linkIcon.png")} />
-        </View>
-        <View style={styles.box4}>
-          <TouchableOpacity onPress={onPressClose}>
-            <Image
-              source={require("../../../resources/images/riCloseLine.png")}
-            />
-          </TouchableOpacity>
-          <Text style={styles.textTitle}>Información de punto</Text>
-          <Image
-            source={require("../../../resources/images/riBookmarkLine.png")}
-          />
-        </View>
-      </View>
+      <HeaderItem {...props} title="Información de punto" />
       <View style={[styles.box, styles.box2]}>
         <ScrollView style={{ flex: 1 }}>
           <View style={styles.divider}></View>
@@ -170,24 +153,6 @@ const styles = StyleSheet.create({
   //content
   box2: {
     flex: 10,
-  },
-  boxImage: {
-    marginTop: 10,
-    marginBottom: 8,
-    alignItems: "center",
-  },
-  textTitle: {
-    fontSize: 20,
-    fontWeight: "500",
-    color: "#003031",
-    lineHeight: 28,
-    letterSpacing: 0.0015,
-  },
-  box4: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginHorizontal: 21,
-    marginBottom: 30,
   },
   box5: {
     marginRight: 20,

@@ -27,7 +27,7 @@ const LinkItem = (props) => {
 
   return (
     <ScrollView style={styles.wrapper}>
-      <TouchableOpacity style={styles.image2} onPress={onPressClose}>
+      <TouchableOpacity style={styles.image} onPress={onPressClose}>
         <Image source={require("../../../resources/images/fab.png")} />
       </TouchableOpacity>
       <Image
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     color: "#A1AAB2",
     paddingTop: 2,
   },
-  image2: {
+  image: {
     position: "absolute",
     top: 20,
     left: 20,

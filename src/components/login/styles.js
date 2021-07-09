@@ -11,7 +11,6 @@ export default StyleSheet.create({
     backgroundColor: "#00AAAD",
   },
   logo: {
-    width: 263,
     height: 140,
     alignSelf: "center",
     resizeMode: "contain",

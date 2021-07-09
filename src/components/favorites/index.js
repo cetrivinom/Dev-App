@@ -11,8 +11,6 @@ const Favorites = (props) => {
     getDataFavorite();
   }, []);
 
-  console.log("dataFavorite", dataFavorite);
-
   return (
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>

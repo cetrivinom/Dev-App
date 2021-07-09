@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
   },
   logo: {
     top: 163,
-    width: 379,
     height: 201.53,
     resizeMode: "contain",
   },
