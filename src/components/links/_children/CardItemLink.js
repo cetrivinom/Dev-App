@@ -13,7 +13,8 @@ const CardItemLink = (props) => {
   } = props || {};
 
   const onPressOpen = () => {
-    props.navigation.navigate("LinkItem", { resume, date, content, image });};
+    props.navigation.navigate("LinkItem", { resume, date, content, image });
+  };
   const regex = /(<([^>]+)>)/gi;
   const result = resume.replace(regex, "");
   let _resume = result.substring(0, 60);
@@ -28,7 +29,7 @@ const CardItemLink = (props) => {
           }}
         />
         <View style={styles.containeImageText}>
-          <Text style={styles.titleSection}>{_resume}</Text>
+          <Text style={styles.titleSection}>{_resume + "..."}</Text>
           <View style={styles.containerDate}>
             <Image source={require("../../../resources/images/calendar.png")} />
             <Text style={styles.titleDate}>{date}</Text>
@@ -42,18 +43,17 @@ const CardItemLink = (props) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
+    marginVertical: 10,
+    marginHorizontal: 10,
   },
   containeImage: {
-    marginVertical: 12,
-    marginHorizontal: 12,
     width: 148,
     height: 100,
   },
   containeImageText: {
-    width: 250,
-    height: 100,
-    marginTop: 12,
+    width: metrics.WIDTH - 128,
     justifyContent: "space-between",
+    paddingStart: 5,
   },
   titleSection: {
     fontSize: 17,

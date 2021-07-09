@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-const FilterContent = ({ setShowFilterOption }) => {
+const HeaderFilterLink = ({ setShowFilterOption }) => {
   const onPressFilter = () => {
     setShowFilterOption((prev) => !prev);
   };
@@ -63,4 +63,4 @@ const styles = StyleSheet.create({
     top: -4,
   },
 });
-export default FilterContent;
+export default HeaderFilterLink;

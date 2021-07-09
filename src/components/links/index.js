@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Header from "../global/_children/Header";
 import CardItemLink from "./_children/CardItemLink";
-import FilterLink from "./_children/FilterLink";
+import HeaderFilterLink from "./_children/HeaderFilterLink";
 import IOMContext from "../../../context/iomData/iomContext";
 
 const Links = (props) => {
@@ -30,7 +30,7 @@ const Links = (props) => {
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>
         <Header {...props} showBack={false} title="Enlaces de interés" />
-        <FilterLink setShowFilterOption={setShowFilterOption} />
+        <HeaderFilterLink setShowFilterOption={setShowFilterOption} />
       </View>
       {dataLink !== null && (
         <View style={[styles.box, styles.box2]}>
