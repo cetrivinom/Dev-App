@@ -13,16 +13,34 @@ import {
 export default (state, action) => {
   switch (action.type) {
     case GET_DATA_LINK:
+      const dataLink = JSON.parse(action.value);
+      const unique = [...new Set(dataLink.map((item) => item.Etiquetas))];
+      const mergeDedupe = (arr) => {
+        return [...new Set([].concat(...arr))];
+      };
       return {
         ...state,
-        dataLink: JSON.parse(action.payload),
+        dataLink:
+          action.item !== "" && action.item !== undefined
+            ? dataLink.filter((obj) =>
+                obj.Etiquetas.some((o) => o == action.item)
+              )
+            : dataLink,
+        dataLinkEtiquetas: mergeDedupe(unique),
         dataItem: null,
         messageError: null,
       };
     case GET_DATA_POINT:
+      const dataPoint = JSON.parse(action.payload);
+      const uniqueState = [...new Set(dataPoint.map((item) => item.Estado))];
+      const uniqueDepartamento = [...new Set(dataPoint.map((item) => item.Departamento))];
+      const uniqueMunicipio = [...new Set(dataPoint.map((item) => item.Municipio))];
       return {
         ...state,
         dataPoint: JSON.parse(action.payload),
+        dataPointState: uniqueState,
+        dataPointDepartamento: uniqueDepartamento,
+        dataPointMunicipio: uniqueMunicipio,
         dataItem: null,
         messageError: null,
       };
@@ -34,7 +52,9 @@ export default (state, action) => {
     case GET_DATA_DIRECTORY:
       return {
         ...state,
-        dataDirectory: JSON.parse(action.payload),
+        dataDirectory: JSON.parse(action.value).filter((item) =>
+          item.departamento.toLowerCase().includes(action.item.toLowerCase())
+        ),
         dataItem: null,
         messageError: null,
       };

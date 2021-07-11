@@ -10,16 +10,22 @@ import {
 import Header from "../global/_children/Header";
 import CardItemLink from "./_children/CardItemLink";
 import HeaderFilterLink from "./_children/HeaderFilterLink";
+import ModalFilter from "./_children/ModalFilter";
 import IOMContext from "../../../context/iomData/iomContext";
 
 const Links = (props) => {
   const [showFilterOption, setShowFilterOption] = useState(false);
-  const { dataLink, getDataLink } = useContext(IOMContext);
-
-  console.log("dataLink", dataLink);
+  const [show, setShow] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const { dataLink, dataLinkEtiquetas, getDataLink } = useContext(IOMContext);
 
   const onPressClose = () => {
     setShowFilterOption((prev) => !prev);
+  };
+
+  const onPressFilter = () => {
+    getDataLink(searchTerm);
+    onPressClose();
   };
 
   useEffect(() => {
@@ -68,25 +74,39 @@ const Links = (props) => {
             />
           </View>
           <View style={styles.box5}>
-            <View style={styles.box6}>
-              <Text style={styles.textBox}>Tipo de contenido</Text>
+            <TouchableOpacity style={styles.box6} onPress={() => setShow(true)}>
+              <Text style={styles.textBox}>
+                {searchTerm != "" ? searchTerm : "Tipo de contenido"}
+              </Text>
               <Image
                 source={require("../../resources/images/trailingIcon.png")}
               />
-            </View>
+            </TouchableOpacity>
             <View style={styles.box7}>
-              <View style={[styles.caja1]}>
+              <TouchableOpacity
+                style={[styles.caja1]}
+                onPress={() => setSearchTerm("")}
+              >
                 <Text style={styles.textBoxCaja}>Borrar</Text>
-              </View>
-              <View style={[styles.caja1, styles.caja2]}>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.caja1, styles.caja2]}
+                onPress={onPressFilter}
+              >
                 <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
                   Filtrar
                 </Text>
-              </View>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
       )}
+      <ModalFilter
+        onClose={() => setShow(false)}
+        show={show}
+        data={dataLinkEtiquetas}
+        setSearchTerm={setSearchTerm}
+      />
     </View>
   );
 };
@@ -101,6 +121,7 @@ const styles = StyleSheet.create({
   //header
   box1: {
     flex: 1.5,
+    marginBottom: 10,
   },
   //content
   box2: {
@@ -109,7 +130,6 @@ const styles = StyleSheet.create({
   box3: {
     position: "absolute",
     height: 300,
-    width: "100%",
     backgroundColor: "#FFFFFF",
     bottom: 0,
     borderTopRightRadius: 8,

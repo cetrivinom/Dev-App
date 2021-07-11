@@ -13,8 +13,8 @@ const Directory = (props) => {
   const { dataDirectory, getDataDirectory } = useContext(IOMContext);
 
   useEffect(() => {
-    getDataDirectory();
-  }, []);
+    getDataDirectory(searchTerm);
+  }, [searchTerm]);
 
   return (
     <View style={styles.wrapper}>

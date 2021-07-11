@@ -17,7 +17,11 @@ import AsyncStorage from "@react-native-community/async-storage";
 const IOMState = (props) => {
   const initialState = {
     dataLink: null,
+    dataLinkEtiquetas: null,
     dataPoint: null,
+    dataPointState: null,
+    dataPointDepartamento: null,
+    dataPointMunicipio: null,
     dataDirectory: null,
     dataDirectoryService: null,
     dataFavorite: [
@@ -41,13 +45,14 @@ const IOMState = (props) => {
 
   const [state, dispatch] = useReducer(IOMReducer, initialState);
 
-  const getDataLink = async () => {
+  const getDataLink = async (item) => {
     try {
       const value = await AsyncStorage.getItem("api-enlaces-de-interes.json");
       if (value !== null) {
         dispatch({
           type: GET_DATA_LINK,
-          payload: value,
+          value,
+          item,
         });
       }
     } catch (error) {
@@ -82,14 +87,15 @@ const IOMState = (props) => {
     });
   };
 
-  const getDataDirectory = async () => {
+  const getDataDirectory = async (item) => {
     try {
       const value = await AsyncStorage.getItem("lines.json");
       getDataDirectoryService();
       if (value !== null) {
         dispatch({
           type: GET_DATA_DIRECTORY,
-          payload: value,
+          value,
+          item,
         });
       }
     } catch (error) {
@@ -102,7 +108,9 @@ const IOMState = (props) => {
 
   const getDataDirectoryService = async () => {
     try {
-      const value = await AsyncStorage.getItem("api-lineas-telefonicas-servicios.json");
+      const value = await AsyncStorage.getItem(
+        "api-lineas-telefonicas-servicios.json"
+      );
       if (value !== null) {
         dispatch({
           type: GET_DATA_DIRECTORY_SERVICE,
@@ -152,7 +160,11 @@ const IOMState = (props) => {
     <IOMContext.Provider
       value={{
         dataLink: state.dataLink,
+        dataLinkEtiquetas: state.dataLinkEtiquetas,
         dataPoint: state.dataPoint,
+        dataPointState: state.dataPointState,
+        dataPointDepartamento: state.dataPointDepartamento,
+        dataPointMunicipio: state.dataPointMunicipio,
         dataDirectory: state.dataDirectory,
         dataDirectoryService: state.dataDirectoryService,
         dataFavorite: state.dataFavorite,
@@ -165,7 +177,7 @@ const IOMState = (props) => {
         getDataFavorite,
         getDataPointById,
         getDataByDepartId,
-        getDataDirectoryItemService
+        getDataDirectoryItemService,
       }}
     >
       {props.children}

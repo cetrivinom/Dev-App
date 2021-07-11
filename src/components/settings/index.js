@@ -10,8 +10,6 @@ const Settings = (props) => {
   const [position, setPosition] = useState(null);
   const { dataPoint, getDataPoint } = useContext(IOMContext);
 
-  console.log("dataPoint", dataPoint);
-
   useEffect(() => {
     getDataPoint();
     Geolocation.getCurrentPosition(
