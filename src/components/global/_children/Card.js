@@ -43,7 +43,7 @@ export const ItemMain = (props) => {
 
 const styles = StyleSheet.create({
   titleSection: {
-    fontSize: 16,
+    fontSize: metrics.HEIGHT*0.018,
     lineHeight: 23,
     letterSpacing: 0.005,
     fontWeight: "bold",
