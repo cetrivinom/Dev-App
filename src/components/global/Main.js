@@ -30,6 +30,8 @@ const Main = (props) => {
             title="Lineas Telefónicas"
             image="2"
           />
+        </View>
+        <View style={styles.containerForm2}>
           <ItemMain
             {...props}
             name="Links"
@@ -41,6 +43,12 @@ const Main = (props) => {
             name="Favorites"
             title="Puntos guardados"
             image="4"
+          />
+          <ItemMain
+            {...props}
+            name="Profile"
+            title="Mi Perfil"
+            image="5"
           />
         </View>
         <View style={styles.containerFooter}>
@@ -57,6 +65,11 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   containerForm: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+  containerForm2: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",

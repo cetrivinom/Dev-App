@@ -8,10 +8,11 @@ export const ItemMain = (props) => {
   const onPressCard = () => {
     props.navigation.navigate(name);
   };
+  console.log('metrics.WIDTH',metrics.WIDTH,'metrics.HEIGHT',metrics.HEIGHT)
   return (
-    <Pressable onPress={onPressCard} style={styles.wraper}>
+    <Pressable onPress={onPressCard} style={image<3?styles.wraper:styles.wraperTwo}>
       <View style={{ borderRadius: 8 }}>
-        <View style={styles.cardBody}>
+        <View style={image<3?styles.cardBody:styles.cardBodyTwo}>
           <View style={{ flex: 1 }}>
             <Image
               style={styles.imgCover}
@@ -22,8 +23,10 @@ export const ItemMain = (props) => {
                   ? require("../../../resources/images/phoneFill.png")
                   : image === "3"
                   ? require("../../../resources/images/frame.png")
-                  : image === "4" &&
-                    require("../../../resources/images/pointSave.png")
+                  : image === "4"
+                  ?  require("../../../resources/images/pointSave.png")
+                  : image === "5" &&
+                    require("../../../resources/images/profile.png")
               }
             />
           </View>
@@ -51,11 +54,30 @@ const styles = StyleSheet.create({
     width: "50%",
     padding: 11,
   },
+  wraperTwo: {
+    width: "33%",
+    padding: 11,
+  },
   cardBody: {
-    backgroundColor: "#132A3E",
+    backgroundColor: "#00AAAD",
     flexDirection: "column",
-    height: 90,
+    height: metrics.HEIGHT * 0.11,
     width: metrics.WIDTH * 0.44,
+    borderRadius: 8,
+    shadowColor: "#030912",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 3.84,
+    elevation: 7,
+  },
+  cardBodyTwo: {
+    backgroundColor: "#132A3E",
+    //flexDirection: "column",
+    height: metrics.HEIGHT * 0.134,
+    width: metrics.WIDTH * 0.27,
     borderRadius: 8,
     shadowColor: "#030912",
     shadowOffset: {
