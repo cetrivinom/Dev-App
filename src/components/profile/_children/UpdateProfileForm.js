@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { DatePicker } from "react-native-wheel-datepicker";
-import Styles from "./Styles";
+import Styles from "./styles";
 import moment from "moment";
 import AuthContext from "../../../../context/auth/authContext";
 
