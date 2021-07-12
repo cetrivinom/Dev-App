@@ -55,6 +55,13 @@ const Settings = (props) => {
     props.navigation.navigate("FilterSetting");
   };
 
+  var payments = [];
+  for (let i = 0; i < 5; i++) {
+    payments.push(
+      <Image key={i} source={require("../../resources/images/hear.png")} />
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>
@@ -75,8 +82,8 @@ const Settings = (props) => {
         >
           {dataPoint !== null && mapMarkers()}
         </MapView>
-        <View style={styles.overlay2}>
-          <TouchableOpacity style={styles.overlay} onPress={onPressOpen}>
+        <View style={styles.overlay}>
+          <TouchableOpacity style={styles.overlay2} onPress={onPressOpen}>
             <Image
               source={require("../../resources/images/riMapPinLine.png")}
               style={styles.image}
@@ -108,6 +115,15 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   overlay: {
+    position: "absolute",
+    flexDirection: "row",
+    bottom: 24,
+    height: 48,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  overlay2: {
     flex: 1,
     flexDirection: "row",
     backgroundColor: "#132A3E",
@@ -117,25 +133,12 @@ const styles = StyleSheet.create({
     maxWidth: 238,
     padding: 10,
   },
-  overlay2: {
-    position: "absolute",
-    flexDirection: "row",
-    bottom: 24,
-    height: 48,
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
   textFilter: {
     fontSize: 15,
     lineHeight: 18,
     color: "#FFFFFF",
     letterSpacing: 0.0125,
     marginLeft: 5,
-  },
-  image: {
-    width: 30,
-    height: 30,
   },
 });
 

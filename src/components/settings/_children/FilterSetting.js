@@ -6,7 +6,12 @@ import { StyleSheet, Text, Image, View, TouchableOpacity } from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
 
 const FilterSetting = (props) => {
-  const { dataPointState, dataPointDepartamento, dataPointMunicipio } = useContext(IOMContext);
+  const {
+    dataPointState,
+    dataPointDepartamento,
+    dataPointMunicipio,
+    getDataPointFilter,
+  } = useContext(IOMContext);
   const [show, setShow] = useState(false);
   const [openStatus, setOpenStatus] = useState(false);
   const [openMunicipio, setOpenMunicipio] = useState(false);
@@ -23,9 +28,13 @@ const FilterSetting = (props) => {
     setDepartamento("");
     setOpenDepartamento(false);
     setOpenMunicipio(false);
+    getDataPointFilter(false);
   };
 
-  const onPressFilter = () => {};
+  const onPressFilter = () => {
+    //getDataPointFilter(true);
+    props.navigation.navigate("PointListResult");
+  };
 
   return (
     <View style={styles.wrapper}>

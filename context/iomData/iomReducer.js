@@ -2,6 +2,7 @@ import {
   GET_DATA_LINK,
   GET_DATA_POINT,
   GET_DATA_DIRECTORY,
+  GET_DATA_DIRECTORY_FILTER,
   GET_DATA_DIRECTORY_SERVICE,
   GET_DATA_DIRECTORY_SERVICE_ITEM,
   GET_DATA_FAVORITES,
@@ -33,8 +34,12 @@ export default (state, action) => {
     case GET_DATA_POINT:
       const dataPoint = JSON.parse(action.payload);
       const uniqueState = [...new Set(dataPoint.map((item) => item.Estado))];
-      const uniqueDepartamento = [...new Set(dataPoint.map((item) => item.Departamento))];
-      const uniqueMunicipio = [...new Set(dataPoint.map((item) => item.Municipio))];
+      const uniqueDepartamento = [
+        ...new Set(dataPoint.map((item) => item.Departamento)),
+      ];
+      const uniqueMunicipio = [
+        ...new Set(dataPoint.map((item) => item.Municipio)),
+      ];
       return {
         ...state,
         dataPoint: JSON.parse(action.payload),
@@ -43,6 +48,12 @@ export default (state, action) => {
         dataPointMunicipio: uniqueMunicipio,
         dataItem: null,
         messageError: null,
+        //dataPointFilter: false,
+      };
+    case GET_DATA_DIRECTORY_FILTER:
+      return {
+        ...state,
+        dataPointFilter: action.payload,
       };
     case GET_DATA_POINT_ID:
       return {

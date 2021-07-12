@@ -3,6 +3,7 @@ import {
   GET_DATA_POINT,
   GET_DATA_LINK,
   GET_DATA_DIRECTORY,
+  GET_DATA_DIRECTORY_FILTER,
   GET_DATA_DIRECTORY_SERVICE,
   GET_DATA_DIRECTORY_SERVICE_ITEM,
   GET_DATA_FAVORITES,
@@ -22,6 +23,7 @@ const IOMState = (props) => {
     dataPointState: null,
     dataPointDepartamento: null,
     dataPointMunicipio: null,
+    dataPointFilter: false,
     dataDirectory: null,
     dataDirectoryService: null,
     dataFavorite: [
@@ -106,6 +108,13 @@ const IOMState = (props) => {
     }
   };
 
+  const getDataPointFilter = (value) => {
+    dispatch({
+      type: GET_DATA_DIRECTORY_FILTER,
+      payload: value,
+    });
+  }
+
   const getDataDirectoryService = async () => {
     try {
       const value = await AsyncStorage.getItem(
@@ -165,6 +174,7 @@ const IOMState = (props) => {
         dataPointState: state.dataPointState,
         dataPointDepartamento: state.dataPointDepartamento,
         dataPointMunicipio: state.dataPointMunicipio,
+        dataPointFilter: state.dataPointFilter,
         dataDirectory: state.dataDirectory,
         dataDirectoryService: state.dataDirectoryService,
         dataFavorite: state.dataFavorite,
@@ -178,6 +188,7 @@ const IOMState = (props) => {
         getDataPointById,
         getDataByDepartId,
         getDataDirectoryItemService,
+        getDataPointFilter
       }}
     >
       {props.children}
