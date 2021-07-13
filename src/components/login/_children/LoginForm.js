@@ -98,6 +98,7 @@ const LoginForm = (props) => {
               ? Styles.inputTextBoxError
               : Styles.inputTextBox
           }
+          secureTextEntry={true}
           placeholder="Contraseña"
           onChangeText={(e) => {
             setUser({ ...user, password: e });
