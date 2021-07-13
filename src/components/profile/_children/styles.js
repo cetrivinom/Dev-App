@@ -93,4 +93,8 @@ export default StyleSheet.create({
     flexDirection: "column",
     flex: 1,
   },
+  statusBarBackground:{
+    height: (Platform.OS === 'ios') ? metrics.WIDTH * 0.06 : 0,
+    backgroundColor: "#00AAAD",
+  },
 });

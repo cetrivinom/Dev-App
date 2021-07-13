@@ -133,6 +133,8 @@ const UpdateProfileForm = (props) => {
   };
   return (
     <View style={Styles.wrapper}>
+      <View style={Styles.statusBarBackground}>
+      </View>
       <View style={[Styles.box, Styles.box1]}>
         <View style={Styles.containerHeader}>
           <View style={Styles.containerForm}>

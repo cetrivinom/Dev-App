@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   },
   //content
   box2: {
-    flex: 10,
+    flex: (Platform.OS === 'ios') ? 8 : 10,
   },
   box3: {
     position: "absolute",

@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { metrics } from "../../../utilities/Metrics";
 
 const LastUpdate = () => {
   return (
@@ -14,7 +15,7 @@ const LastUpdate = () => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 32,
+    height: metrics.HEIGHT * 0.038,
     backgroundColor: "#FFFFFF",
     alignItems: "center",
   },

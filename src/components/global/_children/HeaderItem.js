@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { metrics } from "../../../utilities/Metrics";
 
 const HeaderItem = (props) => {
   const { title = "" } = props || {};
@@ -7,7 +8,9 @@ const HeaderItem = (props) => {
     props.navigation.goBack();
   };
   return (
-    <View style={[styles.box, styles.box1]}>
+    <View style={[styles.box, styles.box1]}> 
+      <View style={styles.statusBarBackground}>
+      </View>
       <View style={styles.boxImage}>
         <Image source={require("../../../resources/images/linkIcon.png")} />
       </View>
@@ -51,6 +54,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginHorizontal: 21,
     marginBottom: 30,
+  },  
+  statusBarBackground:{
+    height: (Platform.OS === 'ios') ? metrics.WIDTH * 0.06 : 0,
+    //backgroundColor: "#00AAAD",
   },
 });
 

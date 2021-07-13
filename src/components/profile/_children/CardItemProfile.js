@@ -10,6 +10,7 @@ const CardItemProfile = (props) => {
     field = "",
   } = props || {};
   const onPressOpen = () => {
+    if (props.navigation)
     props.navigation.navigate("UpdateProfile", { field });
   };
   return (

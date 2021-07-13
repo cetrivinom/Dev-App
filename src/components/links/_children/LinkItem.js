@@ -9,6 +9,7 @@ import {
   ScrollView,
   Linking,
 } from "react-native";
+import { metrics } from "../../../utilities/Metrics";
 
 const LinkItem = (props) => {
   const onPressClose = () => {
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
   },
   image: {
     position: "absolute",
-    top: 20,
+    top: metrics.HEIGHT * 0.04,
     left: 20,
     zIndex: 10,
   },
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     resizeMode: "cover",
     width: "100%",
-    height: 270,
+    height: metrics.HEIGHT * 0.32,
   },
 });
 

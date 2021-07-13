@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   //content
   box2: {
-    flex: 7,
+    flex: (Platform.OS === 'ios') ? 6 :7,
   },
   map: {
     ...StyleSheet.absoluteFillObject,

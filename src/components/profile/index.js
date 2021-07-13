@@ -17,59 +17,61 @@ const Profile = (props) => {
   };
 
   return (
-    <View style={styles.wrapper}>
-      <View style={[styles.box, styles.box1]}>
-        <View style={styles.containerHeader}>
-          <View style={styles.containerForm}>
-            <TouchableOpacity onPress={onPressBack} style={styles.iconLeft}>
-              <Image source={require("../../resources/images/left.png")} />
-            </TouchableOpacity>
-            <Text style={styles.labelTitleHeader}>Perfil</Text>
+      <View style={styles.wrapper}>
+        <View style={styles.statusBarBackground}>
+        </View>
+        <View style={[styles.box, styles.box1]}>
+          <View style={styles.containerHeader}>
+            <View style={styles.containerForm}>
+              <TouchableOpacity onPress={onPressBack} style={styles.iconLeft}>
+                <Image source={require("../../resources/images/left.png")} />
+              </TouchableOpacity>
+              <Text style={styles.labelTitleHeader}>Perfil</Text>
+            </View>
+          </View>
+        </View>
+        <View style={[styles.box, styles.box2]}>
+          <View style={styles.container}>
+            <CardItemProfile
+              title="Correo electrónico"
+              subTitle={user ? user.email : ""}
+            />
+            <CardItemProfile
+              {...props}
+              title="Fecha de nacimiento"
+              field="birthdate"
+              subTitle={user ? user.birdDate : ""}
+              showImge
+            />
+            <CardItemProfile
+              {...props}
+              title="Género"
+              field="genero"
+              subTitle={
+                user
+                  ? user.gender == "H"
+                    ? "Hombre"
+                    : user.gender == "M"
+                    ? "Mujer"
+                    : "Otro"
+                  : ""
+              }
+              showImge
+            />
+            <CardItemProfile
+              {...props}
+              title="Contraseña"
+              subTitle="****************"
+              showImge
+            />
+            <View style={styles.containerBodyLogOff}>
+              <TouchableOpacity onPress={onPressLogOff}>
+                <Text style={styles.labelTitleLogOff}>Cerrar sesión</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
-      <View style={[styles.box, styles.box2]}>
-        <View style={styles.container}>
-          <CardItemProfile
-            title="Correo electrónico"
-            subTitle={user ? user.email : ""}
-          />
-          <CardItemProfile
-            {...props}
-            title="Fecha de nacimiento"
-            field="birthdate"
-            subTitle={user ? user.birdDate : ""}
-            showImge
-          />
-          <CardItemProfile
-            {...props}
-            title="Género"
-            field="genero"
-            subTitle={
-              user
-                ? user.gender == "H"
-                  ? "Hombre"
-                  : user.gender == "M"
-                  ? "Mujer"
-                  : "Otro"
-                : ""
-            }
-            showImge
-          />
-          <CardItemProfile
-            {...props}
-            title="Contraseña"
-            subTitle="****************"
-            showImge
-          />
-          <View style={styles.containerBodyLogOff}>
-            <TouchableOpacity onPress={onPressLogOff}>
-              <Text style={styles.labelTitleLogOff}>Cerrar sesión</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    </View>
   );
 };
 
@@ -124,6 +126,10 @@ const styles = StyleSheet.create({
   iconLeft: {
     position: "absolute",
     right: metrics.WIDTH * 0.45,
+  },  
+  statusBarBackground:{
+    height: (Platform.OS === 'ios') ? metrics.WIDTH * 0.06 : 0,
+    backgroundColor: "#00AAAD",
   },
 });
 

@@ -22,19 +22,23 @@ const Header = (props) => {
     navigation.navigate("Profile");
   };
   return (
-    <View style={styles.container}>
-      <View style={styles.containerForm}>
-        {showBack && (
-          <TouchableOpacity onPress={onPressBack} style={styles.logo}>
-            <Image source={require("../../../resources/images/left.png")} />
-          </TouchableOpacity>
-        )}
-        <Text style={styles.labelTitle}>{title}</Text>
-        {!showBack && (
-          <TouchableOpacity onPress={onPressProfile} style={styles.image}>
-            <Image source={require("../../../resources/images/profile.png")} />
-          </TouchableOpacity>
-        )}
+    <View>
+      <View style={styles.statusBarBackground}>
+      </View>
+      <View style={styles.container}>
+        <View style={styles.containerForm}>
+          {showBack && (
+            <TouchableOpacity onPress={onPressBack} style={styles.logo}>
+              <Image source={require("../../../resources/images/left.png")} />
+            </TouchableOpacity>
+          )}
+          <Text style={styles.labelTitle}>{title}</Text>
+          {!showBack && (
+            <TouchableOpacity onPress={onPressProfile} style={styles.image}>
+              <Image source={require("../../../resources/images/profile.png")} />
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     </View>
   );
@@ -42,13 +46,17 @@ const Header = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 56,
+    height: metrics.HEIGHT * 0.066,
     alignItems: "center",
     backgroundColor: "#00AAAD",
     justifyContent: "center",
   },
   containerForm: {
     flexDirection: "row",
+  },
+  statusBarBackground:{
+    height: (Platform.OS === 'ios') ? metrics.WIDTH * 0.06 : 0,
+    backgroundColor: "#00AAAD",
   },
   labelTitle: {
     fontSize: 22,
@@ -64,7 +72,7 @@ const styles = StyleSheet.create({
   },
   image: {
     position: "absolute",
-    right: -metrics.WIDTH * 0.22,
+    right: -metrics.WIDTH * 0.26,
     top: -metrics.HEIGHT * 0.007,
   },
 });

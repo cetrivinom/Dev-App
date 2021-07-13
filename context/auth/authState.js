@@ -58,6 +58,28 @@ const AuthState = (props) => {
         });
     });
   };
+
+    /**
+   * metodo que valida si el usuario tiene una sesion activa y no le pide loggin
+   * @return {Promise} devuelve una promesa al terminar la operacion, se utiliza para controlar un llamado sincrono
+   */
+  const isSignIn = async () => {
+    return new Promise((resolve, reject) => {
+      auth()
+        .onAuthStateChanged(response => {
+          if(response){
+            var user = { email:response.email,uid: response.uid };
+            analytics().logEvent("isSignIn", { email: response.email, result: "true" });
+            dispatch({
+              type: LOG_IN,
+              payload: user,
+            });
+            resolve(response.uid);
+          }else
+            resolve(false);
+        })
+    });
+  };
   /**
    * metodo que hace el registro contra firebase
    * @param {Object} data datos del login de usuario
@@ -171,6 +193,7 @@ const AuthState = (props) => {
         message: state.message,
         registre: state.registre,
         signIn,
+        isSignIn,
         signUp,
         signOut,
         updateUser,
