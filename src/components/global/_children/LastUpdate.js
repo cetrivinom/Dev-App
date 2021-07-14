@@ -15,13 +15,13 @@ const LastUpdate = () => {
 
 const styles = StyleSheet.create({
   container: {
-    height: metrics.HEIGHT * 0.038,
+    height: metrics.HEIGHT * 0.04,
     backgroundColor: "#FFFFFF",
     alignItems: "center",
   },
   containerForm: {
     flexDirection: "row",
-    paddingVertical: 10,
+    marginTop: metrics.HEIGHT * 0.01,
   },
   labelTitle1: {
     fontSize: 12,
