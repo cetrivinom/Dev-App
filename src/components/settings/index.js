@@ -86,7 +86,6 @@ const Settings = (props) => {
           <TouchableOpacity style={styles.overlay2} onPress={onPressOpen}>
             <Image
               source={require("../../resources/images/riMapPinLine.png")}
-              style={styles.image}
             />
             <Text style={styles.textFilter}>Filtrar Puntos de servicio</Text>
           </TouchableOpacity>
@@ -109,7 +108,7 @@ const styles = StyleSheet.create({
   },
   //content
   box2: {
-    flex: (Platform.OS === 'ios') ? 6 :7,
+    flex: Platform.OS === "ios" ? 6 : 7,
   },
   map: {
     ...StyleSheet.absoluteFillObject,

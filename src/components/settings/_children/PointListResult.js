@@ -1,7 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useContext } from "react";
 import Header from "../../global/_children/Header";
-import LastUpdate from "../../global/_children/LastUpdate";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import {
   StyleSheet,
@@ -12,13 +11,42 @@ import {
   FlatList,
 } from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
+import { metrics } from "../../../utilities/Metrics";
+import { capitalize } from "../../../utilities/helpers";
 
-export const ItemCardPoint = ({ item }) => {
+export const LastUpdate = (props) => {
+  const onPressClose = () => {
+    props.navigation.goBack();
+  };
+
+  return (
+    <View style={styles.containerHeader}>
+      <View style={styles.containerFormHeader}>
+        <View style={styles.containerFormHeader2}>
+          <Image
+            source={require("../../../resources/images/riMapPinLine2.png")}
+          />
+          <Text style={styles.textTitle2}>
+            Antioquia/Medellin/Restringi....
+          </Text>
+        </View>
+        <TouchableOpacity onPress={onPressClose}>
+          <Text style={styles.labelTitle2}>Volver a filtrar</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+export const ItemCardPoint = (props) => {
   const {
+    ID: id = "",
     Nombre_punto = "",
     Estado = "",
     time = "8:00am - 5:00pm",
-  } = item || {};
+    Coordenadas = "",
+    Direccion = "",
+  } = props.item || {};
   let _Nombre_punto = Nombre_punto.substring(0, 25);
   var payments = [];
   for (let i = 0; i < 5; i++) {
@@ -26,6 +54,24 @@ export const ItemCardPoint = ({ item }) => {
       <Image key={i} source={require("../../../resources/images/hear.png")} />
     );
   }
+
+  const onPressOpenPoint = (id) => {
+    props.navigation.navigate("PointItem", { id });
+  };
+
+  const onPressOpenNavigationApps = () => {
+    let coor = Coordenadas.split(",");
+    let latitude = parseFloat(coor[0]);
+    let longitude = parseFloat(coor[1]);
+    props.navigation.navigate("PointNavigationApp", {
+      id,
+      Nombre_punto,
+      Direccion,
+      latitude,
+      longitude,
+    });
+  };
+
   return (
     <View style={styles.overlay3}>
       <View style={styles.overlay4}>
@@ -33,7 +79,7 @@ export const ItemCardPoint = ({ item }) => {
           <View style={styles.containerFormTitle}>
             <Text style={styles.textTitle}>{_Nombre_punto + "..."}</Text>
             <Image
-              source={require("../../../resources/images/riMoreLine.png")}
+              source={require("../../../resources/images/riBookmarkLine2.png")}
             />
           </View>
           <View style={styles.containerForm}>{payments}</View>
@@ -41,7 +87,9 @@ export const ItemCardPoint = ({ item }) => {
             <Image
               source={require("../../../resources/images/riMapPinFill.png")}
             />
-            <Text style={styles.textTitle2}>{Estado}</Text>
+            <Text style={styles.textTitle2}>
+              {capitalize(Estado.toLowerCase())}
+            </Text>
           </View>
           <View style={styles.containerForm}>
             <Image
@@ -50,12 +98,18 @@ export const ItemCardPoint = ({ item }) => {
             <Text style={styles.textTitle2}>{time}</Text>
           </View>
           <View style={styles.box7}>
-            <TouchableOpacity style={[styles.caja1, styles.caja2]}>
+            <TouchableOpacity
+              style={[styles.caja1, styles.caja2]}
+              onPress={() => onPressOpenPoint(id)}
+            >
               <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
                 Ver más
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.caja1]}>
+            <TouchableOpacity
+              style={[styles.caja1]}
+              onPress={onPressOpenNavigationApps}
+            >
               <Text style={[styles.textBoxCaja]}>¿Cómo llegar?</Text>
             </TouchableOpacity>
           </View>
@@ -67,6 +121,14 @@ export const ItemCardPoint = ({ item }) => {
 
 const PointListResult = (props) => {
   const { dataPointFilter } = useContext(IOMContext);
+
+  const onPressOpenPoint = (id) => {
+    props.navigation.navigate("PointItem", { id });
+  };
+
+  const onPressSeeAll = () => {
+    props.navigation.navigate("PointListResultList");
+  };
 
   const mapMarkers = () => {
     if (dataPointFilter != null) {
@@ -80,7 +142,7 @@ const PointListResult = (props) => {
                 latitude: parseFloat(coor[0]),
                 longitude: parseFloat(coor[1]),
               }}
-              //onPress={() => onPressOpenPoint(item.ID)}
+              onPress={() => onPressOpenPoint(item.ID)}
             ></Marker>
           );
         }
@@ -92,7 +154,7 @@ const PointListResult = (props) => {
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>
         <Header {...props} showBack={false} title="Puntos de servicio" />
-        <LastUpdate />
+        <LastUpdate {...props} />
       </View>
       <View style={[styles.box, styles.box2]}>
         <View style={StyleSheet.absoluteFillObject}>
@@ -109,11 +171,21 @@ const PointListResult = (props) => {
           >
             {dataPointFilter !== null && mapMarkers()}
           </MapView>
+          <View style={styles.overlay}>
+            <TouchableOpacity style={styles.overlay2} onPress={onPressSeeAll}>
+              <Image
+                source={require("../../../resources/images/riListCheck.png")}
+              />
+              <Text style={styles.textFilter}>Ver todo</Text>
+            </TouchableOpacity>
+          </View>
           <View style={{ position: "absolute", bottom: 24 }}>
             <FlatList
               horizontal
               data={dataPointFilter}
-              renderItem={({ item }) => <ItemCardPoint item={item} />}
+              renderItem={({ item }) => (
+                <ItemCardPoint {...props} item={item} />
+              )}
               keyExtractor={(item) => item.ID}
             />
           </View>
@@ -161,12 +233,14 @@ const styles = StyleSheet.create({
   containerFormTitle: {
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingBottom: 10,
   },
   containerForm: {
     flexDirection: "row",
+    paddingBottom: 10,
   },
   textTitle: {
-    fontSize: 14,
+    fontSize: 18,
     lineHeight: 23,
     letterSpacing: 0.0015,
     fontWeight: "bold",
@@ -198,6 +272,72 @@ const styles = StyleSheet.create({
   },
   textBoxCajaNegra: {
     color: "#FFFFFF",
+  },
+  textTitle2: {
+    fontSize: 14,
+    fontWeight: "normal",
+    lineHeight: 16,
+    letterSpacing: 0.0025,
+    color: "#003031",
+    marginTop: 2,
+    marginStart: 10.5,
+  },
+  overlay: {
+    position: "absolute",
+    flexDirection: "row",
+    bottom: 220,
+    height: 48,
+    width: "100%",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    paddingEnd: 16,
+  },
+  overlay2: {
+    flex: 1,
+    flexDirection: "row",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    maxWidth: 123,
+    padding: 15,
+  },
+  textFilter: {
+    fontSize: 15,
+    fontWeight: "bold",
+    lineHeight: 18,
+    color: "#003031",
+    letterSpacing: 0.0125,
+    marginLeft: 5,
+  },
+  containerHeader: {
+    height: metrics.HEIGHT * 0.06,
+    backgroundColor: "#FFFFFF",
+  },
+  containerFormHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 5,
+    paddingHorizontal: 15,
+  },
+  containerFormHeader2: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  labelTitle1: {
+    fontSize: 12,
+    fontWeight: "bold",
+    color: "#003031",
+    lineHeight: 14,
+    letterSpacing: 0.005,
+  },
+  labelTitle2: {
+    fontSize: 13,
+    fontWeight: "bold",
+    color: "#FEC800",
+    lineHeight: 14,
+    letterSpacing: 0.004,
   },
 });
 

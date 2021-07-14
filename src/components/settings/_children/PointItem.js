@@ -27,8 +27,6 @@ const PointItem = (props) => {
     Servicios = [],
   } = dataItem || {};
 
-  console.log(Coordenadas);
-
   useEffect(() => {
     getDataPointById(id);
   }, [id]);
