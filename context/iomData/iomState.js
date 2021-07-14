@@ -23,7 +23,7 @@ const IOMState = (props) => {
     dataPointState: null,
     dataPointDepartamento: null,
     dataPointMunicipio: null,
-    dataPointFilter: false,
+    dataPointFilter: null,
     dataDirectory: null,
     dataDirectoryService: null,
     dataFavorite: [

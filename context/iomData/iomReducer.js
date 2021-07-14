@@ -51,9 +51,10 @@ export default (state, action) => {
         //dataPointFilter: false,
       };
     case GET_DATA_DIRECTORY_FILTER:
+      console.log("action.payload", action.payload);
       return {
         ...state,
-        dataPointFilter: action.payload,
+        dataPointFilter: state.dataPoint.filter((item) => item.Departamento.toLowerCase().includes(action.payload.toLowerCase())),
       };
     case GET_DATA_POINT_ID:
       return {
@@ -63,9 +64,7 @@ export default (state, action) => {
     case GET_DATA_DIRECTORY:
       return {
         ...state,
-        dataDirectory: JSON.parse(action.value).filter((item) =>
-          item.departamento.toLowerCase().includes(action.item.toLowerCase())
-        ),
+        dataDirectory: JSON.parse(action.value).filter((item) => item.departamento.toLowerCase().includes(action.item.toLowerCase())),
         dataItem: null,
         messageError: null,
       };
@@ -73,9 +72,7 @@ export default (state, action) => {
       return {
         ...state,
         message: null,
-        dataItem: state.dataDirectory.find(
-          (item) => item.departamento === action.payload
-        ),
+        dataItem: state.dataDirectory.find((item) => item.departamento === action.payload),
       };
     case GET_DATA_DIRECTORY_SERVICE:
       return {

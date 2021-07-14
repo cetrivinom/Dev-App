@@ -26,7 +26,7 @@ export const ItemMain = (props) => {
                   : image === "4"
                   ?  require("../../../resources/images/pointSave.png")
                   : image === "5" &&
-                    require("../../../resources/images/profile.png")
+                    require("../../../resources/images/riUserFill.png")
               }
             />
           </View>

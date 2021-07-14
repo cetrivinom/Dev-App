@@ -32,7 +32,7 @@ const FilterSetting = (props) => {
   };
 
   const onPressFilter = () => {
-    //getDataPointFilter(true);
+    getDataPointFilter(departamento);
     props.navigation.navigate("PointListResult");
   };
 
