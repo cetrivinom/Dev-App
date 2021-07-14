@@ -13,6 +13,7 @@ import PointNavigationApp from "../settings/_children/PointNavigationApp";
 import PointItemComents from "../settings/_children/PointItemComents";
 import FilterSetting from "../settings/_children/FilterSetting";
 import PointListResult from "../settings/_children/PointListResult";
+import PointListResultList from "../settings/_children/PointListResultList";
 /**
  * Stack de navegacion, esta librería de React Navigation permite configurar la navegación del app
  */
@@ -91,6 +92,12 @@ const AppNavigation = createStackNavigator({
   },
   PointListResult: {
     screen: PointListResult,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  PointListResultList: {
+    screen: PointListResultList,
     navigationOptions: {
       headerShown: false,
     },
