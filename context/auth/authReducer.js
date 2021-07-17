@@ -7,6 +7,7 @@ import {
   SIGN_OUT_ERROR,
   UPDATED_USER,
   UPDATED_USER_INPUT_CHANGE,
+  GET_CONFIG,
 } from "../../types";
 import moment from "moment";
 /**
@@ -79,6 +80,11 @@ export default (state, action) => {
         auth: null,
         user: null,
         message: action.payload,
+      };
+    case GET_CONFIG:
+      return {
+        ...state,
+        config: action.payload,
       };
     default:
       return state;

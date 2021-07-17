@@ -8,6 +8,7 @@ import {
   SIGN_OUT_ERROR,
   UPDATED_USER,
   UPDATED_USER_INPUT_CHANGE,
+  GET_CONFIG,
 } from "../../types";
 import AuthReducer from "./authReducer";
 import AuthContext from "./authContext";
@@ -22,11 +23,12 @@ const AuthState = (props) => {
     auth: null,
     user: null,
     message: null,
+    config: null,
   };
 
   const [state, dispatch] = useReducer(AuthReducer, initialState);
   /**
-   * metodo que hace la autenticacion contra firebase
+   * metodo que hace la autenticacion mediante email contra firebase
    * @param {Object} data datos del login de usuario
    * @param {String} data.email - email del usuario
    * @param {String} data.password - password del usuario
@@ -58,7 +60,40 @@ const AuthState = (props) => {
         });
     });
   };
-
+  /**
+   * metodo que hace la autenticacion anonima contra firebase
+   * @param {Object} data datos del login de usuario
+   * @param {String} data.email - email del usuario
+   * @param {String} data.password - password del usuario
+   * @return {Promise} devuelve una promesa al terminar la operacion, se utiliza para controlar un llamado sincrono
+   */
+   const signInAnonymously = async () => {
+    return new Promise((resolve, reject) => {
+      auth()
+        .signInAnonymously()
+        .then((response) => {
+          console.log('signInAnonymously.response',response);
+          var user = { email:'',uid: response.user.uid };
+          analytics().logEvent("signInAnonymously", { result: "true" });
+          console.log('user',user);
+          dispatch({
+            type: LOG_IN,
+            payload: user,
+          });
+          resolve(response.user.uid);
+        })
+        .catch((error) => {
+          analytics().logEvent("signInAnonymously", {
+            result: "false",
+          });
+          dispatch({
+            type: LOG_IN_ERROR,
+            payload: error,
+          });
+          resolve(false);
+        });
+    });
+  };
     /**
    * metodo que valida si el usuario tiene una sesion activa y no le pide loggin
    * @return {Promise} devuelve una promesa al terminar la operacion, se utiliza para controlar un llamado sincrono
@@ -166,6 +201,28 @@ const AuthState = (props) => {
       });
   };
   /**
+   * metodo que consulta los parametros de configuracion contra la base de datos realtime.firebase
+   */
+   const getConfig = () => {
+    return new Promise((resolve, reject) => {
+      database()
+        .ref("/config/")
+        .once("value", (snapshot) => {
+          if (snapshot.hasChildren())
+          console.log('getConfig.snapshot',snapshot.val())
+            dispatch({
+              type: GET_CONFIG,
+              payload: snapshot.val(),
+            });
+            resolve(snapshot.val());
+        })
+        .catch((error) => {
+          alert(error);
+          resolve(false);
+        });
+    });
+  };
+  /**
    * metodo que hace signOut contra firebase
    */
   const signOut = () => {
@@ -192,13 +249,16 @@ const AuthState = (props) => {
         user: state.user,
         message: state.message,
         registre: state.registre,
+        config: state.config,
         signIn,
+        signInAnonymously,
         isSignIn,
         signUp,
         signOut,
         updateUser,
         getUser,
         updateUserInputChange,
+        getConfig,
       }}
     >
       {props.children}
