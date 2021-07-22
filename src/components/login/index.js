@@ -20,7 +20,7 @@ const Login = (props) => {
       if(config.anonymousAuth){
         signInAnonymously().then((uid) => {
           if (uid) {
-            setVisibleLogin(true)
+            //setVisibleLogin(true)
             getUser(uid);
           }
         });
