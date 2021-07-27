@@ -9,7 +9,7 @@ import {
   UPDATED_USER_INPUT_CHANGE,
   GET_CONFIG,
 } from "../../types";
-import moment from "moment";
+
 /**
  * reducer para la autenticacion, recibe el estado inicial y la accion
  * @param {Object} state estado inicial

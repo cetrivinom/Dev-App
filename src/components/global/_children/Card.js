@@ -8,7 +8,7 @@ export const ItemMain = (props) => {
   const onPressCard = () => {
     props.navigation.navigate(name);
   };
-  console.log('metrics.WIDTH',metrics.WIDTH,'metrics.HEIGHT',metrics.HEIGHT)
+
   return (
     <Pressable onPress={onPressCard} style={image<3?styles.wraper:styles.wraperTwo}>
       <View style={{ borderRadius: 8 }}>

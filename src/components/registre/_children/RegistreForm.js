@@ -32,7 +32,6 @@ export const Footer = (props) => {
       });
       if (auth) {
         //nunca se llama, el useEffect predomina
-        console.log("hi");
         props.navigation.navigate("Home");
       }
     }
@@ -259,7 +258,6 @@ export const RegistreForm3 = ({ setForm, setData, data }) => {
             maximumDate={moment().add(-16, "years").toDate()}
             minimumDate={moment().add(-120, "years").toDate()}
             onDateChange={(date) => {
-              console.log("date.", date, moment(date).format("YYYY-MM-DD"));
               setData({ ...data, birdDate: moment(date).format("YYYY-MM-DD") });
             }}
             style={{ backgroundColor: "white" }}
@@ -280,7 +278,6 @@ export const RegistreForm3 = ({ setForm, setData, data }) => {
  */
 export const RegistreForm4 = (props) => {
   const { setData, data } = props;
-  console.log("data::RegistreForm4", data);
   const onPressSi = () => {
     setData({ ...data, oldMen: "Si" });
   };

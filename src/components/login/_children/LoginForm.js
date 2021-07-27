@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -19,8 +19,8 @@ const LoginForm = (props) => {
   });
   const [errorEmail, setErrorEmail] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
-  const [visible, setVisible] = React.useState(false);
-  const [visibleLogin, setVisibleLogin] = React.useState(false);
+  const [visible, setVisible] = useState(false);
+  const [visibleLogin, setVisibleLogin] = useState(false);
 
   const onDismissSnackBar = () => setVisible(false);
   const {
@@ -37,11 +37,11 @@ const LoginForm = (props) => {
     props.navigation.navigate("Registre");
   };
 
-/*   useEffect(() => {
+  /*useEffect(() => {
     if (auth) {
       props.navigation.navigate("Home");
     }
-  }, [auth]); */
+  }, [auth]);*/
 
   console.log("user", userData);
   console.log("visibleLogin", visibleLogin);
@@ -105,7 +105,6 @@ const LoginForm = (props) => {
         {errorPassword !== "" && (
           <Text style={Styles.labelError}>{errorPassword}</Text>
         )}
-
         <Text style={Styles.labelForgetPassword}>¿Olvidaste tu contraseña</Text>
         <TouchableHighlight style={Styles.btnIniciar} onPress={onPressLogin}>
           <Text style={Styles.labelLogin}>Iniciar sesión</Text>

@@ -15,7 +15,6 @@ const PointNavigationApp = (props) => {
     latitude = "",
     longitude,
   } = props.navigation.state.params || {};
-  console.log("PointNavigationApp", latitude, longitude, Nombre_punto);
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>

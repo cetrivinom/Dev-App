@@ -5,6 +5,28 @@ import ModalFilter from "../../links/_children/ModalFilter";
 import { StyleSheet, Text, Image, View, TouchableOpacity } from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
 
+export const TipoServicios = ({
+  name = "",
+}) => {
+  const [typeService1, setTypeService1] = useState("");
+  console.log("typeService1", typeService1);
+  return (
+    <TouchableOpacity
+      style={styles.containerForm2}
+      onPress={() => setTypeService1(name)}
+    >
+      <Text style={styles.textTitle2}>{name}</Text>
+      <Image
+        source={
+          typeService1 === name
+            ? require("../../../resources/images/checkboxCircle.png")
+            : require("../../../resources/images/unCheckboxCircle.png")
+        }
+      />
+    </TouchableOpacity>
+  );
+};
+
 const FilterSetting = (props) => {
   const {
     dataPointState,
@@ -21,6 +43,8 @@ const FilterSetting = (props) => {
   const [municipio, setMunicipio] = useState("");
   const [departamento, setDepartamento] = useState("");
 
+  console.log("typeService", typeService);
+
   const onPressCancel = () => {
     setTypeService("");
     setStatusPoint("");
@@ -28,12 +52,15 @@ const FilterSetting = (props) => {
     setDepartamento("");
     setOpenDepartamento(false);
     setOpenMunicipio(false);
-    getDataPointFilter(false);
   };
 
   const onPressFilter = () => {
-    getDataPointFilter(departamento);
-    props.navigation.navigate("PointListResult");
+    getDataPointFilter(departamento, municipio, statusPoint);
+    props.navigation.navigate("PointListResult", {
+      departamento,
+      municipio,
+      statusPoint,
+    });
   };
 
   return (
@@ -90,45 +117,9 @@ const FilterSetting = (props) => {
         </TouchableOpacity>
         <View style={styles.divider}></View>
         <Text style={styles.textTitle2}>Tipo de servicio</Text>
-        <TouchableOpacity
-          style={styles.containerForm2}
-          onPress={() => setTypeService("26")}
-        >
-          <Text style={styles.textTitle2}>Hospitales</Text>
-          <Image
-            source={
-              typeService === "26"
-                ? require("../../../resources/images/checkboxCircle.png")
-                : require("../../../resources/images/unCheckboxCircle.png")
-            }
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.containerForm2}
-          onPress={() => setTypeService("42")}
-        >
-          <Text style={styles.textTitle2}>Centro de atención</Text>
-          <Image
-            source={
-              typeService === "42"
-                ? require("../../../resources/images/checkboxCircle.png")
-                : require("../../../resources/images/unCheckboxCircle.png")
-            }
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.containerForm2}
-          onPress={() => setTypeService("31")}
-        >
-          <Text style={styles.textTitle2}>Hospedaje</Text>
-          <Image
-            source={
-              typeService === "31"
-                ? require("../../../resources/images/checkboxCircle.png")
-                : require("../../../resources/images/unCheckboxCircle.png")
-            }
-          />
-        </TouchableOpacity>
+        <TipoServicios
+          name="Hospital"
+        />
 
         <View style={styles.box7}>
           <TouchableOpacity style={[styles.caja1]} onPress={onPressCancel}>

@@ -15,6 +15,11 @@ import { metrics } from "../../../utilities/Metrics";
 import { capitalize } from "../../../utilities/helpers";
 
 export const LastUpdate = (props) => {
+  const {
+    departamento = "",
+    municipio = "",
+    statusPoint = "",
+  } = props.navigation.state.params || {};
   const onPressClose = () => {
     props.navigation.goBack();
   };
@@ -27,7 +32,7 @@ export const LastUpdate = (props) => {
             source={require("../../../resources/images/riMapPinLine2.png")}
           />
           <Text style={styles.textTitle2}>
-            Antioquia/Medellin/Restringi....
+            {departamento + "/" + municipio + "/" + statusPoint}
           </Text>
         </View>
         <TouchableOpacity onPress={onPressClose}>

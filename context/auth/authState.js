@@ -67,15 +67,15 @@ const AuthState = (props) => {
    * @param {String} data.password - password del usuario
    * @return {Promise} devuelve una promesa al terminar la operacion, se utiliza para controlar un llamado sincrono
    */
-   const signInAnonymously = async () => {
+  const signInAnonymously = async () => {
     return new Promise((resolve, reject) => {
       auth()
         .signInAnonymously()
         .then((response) => {
-          console.log('signInAnonymously.response',response);
-          var user = { email:'',uid: response.user.uid };
+          console.log("signInAnonymously.response", response);
+          var user = { email: "", uid: response.user.uid };
           analytics().logEvent("signInAnonymously", { result: "true" });
-          console.log('user',user);
+          console.log("user", user);
           dispatch({
             type: LOG_IN,
             payload: user,
@@ -94,25 +94,26 @@ const AuthState = (props) => {
         });
     });
   };
-    /**
+  /**
    * metodo que valida si el usuario tiene una sesion activa y no le pide loggin
    * @return {Promise} devuelve una promesa al terminar la operacion, se utiliza para controlar un llamado sincrono
    */
   const isSignIn = async () => {
     return new Promise((resolve, reject) => {
-      auth()
-        .onAuthStateChanged(response => {
-          if(response){
-            var user = { email:response.email,uid: response.uid };
-            analytics().logEvent("isSignIn", { email: response.email, result: "true" });
-            dispatch({
-              type: LOG_IN,
-              payload: user,
-            });
-            resolve(response.uid);
-          }else
-            resolve(false);
-        })
+      auth().onAuthStateChanged((response) => {
+        if (response) {
+          var user = { email: response.email, uid: response.uid };
+          analytics().logEvent("isSignIn", {
+            email: response.email,
+            result: "true",
+          });
+          dispatch({
+            type: LOG_IN,
+            payload: user,
+          });
+          resolve(response.uid);
+        } else resolve(false);
+      });
     });
   };
   /**
@@ -177,10 +178,10 @@ const AuthState = (props) => {
    */
   const updateUserInputChange = ({ field, value }) => {
     dispatch({
-      type: UPDATED_USER_INPUT_CHANGE, 
-      payload: { field, value } 
+      type: UPDATED_USER_INPUT_CHANGE,
+      payload: { field, value },
     });
-  }
+  };
   /**
    * metodo que consulta la informacion del usuario contra la base de datos realtime.firebase
    * @param {String} uid - identificador unico del usuario
@@ -190,7 +191,6 @@ const AuthState = (props) => {
       .ref("/users/" + uid)
       .once("value", (snapshot) => {
         if (snapshot.hasChildren())
-        console.log('snapshot',snapshot.val())
           dispatch({
             type: UPDATED_USER,
             payload: snapshot.val(),
@@ -203,18 +203,18 @@ const AuthState = (props) => {
   /**
    * metodo que consulta los parametros de configuracion contra la base de datos realtime.firebase
    */
-   const getConfig = () => {
+  const getConfig = () => {
     return new Promise((resolve, reject) => {
       database()
         .ref("/config/")
         .once("value", (snapshot) => {
           if (snapshot.hasChildren())
-          console.log('getConfig.snapshot',snapshot.val())
-            dispatch({
-              type: GET_CONFIG,
-              payload: snapshot.val(),
-            });
-            resolve(snapshot.val());
+            console.log("getConfig.snapshot", snapshot.val());
+          dispatch({
+            type: GET_CONFIG,
+            payload: snapshot.val(),
+          });
+          resolve(snapshot.val());
         })
         .catch((error) => {
           alert(error);
@@ -229,7 +229,6 @@ const AuthState = (props) => {
     auth()
       .signOut()
       .then(() => {
-        console.log("Signed Out");
         dispatch({
           type: SIGN_OUT,
         });

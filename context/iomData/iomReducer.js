@@ -21,12 +21,7 @@ export default (state, action) => {
       };
       return {
         ...state,
-        dataLink:
-          action.item !== "" && action.item !== undefined
-            ? dataLink.filter((obj) =>
-                obj.Etiquetas.some((o) => o == action.item)
-              )
-            : dataLink,
+        dataLink: action.item !== "" && action.item !== undefined ? dataLink.filter((obj) =>obj.Etiquetas.some((o) => o == action.item)) : dataLink,
         dataLinkEtiquetas: mergeDedupe(unique),
         dataItem: null,
         messageError: null,
@@ -34,12 +29,13 @@ export default (state, action) => {
     case GET_DATA_POINT:
       const dataPoint = JSON.parse(action.payload);
       const uniqueState = [...new Set(dataPoint.map((item) => item.Estado))];
-      const uniqueDepartamento = [
-        ...new Set(dataPoint.map((item) => item.Departamento)),
-      ];
-      const uniqueMunicipio = [
-        ...new Set(dataPoint.map((item) => item.Municipio)),
-      ];
+      const uniqueDepartamento = [ ...new Set(dataPoint.map((item) => item.Departamento)),];
+      const uniqueMunicipio = [...new Set(dataPoint.map((item) => item.Municipio)),];
+      const uniqueService = [...new Set(dataPoint.map((item) => item.Servicios.map((item2 => item2.Servicio)) )),];
+      const mergeDedupe1 = (arr) => {
+        return [...new Set([].concat(...arr))];
+      };
+      //console.log("uniqueService", mergeDedupe1(uniqueService))
       return {
         ...state,
         dataPoint: JSON.parse(action.payload),
@@ -51,10 +47,12 @@ export default (state, action) => {
         //dataPointFilter: false,
       };
     case GET_DATA_DIRECTORY_FILTER:
-      console.log("action.payload", action.payload);
       return {
         ...state,
-        dataPointFilter: state.dataPoint.filter((item) => item.Departamento.toLowerCase().includes(action.payload.toLowerCase())),
+        dataPointFilter: state.dataPoint
+          .filter((item) => item.Departamento.toLowerCase().includes(action.departamento.toLowerCase()))
+          .filter((item) => item.Municipio.toLowerCase().includes(action.municipio.toLowerCase()))
+          .filter((item) => item.Estado.toLowerCase().includes(action.estado.toLowerCase())),
       };
     case GET_DATA_POINT_ID:
       return {
@@ -64,7 +62,9 @@ export default (state, action) => {
     case GET_DATA_DIRECTORY:
       return {
         ...state,
-        dataDirectory: JSON.parse(action.value).filter((item) => item.departamento.toLowerCase().includes(action.item.toLowerCase())),
+        dataDirectory: JSON.parse(action.value).filter((item) =>
+          item.departamento.toLowerCase().includes(action.item.toLowerCase())
+        ),
         dataItem: null,
         messageError: null,
       };
@@ -72,7 +72,9 @@ export default (state, action) => {
       return {
         ...state,
         message: null,
-        dataItem: state.dataDirectory.find((item) => item.departamento === action.payload),
+        dataItem: state.dataDirectory.find(
+          (item) => item.departamento === action.payload
+        ),
       };
     case GET_DATA_DIRECTORY_SERVICE:
       return {
