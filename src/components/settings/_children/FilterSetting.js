@@ -2,28 +2,15 @@
 import React, { useState, useContext, useEffect } from "react";
 import HeaderItem from "../../global/_children/HeaderItem";
 import ModalFilter from "../../links/_children/ModalFilter";
-import { StyleSheet, Text, Image, View, TouchableOpacity, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  Image,
+  View,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
-
-export const TipoServicios = ({ name = "" }) => {
-  const [typeService1, setTypeService1] = useState("");
-  console.log("typeService1", typeService1);
-  return (
-    <TouchableOpacity
-      style={styles.containerForm2}
-      onPress={() => setTypeService1(name)}
-    >
-      <Text style={styles.textTitle2}>{name}</Text>
-      <Image
-        source={
-          typeService1 === name
-            ? require("../../../resources/images/checkboxCircle.png")
-            : require("../../../resources/images/unCheckboxCircle.png")
-        }
-      />
-    </TouchableOpacity>
-  );
-};
 
 const FilterSetting = (props) => {
   const {
@@ -44,7 +31,6 @@ const FilterSetting = (props) => {
   const [departamento, setDepartamento] = useState("");
 
   console.log("typeService", typeService);
-  console.log("dataMapeoService", dataMapeoService);
 
   useEffect(() => {
     getDataMapeoService();
@@ -60,11 +46,12 @@ const FilterSetting = (props) => {
   };
 
   const onPressFilter = () => {
-    getDataPointFilter(departamento, municipio, statusPoint);
+    getDataPointFilter(departamento, municipio, statusPoint, typeService);
     props.navigation.navigate("PointListResult", {
       departamento,
       municipio,
       statusPoint,
+      typeService
     });
   };
 
@@ -124,7 +111,20 @@ const FilterSetting = (props) => {
         <Text style={styles.textTitle2}>Tipo de servicio</Text>
 
         {dataMapeoService.map((l, i) => (
-          <TipoServicios key={i} name={l.servicio.substring(0, 30)} />
+          <TouchableOpacity
+            key={i}
+            style={styles.containerForm2}
+            onPress={() => setTypeService(l.servicio)}
+          >
+            <Text style={styles.textTitle2}>{l.servicio.substring(0, 30)}</Text>
+            <Image
+              source={
+                typeService === l.servicio
+                  ? require("../../../resources/images/checkboxCircle.png")
+                  : require("../../../resources/images/unCheckboxCircle.png")
+              }
+            />
+          </TouchableOpacity>
         ))}
 
         <View style={styles.box7}>
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
   box7: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 60,
+    marginVertical: 30,
   },
   caja1: {
     justifyContent: "center",
