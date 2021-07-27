@@ -30,11 +30,10 @@ export default (state, action) => {
       const uniqueState = [...new Set(dataPoint.map((item) => item.Estado))];
       const uniqueDepartamento = [...new Set(dataPoint.map((item) => item.Departamento)),];
       const uniqueMunicipio = [...new Set(dataPoint.map((item) => item.Municipio)),];
-      const uniqueService = [...new Set(dataPoint.map((item) => item.Servicios.map((item2) => item2.Servicio))),];
+      /*const uniqueService = [...new Set(dataPoint.map((item) => item.Servicios.map((item2) => item2.Servicio))),];
       const mergeDedupe1 = (arr) => {
         return [...new Set([].concat(...arr))];
-      };
-      //console.log("uniqueService", mergeDedupe1(uniqueService))
+      };*/
       return {
         ...state,
         dataPoint: JSON.parse(action.payload),
@@ -51,7 +50,8 @@ export default (state, action) => {
         dataPointFilter: state.dataPoint
           .filter((item) => item.Departamento.toLowerCase().includes(action.departamento.toLowerCase()))
           .filter((item) => item.Municipio.toLowerCase().includes(action.municipio.toLowerCase()))
-          .filter((item) => item.Estado.toLowerCase().includes(action.estado.toLowerCase())),
+          .filter((item) => item.Estado.toLowerCase().includes(action.estado.toLowerCase()))
+          .filter((item) => item.Servicios.some((o) => o.Servicio.toLowerCase().includes(action.typeService.toLowerCase()))),
       };
     case GET_DATA_POINT_ID:
       return {
