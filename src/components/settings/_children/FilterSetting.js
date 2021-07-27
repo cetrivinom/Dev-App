@@ -1,13 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import HeaderItem from "../../global/_children/HeaderItem";
 import ModalFilter from "../../links/_children/ModalFilter";
-import { StyleSheet, Text, Image, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, Image, View, TouchableOpacity, ScrollView } from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
 
-export const TipoServicios = ({
-  name = "",
-}) => {
+export const TipoServicios = ({ name = "" }) => {
   const [typeService1, setTypeService1] = useState("");
   console.log("typeService1", typeService1);
   return (
@@ -32,7 +30,9 @@ const FilterSetting = (props) => {
     dataPointState,
     dataPointDepartamento,
     dataPointMunicipio,
+    dataMapeoService,
     getDataPointFilter,
+    getDataMapeoService,
   } = useContext(IOMContext);
   const [show, setShow] = useState(false);
   const [openStatus, setOpenStatus] = useState(false);
@@ -44,6 +44,11 @@ const FilterSetting = (props) => {
   const [departamento, setDepartamento] = useState("");
 
   console.log("typeService", typeService);
+  console.log("dataMapeoService", dataMapeoService);
+
+  useEffect(() => {
+    getDataMapeoService();
+  }, []);
 
   const onPressCancel = () => {
     setTypeService("");
@@ -64,7 +69,7 @@ const FilterSetting = (props) => {
   };
 
   return (
-    <View style={styles.wrapper}>
+    <ScrollView style={styles.wrapper}>
       <HeaderItem {...props} title="Filtrar puntos de servicio" />
       <View style={[styles.box, styles.box2]}>
         <TouchableOpacity
@@ -117,9 +122,10 @@ const FilterSetting = (props) => {
         </TouchableOpacity>
         <View style={styles.divider}></View>
         <Text style={styles.textTitle2}>Tipo de servicio</Text>
-        <TipoServicios
-          name="Hospital"
-        />
+
+        {dataMapeoService.map((l, i) => (
+          <TipoServicios key={i} name={l.servicio.substring(0, 30)} />
+        ))}
 
         <View style={styles.box7}>
           <TouchableOpacity style={[styles.caja1]} onPress={onPressCancel}>
@@ -166,7 +172,7 @@ const FilterSetting = (props) => {
             : null
         }
       />
-    </View>
+    </ScrollView>
   );
 };
 

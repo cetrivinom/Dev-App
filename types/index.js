@@ -19,3 +19,4 @@ export const GET_DATA_FAVORITES = "GET_DATA_FAVORITES";
 export const GET_DATA = "GET_DATA";
 export const GET_DATA_ERROR = "GET_DATA_ERROR";
 export const GET_CONFIG = "GET_CONFIG";
+export const GET_DATA_MAPEO_SERVICE = "GET_DATA_MAPEO_SERVICE";

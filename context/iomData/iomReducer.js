@@ -9,6 +9,7 @@ import {
   GET_DATA_ERROR,
   GET_DATA_POINT_ID,
   GET_DATA_DIRECTORY_ITEM,
+  GET_DATA_MAPEO_SERVICE,
 } from "../../types";
 
 export default (state, action) => {
@@ -16,12 +17,10 @@ export default (state, action) => {
     case GET_DATA_LINK:
       const dataLink = JSON.parse(action.value);
       const unique = [...new Set(dataLink.map((item) => item.Etiquetas))];
-      const mergeDedupe = (arr) => {
-        return [...new Set([].concat(...arr))];
-      };
+      const mergeDedupe = (arr) => {return [...new Set([].concat(...arr))];};
       return {
         ...state,
-        dataLink: action.item !== "" && action.item !== undefined ? dataLink.filter((obj) =>obj.Etiquetas.some((o) => o == action.item)) : dataLink,
+        dataLink: action.item !== "" && action.item !== undefined ? dataLink.filter((obj) => obj.Etiquetas.some((o) => o == action.item)) : dataLink,
         dataLinkEtiquetas: mergeDedupe(unique),
         dataItem: null,
         messageError: null,
@@ -29,9 +28,9 @@ export default (state, action) => {
     case GET_DATA_POINT:
       const dataPoint = JSON.parse(action.payload);
       const uniqueState = [...new Set(dataPoint.map((item) => item.Estado))];
-      const uniqueDepartamento = [ ...new Set(dataPoint.map((item) => item.Departamento)),];
+      const uniqueDepartamento = [...new Set(dataPoint.map((item) => item.Departamento)),];
       const uniqueMunicipio = [...new Set(dataPoint.map((item) => item.Municipio)),];
-      const uniqueService = [...new Set(dataPoint.map((item) => item.Servicios.map((item2 => item2.Servicio)) )),];
+      const uniqueService = [...new Set(dataPoint.map((item) => item.Servicios.map((item2) => item2.Servicio))),];
       const mergeDedupe1 = (arr) => {
         return [...new Set([].concat(...arr))];
       };
@@ -62,9 +61,7 @@ export default (state, action) => {
     case GET_DATA_DIRECTORY:
       return {
         ...state,
-        dataDirectory: JSON.parse(action.value).filter((item) =>
-          item.departamento.toLowerCase().includes(action.item.toLowerCase())
-        ),
+        dataDirectory: JSON.parse(action.value).filter((item) => item.departamento.toLowerCase().includes(action.item.toLowerCase())),
         dataItem: null,
         messageError: null,
       };
@@ -72,9 +69,7 @@ export default (state, action) => {
       return {
         ...state,
         message: null,
-        dataItem: state.dataDirectory.find(
-          (item) => item.departamento === action.payload
-        ),
+        dataItem: state.dataDirectory.find((item) => item.departamento === action.payload),
       };
     case GET_DATA_DIRECTORY_SERVICE:
       return {
@@ -83,13 +78,17 @@ export default (state, action) => {
         dataItem: null,
         messageError: null,
       };
+    case GET_DATA_MAPEO_SERVICE:
+      return {
+        ...state,
+        dataMapeoService: JSON.parse(action.payload),
+        messageError: null,
+      };
     case GET_DATA_DIRECTORY_SERVICE_ITEM:
       return {
         ...state,
         message: null,
-        dataItemService: state.dataDirectoryService.find(
-          (item) => item.id === action.payload
-        ),
+        dataItemService: state.dataDirectoryService.find((item) => item.id === action.payload),
       };
     case GET_DATA_FAVORITES:
       return {

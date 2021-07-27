@@ -10,6 +10,7 @@ const Splash = (props) => {
     "api-mapeo.json",
     "lines.json",
     "api-lineas-telefonicas-servicios.json",
+    "api-mapeo-servicios.json"
   ];
 
   useEffect(() => {
