@@ -37,12 +37,15 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   textTitle2: {
+    flex: 1, 
+    flexWrap: 'wrap',
     fontSize: 14,
     fontWeight: "bold",
     lineHeight: 16,
     letterSpacing: 0.0025,
     color: "#007681",
     marginTop: 2,
+    marginBottom: 5,
     marginStart: 10.5,
   },
   containerForm2: {

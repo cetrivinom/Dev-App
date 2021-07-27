@@ -8,10 +8,11 @@ import IOMContext from "../../../context/iomData/iomContext";
 
 const Settings = (props) => {
   const [position, setPosition] = useState(null);
-  const { dataPoint, getDataPoint } = useContext(IOMContext);
+  const { dataPoint, getDataPoint,getDataMapeoService } = useContext(IOMContext);
 
   useEffect(() => {
     getDataPoint();
+    getDataMapeoService();
     Geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;

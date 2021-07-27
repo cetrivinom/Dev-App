@@ -14,7 +14,7 @@ import ServiceItem from "./ServiceItem";
 import { capitalize } from "../../../utilities/helpers";
 
 const PointItem = (props) => {
-  const { dataItem, getDataPointById } = useContext(IOMContext);
+  const { dataItem, dataMapeoService, getDataPointById } = useContext(IOMContext);
   const { id = "" } = props.navigation.state.params || {};
 
   const {
@@ -30,7 +30,7 @@ const PointItem = (props) => {
   useEffect(() => {
     getDataPointById(id);
   }, [id]);
-
+  console.log('dataMapeoService',dataMapeoService);
   const onPressOpenComents = () => {
     props.navigation.navigate("PointItemComents", { id, Nombre_punto });
   };

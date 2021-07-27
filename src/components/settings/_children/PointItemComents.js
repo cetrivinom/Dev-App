@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
+import { metrics } from "../../../utilities/Metrics";
 
 const PointItemComents = (props) => {
   const { id = "", Nombre_punto = "" } = props.navigation.state.params || {};
@@ -18,6 +19,8 @@ const PointItemComents = (props) => {
 
   return (
     <View style={styles.wrapper}>
+      <View style={styles.statusBarBackground}>
+      </View>
       <View style={[styles.box, styles.box1]}>
         <View style={styles.boxImage}>
           <Image source={require("../../../resources/images/linkIcon.png")} />
@@ -205,9 +208,13 @@ const styles = StyleSheet.create({
   inputTextBox: {
     borderColor: "#A1AAB2",
     //fontFamily: "Roboto",
+    marginTop:metrics.HEIGHT*0.02,
     borderRadius: 3.5,
     paddingLeft: 15,
     borderWidth: 1,
+  },
+  statusBarBackground:{
+    height: (Platform.OS === 'ios') ? metrics.WIDTH * 0.06 : 0,
   },
 });
 
