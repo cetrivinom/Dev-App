@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   image: {
     position: "absolute",
-    right: -metrics.WIDTH * 0.26,
+    right: -metrics.WIDTH * 0.24,
     top: -metrics.HEIGHT * 0.007,
   },
 });

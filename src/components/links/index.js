@@ -12,6 +12,7 @@ import CardItemLink from "./_children/CardItemLink";
 import HeaderFilterLink from "./_children/HeaderFilterLink";
 import ModalFilter from "./_children/ModalFilter";
 import IOMContext from "../../../context/iomData/iomContext";
+import { metrics } from "../../utilities/Metrics";
 
 const Links = (props) => {
   const [showFilterOption, setShowFilterOption] = useState(false);
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 42,
     borderWidth: 1,
-    width: 175,
+    width: metrics.WIDTH*0.5,
     borderRadius: 25,
     borderColor: "#A1AAB2",
   },

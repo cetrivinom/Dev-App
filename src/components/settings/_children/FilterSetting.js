@@ -11,6 +11,7 @@ import {
   ScrollView,
 } from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
+import { metrics } from "../../../utilities/Metrics";
 
 const FilterSetting = (props) => {
   const {
@@ -243,7 +244,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 42,
     borderWidth: 1,
-    width: 175,
+    width: metrics.WIDTH * 0.42,
     borderRadius: 25,
     borderColor: "#A1AAB2",
   },

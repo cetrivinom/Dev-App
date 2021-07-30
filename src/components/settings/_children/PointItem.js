@@ -12,6 +12,7 @@ import HeaderItem from "../../global/_children/HeaderItem";
 import IOMContext from "../../../../context/iomData/iomContext";
 import ServiceItem from "./ServiceItem";
 import { capitalize } from "../../../utilities/helpers";
+import { metrics } from "../../../utilities/Metrics";
 
 const PointItem = (props) => {
   const { dataItem, getDataPointById } = useContext(IOMContext);
@@ -154,8 +155,8 @@ const styles = StyleSheet.create({
     flex: 10,
   },
   box5: {
-    marginRight: 20,
-    marginLeft: 20,
+    marginRight: metrics.WIDTH*0.055,
+    marginLeft: metrics.WIDTH*0.055,
     marginBottom: 10,
   },
   divider: {
@@ -170,18 +171,18 @@ const styles = StyleSheet.create({
   },
   overlay: {
     height: 34,
-    width: 130,
+    width: metrics.WIDTH*0.3,
     backgroundColor: "#132A3E",
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
   },
   caja1Text: {
-    width: 220,
-    fontSize: 18,
+    width: metrics.WIDTH*0.61,
+    fontSize: metrics.HEIGHT*0.024,
     fontWeight: "bold",
     color: "#003031",
-    lineHeight: 23,
+    lineHeight: metrics.HEIGHT*0.033,
     letterSpacing: 0.0015,
     alignSelf: "stretch",
   },
