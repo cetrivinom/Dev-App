@@ -6,7 +6,7 @@ import { metrics } from "../../utilities/Metrics";
 
 const Profile = (props) => {
   const { navigation } = props;
-  const { user, signOut } = useContext(AuthContext);
+  const { user, signOut,updatePassInputChange } = useContext(AuthContext);
   const onPressBack = () => {
     navigation.goBack();
   };
@@ -61,6 +61,7 @@ const Profile = (props) => {
             <CardItemProfile
               {...props}
               title="Contraseña"
+              field="password"
               subTitle="****************"
               showImge
             />

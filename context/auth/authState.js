@@ -8,6 +8,7 @@ import {
   SIGN_OUT_ERROR,
   UPDATED_USER,
   UPDATED_USER_INPUT_CHANGE,
+  UPDATED_PASS_INPUT_CHANGE,
   GET_CONFIG,
 } from "../../types";
 import AuthReducer from "./authReducer";
@@ -23,6 +24,7 @@ const AuthState = (props) => {
     auth: null,
     user: null,
     message: null,
+    pass: null,
     config: null,
   };
 
@@ -145,6 +147,36 @@ const AuthState = (props) => {
     });
   };
   /**
+   * metodo que actualiza el password en firebase
+   * @param {String} currentPass - password anterior
+   * @param {String} newPass - nuevo password
+   */
+  const updatePassword = async (pass) => {
+    console.log('updatePass:',pass,auth().currentUser.email)
+    return new Promise((resolve, reject) => {
+      const emailCred  = auth.EmailAuthProvider.credential(
+        auth().currentUser.email, pass.currentPass);
+        console.log('1')
+        console.log('2',emailCred);
+      auth().currentUser.reauthenticateWithCredential(emailCred)
+        .then(() => {
+          console.log('3')
+          auth().currentUser.updatePassword(pass.newPass).then((response) =>{
+            console.log('updatePassword',response);
+            analytics().logEvent("updatePassword", { 
+              user:auth().currentUser.email,
+              result: "true" 
+            });
+            resolve(true);
+          });
+        })
+        .catch((error) => {
+          console.log('error:',error);
+          resolve(false);
+        });
+    });
+  };
+  /**
    * metodo que actualiza la informacion del usuario contra la base de datos realtime.firebase
    * @param {Object} data datos del usuario
    * @param {String} data.email - email del usuario
@@ -179,6 +211,18 @@ const AuthState = (props) => {
   const updateUserInputChange = ({ field, value }) => {
     dispatch({
       type: UPDATED_USER_INPUT_CHANGE,
+      payload: { field, value },
+    });
+  };
+  /**
+   * metodo que actualiza el password cuando el usuario quiere cambiarlo
+   * @param {String} field - identificador del campo
+   * @param {String} value - valor del campo
+   */
+  const updatePassInputChange = ({ field, value }) => {
+    console.log(field,value)
+    dispatch({
+      type: UPDATED_PASS_INPUT_CHANGE,
       payload: { field, value },
     });
   };
@@ -249,6 +293,7 @@ const AuthState = (props) => {
         message: state.message,
         registre: state.registre,
         config: state.config,
+        pass: state.pass,
         signIn,
         signInAnonymously,
         isSignIn,
@@ -257,6 +302,8 @@ const AuthState = (props) => {
         updateUser,
         getUser,
         updateUserInputChange,
+        updatePassInputChange,
+        updatePassword,
         getConfig,
       }}
     >

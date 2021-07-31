@@ -96,5 +96,31 @@ export default StyleSheet.create({
   statusBarBackground:{
     height: (Platform.OS === 'ios') ? metrics.WIDTH * 0.06 : 0,
     backgroundColor: "#00AAAD",
+  },  
+  inputTextBox: {
+    height: 56,
+    borderColor: "#A1AAB2",
+    borderRadius: 3.5,
+    paddingLeft: 15,
+    borderWidth: 1,
+    marginTop: 30,
   },
+  SectionStyle: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#A1AAB2',
+    height: 56,
+    borderRadius: 5,
+    marginTop: 30,
+    //margin: 10,
+  },
+  ImageStyle: {
+      margin: 14,
+      height: 20,
+      width: 18,
+      resizeMode: 'stretch',
+      alignItems: 'center',
+  }
 });

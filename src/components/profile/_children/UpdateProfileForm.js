@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useState,useContext } from "react";
 import {
   View,
   Text,
   Image,
+  TextInput,
   TouchableHighlight,
   TouchableOpacity,
 } from "react-native";
@@ -12,10 +13,20 @@ import moment from "moment";
 import AuthContext from "../../../../context/auth/authContext";
 
 export const Footer = (props) => {
-  const {user,  updateUser } = useContext(AuthContext);
+  const {user,  updateUser,updatePassword,pass } = useContext(AuthContext);
   const onPressSave = () => {
-    updateUser(user);
-    props.navigation.navigate("Profile");
+    console.log('pass',pass);
+    if(pass.currentPass.length > 1 && pass.newPass.length > 1){
+      console.log('action.changePass');
+      updatePassword(pass).then((result) => {
+        console.log('result',result);
+        if(result)
+        props.navigation.navigate("Profile");
+      });
+    }else {
+      updateUser(user);
+      props.navigation.navigate("Profile");
+    }
   };
 
   return (
@@ -118,12 +129,56 @@ export const UpdateBirthDate = (props) => {
     </View>
   );
 };
+
+export const UpdatePassword= (props) => {
+  const {updatePassInputChange } = useContext(AuthContext);
+  return (
+    <View style={[Styles.box, Styles.box2]}>
+      <View style={Styles.container}>
+        <Text style={Styles.labelTitle}>Ingresa tu nueva contraseña</Text>
+        <View style={Styles.SectionStyle}>
+          <Image
+            source={require('../../../resources/images/lock.png')} //Change your icon image here
+            style={Styles.ImageStyle}
+          />
+          <TextInput
+            style={{ flex: 1 }}
+            secureTextEntry={true}
+            placeholder="Contraseña Actual"
+            underlineColorAndroid="transparent"
+            onChangeText={(e) => {
+              updatePassInputChange({ 'field': 'currentPass', 'value': e});            
+            }}
+          />
+        </View>
+        <View style={Styles.SectionStyle}>
+          <Image
+            source={require('../../../resources/images/lock.png')} //Change your icon image here
+            style={Styles.ImageStyle}
+          />
+          <TextInput
+            style={{ flex: 1}}
+            secureTextEntry={true}
+            placeholder="Nueva Contraseña"
+            underlineColorAndroid="transparent"
+            onChangeText={(e) => {
+              updatePassInputChange({ 'field': 'newPass', 'value': e});  
+            }}
+          />
+        </View>
+      </View>
+    </View>
+  );
+};
+
 const ShowComponentToUpdate = (props) => {
   const { field = "" } = props.navigation.state.params || {};
   if (field == "genero") {
     return <UpdateGender {...props}></UpdateGender>;
   } else if (field == "birthdate") {
     return <UpdateBirthDate {...props}></UpdateBirthDate>;
+  } else if (field == "password") {
+    return <UpdatePassword {...props}></UpdatePassword>;
   } else return null;
 };
 
