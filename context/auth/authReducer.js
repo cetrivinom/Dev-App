@@ -6,6 +6,7 @@ import {
   SIGN_OUT,
   SIGN_OUT_ERROR,
   UPDATED_USER,
+  UPDATED_PASS,
   UPDATED_USER_INPUT_CHANGE,
   UPDATED_PASS_INPUT_CHANGE,
   GET_CONFIG,
@@ -74,11 +75,16 @@ export default (state, action) => {
         user: { ...state.user, [action.payload.field]: action.payload.value },
       };
     case UPDATED_PASS_INPUT_CHANGE:
-      console.log('xx',state)
       return {
         ...state,
         auth: true,
         pass: { ...state.pass, [action.payload.field]: action.payload.value },
+      };
+    case UPDATED_PASS:
+      return {
+        ...state,
+        message: null,
+        pass: null,
       };
     case SIGN_OUT:
       return {

@@ -7,6 +7,7 @@ import {
   SIGN_OUT,
   SIGN_OUT_ERROR,
   UPDATED_USER,
+  UPDATED_PASS,
   UPDATED_USER_INPUT_CHANGE,
   UPDATED_PASS_INPUT_CHANGE,
   GET_CONFIG,
@@ -156,23 +157,25 @@ const AuthState = (props) => {
     return new Promise((resolve, reject) => {
       const emailCred  = auth.EmailAuthProvider.credential(
         auth().currentUser.email, pass.currentPass);
-        console.log('1')
-        console.log('2',emailCred);
       auth().currentUser.reauthenticateWithCredential(emailCred)
         .then(() => {
-          console.log('3')
           auth().currentUser.updatePassword(pass.newPass).then((response) =>{
-            console.log('updatePassword',response);
             analytics().logEvent("updatePassword", { 
               user:auth().currentUser.email,
               result: "true" 
             });
-            resolve(true);
+            resolve({value:true});
+          })
+          .catch((error) => {
+            resolve({value:false,message:'la nueva contraseña no es valida'});
           });
         })
         .catch((error) => {
-          console.log('error:',error);
-          resolve(false);
+          analytics().logEvent("updatePassword", { 
+            user:auth().currentUser.email,
+            result: "false" 
+          });
+          resolve({value:false,message:'la contraseña actual no es valida'});
         });
     });
   };

@@ -11,17 +11,26 @@ import { DatePicker } from "react-native-wheel-datepicker";
 import Styles from "./styles";
 import moment from "moment";
 import AuthContext from "../../../../context/auth/authContext";
+import { Snackbar } from "react-native-paper";
 
 export const Footer = (props) => {
-  const {user,  updateUser,updatePassword,pass } = useContext(AuthContext);
+  const {user,  updateUser,updatePassword,updatePassInputChange,pass } = useContext(AuthContext);
+  const [visible, setVisible] = useState(false);
+  const [error, setError] = useState('');
+
+  const onDismissSnackBar = () => setVisible(false);
   const onPressSave = () => {
-    console.log('pass',pass);
-    if(pass.currentPass.length > 1 && pass.newPass.length > 1){
-      console.log('action.changePass');
+    if(pass && pass.currentPass.length > 1 && pass.newPass.length > 1){
       updatePassword(pass).then((result) => {
-        console.log('result',result);
-        if(result)
-        props.navigation.navigate("Profile");
+        if(result.value){
+          props.navigation.navigate("Profile");
+        }
+        else{
+          setVisible(true);
+          setError(result.message)
+        }
+        updatePassInputChange({ 'field': 'currentPass', 'value': ''});  
+        updatePassInputChange({ 'field': 'newPass', 'value': ''});  
       });
     }else {
       updateUser(user);
@@ -31,6 +40,20 @@ export const Footer = (props) => {
 
   return (
     <View style={Styles.containerSaveButton}>
+    <View>
+      <Snackbar
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        duration={3000}
+        action={{
+          label: "X",
+          onPress: () => {
+          },
+        }}
+      >
+        {error}
+      </Snackbar>
+    </View>
       <TouchableHighlight onPress={onPressSave}>
         <Text style={Styles.labelSaveButton}>Guardar</Text>
       </TouchableHighlight>
@@ -45,63 +68,63 @@ export const UpdateGender = (props) => {
     <View style={[Styles.box, Styles.box2]}>
       <View style={Styles.container}>
         <Text style={Styles.labelTitle}>Selecciona tu género</Text>
-        <View style={Styles.containerForm1}>
-          <TouchableOpacity onPress={() => updateUserInputChange({ 'field': 'gender', 'value': 'M'})}>
-            <View style={Styles.containerForm}>
-              <Image
-                source={require("../../../resources/images/riWomenFill.png")}
-                style={Styles.righLine3}
-              />
-              <Text style={Styles.labelItem}>Mujer</Text>
-              <Image
-                source={
-                  user.gender === "M"
-                    ? require("../../../resources/images/checkboxCircle.png")
-                    : require("../../../resources/images/unCheckboxCircle.png")
+        <TouchableOpacity style={Styles.SectionStyle1} onPress={() => updateUserInputChange({ 'field': 'gender', 'value': 'M'})}>
+          <View style={Styles.sectionGender}>
+            <Image
+              source={require("../../../resources/images/riWomenFill.png")}
+            />
+          </View>
+          <View style={Styles.sectionLabel}>
+            <Text style={Styles.labelItem}>Mujer</Text>
+          </View>
+          <View style={Styles.sectionSelect}>
+            <Image
+              source={
+                user.gender === "M" || user.gender === undefined
+                  ? require("../../../resources/images/checkboxCircle.png")
+                  : require("../../../resources/images/unCheckboxCircle.png")
                 }
-                style={Styles.righLine2}
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={Styles.containerForm1}>
-          <TouchableOpacity onPress={() => updateUserInputChange({ 'field': 'gender', 'value': 'H'})}>
-            <View style={Styles.containerForm}>
-              <Image
-                source={require("../../../resources/images/riMenFill.png")}
-                style={Styles.righLine3}
-              />
-              <Text style={Styles.labelItem}>Hombre</Text>
-              <Image
-                source={
-                  user.gender === "H"
-                    ? require("../../../resources/images/checkboxCircle.png")
-                    : require("../../../resources/images/unCheckboxCircle.png")
+            />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={Styles.SectionStyle1} onPress={() => updateUserInputChange({ 'field': 'gender', 'value': 'H'})}>
+          <View style={Styles.sectionGender}>
+            <Image
+              source={require("../../../resources/images/riMenFill.png")}
+            />
+          </View>
+          <View style={Styles.sectionLabel}>
+            <Text style={Styles.labelItem}>Hombre</Text>
+          </View>
+          <View style={Styles.sectionSelect}>
+            <Image
+              source={
+                user.gender === "H" || user.gender === undefined
+                  ? require("../../../resources/images/checkboxCircle.png")
+                  : require("../../../resources/images/unCheckboxCircle.png")
                 }
-                style={Styles.righLine2}
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={Styles.containerForm1}>
-          <TouchableOpacity onPress={() => updateUserInputChange({ 'field': 'gender', 'value': 'O'})}>
-            <View style={Styles.containerForm}>
-              <Image
-                source={require("../../../resources/images/riGenderlessFill.png")}
-                style={Styles.righLine3}
-              />
-              <Text style={Styles.labelItem}>Otro</Text>
-              <Image
-                source={
-                  user.gender === "O" || user.gender === undefined
-                    ? require("../../../resources/images/checkboxCircle.png")
-                    : require("../../../resources/images/unCheckboxCircle.png")
+            />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={Styles.SectionStyle1} onPress={() => updateUserInputChange({ 'field': 'gender', 'value': 'O'})}>
+          <View style={Styles.sectionGender}>
+            <Image
+              source={require("../../../resources/images/riGenderlessFill.png")}
+            />
+          </View>
+          <View style={Styles.sectionLabel}>
+            <Text style={Styles.labelItem}>Otro</Text>
+          </View>
+          <View style={Styles.sectionSelect}>
+            <Image
+              source={
+                user.gender === "O" || user.gender === undefined
+                  ? require("../../../resources/images/checkboxCircle.png")
+                  : require("../../../resources/images/unCheckboxCircle.png")
                 }
-                style={Styles.righLine2}
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
+            />
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

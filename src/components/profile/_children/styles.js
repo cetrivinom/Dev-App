@@ -61,6 +61,12 @@ export default StyleSheet.create({
     color: "#003031",
     marginBottom: 32,
   },
+  labelItem: {
+    fontSize: 18,
+    marginLeft:15,
+    letterSpacing: 0.0015,
+    color: "#003031",
+  },
   labelSaveButton: {
     fontSize: 22,
     textAlign: "center",
@@ -72,7 +78,7 @@ export default StyleSheet.create({
   },
 
   containerForm1: {
-    backgroundColor: "#E7EAEC",
+    backgroundColor: "red",
     marginBottom: 24,
     paddingLeft: 52,
     borderRadius: 8,
@@ -86,6 +92,7 @@ export default StyleSheet.create({
   },
   righLine3: {
     position: "absolute",
+    backgroundColor: "orange",
     right: metrics.WIDTH * 0.8,
   },
   saveButton: {},
@@ -122,5 +129,50 @@ export default StyleSheet.create({
       width: 18,
       resizeMode: 'stretch',
       alignItems: 'center',
+  },
+  SectionStyle1: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: metrics.HEIGHT*0.032,
+    /*borderWidth: 1,
+    borderColor: '#A1AAB2',
+    height: 56,
+    borderRadius: 5,
+    marginTop: 30,*/
+    //margin: 10,
+  },
+  sectionGender:{
+    backgroundColor:'rgba(0, 170, 173, 0.2)',
+    flex:0.15,
+    height:metrics.HEIGHT*0.055,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomLeftRadius:5,
+    borderTopLeftRadius:5
+  },
+  sectionLabel:{
+    backgroundColor:'#E7EAEC',
+    flex:0.7,
+    height:metrics.HEIGHT*0.055,
+    justifyContent: 'center'
+  },
+  sectionSelect:{
+    backgroundColor:'#E7EAEC',
+    flex:0.15,
+    height:metrics.HEIGHT*0.055,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomRightRadius:5,
+    borderTopRightRadius:5
+  },
+  ImageStyle1: {
+      //margin: 14,
+      //height: 20,
+      //width: 18,
+      //resizeMode: 'stretch',
+      borderTopLeftRadius:30,
+      borderBottomLeftRadius:30,
+      borderRadius:50,
   }
 });
