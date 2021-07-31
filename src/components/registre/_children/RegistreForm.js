@@ -176,63 +176,63 @@ export const RegistreForm2 = ({ setForm, setData, data }) => {
     <View style={Styles.container}>
       <View style={[Styles.box, Styles.box1]}>
         <Text style={Styles.labelTitle}>Selecciona tu género</Text>
-        <View style={Styles.containerForm}>
-          <TouchableOpacity onPress={() => setData({ ...data, gender: "M" })}>
-            <View style={Styles.containerForm2}>
-              <Image
-                source={require("../../../resources/images/riWomenFill.png")}
-                style={Styles.righLine3}
-              />
-              <Text style={Styles.labelItem}>Mujer</Text>
-              <Image
-                source={
-                  data.gender === "M"
-                    ? require("../../../resources/images/checkboxCircle.png")
-                    : require("../../../resources/images/unCheckboxCircle.png")
+        <TouchableOpacity style={Styles.SectionStyle1} onPress={() => setData({ ...data, gender: "M" })}>
+          <View style={Styles.sectionGender}>
+            <Image
+              source={require("../../../resources/images/riWomenFill.png")}
+            />
+          </View>
+          <View style={Styles.sectionLabel}>
+            <Text style={Styles.labelItem}>Mujer</Text>
+          </View>
+          <View style={Styles.sectionSelect}>
+            <Image
+              source={
+                data.gender === "M"
+                  ? require("../../../resources/images/checkboxCircle.png")
+                  : require("../../../resources/images/unCheckboxCircle.png")
                 }
-                style={Styles.righLine2}
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={Styles.containerForm}>
-          <TouchableOpacity onPress={() => setData({ ...data, gender: "H" })}>
-            <View style={Styles.containerForm2}>
-              <Image
-                source={require("../../../resources/images/riMenFill.png")}
-                style={Styles.righLine3}
-              />
-              <Text style={Styles.labelItem}>Hombre</Text>
-              <Image
-                source={
-                  data.gender === "H"
-                    ? require("../../../resources/images/checkboxCircle.png")
-                    : require("../../../resources/images/unCheckboxCircle.png")
+            />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={Styles.SectionStyle1} onPress={() => setData({ ...data, gender: "H" })}>
+          <View style={Styles.sectionGender}>
+            <Image
+              source={require("../../../resources/images/riMenFill.png")}
+            />
+          </View>
+          <View style={Styles.sectionLabel}>
+            <Text style={Styles.labelItem}>Hombre</Text>
+          </View>
+          <View style={Styles.sectionSelect}>
+            <Image
+              source={
+                data.gender === "H"
+                  ? require("../../../resources/images/checkboxCircle.png")
+                  : require("../../../resources/images/unCheckboxCircle.png")
                 }
-                style={Styles.righLine2}
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={Styles.containerForm}>
-          <TouchableOpacity onPress={() => setData({ ...data, gender: "O" })}>
-            <View style={Styles.containerForm2}>
-              <Image
-                source={require("../../../resources/images/riGenderlessFill.png")}
-                style={Styles.righLine3}
-              />
-              <Text style={Styles.labelItem}>Otro</Text>
-              <Image
-                source={
-                  data.gender === "O"
-                    ? require("../../../resources/images/checkboxCircle.png")
-                    : require("../../../resources/images/unCheckboxCircle.png")
+            />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={Styles.SectionStyle1} onPress={() => setData({ ...data, gender: "O" })}>
+          <View style={Styles.sectionGender}>
+            <Image
+              source={require("../../../resources/images/riGenderlessFill.png")}
+            />
+          </View>
+          <View style={Styles.sectionLabel}>
+            <Text style={Styles.labelItem}>Otro</Text>
+          </View>
+          <View style={Styles.sectionSelect}>
+            <Image
+              source={
+                data.gender === "O"
+                  ? require("../../../resources/images/checkboxCircle.png")
+                  : require("../../../resources/images/unCheckboxCircle.png")
                 }
-                style={Styles.righLine2}
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
+            />
+          </View>
+        </TouchableOpacity>
       </View>
       <Footer formValue={2} title="Siguiente" setForm={setForm} />
     </View>

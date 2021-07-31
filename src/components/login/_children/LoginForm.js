@@ -75,7 +75,27 @@ const LoginForm = (props) => {
     <View style={Styles.container}>
       <Text style={Styles.labelInicio}>Inicia sesión</Text>
       <View style={Styles.containerForm}>
-        <TextInput
+        <View style={Styles.SectionStyle}>
+          <Image
+            source={require('../../../resources/images/email.png')}
+            style={Styles.ImageStyle}
+          />
+          <TextInput
+          style={
+            errorEmail !== "" ? Styles.inputTextBoxError : Styles.inputTextBox
+          }
+            placeholder="Correo electrónico"
+            onChangeText={(e) => {
+              setUser({ ...user, email: e });
+              setErrorEmail("");
+              setErrorPassword("");
+            }}
+          />
+          {errorEmail !== "" && (
+            <Text style={Styles.labelError}>{errorEmail}</Text>
+          )}
+        </View>
+{/*         <TextInput
           style={
             errorEmail !== "" ? Styles.inputTextBoxError : Styles.inputTextBox
           }
@@ -85,11 +105,28 @@ const LoginForm = (props) => {
             setErrorEmail("");
             setErrorPassword("");
           }}
-        />
-        {errorEmail !== "" && (
-          <Text style={Styles.labelError}>{errorEmail}</Text>
-        )}
-        <TextInput
+        /> */}
+        <View style={Styles.SectionStyle}>
+          <Image
+            source={require('../../../resources/images/lock.png')}
+            style={Styles.ImageStyle2}
+          />
+          <TextInput
+            style={
+              errorEmail !== "" ? Styles.inputTextBoxError : Styles.inputTextBox
+            }
+            secureTextEntry={true}
+            placeholder="Contraseña"
+            onChangeText={(e) => {
+              setUser({ ...user, password: e });
+              setErrorPassword("");
+            }}
+          />
+          {errorPassword !== "" && (
+            <Text style={Styles.labelError}>{errorPassword}</Text>
+          )}
+        </View>
+{/*         <TextInput
           style={
             errorPassword !== ""
               ? Styles.inputTextBoxError
@@ -104,7 +141,7 @@ const LoginForm = (props) => {
         />
         {errorPassword !== "" && (
           <Text style={Styles.labelError}>{errorPassword}</Text>
-        )}
+        )} */}
         <Text style={Styles.labelForgetPassword}>¿Olvidaste tu contraseña</Text>
         <TouchableHighlight style={Styles.btnIniciar} onPress={onPressLogin}>
           <Text style={Styles.labelLogin}>Iniciar sesión</Text>

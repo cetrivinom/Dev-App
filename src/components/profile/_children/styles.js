@@ -68,7 +68,7 @@ export default StyleSheet.create({
     color: "#003031",
   },
   labelSaveButton: {
-    fontSize: 22,
+    fontSize: 15,
     textAlign: "center",
     fontWeight: "bold",
     lineHeight: 28,
