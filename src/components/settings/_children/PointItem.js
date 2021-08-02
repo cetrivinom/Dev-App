@@ -133,7 +133,7 @@ const PointItem = (props) => {
 
             {dataComments.filter(data => data.pointID === id).map(filtered => (
               filtered.comments.map((l, i) => (
-                <View style={styles.cajaDireccion1}>
+                <View style={styles.cajaDireccion1} key={l.commentID}>
                   <View style={styles.containerForm}>
                     <Image
                       source={require("../../../resources/images/userIco.png")}

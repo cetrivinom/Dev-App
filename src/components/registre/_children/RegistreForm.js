@@ -20,6 +20,7 @@ import Styles from "./styles";
 export const Footer = (props) => {
   const { auth, user, message, signUp, updateUser } = useContext(AuthContext);
   const { setForm, formValue, title, data, setError, error } = props;
+  console.log('formValue',formValue);
   const onPressNext = () => {
     if (formValue !== 4 && !error) {
       setForm(formValue);
@@ -49,7 +50,7 @@ export const Footer = (props) => {
         </View>
       </TouchableHighlight>
       <View style={Styles.breadcums}>
-        <Image source={require("../../../resources/images/Breadcums1.png")} />
+        <Image source={formValue == 2 ? require("../../../resources/images/Breadcums2.png"):require("../../../resources/images/Breadcums3.png")} />
       </View>
     </View>
   );
@@ -96,55 +97,75 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
     <View style={Styles.container}>
       <View style={[Styles.box, Styles.box1]}>
         <Text style={Styles.labelTitle}>Ingresa los datos de tu cuenta</Text>
-        <TextInput
-          style={
-            errorEmail !== "" ? Styles.inputTextBoxError : Styles.inputTextBox
-          }
-          placeholder="Correo electrónico"
-          onChangeText={(e) => {
-            setData({ ...data, email: e });
-            setErrorEmail("");
-            setErrorPassword("");
-            setErrorRePassword("");
-          }}
-        />
-        {errorEmail !== "" && (
-          <Text style={Styles.labelError}>{errorEmail}</Text>
-        )}
-        <TextInput
-          style={
-            errorPassword !== ""
-              ? Styles.inputTextBoxError
-              : Styles.inputTextBox
-          }
-          placeholder="Contraseña"
-          onChangeText={(e) => {
-            setData({ ...data, password: e });
-            setErrorEmail("");
-            setErrorPassword("");
-            setErrorRePassword("");
-          }}
-        />
-        {errorPassword !== "" && (
-          <Text style={Styles.labelError}>{errorPassword}</Text>
-        )}
-        <TextInput
-          style={
-            errorRePassword !== ""
-              ? Styles.inputTextBoxError
-              : Styles.inputTextBox
-          }
-          placeholder="Repetir contraseña"
-          onChangeText={(e) => {
-            setData({ ...data, rePassword: e });
-            setErrorEmail("");
-            setErrorPassword("");
-            setErrorRePassword("");
-          }}
-        />
-        {errorRePassword !== "" && (
-          <Text style={Styles.labelError}>{errorRePassword}</Text>
-        )}
+        <View style={Styles.SectionStyle}>
+          <Image
+            source={require('../../../resources/images/email.png')}
+            style={Styles.ImageStyle}
+          />
+          <TextInput
+            style={
+              errorEmail !== "" ? Styles.inputTextBoxError : Styles.inputTextBox
+            }
+            placeholder="Correo electrónico"
+            onChangeText={(e) => {
+              setData({ ...data, email: e });
+              setErrorEmail("");
+              setErrorPassword("");
+              setErrorRePassword("");
+            }}
+          />
+          {errorEmail !== "" && (
+            <Text style={Styles.labelError}>{errorEmail}</Text>
+          )}
+        </View>
+        <View style={Styles.SectionStyle}>
+          <Image
+            source={require('../../../resources/images/lock.png')}
+            style={Styles.ImageStyle2}
+          />
+          <TextInput
+            style={
+              errorPassword !== ""
+                ? Styles.inputTextBoxError
+                : Styles.inputTextBox
+            }
+            secureTextEntry={true}
+            placeholder="Contraseña"
+            onChangeText={(e) => {
+              setData({ ...data, password: e });
+              setErrorEmail("");
+              setErrorPassword("");
+              setErrorRePassword("");
+            }}
+          />
+          {errorPassword !== "" && (
+            <Text style={Styles.labelError}>{errorPassword}</Text>
+          )}
+        </View>
+        <View style={Styles.SectionStyle}>
+          <Image
+            source={require('../../../resources/images/lock.png')}
+            style={Styles.ImageStyle2}
+          />
+          <TextInput
+            style={
+              errorRePassword !== ""
+                ? Styles.inputTextBoxError
+                : Styles.inputTextBox
+            }
+            secureTextEntry={true}
+            placeholder="Repetir contraseña"
+            onChangeText={(e) => {
+              setData({ ...data, rePassword: e });
+              setErrorEmail("");
+              setErrorPassword("");
+              setErrorRePassword("");
+            }}
+          />
+          {errorRePassword !== "" && (
+            <Text style={Styles.labelError}>{errorRePassword}</Text>
+          )}
+        </View>
       </View>
       <View style={[Styles.box, Styles.box2]}>
         <TouchableHighlight style={Styles.btnNext} onPress={onPressNext}>

@@ -135,7 +135,8 @@ export default StyleSheet.create({
     lineHeight: 19,
     letterSpacing: 0.005,
     marginLeft: 8,
-  },  SectionStyle: {
+  },
+  SectionStyle: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -144,7 +145,6 @@ export default StyleSheet.create({
     height: 56,
     borderRadius: 5,
     marginTop: 30,
-    //margin: 10,
   },
   ImageStyle: {
       margin: 14,
