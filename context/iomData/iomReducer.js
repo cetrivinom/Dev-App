@@ -10,6 +10,7 @@ import {
   GET_DATA_POINT_ID,
   GET_DATA_DIRECTORY_ITEM,
   GET_DATA_MAPEO_SERVICE,
+  GET_USER_COMMENTS,
 } from "../../types";
 
 export default (state, action) => {
@@ -96,6 +97,11 @@ export default (state, action) => {
         dataFavorite: JSON.parse(action.payload),
         dataItem: null,
         messageError: null,
+      };
+    case GET_USER_COMMENTS:
+      return {
+        ...state,
+        dataComments: action.payload,
       };
     case GET_DATA_ERROR:
       return {

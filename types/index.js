@@ -22,3 +22,5 @@ export const GET_DATA = "GET_DATA";
 export const GET_DATA_ERROR = "GET_DATA_ERROR";
 export const GET_CONFIG = "GET_CONFIG";
 export const GET_DATA_MAPEO_SERVICE = "GET_DATA_MAPEO_SERVICE";
+export const GET_USER_COMMENTS = "GET_USER_COMMENTS";
+export const NEW_COMMENT = "NEW_COMMENT";

@@ -10,12 +10,15 @@ import {
 } from "react-native";
 import HeaderItem from "../../global/_children/HeaderItem";
 import IOMContext from "../../../../context/iomData/iomContext";
+import authContext from "../../../../context/auth/authContext";
 import ServiceItem from "./ServiceItem";
 import { capitalize } from "../../../utilities/helpers";
 import { metrics } from "../../../utilities/Metrics";
+import _ from 'lodash';
 
 const PointItem = (props) => {
-  const { dataItem, getDataPointById } = useContext(IOMContext);
+  const { dataItem, getDataPointById,dataComments } = useContext(IOMContext);
+  const { user } = useContext(authContext);
   const { id = "" } = props.navigation.state.params || {};
 
   const {
@@ -127,6 +130,23 @@ const PointItem = (props) => {
           <View style={styles.divider}></View>
           <View style={styles.box5}>
             <Text style={styles.textComentario}>Tus comentarios</Text>
+
+            {dataComments.filter(data => data.pointID === id).map(filtered => (
+              filtered.comments.map((l, i) => (
+                <View style={styles.cajaDireccion1}>
+                  <View style={styles.containerForm}>
+                    <Image
+                      source={require("../../../resources/images/userIco.png")}
+                    />
+                    <Text style={styles.textTitle2}>{user.email}</Text>
+                  </View>
+                  <Text style={styles.textTitle3}>{l.comment}</Text>
+                </View>
+              ))
+            ))}
+
+            
+
             <TouchableOpacity onPress={onPressOpenComents}>
               <Text style={styles.textAgregarComentario}>
                 Agregar comentario
@@ -215,6 +235,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 3,
     marginBottom: 10,
   },
+  cajaDireccion1: {
+    paddingVertical: 3,
+    paddingHorizontal: 3,
+    marginBottom: 10,
+  },
   textDireccion: {
     fontSize: 15,
     fontWeight: "normal",
@@ -247,6 +272,15 @@ const styles = StyleSheet.create({
     marginStart: 10,
     marginTop: 20,
     marginBottom: 50,
+  },
+  textTitle3: {
+    fontSize: 14,
+    fontWeight: "normal",
+    lineHeight: 16,
+    letterSpacing: 0.0025,
+    color: "#A1AAB2",
+    marginTop: 2,
+    textAlign: "justify",
   },
 });
 

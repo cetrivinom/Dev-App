@@ -2,24 +2,29 @@ import React, { useContext, useEffect, useState } from "react";
 import { ImageBackground, Image } from "react-native";
 import LoginForm from "./_children/LoginForm";
 import AuthContext from "../../../context/auth/authContext";
+import IOMContext from "../../../context/iomData/iomContext";
 import Styles from "./styles";
 
 const Login = (props) => {
   const [visibleLogin, setVisibleLogin] = useState(false);
   const { auth, signInAnonymously, isSignIn, getUser, getConfig } = useContext(AuthContext);
+  const { getUserComments} = useContext(IOMContext);
 
   useEffect(() => {
     getConfig().then((config) => {
       if (config.anonymousAuth) {
         signInAnonymously().then((uid) => {
           if (uid) {
-            //setVisibleLogin(true)
             getUser(uid);
+            getUserComments(uid);
           }
         });
       } else {
         isSignIn().then((uid) => {
-          if (uid) getUser(uid);
+          if (uid) {
+            getUser(uid);
+            getUserComments(uid);
+          }
           else setVisibleLogin(true);
         });
       }

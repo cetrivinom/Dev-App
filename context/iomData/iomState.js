@@ -10,11 +10,16 @@ import {
   GET_DATA_ERROR,
   GET_DATA_DIRECTORY_ITEM,
   GET_DATA_POINT_ID,
-  GET_DATA_MAPEO_SERVICE
+  GET_DATA_MAPEO_SERVICE,
+  GET_USER_COMMENTS,
+  NEW_COMMENT,
 } from "../../types";
+import moment from 'moment';
 import IOMReducer from "./iomReducer";
 import IOMContext from "./iomContext";
 import AsyncStorage from "@react-native-community/async-storage";
+import database from "@react-native-firebase/database";
+import _ from 'lodash';
 
 const IOMState = (props) => {
   const initialState = {
@@ -45,6 +50,7 @@ const IOMState = (props) => {
     dataItem: null,
     dataItemService: null,
     messageError: null,
+    dataComments: null,
   };
 
   const [state, dispatch] = useReducer(IOMReducer, initialState);
@@ -187,6 +193,37 @@ const IOMState = (props) => {
     }
   };
 
+  const getUserComments = (uid) => {
+    database().ref('/comments/'+uid).on('value',snapshot => {
+      let res = [];
+      snapshot.forEach((value) => {
+        const pointID= value.key;
+        let comments = [];
+        value.forEach((item) =>{
+          comments.push({commentID:item.key,date:item.val().date,comment:item.val().comment});
+        });
+        res.push({pointID,comments});
+      });
+      console.log('getUserComments res[]',res);
+      dispatch({
+        type: GET_USER_COMMENTS,
+        payload: res
+      });
+    });
+  };
+
+  const createUserComment = (uid,id,comment) => {
+    var date = moment().format('YYYY-MM-DD, hh:mm:ss a');
+    database().ref('/comments/'+uid+'/'+id).push({
+      comment,
+      date
+    }).then(()=> 
+      dispatch({
+        type: NEW_COMMENT
+      })
+    );
+  }
+
   return (
     <IOMContext.Provider
       value={{
@@ -204,6 +241,7 @@ const IOMState = (props) => {
         dataItemService: state.dataItemService,
         messageError: state.messageError,
         dataMapeoService: state.dataMapeoService,
+        dataComments: state.dataComments,
         getDataLink,
         getDataPoint,
         getDataDirectory,
@@ -212,7 +250,9 @@ const IOMState = (props) => {
         getDataByDepartId,
         getDataDirectoryItemService,
         getDataPointFilter,
-        getDataMapeoService
+        getDataMapeoService,
+        getUserComments,
+        createUserComment
       }}
     >
       {props.children}
