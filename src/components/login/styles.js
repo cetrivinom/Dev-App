@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { metrics } from "../../utilities/Metrics";
 
 export default StyleSheet.create({
   container: {
@@ -7,12 +8,15 @@ export default StyleSheet.create({
   },
   image: {
     flex: 1,
-    resizeMode: "cover",
+    resizeMode: "contain",
+    height: metrics.HEIGHT*0.6,
+    width: metrics.WIDTH,
     backgroundColor: "#00AAAD",
   },
   logo: {
-    height: 140,
     alignSelf: "center",
     resizeMode: "contain",
+    marginTop: metrics.HEIGHT*0.03,
+    height: metrics.HEIGHT*0.19,
   },
 });

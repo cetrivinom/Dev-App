@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { metrics } from "../../../utilities/Metrics";
 
 export default StyleSheet.create({
   container: {
@@ -6,9 +7,10 @@ export default StyleSheet.create({
     backgroundColor: "#FFFFFF",
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
+    //marginTop:metrics.WIDTH*0.00,
   },
   containerForm: {
-    marginHorizontal: 16
+    marginHorizontal: 16,
   },
   s: {
     marginTop: 40,

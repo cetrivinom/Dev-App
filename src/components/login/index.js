@@ -37,7 +37,7 @@ const Login = (props) => {
 
   return (
     <ImageBackground
-      source={require("../../resources/images/backgroundLogIn.png")}
+      source={require("../../resources/images/backgroundLogIn1.png")}
       style={Styles.image}
     >
       <Image

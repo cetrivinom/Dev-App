@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { View, Image, StyleSheet } from "react-native";
 import InitialContext from "../../../context/initialData/initialContext";
+import { metrics } from "../../utilities/Metrics";
 //import AsyncStorage from "@react-native-community/async-storage";
 
 const Splash = (props) => {
@@ -30,7 +31,7 @@ const Splash = (props) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../../resources/images/Logo.png")}
+        source={require("../../resources/images/Splash.png")}
         style={styles.logo}
       />
     </View>
@@ -44,8 +45,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#00AAAD",
   },
   logo: {
-    top: 163,
-    height: 201.53,
+    //top: 163,
+    height: metrics.HEIGHT * 0.9,
     resizeMode: "contain",
   },
 });
