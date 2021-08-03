@@ -14,10 +14,9 @@ import authContext from "../../../../context/auth/authContext";
 import ServiceItem from "./ServiceItem";
 import { capitalize } from "../../../utilities/helpers";
 import { metrics } from "../../../utilities/Metrics";
-import _ from 'lodash';
 
 const PointItem = (props) => {
-  const { dataItem, getDataPointById,dataComments } = useContext(IOMContext);
+  const { dataItem, getDataPointById, dataComments } = useContext(IOMContext);
   const { user } = useContext(authContext);
   const { id = "" } = props.navigation.state.params || {};
 
@@ -34,7 +33,7 @@ const PointItem = (props) => {
   useEffect(() => {
     getDataPointById(id);
   }, [id]);
-  
+
   const onPressOpenComents = () => {
     props.navigation.navigate("PointItemComents", { id, Nombre_punto });
   };
@@ -131,21 +130,21 @@ const PointItem = (props) => {
           <View style={styles.box5}>
             <Text style={styles.textComentario}>Tus comentarios</Text>
 
-            {dataComments.filter(data => data.pointID === id).map(filtered => (
-              filtered.comments.map((l, i) => (
-                <View style={styles.cajaDireccion1} key={l.commentID}>
-                  <View style={styles.containerForm}>
-                    <Image
-                      source={require("../../../resources/images/userIco.png")}
-                    />
-                    <Text style={styles.textTitle2}>{user.email}</Text>
+            {dataComments
+              .filter((data) => data.pointID === id)
+              .map((filtered) =>
+                filtered.comments.map((l, i) => (
+                  <View style={styles.cajaDireccion1} key={l.commentID}>
+                    <View style={styles.containerForm}>
+                      <Image
+                        source={require("../../../resources/images/userIco.png")}
+                      />
+                      <Text style={styles.textTitle2}>{user.email}</Text>
+                    </View>
+                    <Text style={styles.textTitle3}>{l.comment}</Text>
                   </View>
-                  <Text style={styles.textTitle3}>{l.comment}</Text>
-                </View>
-              ))
-            ))}
-
-            
+                ))
+              )}
 
             <TouchableOpacity onPress={onPressOpenComents}>
               <Text style={styles.textAgregarComentario}>
@@ -175,8 +174,8 @@ const styles = StyleSheet.create({
     flex: 10,
   },
   box5: {
-    marginRight: metrics.WIDTH*0.055,
-    marginLeft: metrics.WIDTH*0.055,
+    marginRight: metrics.WIDTH * 0.055,
+    marginLeft: metrics.WIDTH * 0.055,
     marginBottom: 10,
   },
   divider: {
@@ -191,18 +190,18 @@ const styles = StyleSheet.create({
   },
   overlay: {
     height: 34,
-    width: metrics.WIDTH*0.3,
+    width: metrics.WIDTH * 0.3,
     backgroundColor: "#132A3E",
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
   },
   caja1Text: {
-    width: metrics.WIDTH*0.61,
-    fontSize: metrics.HEIGHT*0.024,
+    width: metrics.WIDTH * 0.61,
+    fontSize: metrics.HEIGHT * 0.024,
     fontWeight: "bold",
     color: "#003031",
-    lineHeight: metrics.HEIGHT*0.033,
+    lineHeight: metrics.HEIGHT * 0.033,
     letterSpacing: 0.0015,
     alignSelf: "stretch",
   },
