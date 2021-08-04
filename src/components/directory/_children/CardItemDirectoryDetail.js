@@ -43,7 +43,7 @@ const CardItemDirectoryDetail = (props) => {
               source={require("../../../resources/images/phone.png")}
               style={styles.image2}
             />
-            <Text style={styles.textTitle2}>{subTitle2}</Text>
+            <Text style={styles.textTitle2}>{subTitle2.length>0?subTitle2[0].value:''}</Text>
           </View>
           <View style={styles.form1}>
             <Image
