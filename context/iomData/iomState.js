@@ -13,6 +13,7 @@ import {
   GET_DATA_MAPEO_SERVICE,
   GET_USER_COMMENTS,
   NEW_COMMENT,
+  NEW_FAVORITE,
 } from "../../types";
 import moment from 'moment';
 import IOMReducer from "./iomReducer";
@@ -33,20 +34,7 @@ const IOMState = (props) => {
     dataDirectory: null,
     dataDirectoryService: null,
     dataMapeoService: [],
-    dataFavorite: [
-      { id: "348" },
-      { id: "42" },
-      { id: "430" },
-      { id: "423" },
-      { id: "314" },
-      { id: "381" },
-      { id: "297" },
-      { id: "406" },
-      { id: "467" },
-      { id: "433" },
-      { id: "598" },
-      { id: "615" },
-    ],
+    dataFavorite: [],
     dataItem: null,
     dataItemService: null,
     messageError: null,
@@ -204,7 +192,6 @@ const IOMState = (props) => {
         });
         res.push({pointID,comments});
       });
-      console.log('getUserComments res[]',res);
       dispatch({
         type: GET_USER_COMMENTS,
         payload: res
@@ -223,6 +210,31 @@ const IOMState = (props) => {
       })
     );
   }
+
+  const createFavorite = async (point) => {
+    try {
+        var value = JSON.parse(await AsyncStorage.getItem("favorites"));
+        if(!value)
+          value=[];
+        /*if(!(value instanceof Array)){
+          value = [value];
+        }*/
+        let index = value.findIndex(favorite => favorite.id == point.id);
+        if(index == -1) {
+          value.push(point);
+          AsyncStorage.setItem("favorites", JSON.stringify(value));
+          dispatch({
+            type: NEW_FAVORITE,
+            payload: value,
+          });
+        }
+    } catch (error) {
+      dispatch({
+        type: GET_DATA_ERROR,
+        payload: error,
+      });
+    }
+  };
 
   return (
     <IOMContext.Provider
@@ -252,7 +264,8 @@ const IOMState = (props) => {
         getDataPointFilter,
         getDataMapeoService,
         getUserComments,
-        createUserComment
+        createUserComment,
+        createFavorite,
       }}
     >
       {props.children}

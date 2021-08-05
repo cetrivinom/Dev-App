@@ -11,6 +11,7 @@ import {
   GET_DATA_DIRECTORY_ITEM,
   GET_DATA_MAPEO_SERVICE,
   GET_USER_COMMENTS,
+  NEW_FAVORITE,
 } from "../../types";
 
 export default (state, action) => {
@@ -109,6 +110,11 @@ export default (state, action) => {
         messageError: action.payload,
         data: null,
         dataItem: null,
+      };
+    case NEW_FAVORITE:
+      return {
+        ...state,
+        dataFavorite: action.payload,
       };
     default:
       return state;

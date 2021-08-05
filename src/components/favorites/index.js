@@ -8,9 +8,8 @@ const Favorites = (props) => {
   const { dataFavorite, getDataFavorite } = useContext(IOMContext);
 
   useEffect(() => {
-    getDataFavorite();
+      getDataFavorite();
   }, []);
-
   return (
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>

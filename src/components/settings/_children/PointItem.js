@@ -31,11 +31,11 @@ const PointItem = (props) => {
     Coordenadas = "",
     Servicios = [],
   } = dataItem || {};
-
   useEffect(() => {
     getDataPointById(id);
   }, [id]);
   const openMenu = () => setVisible(true);
+  const closeMenu = () => setVisible(false);
   const onPressOpenComents = () => {
     props.navigation.navigate("PointItemComents", { id, Nombre_punto });
   };
@@ -76,7 +76,7 @@ const PointItem = (props) => {
 
   return (
     <View style={styles.wrapper}>
-      <HeaderItem {...props} title="Información de punto" />
+      <HeaderItem {...props} title="Información de punto" id={id}/>
       <View style={[styles.box, styles.box2]}>
         <ScrollView style={{ flex: 1 }}>
           <View style={styles.divider}></View>
@@ -135,6 +135,9 @@ const PointItem = (props) => {
               <Text style={styles.textTitle2}>Sábado - Domingo: Cerrado</Text>
             </View>
           </View>
+
+          
+    
           <View style={styles.divider}></View>
           <View style={styles.box5}>
             <Text style={styles.textHorario}>Servicios</Text>
@@ -149,10 +152,9 @@ const PointItem = (props) => {
               />
             ))}
           </View>
-          <View style={styles.divider}></View>
+          <View style={styles.divider}></View>    
           <View style={styles.box5}>
             <Text style={styles.textComentario}>Tus comentarios</Text>
-
             {dataComments
               .filter((data) => data.pointID === id)
               .map((filtered) =>
@@ -164,7 +166,7 @@ const PointItem = (props) => {
                       />
                       <Text style={styles.textTitle2}>{user.email}</Text>
                       <TouchableOpacity onPress={() => {
-                          setVisible(true);
+                          //setVisible(true);
                           onPressDotMenu();
                         }} style={{position: 'absolute', right: 0}}>
                         <Image source={require("../../../resources/images/riMoreLine.png")} />

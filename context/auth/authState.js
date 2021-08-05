@@ -75,10 +75,8 @@ const AuthState = (props) => {
       auth()
         .signInAnonymously()
         .then((response) => {
-          console.log("signInAnonymously.response", response);
           var user = { email: "", uid: response.user.uid };
           analytics().logEvent("signInAnonymously", { result: "true" });
-          console.log("user", user);
           dispatch({
             type: LOG_IN,
             payload: user,
@@ -153,7 +151,6 @@ const AuthState = (props) => {
    * @param {String} newPass - nuevo password
    */
   const updatePassword = async (pass) => {
-    console.log('updatePass:',pass,auth().currentUser.email)
     return new Promise((resolve, reject) => {
       const emailCred  = auth.EmailAuthProvider.credential(
         auth().currentUser.email, pass.currentPass);
@@ -223,7 +220,6 @@ const AuthState = (props) => {
    * @param {String} value - valor del campo
    */
   const updatePassInputChange = ({ field, value }) => {
-    console.log(field,value)
     dispatch({
       type: UPDATED_PASS_INPUT_CHANGE,
       payload: { field, value },
@@ -256,7 +252,6 @@ const AuthState = (props) => {
         .ref("/config/")
         .once("value", (snapshot) => {
           if (snapshot.hasChildren())
-            console.log("getConfig.snapshot", snapshot.val());
           dispatch({
             type: GET_CONFIG,
             payload: snapshot.val(),

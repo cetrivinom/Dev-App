@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { metrics } from "../../../utilities/Metrics";
+import IOMContext from "../../../../context/iomData/iomContext";
+
 
 const HeaderItem = (props) => {
-  const { title = "" } = props || {};
+  const { title = "", id = "" } = props || {};
+  const { createFavorite, dataFavorite } = useContext(IOMContext);
+  const [ isFavorite, setIsFavorite] = useState(false);
+
   const onPressClose = () => {
     props.navigation.goBack();
   };
+  const onPressSave = () => {
+    createFavorite({id});
+  };
+
+  useEffect(() => {
+    let index = dataFavorite.findIndex(favorite => favorite.id == id);
+    if (index > 0)
+    setIsFavorite(true);
+  });
+
+  console.log('title',title,'id',id, 'dataFavorite',dataFavorite);
   return (
     <View style={[styles.box, styles.box1]}> 
       <View style={styles.statusBarBackground}>
@@ -21,9 +37,11 @@ const HeaderItem = (props) => {
           />
         </TouchableOpacity>
         <Text style={styles.textTitle}>{title}</Text>
-        <Image
-          source={require("../../../resources/images/riBookmarkLine.png")}
-        />
+        <TouchableOpacity onPress={onPressSave}>
+          <Image
+            source={isFavorite?require("../../../resources/images/riBookmarkLine2.png"):require("../../../resources/images/riBookmarkLine.png")}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );

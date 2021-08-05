@@ -23,7 +23,6 @@ const PointItemComents = (props) => {
   };
 
   const onPressPublic = () => {
-    console.log('user.',user.uid,id);
     if(comment.length>1)
     createUserComment(user.uid,id,comment);
     props.navigation.goBack();
