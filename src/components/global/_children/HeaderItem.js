@@ -14,6 +14,7 @@ const HeaderItem = (props) => {
   };
   const onPressSave = () => {
     createFavorite({id});
+    setIsFavorite(true);
   };
 
   useEffect(() => {

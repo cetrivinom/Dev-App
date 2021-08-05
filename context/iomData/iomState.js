@@ -223,10 +223,10 @@ const IOMState = (props) => {
         if(index == -1) {
           value.push(point);
           AsyncStorage.setItem("favorites", JSON.stringify(value));
-          dispatch({
+          /*dispatch({
             type: NEW_FAVORITE,
             payload: value,
-          });
+          });*/
         }
     } catch (error) {
       dispatch({
