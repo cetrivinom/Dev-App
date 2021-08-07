@@ -2,10 +2,12 @@
 import React, { useEffect, useContext } from "react";
 import { StyleSheet, Text, Image, View } from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
+import { SvgCssUri } from 'react-native-svg';
+import _ from 'lodash';
 
 const CardItemFavorite = (props) => {
   const { id = "" } = props || {};
-  const { dataPoint, getDataPoint } = useContext(IOMContext);
+  const { dataPoint, getDataPoint, dataMapeoService } = useContext(IOMContext);
 
   useEffect(() => {
     getDataPoint();
@@ -16,14 +18,34 @@ const CardItemFavorite = (props) => {
     Estado = "",
     time = "8:00am - 5:00pm",
     point = 5,
+    Servicios = [],
   } = dataPoint !== null ? dataPoint.find((item) => item.ID == id) : {};
 
-  var payments = [];
-  for (let i = 0; i < point; i++) {
-    payments.push(
-      <Image key={i} source={require("../../../resources/images/hear.png")} />
-    );
-  }
+
+  const unique = [...new Set(Servicios.map(item => item.Servicio_id))];
+  var services = [];
+
+
+  _.map(unique,(val,id) => {
+    var service = dataMapeoService.find((element) => {
+      return element.id_servicio === val;
+    });
+
+    let index = services.findIndex(item => item.b64 == service.img_servicio_b64);
+
+    if(service && index < 0){
+
+      services.push({
+        b64:service.img_servicio_b64,
+        svg:<SvgCssUri
+            height='32'
+            width='32'
+            uri={Platform.OS==='ios'?service.img_servicio_b64:'https://mapeo-de-servicios.gifmm-colombia.site'+service.img_servicio}
+        />
+      });
+    }
+    //console.log('Nombre_punto',Nombre_punto,'Servicios',Servicios,'uniqueServices',unique,'services',services);
+  });
 
   let _Nombre_punto = Nombre_punto.substring(0, 25);
 
@@ -33,7 +55,10 @@ const CardItemFavorite = (props) => {
         <Text style={styles.textTitle}>{_Nombre_punto + "..."}</Text>
         <Image source={require("../../../resources/images/riMoreLine.png")} />
       </View>
-      <View style={styles.containerForm}>{payments}</View>
+      <View style={styles.containerForm}>{_.map(services,(val) => {
+        return val.svg
+      })}
+      </View>
       <View style={styles.containerForm}>
         <Image source={require("../../../resources/images/riMapPinFill.png")} />
         <Text style={styles.textTitle2}>{Estado}</Text>

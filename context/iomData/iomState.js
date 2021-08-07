@@ -216,17 +216,14 @@ const IOMState = (props) => {
         var value = JSON.parse(await AsyncStorage.getItem("favorites"));
         if(!value)
           value=[];
-        /*if(!(value instanceof Array)){
-          value = [value];
-        }*/
         let index = value.findIndex(favorite => favorite.id == point.id);
         if(index == -1) {
           value.push(point);
           AsyncStorage.setItem("favorites", JSON.stringify(value));
-          /*dispatch({
+          dispatch({
             type: NEW_FAVORITE,
             payload: value,
-          });*/
+          });
         }
     } catch (error) {
       dispatch({

@@ -22,8 +22,7 @@ const HeaderItem = (props) => {
     if (index > 0)
     setIsFavorite(true);
   });
-
-  console.log('title',title,'id',id, 'dataFavorite',dataFavorite);
+  
   return (
     <View style={[styles.box, styles.box1]}> 
       <View style={styles.statusBarBackground}>

@@ -42,7 +42,8 @@ export default (state, action) => {
         dataPointState: uniqueState,
         dataPointDepartamento: uniqueDepartamento,
         dataPointMunicipio: uniqueMunicipio,
-        dataItem: null,
+        /* Esto genera un error porque al guardar un punto la info se borra y es por esto, ya que al entrar primero a favoritos el redux de datapoint queda activo
+        dataItem: null        */
         messageError: null,
         //dataPointFilter: false,
       };
