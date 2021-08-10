@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useContext } from "react";
-import { StyleSheet, Text, Image, View } from "react-native";
+import { StyleSheet, Text, Image, View, TouchableOpacity } from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
 import { SvgCssUri } from 'react-native-svg';
 import _ from 'lodash';
@@ -21,6 +21,9 @@ const CardItemFavorite = (props) => {
     Servicios = [],
   } = dataPoint !== null ? dataPoint.find((item) => item.ID == id) : {};
 
+  const onPressOpenPoint = (id) => {
+    props.navigation.navigate("PointItem", { id });
+  };
 
   const unique = [...new Set(Servicios.map(item => item.Servicio_id))];
   var services = [];
@@ -50,7 +53,7 @@ const CardItemFavorite = (props) => {
   let _Nombre_punto = Nombre_punto.substring(0, 25);
 
   return Nombre_punto !== "" ? (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => onPressOpenPoint(id)}>
       <View style={styles.containerFormTitle}>
         <Text style={styles.textTitle}>{_Nombre_punto + "..."}</Text>
         <Image source={require("../../../resources/images/riMoreLine.png")} />
@@ -67,7 +70,7 @@ const CardItemFavorite = (props) => {
         <Image source={require("../../../resources/images/riTimeFill.png")} />
         <Text style={styles.textTitle2}>{time}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   ) : null;
 };
 

@@ -18,7 +18,7 @@ const ServiceItem = (props) => {
           //uri="https://mapeo-de-servicios.gifmm-colombia.site/sites/default/files/sector/icono/SEGURIDADALIMENTARIA.svg"
           //uri="data:image/svg+xml;base64,PHN2ZyBpZD0iQ2FwYV8xIiBkYXRhLW5hbWU9IkNhcGEgMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNTAgNTAiPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojMDBhYWFkO308L3N0eWxlPjwvZGVmcz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik00MS4yMSwxMC4zM2EyLjMzLDIuMzMsMCwwLDAtMi4zMSwyLjMyVjI1bC0zLjcxLDMuNzRhLjc1Ljc1LDAsMCwxLTEuMjQuMTMsMSwxLDAsMCwxLDAtMS4zNWwzLjEzLTMuMThhMS42NiwxLjY2LDAsMCwwLDAtMi4zMiwxLjU5LDEuNTksMCwwLDAtMi4yOCwwTDI4LjczLDI4LjJBNSw1LDAsMCwwLDI3LjMzLDMyaDBWNDMuNTNoNi45NFYzNi4wOGE0Ljg1LDQuODUsMCwwLDAsMS4yOS0uOTRsNy4zMS03LjQyYTIuMzEsMi4zMSwwLDAsMCwuNjctMS42NFYxMi42NUEyLjMzLDIuMzMsMCwwLDAsNDEuMjEsMTAuMzNaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjEuMjcsMjguMiwxNS4yLDIyYTEuNTksMS41OSwwLDAsMC0yLjI4LDAsMS42NiwxLjY2LDAsMCwwLDAsMi4zMmwzLjEzLDMuMThhMSwxLDAsMCwxLDAsMS4zNS45MS45MSwwLDAsMS0xLjMyLDBMMTEuMSwyNVYxMi42NWEyLjMyLDIuMzIsMCwxLDAtNC42MywwVjI2LjA4YTIuMzEsMi4zMSwwLDAsMCwuNjcsMS42NGw3LjMxLDcuNDJhNC44NSw0Ljg1LDAsMCwwLDEuMjkuOTR2Ny40NWg2Ljk0VjMyaDBBNSw1LDAsMCwwLDIxLjI3LDI4LjJaIi8+PGNpcmNsZSBjbGFzcz0iY2xzLTEiIGN4PSIyNSIgY3k9IjEzLjQyIiByPSI2Ljk1Ii8+PC9zdmc+"
           //en android el fetch falla con base64, se debe revisar este problema
-          uri={Platform.OS==='ios'?service.img_servicio_b64:'https://mapeo-de-servicios.gifmm-colombia.site'+service.img_servicio}
+          uri={(Platform.OS==='ios'?service?.img_servicio_b64:'https://mapeo-de-servicios.gifmm-colombia.site'+service?.img_servicio)}
         />
         <Text style={styles.textTitle2}>{props.Servicio}</Text>
       </View>

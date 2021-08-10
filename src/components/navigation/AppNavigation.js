@@ -14,6 +14,7 @@ import PointItemComents from "../settings/_children/PointItemComents";
 import FilterSetting from "../settings/_children/FilterSetting";
 import PointListResult from "../settings/_children/PointListResult";
 import PointListResultList from "../settings/_children/PointListResultList";
+import CardItemFavorite from "../favorites/_children/CardtemFavorite";
 /**
  * Stack de navegacion, esta librería de React Navigation permite configurar la navegación del app
  */
@@ -98,6 +99,12 @@ const AppNavigation = createStackNavigator({
   },
   PointListResultList: {
     screen: PointListResultList,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  CardItemFavorite: {
+    screen: CardItemFavorite,
     navigationOptions: {
       headerShown: false,
     },

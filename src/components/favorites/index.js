@@ -6,7 +6,6 @@ import IOMContext from "../../../context/iomData/iomContext";
 
 const Favorites = (props) => {
   const { dataFavorite, getDataFavorite } = useContext(IOMContext);
-
   useEffect(() => {
       getDataFavorite();
   }, []);
@@ -19,7 +18,7 @@ const Favorites = (props) => {
         <View style={[styles.box, styles.box2]}>
           <FlatList
             data={dataFavorite}
-            renderItem={(item) => <CardtemFavorite id={item.item.id} />}
+            renderItem={(item) => <CardtemFavorite {...props} id={item.item.id} />}
             keyExtractor={(item) => item.id}
           />
         </View>
