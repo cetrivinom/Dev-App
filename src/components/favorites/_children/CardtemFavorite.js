@@ -7,10 +7,16 @@ import _ from 'lodash';
 
 const CardItemFavorite = (props) => {
   const { id = "" } = props || {};
-  const { dataPoint, getDataPoint, dataMapeoService } = useContext(IOMContext);
+  const { dataPoint, dataMapeoService, getDataPoint, getDataMapeoService } = useContext(IOMContext);
 
   useEffect(() => {
-    getDataPoint();
+
+    if(dataPoint && dataPoint.length < 1){
+      getDataPoint();
+    }
+    if(dataMapeoService && dataMapeoService.length < 1){
+      getDataMapeoService();
+    }
   }, []);
 
   const {
@@ -41,6 +47,7 @@ const CardItemFavorite = (props) => {
       services.push({
         b64:service.img_servicio_b64,
         svg:<SvgCssUri
+            key={service.id_servicio}
             height='32'
             width='32'
             uri={Platform.OS==='ios'?service.img_servicio_b64:'https://mapeo-de-servicios.gifmm-colombia.site'+service.img_servicio}
@@ -53,7 +60,7 @@ const CardItemFavorite = (props) => {
   let _Nombre_punto = Nombre_punto.substring(0, 25);
 
   return Nombre_punto !== "" ? (
-    <TouchableOpacity style={styles.container} onPress={() => onPressOpenPoint(id)}>
+    <TouchableOpacity key={id} style={styles.container} onPress={() => onPressOpenPoint(id)}>
       <View style={styles.containerFormTitle}>
         <Text style={styles.textTitle}>{_Nombre_punto + "..."}</Text>
         <Image source={require("../../../resources/images/riMoreLine.png")} />

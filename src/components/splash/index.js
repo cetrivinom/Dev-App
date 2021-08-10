@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { View, Image, StyleSheet } from "react-native";
 import InitialContext from "../../../context/initialData/initialContext";
+import IOMContext from "../../../context/iomData/iomContext";
 import { metrics } from "../../utilities/Metrics";
 //import AsyncStorage from "@react-native-community/async-storage";
 
@@ -14,8 +15,15 @@ const Splash = (props) => {
     "api-mapeo-servicios.json"
   ];
 
+
+
+  const { dataPoint, getDataPoint, dataMapeoService, getDataMapeoService  } = useContext(IOMContext);
+
   useEffect(() => {
-    //AsyncStorage.clear()
+    if(dataPoint && dataPoint.length < 1)
+      getDataPoint();
+    if(dataMapeoService && dataMapeoService.length < 1)
+      getDataMapeoService();
     let i = 0;
     api.map((item) => {
       i += 1;

@@ -26,7 +26,7 @@ const IOMState = (props) => {
   const initialState = {
     dataLink: null,
     dataLinkEtiquetas: null,
-    dataPoint: null,
+    dataPoint: [],
     dataPointState: null,
     dataPointDepartamento: null,
     dataPointMunicipio: null,
