@@ -72,12 +72,14 @@ export default StyleSheet.create({
   inputTextBox: {
     flex:1,
     borderColor: "#A1AAB2",
+    color: 'black',
     fontSize: 16,
     color: "#000",
   },
   inputTextBoxError: {
     flex:1,
     borderColor: "#DD3338",
+    color: 'black',
     borderWidth: 1,
     fontSize: 16,
   },
