@@ -33,6 +33,11 @@ const Settings = (props) => {
   const mapMarkers = () => {
     if (dataPoint != null) {
       return dataPoint.map((item, index) => {
+        var icon;
+        if(item.Estado_id == 136) icon= require('./../../resources/images/ri-map-pin-fill02.png');
+        else if(item.Estado_id == 137) icon= require('./../../resources/images/ri-map-pin-fill03.png');
+        else if(item.Estado_id == 139) icon= require('./../../resources/images/ri-map-pin-fill04.png');
+        else icon= require('./../../resources/images/ri-map-pin-fill01.png');
         if (item.Coordenadas !== "") {
           let coor = item.Coordenadas.split(",");
           return (
@@ -44,7 +49,7 @@ const Settings = (props) => {
               }}
               onPress={() => onPressOpenPoint(item.ID)}
             >
-            <Image source={require('./../../resources/images/ri-map-pin-fill.png')} style={{height: 35, width: 35 }} />
+            <Image source={icon} style={{height: 40, width: 28 }} />
             </Marker>
           );
         }
