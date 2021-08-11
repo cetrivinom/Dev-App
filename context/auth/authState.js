@@ -137,9 +137,19 @@ const AuthState = (props) => {
           resolve(user);
         })
         .catch((error) => {
+          console.log('error',error);
+          var message;
+          switch(error.code) {
+            case 'auth/weak-password':
+              message = 'Password invalido';
+              break;
+            default:
+              message = ''+error;
+              break;
+          }
           dispatch({
             type: SIGN_UP_ERROR,
-            payload: error,
+            payload: message,
           });
           resolve(null);
         });

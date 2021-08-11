@@ -43,7 +43,9 @@ const Settings = (props) => {
                 longitude: parseFloat(coor[1]),
               }}
               onPress={() => onPressOpenPoint(item.ID)}
-            ></Marker>
+            >
+            <Image source={require('./../../resources/images/ri-map-pin-fill.png')} style={{height: 35, width: 35 }} />
+            </Marker>
           );
         }
       });

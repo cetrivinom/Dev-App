@@ -84,6 +84,10 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
       setErrorPassword("Contraseña invalida");
       ok = false;
     }
+    if (password.length < 6 || rePassword.length < 6 ) {
+      setErrorPassword("La contraseña debe tener al menos 6 caracteres");
+      ok = false;
+    }
     if (rePassword === "") {
       setErrorRePassword("Contraseña invalida");
       ok = false;
@@ -114,10 +118,10 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
               setErrorRePassword("");
             }}
           />
+        </View>
           {errorEmail !== "" && (
             <Text style={Styles.labelError}>{errorEmail}</Text>
           )}
-        </View>
         <View style={Styles.SectionStyle}>
           <Image
             source={require('../../../resources/images/lock.png')}
@@ -138,10 +142,10 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
               setErrorRePassword("");
             }}
           />
+        </View>
           {errorPassword !== "" && (
             <Text style={Styles.labelError}>{errorPassword}</Text>
           )}
-        </View>
         <View style={Styles.SectionStyle}>
           <Image
             source={require('../../../resources/images/lock.png')}
@@ -162,10 +166,10 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
               setErrorRePassword("");
             }}
           />
+        </View>
           {errorRePassword !== "" && (
             <Text style={Styles.labelError}>{errorRePassword}</Text>
           )}
-        </View>
       </View>
       <View style={[Styles.box, Styles.box2]}>
         <TouchableHighlight style={Styles.btnNext} onPress={onPressNext}>
@@ -275,11 +279,11 @@ export const RegistreForm3 = ({ setForm, setData, data }) => {
         <View style={{ flex: 0.9, justifyContent: "center" }}>
           <DatePicker
             mode="date"
-            date={moment().add(-30, "years").toDate()}
+            date={data.birdDate}
             maximumDate={moment().add(-16, "years").toDate()}
             minimumDate={moment().add(-120, "years").toDate()}
             onDateChange={(date) => {
-              setData({ ...data, birdDate: moment(date).format("YYYY-MM-DD") });
+              setData({ ...data, birdDate: date});
             }}
             style={{ backgroundColor: "white" }}
           />

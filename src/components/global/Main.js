@@ -7,10 +7,7 @@ import HeaderHome from "./_children/HeaderHome";
 const Main = (props) => {
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require("../../resources/images/Background.png")}
-        style={styles.image}
-      >
+
         <HeaderHome />
         <Text style={styles.labelTitle}>¡Te damos la bienvenida!</Text>
         <Text style={styles.labelDescripcion}>
@@ -54,7 +51,6 @@ const Main = (props) => {
         <View style={styles.containerFooter}>
           <LastUpdate />
         </View>
-      </ImageBackground>
     </View>
   );
 };

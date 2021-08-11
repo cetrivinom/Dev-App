@@ -35,8 +35,7 @@ export default StyleSheet.create({
   },
   inputTextBoxError: {
     flex:1,
-    borderColor: "#DD3338",
-    borderWidth: 1,
+    borderColor: "#A1AAB2",
     fontSize: 16,
   },
   labelError: {

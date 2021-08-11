@@ -7,6 +7,7 @@ import {
   RegistreForm3,
   RegistreForm4,
 } from "./_children/RegistreForm";
+import moment from "moment";
 import Styles from "./styles";
 
 const Registre = (props) => {
@@ -16,7 +17,7 @@ const Registre = (props) => {
     password: "",
     rePassword: "",
     gender: "",
-    birdDate: "",
+    birdDate: moment().add(-30, "years").toDate(),
     oldMen: "",
   });
 
