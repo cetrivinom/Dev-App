@@ -31,11 +31,13 @@ export default StyleSheet.create({
   inputTextBox: {
     flex:1,
     borderColor: "#A1AAB2",
+    color: 'black',
     fontSize: 16,
   },
   inputTextBoxError: {
     flex:1,
     borderColor: "#A1AAB2",
+    color: 'black',
     fontSize: 16,
   },
   labelError: {
