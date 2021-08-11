@@ -111,6 +111,7 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
               errorEmail !== "" ? Styles.inputTextBoxError : Styles.inputTextBox
             }
             placeholder="Correo electrónico"
+            placeholderTextColor="#a9a9a9"
             onChangeText={(e) => {
               setData({ ...data, email: e });
               setErrorEmail("");
@@ -135,6 +136,7 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
             }
             secureTextEntry={true}
             placeholder="Contraseña"
+            placeholderTextColor="#a9a9a9"
             onChangeText={(e) => {
               setData({ ...data, password: e });
               setErrorEmail("");
@@ -159,6 +161,7 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
             }
             secureTextEntry={true}
             placeholder="Repetir contraseña"
+            placeholderTextColor="#a9a9a9"
             onChangeText={(e) => {
               setData({ ...data, rePassword: e });
               setErrorEmail("");
