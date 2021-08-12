@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { metrics } from "../../../utilities/Metrics";
+import InitialContext from "../../../../context/initialData/initialContext";
+
 
 const LastUpdate = () => {
+  const { lastUpdate } = useContext(InitialContext);
+  console.log('LastUpdate',lastUpdate)
   return (
     <View style={styles.container}>
       <View style={styles.containerForm}>
         <Text style={styles.labelTitle1}>Ultima actualización </Text>
-        <Text style={styles.labelTitle2}>DD/MM/AA 00:00</Text>
+        <Text style={styles.labelTitle2}>{lastUpdate}</Text>
       </View>
     </View>
   );

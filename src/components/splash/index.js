@@ -6,7 +6,7 @@ import { metrics } from "../../utilities/Metrics";
 //import AsyncStorage from "@react-native-community/async-storage";
 
 const Splash = (props) => {
-  const { getDataLink } = useContext(InitialContext);
+  const { getDataLink, updateLastUpdate } = useContext(InitialContext);
   const api = [
     "api-enlaces-de-interes.json",
     "api-mapeo.json",
@@ -31,6 +31,7 @@ const Splash = (props) => {
     });
     if (i === api.length) {
       setTimeout(() => {
+        updateLastUpdate();
         props.navigation.navigate("Login");
       }, 2000);
     }

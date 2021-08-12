@@ -43,7 +43,6 @@ const CardItemFavorite = (props) => {
     let index = services.findIndex(item => item.b64 == service.img_servicio_b64);
 
     if(service && index < 0){
-
       services.push({
         b64:service.img_servicio_b64,
         svg:<SvgCssUri
@@ -54,7 +53,6 @@ const CardItemFavorite = (props) => {
         />
       });
     }
-    //console.log('Nombre_punto',Nombre_punto,'Servicios',Servicios,'uniqueServices',unique,'services',services);
   });
 
   let _Nombre_punto = Nombre_punto.substring(0, 25);

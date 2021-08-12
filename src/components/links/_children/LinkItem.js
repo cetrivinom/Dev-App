@@ -10,6 +10,7 @@ import {
   Linking,
 } from "react-native";
 import { metrics } from "../../../utilities/Metrics";
+import _ from 'lodash';
 
 const LinkItem = (props) => {
   const onPressClose = () => {
@@ -20,12 +21,13 @@ const LinkItem = (props) => {
     date = "",
     content = "",
     image = "",
+    links = [],
   } = props.navigation.state.params || {};
 
   const regex = /(<([^>]+)>)/gi;
   const _resume = resume.replace(regex, "");
   const _content = content.replace(regex, "");
-
+  console.log('links::',links)
   return (
     <ScrollView style={styles.wrapper}>
       <TouchableOpacity style={styles.image} onPress={onPressClose}>
@@ -44,15 +46,24 @@ const LinkItem = (props) => {
           <Text style={styles.titleDate}>{date}</Text>
         </View>
         <Text style={styles.textContent}>{_content}</Text>
-        <TouchableOpacity
-          style={styles.boxOpenLink}
-          onPress={() => Linking.openURL(`https://www.google.com`)}
-        >
-          <Text style={styles.textOpenLink}>Abrir enlace</Text>
-          <Image
-            source={require("../../../resources/images/riExternalLinkFill.png")}
-          />
-        </TouchableOpacity>
+        <View style={styles.viewLink}>
+          {_.map(links,(val,id) => {
+            const link = val.indexOf('enlace:');
+            const url = val.substring(link+7,val.length)
+            const desc = val.substring(7,link-1)
+            console.log('val',val,link,val.length,url,desc)
+            return <TouchableOpacity
+                key={id}
+                style={styles.boxOpenLink}
+                onPress={() => Linking.openURL(url)}
+              >
+                <Text style={styles.textOpenLink}>{desc}</Text>
+                <Image
+                  source={require("../../../resources/images/riExternalLinkFill.png")}
+                />
+              </TouchableOpacity>
+          })}
+        </View>
       </View>
     </ScrollView>
   );
@@ -82,7 +93,7 @@ const styles = StyleSheet.create({
   },
   boxOpenLink: {
     justifyContent: "flex-start",
-    paddingVertical: 35,
+    paddingVertical: metrics.HEIGHT * 0.01,
     flexDirection: "row",
     alignItems: "center",
   },
@@ -94,6 +105,9 @@ const styles = StyleSheet.create({
     letterSpacing: 0.00125,
     marginRight: 10,
     paddingTop: 5,
+  },
+  viewLink: {
+    marginTop: metrics.HEIGHT * 0.05,
   },
   containerDate: {
     marginTop: 10,

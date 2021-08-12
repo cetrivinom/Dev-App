@@ -13,6 +13,9 @@ import {
 import IOMContext from "../../../../context/iomData/iomContext";
 import { metrics } from "../../../utilities/Metrics";
 import { capitalize } from "../../../utilities/helpers";
+import { SvgCssUri } from 'react-native-svg';
+import _ from 'lodash';
+
 
 export const LastUpdate = (props) => {
   const {
@@ -51,14 +54,31 @@ export const ItemCardPoint = (props) => {
     time = "8:00am - 5:00pm",
     Coordenadas = "",
     Direccion = "",
+    Servicios = [],
   } = props.item || {};
+  const { dataMapeoService, getDataMapeoService } = useContext(IOMContext);
   let _Nombre_punto = Nombre_punto.substring(0, 25);
-  var payments = [];
-  for (let i = 0; i < 5; i++) {
-    payments.push(
-      <Image key={i} source={require("../../../resources/images/hear.png")} />
-    );
-  }
+  const unique = [...new Set(Servicios.map(item => item.Servicio_id))];
+  var services = [];
+  _.map(unique,(val,id) => {
+    var service = dataMapeoService.find((element) => {
+      return element.id_servicio === val;
+    });
+
+    let index = services.findIndex(item => item.b64 == service.img_servicio_b64);
+
+    if(service && index < 0){
+      services.push({
+        b64:service.img_servicio_b64,
+        svg:<SvgCssUri
+            key={service.id_servicio}
+            height='32'
+            width='32'
+            uri={Platform.OS==='ios'?service.img_servicio_b64:'https://mapeo-de-servicios.gifmm-colombia.site'+service.img_servicio}
+        />
+      });
+    }
+  });
 
   const onPressOpenPoint = (id) => {
     props.navigation.navigate("PointItem", { id });
@@ -87,7 +107,9 @@ export const ItemCardPoint = (props) => {
               source={require("../../../resources/images/riBookmarkLine2.png")}
             />
           </View>
-          <View style={styles.containerForm}>{payments}</View>
+          <View style={styles.containerForm}>{_.map(services,(val) => {
+        return val.svg
+      })}</View>
           <View style={styles.containerForm}>
             <Image
               source={require("../../../resources/images/riMapPinFill.png")}
@@ -138,6 +160,11 @@ const PointListResult = (props) => {
   const mapMarkers = () => {
     if (dataPointFilter != null) {
       return dataPointFilter.map((item, index) => {
+        var icon;
+        if(item.Estado_id == 136) icon= require('./../../../resources/images/ri-map-pin-fill02.png');
+        else if(item.Estado_id == 137) icon= require('./../../../resources/images/ri-map-pin-fill03.png');
+        else if(item.Estado_id == 139) icon= require('./../../../resources/images/ri-map-pin-fill04.png');
+        else icon= require('./../../../resources/images/ri-map-pin-fill01.png');
         if (item.Coordenadas !== "") {
           let coor = item.Coordenadas.split(",");
           return (
@@ -148,7 +175,9 @@ const PointListResult = (props) => {
                 longitude: parseFloat(coor[1]),
               }}
               onPress={() => onPressOpenPoint(item.ID)}
-            ></Marker>
+            >
+            <Image source={icon} style={{height: 40, width: 28 }} />
+            </Marker>
           );
         }
       });

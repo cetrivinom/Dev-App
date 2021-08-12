@@ -32,7 +32,7 @@ const Links = (props) => {
   useEffect(() => {
     getDataLink();
   }, []);
-
+  console.log('dataLink',dataLink)
   return (
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>
@@ -51,6 +51,7 @@ const Links = (props) => {
                 content={item.item.Contenido}
                 image={item.item.Imagen}
                 date={item.item.Fecha}
+                links={item.item.EnlaceExterno}
               />
             )}
             keyExtractor={(item) => item.Titulo}

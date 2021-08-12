@@ -12,6 +12,8 @@ import {
 import IOMContext from "../../../../context/iomData/iomContext";
 import HeaderItem from "../../global/_children/HeaderItem";
 import { metrics } from "../../../utilities/Metrics";
+import { SvgCssUri } from 'react-native-svg';
+import _ from 'lodash';
 
 export const LastUpdate = (props) => {
   const {
@@ -51,15 +53,32 @@ export const ItemCardPoint = (props) => {
     Coordenadas = "",
     Direccion = "",
     point = 5,
+    Servicios = [],
   } = props.item || {};
 
-  var payments = [];
-  for (let i = 0; i < point; i++) {
-    payments.push(
-      <Image key={i} source={require("../../../resources/images/hear.png")} />
-    );
-  }
-  let _Nombre_punto = Nombre_punto.substring(0, 25);
+  const { dataMapeoService, getDataMapeoService } = useContext(IOMContext);
+  let _Nombre_punto = Nombre_punto.substring(0, 25);  
+  const unique = [...new Set(Servicios.map(item => item.Servicio_id))];
+  var services = [];
+  _.map(unique,(val,id) => {
+    var service = dataMapeoService.find((element) => {
+      return element.id_servicio === val;
+    });
+
+    let index = services.findIndex(item => item.b64 == service.img_servicio_b64);
+
+    if(service && index < 0){
+      services.push({
+        b64:service.img_servicio_b64,
+        svg:<SvgCssUri
+            key={service.id_servicio}
+            height='32'
+            width='32'
+            uri={Platform.OS==='ios'?service.img_servicio_b64:'https://mapeo-de-servicios.gifmm-colombia.site'+service.img_servicio}
+        />
+      });
+    }
+  });
 
   return Nombre_punto !== "" ? (
     <View style={styles.container1}>
@@ -67,7 +86,9 @@ export const ItemCardPoint = (props) => {
         <Text style={styles.textTitle}>{_Nombre_punto + "..."}</Text>
         <Image source={require("../../../resources/images/riMoreLine.png")} />
       </View>
-      <View style={styles.containerForm}>{payments}</View>
+      <View style={styles.containerForm}>{_.map(services,(val) => {
+        return val.svg
+      })}</View>
       <View style={styles.containerForm}>
         <Image source={require("../../../resources/images/riMapPinFill.png")} />
         <Text style={styles.textTitle2}>{Estado}</Text>

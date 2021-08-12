@@ -1,4 +1,8 @@
-import { GET_DATA, GET_DATA_ERROR } from "../../types";
+import { 
+  GET_DATA, 
+  GET_DATA_ERROR,
+  UPDATED_LAST_UPDATE
+} from "../../types";
 
 export default (state, action) => {
   switch (action.type) {
@@ -13,6 +17,11 @@ export default (state, action) => {
         ...state,
         message: action.payload,
         status: false,
+      };
+    case UPDATED_LAST_UPDATE:
+      return {
+        ...state,
+        lastUpdate: action.payload,
       };
     default:
       return state;
