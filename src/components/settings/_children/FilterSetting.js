@@ -16,11 +16,14 @@ import { metrics } from "../../../utilities/Metrics";
 const FilterSetting = (props) => {
   const {
     dataPointState,
+    dataPoint,
     dataPointDepartamento,
     dataPointMunicipio,
     dataMapeoService,
     getDataPointFilter,
     getDataMapeoService,
+    getDataByDepartId,
+    dataItem,
   } = useContext(IOMContext);
   const [show, setShow] = useState(false);
   const [openStatus, setOpenStatus] = useState(false);
@@ -35,7 +38,10 @@ const FilterSetting = (props) => {
 
   useEffect(() => {
     getDataMapeoService();
+    
   }, []);
+
+  
 
   const onPressCancel = () => {
     setTypeService("");
@@ -162,7 +168,7 @@ const FilterSetting = (props) => {
             : openDepartamento
             ? dataPointDepartamento
             : openMunicipio
-            ? dataPointMunicipio
+            ? dataPoint
             : []
         }
         setSearchTerm={
@@ -175,6 +181,21 @@ const FilterSetting = (props) => {
             : null
         }
         toggleModal = {toggleModal}
+        departamento = {openStatus
+          ? null
+          : openDepartamento
+          ? null
+          : openMunicipio
+          ? departamento
+          : null}
+        openStatus={openStatus
+          ? 'status'
+          : openDepartamento
+          ? 'departamento'
+          : openMunicipio
+          ? 'municipio'
+          : null}
+
       />
     </ScrollView>
   );

@@ -1,3 +1,4 @@
+import { identity } from "lodash";
 import React, { useState, useEffect } from "react";
 import {
   Alert,
@@ -33,22 +34,41 @@ const ModalFilter = ({
   setSearchTerm,
   placeholder = "Buscar tipo de contenido",
   toggleModal,
+  departamento,
+  openStatus
 }) => {
   const [searchFilter, setSearchFilter] = useState("");
   useEffect(() => {
     setSearchFilter("");
-    
+
   }, [show]);
 
   if (data === null) {
     return null;
   }
 
-  
+ 
+  var dataFilter;
+  if (openStatus == "municipio" && departamento !== null && departamento !== "" ) {
+    dataFilter = [...new Set(
+      data.filter((item) => item.Departamento==departamento).map((item) => item.Municipio)),];
+      dataFilter = dataFilter.filter((item) =>
+      item.toLowerCase().includes(searchFilter.toLowerCase()));
+  } else if (openStatus == "municipio" && (departamento == null || departamento=="")) {
+    dataFilter = [];
+  }
 
-  const dataFilter = data.filter((item) =>
+  else {
+    dataFilter = data.filter((item) =>
+      item.toLowerCase().includes(searchFilter.toLowerCase()));
+  }
+
+
+  /*const dataFilter = data.filter((item) =>
     item.toLowerCase().includes(searchFilter.toLowerCase())
-  );
+  );*/
+
+  
 
   return (
     <View style={styles.centeredView}>
@@ -63,30 +83,30 @@ const ModalFilter = ({
         }}
       >
         <TouchableHighlight style={styles.background} onPress={toggleModal} underlayColor={"transparent"}>
-    
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <TextInput
-              style={styles.cardItemBuscar}
-              placeholder={placeholder}
-              onChangeText={(e) => {
-                setSearchFilter(e);
-              }}
-            />
-            <View style={styles.divider}></View>
-            <FlatList
-              data={dataFilter}
-              renderItem={(item) => (
-                <ItemMain
-                  item={item.item}
-                  setSearchTerm={setSearchTerm}
-                  onClose={onClose}
-                />
-              )}
-              keyExtractor={(item, index) => index}
-            />
+
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <TextInput
+                style={styles.cardItemBuscar}
+                placeholder={placeholder}
+                onChangeText={(e) => {
+                  setSearchFilter(e);
+                }}
+              />
+              <View style={styles.divider}></View>
+              <FlatList
+                data={dataFilter}
+                renderItem={(item) => (
+                  <ItemMain
+                    item={item.item}
+                    setSearchTerm={setSearchTerm}
+                    onClose={onClose}
+                  />
+                )}
+                keyExtractor={(item, index) => index}
+              />
+            </View>
           </View>
-        </View>
         </TouchableHighlight>
       </Modal>
     </View>
