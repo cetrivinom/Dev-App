@@ -56,6 +56,8 @@ const FilterSetting = (props) => {
     });
   };
 
+  const toggleModal = () => setShow(!show);
+
   return (
     <ScrollView style={styles.wrapper}>
       <HeaderItem {...props} title="Filtrar puntos de servicio" />
@@ -172,6 +174,7 @@ const FilterSetting = (props) => {
             ? setMunicipio
             : null
         }
+        toggleModal = {toggleModal}
       />
     </ScrollView>
   );

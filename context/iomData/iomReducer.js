@@ -117,6 +117,11 @@ export default (state, action) => {
         ...state,
         dataFavorite: action.payload,
       };
+      case DELETE_FAVORITE:
+        return {
+          ...state,
+          dataFavorite: action.payload,
+        };
     default:
       return state;
   }

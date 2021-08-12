@@ -61,7 +61,7 @@ const CardItemFavorite = (props) => {
     <TouchableOpacity key={id} style={styles.container} onPress={() => onPressOpenPoint(id)}>
       <View style={styles.containerFormTitle}>
         <Text style={styles.textTitle}>{_Nombre_punto + "..."}</Text>
-        <Image source={require("../../../resources/images/riMoreLine.png")} />
+        
       </View>
       <View style={styles.containerForm}>{_.map(services,(val) => {
         return val.svg
@@ -83,8 +83,7 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 12,
     marginHorizontal: 12,
-    borderBottomWidth: 3,
-    borderColor: "#E7EAEC",
+    
   },
   containerForm: {
     flexDirection: "row",

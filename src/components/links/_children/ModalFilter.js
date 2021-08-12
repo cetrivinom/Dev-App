@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableHighlight,
   View,
   FlatList,
   TextInput,
@@ -31,16 +32,19 @@ const ModalFilter = ({
   data,
   setSearchTerm,
   placeholder = "Buscar tipo de contenido",
+  toggleModal,
 }) => {
   const [searchFilter, setSearchFilter] = useState("");
-
   useEffect(() => {
     setSearchFilter("");
+    
   }, [show]);
 
   if (data === null) {
     return null;
   }
+
+  
 
   const dataFilter = data.filter((item) =>
     item.toLowerCase().includes(searchFilter.toLowerCase())
@@ -52,11 +56,14 @@ const ModalFilter = ({
         animationType="fade"
         transparent={true}
         visible={show}
+        closeOnClick={true}
         onRequestClose={() => {
           Alert.alert("Modal has been closed.");
           setModalVisible(!show);
         }}
       >
+        <TouchableHighlight style={styles.background} onPress={toggleModal} underlayColor={"transparent"}>
+    
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <TextInput
@@ -80,12 +87,16 @@ const ModalFilter = ({
             />
           </View>
         </View>
+        </TouchableHighlight>
       </Modal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1
+  },
   centeredView: {
     flex: 1,
     justifyContent: "center",

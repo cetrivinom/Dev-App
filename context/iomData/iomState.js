@@ -233,6 +233,28 @@ const IOMState = (props) => {
     }
   };
 
+  const deleteFavorite = async (point) => {
+    try {
+      const posts = await AsyncStorage.getItem('favorites');
+      let postsFav = JSON.parse(posts);
+const postsItems = postsFav.filter(function(e){ return e.id !== point});
+      
+      await AsyncStorage.setItem('favorites', JSON.stringify(postsItems));
+      const value = await AsyncStorage.getItem("favorites");
+      if (value !== null) {
+        dispatch({
+          type: GET_DATA_FAVORITES,
+          payload: value,
+        });
+      }
+    } catch(error) {
+      dispatch({
+        type: GET_DATA_ERROR,
+        payload: error,
+      });
+    }
+  };
+
   return (
     <IOMContext.Provider
       value={{
@@ -263,6 +285,7 @@ const IOMState = (props) => {
         getUserComments,
         createUserComment,
         createFavorite,
+        deleteFavorite
       }}
     >
       {props.children}
