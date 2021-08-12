@@ -85,6 +85,7 @@ const LoginForm = (props) => {
             errorEmail !== "" ? Styles.inputTextBoxError : Styles.inputTextBox
           }
             placeholder="Correo electrónico"
+            placeholderTextColor="#a9a9a9"
             onChangeText={(e) => {
               setUser({ ...user, email: e });
               setErrorEmail("");
@@ -116,6 +117,7 @@ const LoginForm = (props) => {
               errorEmail !== "" ? Styles.inputTextBoxError : Styles.inputTextBox
             }
             secureTextEntry={true}
+            placeholderTextColor="#a9a9a9"
             placeholder="Contraseña"
             onChangeText={(e) => {
               setUser({ ...user, password: e });

@@ -33,6 +33,7 @@ export default StyleSheet.create({
     borderColor: "#A1AAB2",
     color: 'black',
     fontSize: 16,
+    color: "#000",
   },
   inputTextBoxError: {
     flex:1,

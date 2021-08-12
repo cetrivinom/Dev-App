@@ -165,9 +165,10 @@ export const UpdatePassword= (props) => {
             style={Styles.ImageStyle}
           />
           <TextInput
-            style={{ flex: 1 }}
+            style={{ flex: 1,color: "#000", }}
             secureTextEntry={true}
             placeholder="Contraseña Actual"
+            placeholderTextColor="#a9a9a9"
             underlineColorAndroid="transparent"
             onChangeText={(e) => {
               updatePassInputChange({ 'field': 'currentPass', 'value': e});            
@@ -180,9 +181,10 @@ export const UpdatePassword= (props) => {
             style={Styles.ImageStyle}
           />
           <TextInput
-            style={{ flex: 1}}
+            style={{ flex: 1,color: "#000",}}
             secureTextEntry={true}
             placeholder="Nueva Contraseña"
+            placeholderTextColor="#a9a9a9"
             underlineColorAndroid="transparent"
             onChangeText={(e) => {
               updatePassInputChange({ 'field': 'newPass', 'value': e});  

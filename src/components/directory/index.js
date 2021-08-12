@@ -26,6 +26,7 @@ const Directory = (props) => {
           <TextInput
             style={styles.inputTextBox}
             onChangeText={(e) => setSearchTerm(e)}
+            placeholderTextColor="#a9a9a9"
             placeholder="Buscar departamento"
           />
         </View>
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     borderWidth: 1,
     paddingLeft: 15,
+    color: "#000",
   },
 });
 
