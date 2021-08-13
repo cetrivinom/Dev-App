@@ -9,9 +9,12 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  SafeAreaView,
 } from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
 import { metrics } from "../../../utilities/Metrics";
+import SelectBox from 'react-native-multi-selectbox'
+import { xorBy } from 'lodash'
 
 const FilterSetting = (props) => {
   const {
@@ -33,18 +36,32 @@ const FilterSetting = (props) => {
   const [statusPoint, setStatusPoint] = useState("");
   const [municipio, setMunicipio] = useState("");
   const [departamento, setDepartamento] = useState("");
+  const [selectedService, setSelectedService] = useState([]);
+  
+  const [arregloServicios, setArregloServicios] = useState([]);
 
-  console.log("typeService", typeService);
 
   useEffect(() => {
     getDataMapeoService();
-    
+    var arr = [];
+    dataMapeoService.map(index => {
+
+      arr.push({ item: index.servicio, id: index.id_servicio });
+
+    })
+
+    setArregloServicios(arr);
+
   }, []);
 
   
 
+  function onMultiChange() {
+    return (item) => setSelectedService(xorBy(selectedService, [item], 'id'))
+  }
+
   const onPressCancel = () => {
-    setTypeService("");
+    setSelectedService([]);
     setStatusPoint("");
     setMunicipio("");
     setDepartamento("");
@@ -53,153 +70,103 @@ const FilterSetting = (props) => {
   };
 
   const onPressFilter = () => {
-    getDataPointFilter(departamento, municipio, statusPoint, typeService);
+    getDataPointFilter(departamento, municipio, statusPoint, selectedService);
     props.navigation.navigate("PointListResult", {
       departamento,
       municipio,
       statusPoint,
-      typeService
+      selectedService
     });
   };
 
   const toggleModal = () => setShow(!show);
 
   return (
-    <ScrollView style={styles.wrapper}>
-      <HeaderItem {...props} title="Filtrar puntos de servicio" />
-      <View style={[styles.box, styles.box2]}>
-        <TouchableOpacity
-          style={styles.box6}
-          onPress={() => {
-            setShow(true);
-            setOpenDepartamento(true);
-            setOpenStatus(false);
-            setOpenMunicipio(false);
-          }}
-        >
-          <Text style={styles.textBox}>
-            {departamento != "" ? departamento : "Departamento"}
-          </Text>
-          <Image
-            source={require("../../../resources/images/trailingIcon.png")}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.box6}
-          onPress={() => {
-            setShow(true);
-            setOpenMunicipio(true);
-            setOpenStatus(false);
-            setOpenDepartamento(false);
-          }}
-        >
-          <Text style={styles.textBox}>
-            {municipio != "" ? municipio : "Municipio"}
-          </Text>
-          <Image
-            source={require("../../../resources/images/trailingIcon.png")}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.box6}
-          onPress={() => {
-            setShow(true);
-            setOpenStatus(true);
-            setOpenMunicipio(false);
-            setOpenDepartamento(false);
-          }}
-        >
-          <Text style={styles.textBox}>
-            {statusPoint != "" ? statusPoint : "Estado de punto"}
-          </Text>
-          <Image
-            source={require("../../../resources/images/trailingIcon.png")}
-          />
-        </TouchableOpacity>
-        <View style={styles.divider}></View>
-        <Text style={styles.textTitle2}>Tipo de servicio</Text>
-
-        {dataMapeoService.map((l, i) => (
+      <View style={styles.wrapper}>
+        <HeaderItem {...props} title="Filtrar puntos de servicio" />
+        <View style={[styles.box, styles.box2]}>
           <TouchableOpacity
-            key={i}
-            style={styles.containerForm2}
-            onPress={() => setTypeService(l.servicio)}
+            style={styles.box6}
+            onPress={() => {
+              setShow(true);
+              setOpenDepartamento(true);
+              setOpenStatus(false);
+              setOpenMunicipio(false);
+            }}
           >
-            <Text style={styles.textTitle2}>{l.servicio.substring(0, 30)}</Text>
+            <Text style={styles.textBox}>
+              {departamento != "" ? departamento : "Departamento"}
+            </Text>
             <Image
-              source={
-                typeService === l.servicio
-                  ? require("../../../resources/images/checkboxCircle.png")
-                  : require("../../../resources/images/unCheckboxCircle.png")
-              }
+              source={require("../../../resources/images/trailingIcon.png")}
             />
           </TouchableOpacity>
-        ))}
-
-        <View style={styles.box7}>
-          <TouchableOpacity style={[styles.caja1]} onPress={onPressCancel}>
-            <Text style={styles.textBoxCaja}>Borrar</Text>
+          <TouchableOpacity
+            style={styles.box6}
+            onPress={() => {
+              setShow(true);
+              setOpenMunicipio(true);
+              setOpenStatus(false);
+              setOpenDepartamento(false);
+            }}
+          >
+            <Text style={styles.textBox}>
+              {municipio != "" ? municipio : "Municipio"}
+            </Text>
+            <Image
+              source={require("../../../resources/images/trailingIcon.png")}
+            />
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.caja1, styles.caja2]}
-            onPress={onPressFilter}
+            style={styles.box6}
+            onPress={() => {
+              setShow(true);
+              setOpenStatus(true);
+              setOpenMunicipio(false);
+              setOpenDepartamento(false);
+            }}
           >
-            <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
-              Filtrar
+            <Text style={styles.textBox}>
+              {statusPoint != "" ? statusPoint : "Estado de punto"}
             </Text>
+            <Image
+              source={require("../../../resources/images/trailingIcon.png")}
+            />
           </TouchableOpacity>
+
+          <View style={styles.divider}></View>
+
+
+          <Text style={styles.textTitle2}>Tipo de servicio</Text>
+
+          <SelectBox
+            label=""
+            options={arregloServicios}
+            selectedValues={selectedService}
+            onMultiSelect={onMultiChange()}
+            onTapClose={onMultiChange()}
+            isMulti
+          />
+
+          <View style={styles.box7}>
+            <TouchableOpacity style={[styles.caja1]} onPress={onPressCancel}>
+              <Text style={styles.textBoxCaja}>Borrar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.caja1, styles.caja2]}
+              onPress={onPressFilter}
+            >
+              <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
+                Filtrar
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-      <ModalFilter
-        onClose={() => setShow(false)}
-        show={show}
-        placeholder={
-          openStatus
-            ? "Buscar Estado de Punto"
-            : openDepartamento
-            ? "Buscar Departamento"
-            : openMunicipio
-            ? "Buscar Municipio"
-            : ""
-        }
-        data={
-          openStatus
-            ? dataPointState
-            : openDepartamento
-            ? dataPointDepartamento
-            : openMunicipio
-            ? dataPoint
-            : []
-        }
-        setSearchTerm={
-          openStatus
-            ? setStatusPoint
-            : openDepartamento
-            ? setDepartamento
-            : openMunicipio
-            ? setMunicipio
-            : null
-        }
-        toggleModal = {toggleModal}
-        departamento = {openStatus
-          ? null
-          : openDepartamento
-          ? null
-          : openMunicipio
-          ? departamento
-          : null}
-        openStatus={openStatus
-          ? 'status'
-          : openDepartamento
-          ? 'departamento'
-          : openMunicipio
-          ? 'municipio'
-          : null}
-
-      />
-    </ScrollView>
+    
   );
 };
+
 
 const styles = StyleSheet.create({
   wrapper: {
