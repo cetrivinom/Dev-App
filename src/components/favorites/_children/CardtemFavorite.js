@@ -55,13 +55,12 @@ const CardItemFavorite = (props) => {
     }
   });
 
-  let _Nombre_punto = Nombre_punto.substring(0, 25);
+  let _Nombre_punto = Nombre_punto.substring(0, 30);
 
   return Nombre_punto !== "" ? (
     <TouchableOpacity key={id} style={styles.container} onPress={() => onPressOpenPoint(id)}>
       <View style={styles.containerFormTitle}>
         <Text style={styles.textTitle}>{_Nombre_punto + "..."}</Text>
-        
       </View>
       <View style={styles.containerForm}>{_.map(services,(val) => {
         return val.svg
@@ -81,9 +80,8 @@ const CardItemFavorite = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 12,
     marginHorizontal: 12,
-    
+    flex: 0.98
   },
   containerForm: {
     flexDirection: "row",

@@ -14,7 +14,13 @@ import authContext from "../../../../context/auth/authContext";
 import ServiceItem from "./ServiceItem";
 import { capitalize } from "../../../utilities/helpers";
 import { metrics } from "../../../utilities/Metrics";
-import { Button, Menu, Provider } from 'react-native-paper';
+import { Button,  Provider } from 'react-native-paper';
+import Menu, {
+  MenuProvider,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger
+} from 'react-native-popup-menu';
 
 const PointItem = (props) => {
   const { dataItem, getDataPointById, dataComments } = useContext(IOMContext);
@@ -153,7 +159,7 @@ const PointItem = (props) => {
             ))}
           </View>
           <View style={styles.divider}></View>    
-          <View style={styles.box5}>
+          <MenuProvider style={styles.box5}>
             <Text style={styles.textComentario}>Tus comentarios</Text>
             {dataComments
               .filter((data) => data.pointID === id)
@@ -165,12 +171,14 @@ const PointItem = (props) => {
                         source={require("../../../resources/images/userIco.png")}
                       />
                       <Text style={styles.textTitle2}>{user.email}</Text>
-                      <TouchableOpacity onPress={() => {
-                          //setVisible(true);
-                          onPressDotMenu();
-                        }} style={{position: 'absolute', right: 0}}>
-                        <Image source={require("../../../resources/images/riMoreLine.png")} />
-                      </TouchableOpacity>
+                      <Menu>
+                        <MenuTrigger style={styles.trigger}>
+                          <Image source={require("../../../resources/images/riMoreLine.png")} />
+                        </MenuTrigger>
+                        <MenuOptions optionsContainerStyle={{width:100}} customStyles={{ optionText: styles.text}}>
+                          <MenuOption text='Borrar' />
+                        </MenuOptions>
+                      </Menu>
                     </View>
                     <Text style={styles.textTitle3}>{l.comment}</Text>
                   </View>
@@ -182,7 +190,7 @@ const PointItem = (props) => {
                 Agregar comentario
               </Text>
             </TouchableOpacity>
-          </View>
+          </MenuProvider>
         </ScrollView>
       </View>
     </View>
@@ -246,6 +254,7 @@ const styles = StyleSheet.create({
   containerForm: {
     flexDirection: "row",
     marginBottom: 10,
+    flex:1,
   },
   textTitle2: {
     fontSize: 14,
@@ -255,6 +264,7 @@ const styles = StyleSheet.create({
     color: "#003031",
     marginTop: 2,
     marginStart: 10.5,
+    flex:1
   },
   cajaDireccion: {
     backgroundColor: "#132A3E",
@@ -311,6 +321,13 @@ const styles = StyleSheet.create({
     color: "#A1AAB2",
     marginTop: 2,
     textAlign: "justify",
+  },
+  text: {
+    fontSize: 15,
+    lineHeight: 23,
+    letterSpacing: 0.0015,
+    fontWeight: "bold",
+    color: "#003031",
   },
 });
 

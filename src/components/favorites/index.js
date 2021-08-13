@@ -11,6 +11,7 @@ import Menu, {
   MenuTrigger,
   renderers
 } from 'react-native-popup-menu';
+const { SlideInMenu } = renderers;
 
 const Favorites = (props) => {
   var {dataFavorite, getDataFavorite, deleteFavorite } = useContext(IOMContext);
@@ -32,36 +33,32 @@ getDataFavorite();
 
   return (
     
-    <View style={styles.container}>
+    <MenuProvider style={styles.container}>
       <View style={[styles.box, styles.box1]}>
         <Header {...props} showBack={false} title="Puntos favoritos" />
       </View>
+      
       {dataFavorite !== null && (
         <View style={[styles.box, styles.box2]}>
           <FlatList
-          style={{ height: 200 }}
             data={dataFavorite}
-            renderItem={(item) => <View style={{display:'flex', flexDirection:'row',borderBottomWidth: 3,
-            borderColor: "#E7EAEC"}}>
-              <CardtemFavorite {...props} id={item.item.id} />
-              <MenuProvider style={{position:'absolute', top:8, right:8}}>
-                <Menu>
-                  <MenuTrigger>
-                    <Image source={require("../../resources/images/riMoreLine.png")} />
-                  </MenuTrigger>
-                  <MenuOptions>
-                    <MenuOption onSelect={() => deleteItemById(item.item.id)} customStyles={{ height: 48, width: 100 }}>
-                      <Text style={styles.textTitle2}>Borrar</Text>
-                    </MenuOption>
-                  </MenuOptions>
-                </Menu>
-              </MenuProvider>
-            </View>}
+            renderItem={(item) => (
+              <Menu style={styles.menu}>
+                <CardtemFavorite {...props} id={item.item.id} />
+                <MenuTrigger
+                  style={styles.trigger}>
+                  <Image source={require("../../resources/images/riMoreLine.png")} />
+                </MenuTrigger>
+                <MenuOptions optionsContainerStyle={{width:100}} customStyles={{ optionText: styles.text}}>
+                  <MenuOption  onSelect={() => deleteItemById(item.item.id)} text='Borrar' />
+                </MenuOptions>
+              </Menu>
+            )}
             keyExtractor={(item) => item.id}
           />
         </View>
       )}
-    </View>
+    </MenuProvider>
   );
 };
 
@@ -79,6 +76,48 @@ const styles = StyleSheet.create({
   //content
   box2: {
     flex: 10,
+  },
+
+  trigger: {
+    //padding: 5,
+    //margin: 25,
+  },
+  triggerText: {
+    color: 'white',
+  },
+  disabled: {
+    color: '#ccc',
+  },
+  divider: {
+    marginVertical: 5,
+    marginHorizontal: 2,
+    borderBottomWidth: 1,
+    borderColor: '#ccc',
+  },
+  logView: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  logItem: {
+    flexDirection: 'row',
+    padding: 8,
+  },
+  slideInOption: {
+    padding: 5,
+  },
+  text: {
+    fontSize: 15,
+    lineHeight: 23,
+    letterSpacing: 0.0015,
+    fontWeight: "bold",
+    color: "#003031",
+  },
+  menu:{
+    marginTop:12,
+    display:'flex', 
+    flexDirection:'row',
+    borderBottomWidth: 3, 
+    borderColor: "#E7EAEC"
   },
 });
 
