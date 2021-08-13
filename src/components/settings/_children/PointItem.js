@@ -23,7 +23,7 @@ import Menu, {
 } from 'react-native-popup-menu';
 
 const PointItem = (props) => {
-  const { dataItem, getDataPointById, dataComments } = useContext(IOMContext);
+  const { dataItem, getDataPointById, dataComments, deleteUserComment } = useContext(IOMContext);
   const [ visible, setVisible ] = useState(false);
   const { user } = useContext(authContext);
   const { id = "" } = props.navigation.state.params || {};
@@ -175,8 +175,8 @@ const PointItem = (props) => {
                         <MenuTrigger style={styles.trigger}>
                           <Image source={require("../../../resources/images/riMoreLine.png")} />
                         </MenuTrigger>
-                        <MenuOptions optionsContainerStyle={{width:100}} customStyles={{ optionText: styles.text}}>
-                          <MenuOption text='Borrar' />
+                        <MenuOptions optionsContainerStyle={{width:100}} customStyles={{ optionText: styles.textComment}}>
+                          <MenuOption  onSelect={() => deleteUserComment(user.uid,id,l.commentID)} text='Borrar' />
                         </MenuOptions>
                       </Menu>
                     </View>
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     textAlign: "justify",
   },
-  text: {
+  textComment: {
     fontSize: 15,
     lineHeight: 23,
     letterSpacing: 0.0015,

@@ -13,6 +13,7 @@ import {
   GET_USER_COMMENTS,
   NEW_FAVORITE,
   NEW_COMMENT,
+  DELETE_COMMENT,
 } from "../../types";
 
 export default (state, action) => {
@@ -120,6 +121,10 @@ export default (state, action) => {
         dataFavorite: action.payload,
       };
     case NEW_COMMENT:
+      return {
+        ...state
+      };
+    case DELETE_COMMENT:
       return {
         ...state
       };
