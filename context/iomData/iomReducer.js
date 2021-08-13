@@ -17,12 +17,12 @@ import {
 } from "../../types";
 
 export default (state, action) => {
-  console.log('action11',action);
+  
   switch (action.type) {
     case GET_DATA_LINK:
       const dataLink = JSON.parse(action.value);
       const unique = [...new Set(dataLink.map((item) => item.Etiquetas))];
-      const mergeDedupe = (arr) => {return [...new Set([].concat(...arr))];};
+      const mergeDedupe = (arr) => { return [...new Set([].concat(...arr))]; };
       return {
         ...state,
         dataLink: action.item !== "" && action.item !== undefined ? dataLink.filter((obj) => obj.Etiquetas.some((o) => o == action.item)) : dataLink,
@@ -51,13 +51,41 @@ export default (state, action) => {
         //dataPointFilter: false,
       };
     case GET_DATA_DIRECTORY_FILTER:
+
+      const array = [];
+      state.dataPoint.map(element => {
+        var todos = false;
+
+        element.Servicios.map(item => {
+
+console.log("item.Servicio",item.Servicio);
+          action.typeService.map(service => {
+            console.log("service.item",service.item);
+            if (service.item === item.Servicio) {
+              todos = true;
+            }
+          })
+
+        })
+        if (todos) {
+          array.push(element);
+        }
+
+
+      })
+
+
+
       return {
+
+
+
         ...state,
-        dataPointFilter: state.dataPoint
+        dataPointFilter: array
           .filter((item) => item.Departamento.toLowerCase().includes(action.departamento.toLowerCase()))
           .filter((item) => item.Municipio.toLowerCase().includes(action.municipio.toLowerCase()))
           .filter((item) => item.Estado.toLowerCase().includes(action.estado.toLowerCase()))
-          .filter((item) => item.Servicios.some((o) => o.Servicio.toLowerCase().includes(action.typeService.toLowerCase()))),
+        //.filter((item) => item.Servicios.some((o) => o.Servicio.toLowerCase().includes(action.typeService.toLowerCase()))),
       };
     case GET_DATA_POINT_ID:
       return {
