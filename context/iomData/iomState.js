@@ -244,7 +244,9 @@ const IOMState = (props) => {
   };
 
   const deleteFavorite = async (point) => {
-    try {
+
+    AsyncStorage.removeItem('favorites')
+    /*try {
       const posts = await AsyncStorage.getItem('favorites');
       let postsFav = JSON.parse(posts);
 const postsItems = postsFav.filter(function(e){ return e.id !== point});
@@ -262,7 +264,7 @@ const postsItems = postsFav.filter(function(e){ return e.id !== point});
         type: GET_DATA_ERROR,
         payload: error,
       });
-    }
+    }*/
   };
 
   return (
