@@ -10,6 +10,7 @@ import {
   GET_DATA_POINT_ID,
   GET_DATA_DIRECTORY_ITEM,
   GET_DATA_MAPEO_SERVICE,
+  GET_DATA_MAPEO_STATE,
   GET_USER_COMMENTS,
   NEW_FAVORITE,
   NEW_COMMENT,
@@ -57,10 +58,7 @@ export default (state, action) => {
         var todos = false;
 
         element.Servicios.map(item => {
-
-console.log("item.Servicio",item.Servicio);
           action.typeService.map(service => {
-            console.log("service.item",service.item);
             if (service.item === item.Servicio) {
               todos = true;
             }
@@ -116,6 +114,12 @@ console.log("item.Servicio",item.Servicio);
       return {
         ...state,
         dataMapeoService: JSON.parse(action.payload),
+        messageError: null,
+      };
+    case GET_DATA_MAPEO_STATE:
+      return {
+        ...state,
+        dataMapeoState: JSON.parse(action.payload),
         messageError: null,
       };
     case GET_DATA_DIRECTORY_SERVICE_ITEM:

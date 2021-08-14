@@ -11,6 +11,7 @@ import {
   GET_DATA_DIRECTORY_ITEM,
   GET_DATA_POINT_ID,
   GET_DATA_MAPEO_SERVICE,
+  GET_DATA_MAPEO_STATE,
   GET_USER_COMMENTS,
   NEW_COMMENT,
   NEW_FAVORITE,
@@ -35,6 +36,7 @@ const IOMState = (props) => {
     dataDirectory: null,
     dataDirectoryService: null,
     dataMapeoService: [],
+    dataMapeoState: [],
     dataFavorite: [],
     dataItem: null,
     dataItemService: null,
@@ -182,6 +184,24 @@ const IOMState = (props) => {
     }
   };
 
+
+  const getDataMapeoState = async () => {
+    try {
+      const value = await AsyncStorage.getItem("api-mapeo-estados.json");
+      if (value !== null) {
+        dispatch({
+          type: GET_DATA_MAPEO_STATE,
+          payload: value,
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: GET_DATA_ERROR,
+        payload: error,
+      });
+    }
+  };
+
   const getUserComments = (uid) => {
     database().ref('/comments/'+uid).on('value',snapshot => {
       let res = [];
@@ -284,6 +304,7 @@ const postsItems = postsFav.filter(function(e){ return e.id !== point});
         dataItemService: state.dataItemService,
         messageError: state.messageError,
         dataMapeoService: state.dataMapeoService,
+        dataMapeoState: state.dataMapeoState,
         dataComments: state.dataComments,
         getDataLink,
         getDataPoint,
@@ -294,6 +315,7 @@ const postsItems = postsFav.filter(function(e){ return e.id !== point});
         getDataDirectoryItemService,
         getDataPointFilter,
         getDataMapeoService,
+        getDataMapeoState,
         getUserComments,
         createUserComment,
         createFavorite,
