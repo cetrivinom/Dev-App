@@ -162,6 +162,52 @@ const FilterSetting = (props) => {
             </TouchableOpacity>
           </View>
         </View>
+        <ModalFilter
+          onClose={() => setShow(false)}
+          show={show}
+          placeholder={
+            openStatus
+              ? "Buscar Estado de Punto"
+              : openDepartamento
+              ? "Buscar Departamento"
+              : openMunicipio
+              ? "Buscar Municipio"
+              : ""
+          }
+          data={
+            openStatus
+              ? dataPointState
+              : openDepartamento
+              ? dataPointDepartamento
+              : openMunicipio
+              ? dataPoint
+              : []
+          }
+          setSearchTerm={
+            openStatus
+              ? setStatusPoint
+              : openDepartamento
+              ? setDepartamento
+              : openMunicipio
+              ? setMunicipio
+              : null
+          }
+          toggleModal = {toggleModal}
+          departamento = {openStatus
+            ? null
+            : openDepartamento
+            ? null
+            : openMunicipio
+            ? departamento
+            : null}
+          openStatus={openStatus
+            ? 'status'
+            : openDepartamento
+            ? 'departamento'
+            : openMunicipio
+            ? 'municipio'
+            : null}
+        />
       </View>
     
   );
