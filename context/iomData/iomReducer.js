@@ -53,38 +53,53 @@ export default (state, action) => {
       };
     case GET_DATA_DIRECTORY_FILTER:
 
-      const array = [];
-      state.dataPoint.map(element => {
-        var todos = false;
+      if (action.typeService.length > 0) {
 
-        element.Servicios.map(item => {
-          action.typeService.map(service => {
-            if (service.item === item.Servicio) {
-              todos = true;
-            }
+        const array = [];
+        state.dataPoint.map(element => {
+          var todos = false;
+
+          element.Servicios.map(item => {
+
+
+            action.typeService.map(service => {
+
+              if (service.item === item.Servicio) {
+                todos = true;
+              }
+            })
+
           })
+          if (todos) {
+            array.push(element);
+          }
+
 
         })
-        if (todos) {
-          array.push(element);
-        }
 
-
-      })
+        return {
 
 
 
-      return {
+          ...state,
+          dataPointFilter: array
+            .filter((item) => item.Departamento.toLowerCase().includes(action.departamento.toLowerCase()))
+            .filter((item) => item.Municipio.toLowerCase().includes(action.municipio.toLowerCase()))
+            .filter((item) => item.Estado.toLowerCase().includes(action.estado.toLowerCase()))
 
-
+        };
+      }
+      else {
+     return {
 
         ...state,
-        dataPointFilter: array
+        dataPointFilter: state.dataPoint
           .filter((item) => item.Departamento.toLowerCase().includes(action.departamento.toLowerCase()))
           .filter((item) => item.Municipio.toLowerCase().includes(action.municipio.toLowerCase()))
           .filter((item) => item.Estado.toLowerCase().includes(action.estado.toLowerCase()))
-        //.filter((item) => item.Servicios.some((o) => o.Servicio.toLowerCase().includes(action.typeService.toLowerCase()))),
+          //.filter((item) => item.Servicios.some((o) => o.Servicio.toLowerCase().includes(action.typeService.toLowerCase()))),
       };
+    }
     case GET_DATA_POINT_ID:
       return {
         ...state,
