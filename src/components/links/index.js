@@ -33,6 +33,7 @@ const Links = (props) => {
     getDataLink();
   }, []);
   
+  const toggleModal = () => setShow(!show);
   return (
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>
@@ -108,6 +109,7 @@ const Links = (props) => {
         show={show}
         data={dataLinkEtiquetas}
         setSearchTerm={setSearchTerm}
+        toggleModal={toggleModal}
       />
     </View>
   );
@@ -131,6 +133,7 @@ const styles = StyleSheet.create({
   },
   box3: {
     position: "absolute",
+    width:"100%",
     height: 300,
     backgroundColor: "#FFFFFF",
     bottom: 0,
@@ -186,7 +189,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 42,
     borderWidth: 1,
-    width: metrics.WIDTH*0.5,
+    width: metrics.WIDTH*0.4,
     borderRadius: 25,
     borderColor: "#A1AAB2",
   },
