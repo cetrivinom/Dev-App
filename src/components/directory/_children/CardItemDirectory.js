@@ -21,7 +21,7 @@ const CardItemDirectory = (props) => {
     </View>
   );
 };
-console.log(metrics)
+
 const styles = StyleSheet.create({
   card: {
     justifyContent: "center",

@@ -8,13 +8,15 @@ import IOMContext from "../../../context/iomData/iomContext";
 
 const Settings = (props) => {
   const [position, setPosition] = useState(null);
-  const { dataPoint, getDataPoint, dataMapeoService, getDataMapeoService, dataMapeoState } = useContext(IOMContext);
+  const { dataPoint, getDataPoint, dataMapeoService, getDataMapeoService, dataMapeoState, getDataMapeoState } = useContext(IOMContext);
 
   useEffect(() => {
     if(dataPoint && dataPoint.length < 1)
       getDataPoint();
     if(dataMapeoService && dataMapeoService.length < 1)
       getDataMapeoService();
+    if(dataMapeoState && dataMapeoState.length < 1)
+      getDataMapeoState();
     Geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
@@ -45,7 +47,7 @@ const Settings = (props) => {
               }}
               onPress={() => onPressOpenPoint(item.ID)}
             >
-              <Image style={{width: 28, height: 40}} source={{uri: icon.img_estado_b64}}/>
+              <Image style={{width: 28, height: 40}} source={{uri: icon?.img_estado_b64}}/>
             </Marker>
           );
         }

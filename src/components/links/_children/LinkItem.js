@@ -51,7 +51,6 @@ const LinkItem = (props) => {
             const link = val.indexOf('enlace:');
             const url = val.substring(link+7,val.length)
             const desc = val.substring(7,link-1)
-            console.log('val',val,link,val.length,url,desc)
             return <TouchableOpacity
                 key={id}
                 style={styles.boxOpenLink}

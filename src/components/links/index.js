@@ -32,7 +32,7 @@ const Links = (props) => {
   useEffect(() => {
     getDataLink();
   }, []);
-  console.log('dataLink',dataLink)
+  
   return (
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>

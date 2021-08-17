@@ -8,12 +8,12 @@ import { metrics } from "../../utilities/Metrics";
 const Splash = (props) => {
   const { getDataLink, updateLastUpdate } = useContext(InitialContext);
   const api = [
+    "api-mapeo-estados.json",
     "api-enlaces-de-interes.json",
     "api-mapeo.json",
     "lines.json",
     "api-lineas-telefonicas-servicios.json",
     "api-mapeo-servicios.json",
-    "api-mapeo-estados.json",
   ];
 
 
@@ -21,17 +21,18 @@ const Splash = (props) => {
   const { dataPoint, getDataPoint, dataMapeoService, getDataMapeoService, dataMapeoState, getDataMapeoState } = useContext(IOMContext);
 
   useEffect(() => {
-    if(dataPoint && dataPoint.length < 1)
-      getDataPoint();
-    if(dataMapeoService && dataMapeoService.length < 1)
-      getDataMapeoService();
-    if(dataMapeoState && dataMapeoState.length < 1)
-      getDataMapeoState();
     let i = 0;
     api.map((item) => {
       i += 1;
       return getDataLink(item);
     });
+    if(dataPoint && dataPoint.length < 1)
+      getDataPoint();
+    if(dataMapeoService && dataMapeoService.length < 1)
+      getDataMapeoService();
+    if(dataMapeoState && dataMapeoState.length < 1){
+      getDataMapeoState();
+    }
     if (i === api.length) {
       setTimeout(() => {
         updateLastUpdate();

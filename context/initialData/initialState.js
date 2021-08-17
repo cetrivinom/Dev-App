@@ -23,7 +23,6 @@ const InitialState = (props) => {
         'Expires': '0',
       };
       const response = await API.get(apiName);
-      console.log(apiName,response)
       if (response.status === 200) {
         AsyncStorage.setItem(apiName, JSON.stringify(response.data));
         dispatch({
@@ -56,7 +55,6 @@ const InitialState = (props) => {
   const updateLastUpdate = async () => {
     try {
         var date = moment().format('DD/MM/YY, HH:mm:ss');
-        console.log('updateLastUpdate',date)
         AsyncStorage.setItem('lastUpdate', date);
         dispatch({
           type: UPDATED_LAST_UPDATE,
