@@ -147,7 +147,7 @@ export const ItemCardPoint = (props) => {
 };
 
 const PointListResult = (props) => {
-  const { dataPointFilter } = useContext(IOMContext);
+  const { dataPointFilter, dataMapeoState } = useContext(IOMContext);
 
   const onPressOpenPoint = (id) => {
     props.navigation.navigate("PointItem", { id });
@@ -160,12 +160,8 @@ const PointListResult = (props) => {
   const mapMarkers = () => {
     if (dataPointFilter != null) {
       return dataPointFilter.map((item, index) => {
-        var icon;
-        if(item.Estado_id == 136) icon= require('./../../../resources/images/ri-map-pin-fill02.png');
-        else if(item.Estado_id == 137) icon= require('./../../../resources/images/ri-map-pin-fill03.png');
-        else if(item.Estado_id == 139) icon= require('./../../../resources/images/ri-map-pin-fill04.png');
-        else icon= require('./../../../resources/images/ri-map-pin-fill01.png');
         if (item.Coordenadas !== "") {
+          var icon = (dataMapeoState.find((state) => state.id_estado == item.Estado_id));
           let coor = item.Coordenadas.split(",");
           return (
             <Marker
@@ -176,7 +172,7 @@ const PointListResult = (props) => {
               }}
               onPress={() => onPressOpenPoint(item.ID)}
             >
-            <Image source={icon} style={{height: 40, width: 28 }} />
+            <Image style={{height: 40, width: 28 }} source={{uri: icon?.img_estado_b64}} />
             </Marker>
           );
         }

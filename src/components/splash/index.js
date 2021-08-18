@@ -11,7 +11,7 @@ const Splash = (props) => {
     "api-mapeo-estados.json",
     "api-enlaces-de-interes.json",
     "api-mapeo.json",
-    "lines.json",
+    "api-lineas-telefonicas.json",
     "api-lineas-telefonicas-servicios.json",
     "api-mapeo-servicios.json",
   ];

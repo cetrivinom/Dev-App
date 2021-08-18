@@ -16,7 +16,7 @@ const DirectoryItem = (props) => {
   useEffect(() => {
     getDataByDepartId(otherParam);
   }, [otherParam]);
-
+  console.log('dataItem.LineasTelefonicas',dataItem)
   return (
     <View style={styles.wrapper}>
       <HeaderItem {...props} title={otherParam} />

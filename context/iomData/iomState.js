@@ -107,7 +107,7 @@ const IOMState = (props) => {
 
   const getDataDirectory = async (item) => {
     try {
-      const value = await AsyncStorage.getItem("lines.json");
+      const value = await AsyncStorage.getItem("api-lineas-telefonicas.json");
       getDataDirectoryService();
       if (value !== null) {
         dispatch({

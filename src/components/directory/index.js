@@ -34,7 +34,7 @@ const Directory = (props) => {
           <FlatList
             data={dataDirectory}
             renderItem={(item) => (
-              <CardItemDirectory {...props} title={item.item.departamento} />
+              <CardItemDirectory {...props} title={item.item.departamento} icon={item.item.icon} />
             )}
             keyExtractor={(item) => item.departamento_id}
           />
