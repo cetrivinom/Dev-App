@@ -6,7 +6,6 @@ import InitialContext from "../../../../context/initialData/initialContext";
 
 const LastUpdate = () => {
   const { lastUpdate } = useContext(InitialContext);
-  console.log('LastUpdate',lastUpdate)
   return (
     <View style={styles.container}>
       <View style={styles.containerForm}>

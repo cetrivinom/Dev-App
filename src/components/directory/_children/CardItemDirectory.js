@@ -7,7 +7,6 @@ const CardItemDirectory = (props) => {
   const { title = "", icon = "" } = props || {};
   const onPressOpen = () => {
     props.navigation.navigate("DirectoryItem", {
-      itemId: 86,
       otherParam: title,
     });
   };

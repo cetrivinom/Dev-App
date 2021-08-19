@@ -15,7 +15,6 @@ const Directory = (props) => {
   useEffect(() => {
     getDataDirectory(searchTerm);
   }, [searchTerm]);
-
   return (
     <View style={styles.wrapper}>
       <View style={[styles.box, styles.box1]}>

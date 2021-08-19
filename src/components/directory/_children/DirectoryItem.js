@@ -16,7 +16,6 @@ const DirectoryItem = (props) => {
   useEffect(() => {
     getDataByDepartId(otherParam);
   }, [otherParam]);
-  console.log('dataItem.LineasTelefonicas',dataItem)
   return (
     <View style={styles.wrapper}>
       <HeaderItem {...props} title={otherParam} />
@@ -34,7 +33,7 @@ const DirectoryItem = (props) => {
                 subTitle={item.item.tipo_de_linea_id}
               />
             )}
-            keyExtractor={(item) => item.tipo_de_linea_id}
+            keyExtractor={(item) => item.key}
           />
         </View>
       )}

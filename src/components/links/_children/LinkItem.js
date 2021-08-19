@@ -27,7 +27,6 @@ const LinkItem = (props) => {
   const regex = /(<([^>]+)>)/gi;
   const _resume = resume.replace(regex, "");
   const _content = content.replace(regex, "");
-  console.log('links::',links)
   return (
     <ScrollView style={styles.wrapper}>
       <TouchableOpacity style={styles.image} onPress={onPressClose}>

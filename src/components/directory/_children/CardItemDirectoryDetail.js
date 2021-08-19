@@ -2,6 +2,7 @@
 import React, { useState, useContext } from "react";
 import { StyleSheet, Text, Image, View, TouchableOpacity } from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
+import { metrics } from "../../../utilities/Metrics";
 
 const CardItemDirectoryDetail = (props) => {
   const { dataItemService, getDataDirectoryItemService } =
@@ -19,7 +20,6 @@ const CardItemDirectoryDetail = (props) => {
     setOpen((prev) => !prev);
     getDataDirectoryItemService(subTitle);
   };
-
   const { descripcion = "" } = dataItemService || {};
 
   return (
@@ -27,6 +27,7 @@ const CardItemDirectoryDetail = (props) => {
       <TouchableOpacity style={styles.containerItem} onPress={onPressOpen}>
         <Text style={styles.textTitle}>{title}</Text>
         <Image
+          style={{marginRight:10}}
           source={
             !open
               ? require("../../../resources/images/riArrowDownsLine.png")
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   container: {
     borderWidth: 0.54,
     borderColor: "#A1AAB2",
-    paddingHorizontal: 18,
+    paddingLeft: metrics.WIDTH * 0.05,
   },
   containerItem: {
     flex: 1,
@@ -74,7 +75,8 @@ const styles = StyleSheet.create({
   textTitle: {
     fontSize: 16,
     lineHeight: 24,
-    letterSpacing: 0.15,
+    letterSpacing: 0.12,
+    paddingRight: 20,
     color: "#003031",
   },
   form: {
