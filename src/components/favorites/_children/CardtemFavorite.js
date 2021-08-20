@@ -10,7 +10,6 @@ const CardItemFavorite = (props) => {
   const { dataPoint, dataMapeoService, getDataPoint, getDataMapeoService } = useContext(IOMContext);
 
   useEffect(() => {
-
     if(dataPoint && dataPoint.length < 1){
       getDataPoint();
     }
@@ -19,19 +18,20 @@ const CardItemFavorite = (props) => {
     }
   }, []);
 
-  const {
-    Nombre_punto = "",
-    Estado = "",
-    time = "8:00am - 5:00pm",
-    point = 5,
-    Servicios = [],
-  } = dataPoint !== null ? dataPoint.find((item) => item.ID == id) : {};
+    /*const {
+      Nombre_punto = "",
+      Estado = "",
+      time = "8:00am - 5:00pm",
+      point = 5,
+      Servicios = [],
+    } = dataPoint !== null ? dataPoint.find((item) => item.ID == id) : {};*/
+  const fav = dataPoint !== null ? dataPoint.find((item) => item.ID == id) : {};
 
   const onPressOpenPoint = (id) => {
     props.navigation.navigate("PointItem", { id });
   };
 
-  const unique = [...new Set(Servicios.map(item => item.Servicio_id))];
+  const unique = [...new Set(fav?.Servicios.map(item => item.Servicio_id))];
   var services = [];
 
 
@@ -54,10 +54,26 @@ const CardItemFavorite = (props) => {
       });
     }
   });
+  let _Nombre_punto = fav?.Nombre_punto.substring(0, 30);
 
-  let _Nombre_punto = Nombre_punto.substring(0, 30);
+  const dayWeek = (id) => {
+    switch(id) {
+      case "1":
+        return 'Lunes '
+      case "2":
+        return 'Martes '
+      case "3":
+        return 'Miercoles '
+      case "4":
+        return 'Jueves '
+      case "5":
+        return 'Viernes '
+      default:
+        return 'Sabado '
+      }
+  }
 
-  return Nombre_punto !== "" ? (
+  return fav?.Nombre_punto !== "" ? (
     <TouchableOpacity key={id} style={styles.container} onPress={() => onPressOpenPoint(id)}>
       <View style={styles.containerFormTitle}>
         <Text style={styles.textTitle}>{_Nombre_punto + "..."}</Text>
@@ -68,12 +84,16 @@ const CardItemFavorite = (props) => {
       </View>
       <View style={styles.containerForm}>
         <Image source={require("../../../resources/images/riMapPinFill.png")} />
-        <Text style={styles.textTitle2}>{Estado}</Text>
+        <Text style={styles.textTitle2}>{fav?.Estado}</Text>
       </View>
-      <View style={styles.containerForm}>
-        <Image source={require("../../../resources/images/riTimeFill.png")} />
-        <Text style={styles.textTitle2}>{time}</Text>
+        {_.map(fav?.Horario,(val,id) => {
+        return <View style={styles.containerForm}>
+          <Image source={require("../../../resources/images/riTimeFill.png")} />
+           <Text style={styles.textTitle2}>{dayWeek(val.day)}</Text>
+           <Text style={styles.textTitle3}>{val?.starthours/100+':00'+' - '+val?.endhours/100+':00'}</Text>
       </View>
+        })
+        }
     </TouchableOpacity>
   ) : null;
 };
@@ -100,6 +120,16 @@ const styles = StyleSheet.create({
     color: "#003031",
   },
   textTitle2: {
+    fontSize: 14,
+    fontWeight: "normal",
+    lineHeight: 16,
+    letterSpacing: 0.0025,
+    color: "#003031",
+    fontWeight: "bold",
+    marginTop: 2,
+    marginStart: 10.5,
+  },
+  textTitle3: {
     fontSize: 14,
     fontWeight: "normal",
     lineHeight: 16,

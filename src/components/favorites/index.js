@@ -16,21 +16,14 @@ const { SlideInMenu } = renderers;
 const Favorites = (props) => {
   var {dataFavorite, getDataFavorite, deleteFavorite } = useContext(IOMContext);
   useEffect(() => {
-
-getDataFavorite();
-
-   
-
+    getDataFavorite();
   }, []);
 
-  
-  
   const deleteItemById = id => {
     deleteFavorite(id);
-    dataFavorite=(dataFavorite.filter(item => item.id !== id));
-    
+    dataFavorite=(dataFavorite.filter(item => item.id !== id));    
   }
-
+  
   return (
     
     <MenuProvider style={styles.container}>

@@ -247,7 +247,7 @@ const IOMState = (props) => {
         if(!value)
           value=[];
         let index = value.findIndex(favorite => favorite.id == point.id);
-        if(index == -1) {
+        if(index == -1 && point.id >= 0) {
           value.push(point);
           AsyncStorage.setItem("favorites", JSON.stringify(value));
           dispatch({
@@ -265,8 +265,8 @@ const IOMState = (props) => {
 
   const deleteFavorite = async (point) => {
 
-    AsyncStorage.removeItem('favorites')
-    /*try {
+    //AsyncStorage.removeItem('favorites')
+    try {
       const posts = await AsyncStorage.getItem('favorites');
       let postsFav = JSON.parse(posts);
 const postsItems = postsFav.filter(function(e){ return e.id !== point});
@@ -284,7 +284,7 @@ const postsItems = postsFav.filter(function(e){ return e.id !== point});
         type: GET_DATA_ERROR,
         payload: error,
       });
-    }*/
+    }
   };
 
   return (
