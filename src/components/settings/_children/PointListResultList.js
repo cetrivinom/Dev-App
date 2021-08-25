@@ -8,6 +8,7 @@ import {
   View,
   TouchableOpacity,
   FlatList,
+  Platform,
 } from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
 import HeaderItem from "../../global/_children/HeaderItem";
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
   },
   //content
   box2: {
-    flex: metrics.HEIGHT*0.0075,
+    flex: Platform.OS === "ios" ? 6.2 : 7.3,
     backgroundColor: "#FFFFFF",
   },
   containerHeader: {

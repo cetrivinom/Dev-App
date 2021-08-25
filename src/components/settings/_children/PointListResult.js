@@ -9,6 +9,7 @@ import {
   View,
   TouchableOpacity,
   FlatList,
+  Platform,
 } from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
 import { metrics } from "../../../utilities/Metrics";
@@ -238,7 +239,7 @@ const styles = StyleSheet.create({
   },
   //content
   box2: {
-    flex: metrics.HEIGHT*0.0075,
+    flex: Platform.OS === "ios" ? 6.2 : 7.3,
   },
   map: {
     ...StyleSheet.absoluteFillObject,
@@ -310,12 +311,13 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     letterSpacing: 0.0025,
     color: "#003031",
+    marginTop: 2,
     marginStart: 10.5,
   },
   overlay: {
     position: "absolute",
     flexDirection: "row",
-    bottom: metrics.HEIGHT * 0.27,
+    bottom: Platform.OS === "ios" ? metrics.HEIGHT * 0.27 : metrics.HEIGHT * 0.33 ,
     height: metrics.HEIGHT * 0.057,
     width: "100%",
     justifyContent: "flex-end",
@@ -330,12 +332,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     maxWidth: 123,
-    padding: 15,
+    padding: 10,
   },
   textFilter: {
     fontSize: 15,
     fontWeight: "bold",
-    lineHeight: 18,
+    lineHeight: 16,
     color: "#003031",
     letterSpacing: 0.0125,
     marginLeft: 5,

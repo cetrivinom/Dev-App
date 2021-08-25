@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   containerSearch: {
     //marginVertical: 30,
-    marginTop: 30,
+    marginTop: Platform.OS === "ios" ? 30 : 10,
     marginBottom: 10,
   },
   inputTextBox: {

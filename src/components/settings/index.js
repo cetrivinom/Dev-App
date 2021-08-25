@@ -116,11 +116,11 @@ const styles = StyleSheet.create({
   },
   //content
   box2: {
-    flex: Platform.OS === "ios" ? 6 : 7,
+    flex: Platform.OS === "ios" ? 5.8 : 7.3,
   },
   map: {
     ...StyleSheet.absoluteFillObject,
-    marginTop: 10,
+    //marginTop: 10,
   },
   overlay: {
     position: "absolute",
