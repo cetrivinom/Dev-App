@@ -84,7 +84,6 @@ export const ItemCardPoint = (props) => {
     <View style={styles.container1}>
       <View style={styles.containerFormTitle}>
         <Text style={styles.textTitle}>{_Nombre_punto + "..."}</Text>
-        <Image source={require("../../../resources/images/riMoreLine.png")} />
       </View>
       <View style={styles.containerForm}>{_.map(services,(val) => {
         return val.svg
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
   },
   //content
   box2: {
-    flex: 7.3,
+    flex: metrics.HEIGHT*0.0075,
     backgroundColor: "#FFFFFF",
   },
   containerHeader: {

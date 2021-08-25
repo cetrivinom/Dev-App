@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   statusBarBackground:{
-    height: (Platform.OS === 'ios') ? metrics.WIDTH * 0.06 : 0,
+    height: (Platform.OS === 'ios') ? metrics.WIDTH * 0.08 : 0,
     backgroundColor: "#00AAAD",
   },
   labelTitle: {

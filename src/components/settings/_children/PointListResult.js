@@ -209,7 +209,7 @@ const PointListResult = (props) => {
               <Text style={styles.textFilter}>Ver todo</Text>
             </TouchableOpacity>
           </View>
-          <View style={{ position: "absolute", bottom: 24 }}>
+          <View style={{ position: "absolute", bottom: metrics.HEIGHT * 0.028 }}>
             <FlatList
               horizontal
               data={dataPointFilter}
@@ -238,10 +238,11 @@ const styles = StyleSheet.create({
   },
   //content
   box2: {
-    flex: 7.3,
+    flex: metrics.HEIGHT*0.0075,
   },
   map: {
     ...StyleSheet.absoluteFillObject,
+    //marginTop: 16,
   },
   overlay3: {
     flex: 1,
@@ -309,14 +310,13 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     letterSpacing: 0.0025,
     color: "#003031",
-    marginTop: 2,
     marginStart: 10.5,
   },
   overlay: {
     position: "absolute",
     flexDirection: "row",
-    bottom: 220,
-    height: 48,
+    bottom: metrics.HEIGHT * 0.27,
+    height: metrics.HEIGHT * 0.057,
     width: "100%",
     justifyContent: "flex-end",
     alignItems: "center",

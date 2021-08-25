@@ -62,7 +62,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
   },
   containerSearch: {
-    marginVertical: 20,
+    //marginVertical: 30,
+    marginTop: 30,
+    marginBottom: 10,
   },
   inputTextBox: {
     height: 46,
