@@ -27,7 +27,7 @@ const Main = (props) => {
           <ItemMain
             {...props}
             name="Directory"
-            title="Lineas Telefónicas"
+            title="Líneas Telefónicas"
             image="2"
           />
         </View>

@@ -15,6 +15,20 @@ const Directory = (props) => {
   useEffect(() => {
     getDataDirectory(searchTerm);
   }, [searchTerm]);
+
+  const compareObjects = (object1, object2, key) => {
+    const obj1 = object1[key].toUpperCase()
+    const obj2 = object2[key].toUpperCase()
+    if (obj1 < obj2) {
+      return -1
+    }
+    if (obj1 > obj2) {
+      return 1
+    }
+    return 0;
+  };
+
+  console.log('dataDirectory',dataDirectory);
   return (
     <View style={styles.wrapper}>
       <View style={[styles.box, styles.box1]}>
@@ -31,7 +45,9 @@ const Directory = (props) => {
         </View>
         {dataDirectory != null && (
           <FlatList
-            data={dataDirectory}
+            data={dataDirectory.sort(function(a,b) {
+              return compareObjects(a, b, 'departamento')
+            })}
             renderItem={(item) => (
               <CardItemDirectory {...props} title={item.item.departamento} icon={item.item.icon} />
             )}

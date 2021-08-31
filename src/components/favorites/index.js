@@ -23,7 +23,7 @@ const Favorites = (props) => {
     deleteFavorite(id);
     dataFavorite=(dataFavorite.filter(item => item.id !== id));    
   }
-  
+  console.log('dataFavorite',dataFavorite);
   return (
     
     <MenuProvider style={styles.container}>

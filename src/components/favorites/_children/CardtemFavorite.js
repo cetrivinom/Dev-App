@@ -7,7 +7,7 @@ import _ from 'lodash';
 
 const CardItemFavorite = (props) => {
   const { id = "" } = props || {};
-  const { dataPoint, dataMapeoService, getDataPoint, getDataMapeoService } = useContext(IOMContext);
+  const { dataPoint, dataMapeoService, getDataPoint, dataMapeoState, getDataMapeoService } = useContext(IOMContext);
 
   useEffect(() => {
     if(dataPoint && dataPoint.length < 1){
@@ -26,9 +26,13 @@ const CardItemFavorite = (props) => {
       Servicios = [],
     } = dataPoint !== null ? dataPoint.find((item) => item.ID == id) : {};*/
   const fav = dataPoint !== null ? dataPoint.find((item) => item.ID == id) : {};
-
   const onPressOpenPoint = (id) => {
-    props.navigation.navigate("PointItem", { id });
+    let coor = fav.Coordenadas.split(",");
+    let latitude = parseFloat(coor[0]);
+    let longitude = parseFloat(coor[1]);
+    let icon = (dataMapeoState.find((state) => state.id_estado == fav.Estado_id));
+    let uri = icon?.img_estado_b64;
+    props.navigation.navigate("PointItem", { id, latitude, longitude, uri });
   };
 
   const unique = [...new Set(fav?.Servicios.map(item => item.Servicio_id))];

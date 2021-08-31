@@ -38,14 +38,16 @@ const Settings = (props) => {
         var icon = (dataMapeoState.find((state) => state.id_estado == item.Estado_id));
         if (item.Coordenadas !== "") {
           let coor = item.Coordenadas.split(",");
+          let latitude = parseFloat(coor[0]);
+          let longitude = parseFloat(coor[1]);
           return (
             <Marker
               key={index}
               coordinate={{
-                latitude: parseFloat(coor[0]),
-                longitude: parseFloat(coor[1]),
+                latitude,
+                longitude,
               }}
-              onPress={() => onPressOpenPoint(item.ID)}
+              onPress={() => onPressOpenPoint(item.ID,latitude,longitude,icon?.img_estado_b64)}
             >
               <Image style={{width: 28, height: 40}} source={{uri: icon?.img_estado_b64}}/>
             </Marker>
@@ -55,8 +57,8 @@ const Settings = (props) => {
     }
   };
 
-  const onPressOpenPoint = (id) => {
-    props.navigation.navigate("PointItem", { id });
+  const onPressOpenPoint = (id,latitude,longitude,uri) => {
+    props.navigation.navigate("PointItem", { id, latitude,longitude,uri});
   };
 
   const onPressOpen = () => {

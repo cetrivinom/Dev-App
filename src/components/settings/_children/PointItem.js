@@ -21,12 +21,13 @@ import Menu, {
   MenuOption,
   MenuTrigger
 } from 'react-native-popup-menu';
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
 const PointItem = (props) => {
   const { dataItem, getDataPointById, dataComments, deleteUserComment } = useContext(IOMContext);
   const [ visible, setVisible ] = useState(false);
   const { user } = useContext(authContext);
-  const { id = "" } = props.navigation.state.params || {};
+  const { id = "", latitude = "", longitude = "", uri ="" } = props.navigation.state.params || {};
 
   const {
     Nombre_punto = "",
@@ -37,6 +38,7 @@ const PointItem = (props) => {
     Coordenadas = "",
     Servicios = [],
   } = dataItem || {};
+
   useEffect(() => {
     getDataPointById(id);
   }, [id]);
@@ -68,9 +70,9 @@ const PointItem = (props) => {
    }
 
   const onPressOpenNavigationApps = () => {
-    let coor = Coordenadas.split(",");
+    /*let coor = Coordenadas.split(",");
     let latitude = parseFloat(coor[0]);
-    let longitude = parseFloat(coor[1]);
+    let longitude = parseFloat(coor[1]);*/
     props.navigation.navigate("PointNavigationApp", {
       id,
       Nombre_punto,
@@ -83,8 +85,26 @@ const PointItem = (props) => {
   return (
     <View style={styles.wrapper}>
       <HeaderItem {...props} title="Información de punto" id={id}/>
+
       <View style={[styles.box, styles.box2]}>
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 }}>      
+          <MapView
+            style={{ height: metrics.HEIGHT * 0.2}}
+            initialRegion={{
+              latitude: latitude,
+              longitude: longitude,
+              latitudeDelta: 0.006,
+              longitudeDelta: 0.006,
+            }}>
+            <Marker
+              key={1}
+              coordinate={{
+                latitude,
+                longitude,
+              }}>
+              <Image style={{width: 28, height: 40}} source={{uri: uri}}/>
+            </Marker>
+          </MapView>
           <View style={styles.divider}></View>
           <View style={styles.box5}>
             <View style={styles.caja1}>
@@ -328,6 +348,10 @@ const styles = StyleSheet.create({
     letterSpacing: 0.0015,
     fontWeight: "bold",
     color: "#003031",
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+    //marginTop: 10,
   },
 });
 
