@@ -5,7 +5,7 @@ import IOMContext from "../../../../context/iomData/iomContext";
 
 
 const HeaderItem = (props) => {
-  const { title = "", id = "" } = props || {};
+  const { title = "", id = "", showSaveOpt = true } = props || {};
   const { createFavorite, dataFavorite } = useContext(IOMContext);
   const [ isFavorite, setIsFavorite] = useState(false);
 
@@ -37,11 +37,13 @@ const HeaderItem = (props) => {
           />
         </TouchableOpacity>
         <Text style={styles.textTitle}>{title}</Text>
-        <TouchableOpacity onPress={onPressSave}>
-          <Image
-            source={isFavorite?require("../../../resources/images/riBookmarkLine2.png"):require("../../../resources/images/riBookmarkLine.png")}
-          />
-        </TouchableOpacity>
+            <TouchableOpacity onPress={onPressSave}>
+              {showSaveOpt && (
+                <Image
+                  source={isFavorite?require("../../../resources/images/riBookmarkLine2.png"):require("../../../resources/images/riBookmarkLine.png")}
+                />
+              )}
+            </TouchableOpacity>
       </View>
     </View>
   );
@@ -64,7 +66,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "500",
     color: "#003031",
-    lineHeight: 28,
+    alignItems: 'center',
+    //lineHeight: 28,
     letterSpacing: 0.0015,
   },
   box4: {

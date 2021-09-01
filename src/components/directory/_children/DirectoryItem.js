@@ -18,7 +18,7 @@ const DirectoryItem = (props) => {
   }, [otherParam]);
   return (
     <View style={styles.wrapper}>
-      <HeaderItem {...props} title={otherParam} />
+      <HeaderItem {...props} title={otherParam} showSaveOpt={false} />
       {dataItem !== null && (
         <View style={[styles.box, styles.box2]}>
           <FlatList

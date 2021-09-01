@@ -32,7 +32,7 @@ const Directory = (props) => {
   return (
     <View style={styles.wrapper}>
       <View style={[styles.box, styles.box1]}>
-        <Header {...props} showBack={false} title="Lineas telefónicas" />
+        <Header {...props} showBack={false} title="Lineas telefónicas"/>
       </View>
       <View style={[styles.box, styles.box2]}>
         <View style={styles.containerSearch}>

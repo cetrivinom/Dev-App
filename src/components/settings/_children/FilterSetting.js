@@ -69,7 +69,6 @@ const FilterSetting = (props) => {
     setOpenMunicipio(false);
   };
 
-  console.log('dataPointDepartamento',dataPointDepartamento)
   const onPressFilter = () => {
     getDataPointFilter(departamento, municipio, statusPoint, selectedService);
     props.navigation.navigate("PointListResult", {
@@ -179,7 +178,7 @@ const FilterSetting = (props) => {
             openStatus
               ? dataPointState
               : openDepartamento
-              ? dataPointDepartamento
+              ? dataPointDepartamento.sort((a, b) => a.localeCompare(b))
               : openMunicipio
               ? dataPoint
               : []

@@ -249,7 +249,7 @@ export const RegistreForm2 = ({ setForm, setData, data }) => {
             />
           </View>
           <View style={Styles.sectionLabel}>
-            <Text style={Styles.labelItem}>Otro</Text>
+            <Text style={Styles.labelItem}>Diverso</Text>
           </View>
           <View style={Styles.sectionSelect}>
             <Image

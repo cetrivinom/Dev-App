@@ -52,12 +52,13 @@ export const ItemCardPoint = (props) => {
     ID: id = "",
     Nombre_punto = "",
     Estado = "",
+    Estado_id = "",
     time = "8:00am - 5:00pm",
     Coordenadas = "",
     Direccion = "",
     Servicios = [],
   } = props.item || {};
-  const { dataMapeoService, getDataMapeoService } = useContext(IOMContext);
+  const { dataMapeoService, dataMapeoState } = useContext(IOMContext);
   let _Nombre_punto = Nombre_punto.substring(0, 25);
   const unique = [...new Set(Servicios.map(item => item.Servicio_id))];
   var services = [];
@@ -82,7 +83,12 @@ export const ItemCardPoint = (props) => {
   });
 
   const onPressOpenPoint = (id) => {
-    props.navigation.navigate("PointItem", { id });
+    let coor = Coordenadas.split(",");
+    let latitude = parseFloat(coor[0]);
+    let longitude = parseFloat(coor[1]);
+    let icon = (dataMapeoState.find((state) => state.id_estado == Estado_id));
+    let uri = icon?.img_estado_b64;
+    props.navigation.navigate("PointItem", { id, latitude, longitude, uri});
   };
 
   const onPressOpenNavigationApps = () => {

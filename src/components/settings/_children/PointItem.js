@@ -145,7 +145,7 @@ const PointItem = (props) => {
           </View>
           <View style={styles.divider}></View>
           <View style={styles.box5}>
-            <Text style={styles.textHorario}>Horario de punto</Text>
+            <Text style={styles.textHorario}>Horario de atención</Text>
             <View style={styles.containerForm}>
               <Image
                 source={require("../../../resources/images/riTimeFill.png")}

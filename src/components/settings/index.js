@@ -97,7 +97,7 @@ const Settings = (props) => {
             <Image
               source={require("../../resources/images/riMapPinLine.png")}
             />
-            <Text style={styles.textFilter}>Filtrar Puntos de servicio</Text>
+            <Text style={styles.textFilter}>Filtrar puntos de servicio</Text>
           </TouchableOpacity>
         </View>
       </View>

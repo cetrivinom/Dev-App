@@ -37,7 +37,7 @@ const CardItemFavorite = (props) => {
 
   const unique = [...new Set(fav?.Servicios.map(item => item.Servicio_id))];
   var services = [];
-
+console.log(dataMapeoService)
 
   _.map(unique,(val,id) => {
     var service = dataMapeoService.find((element) => {
