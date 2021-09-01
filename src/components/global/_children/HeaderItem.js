@@ -37,13 +37,13 @@ const HeaderItem = (props) => {
           />
         </TouchableOpacity>
         <Text style={styles.textTitle}>{title}</Text>
-            <TouchableOpacity onPress={onPressSave}>
-              {showSaveOpt && (
-                <Image
-                  source={isFavorite?require("../../../resources/images/riBookmarkLine2.png"):require("../../../resources/images/riBookmarkLine.png")}
-                />
-              )}
-            </TouchableOpacity>
+          <TouchableOpacity onPress={onPressSave}>
+            {showSaveOpt && (
+              <Image
+                source={isFavorite?require("../../../resources/images/riBookmarkLine2.png"):require("../../../resources/images/riBookmarkLine.png")}
+              />
+            )}
+          </TouchableOpacity>
       </View>
     </View>
   );
