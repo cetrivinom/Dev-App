@@ -83,7 +83,7 @@ const FilterSetting = (props) => {
 
   return (
       <View style={styles.wrapper}>
-        <HeaderItem {...props} title="Filtrar puntos de servicio" />
+        <HeaderItem {...props} title="Filtrar puntos de servicio" showSaveOpt={false} />
         <View style={[styles.box, styles.box2]}>
           <TouchableOpacity
             style={styles.box6}

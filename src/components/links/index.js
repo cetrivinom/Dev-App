@@ -73,7 +73,6 @@ const Links = (props) => {
 
             <Text style={styles.text}>Filtrar contenido</Text>
             <Image
-              source={require("../../resources/images/riBookmarkLine.png")}
             />
           </View>
           <View style={styles.box5}>
@@ -96,9 +95,7 @@ const Links = (props) => {
                 style={[styles.caja1, styles.caja2]}
                 onPress={onPressFilter}
               >
-                <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
-                  Filtrar
-                </Text>
+                <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>Filtrar</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -171,7 +168,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 54,
     paddingHorizontal: 15,
-    marginBottom: 100,
+    //marginBottom: 100,
   },
   textBox: {
     fontSize: 16,
@@ -183,6 +180,8 @@ const styles = StyleSheet.create({
   box7: {
     flexDirection: "row",
     justifyContent: "space-between",
+    marginTop: metrics.HEIGHT * 0.05,
+    //mar: metrics.HEIGHT * 0.01,
   },
   caja1: {
     justifyContent: "center",

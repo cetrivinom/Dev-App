@@ -156,8 +156,8 @@ export const ItemCardPoint = (props) => {
 const PointListResult = (props) => {
   const { dataPointFilter, dataMapeoState } = useContext(IOMContext);
 
-  const onPressOpenPoint = (id) => {
-    props.navigation.navigate("PointItem", { id });
+  const onPressOpenPoint = (id, latitude, longitude, uri) => {
+    props.navigation.navigate("PointItem", { id, latitude, longitude, uri });
   };
 
   const onPressSeeAll = () => {
@@ -170,14 +170,17 @@ const PointListResult = (props) => {
         if (item.Coordenadas !== "") {
           var icon = (dataMapeoState.find((state) => state.id_estado == item.Estado_id));
           let coor = item.Coordenadas.split(",");
+          let latitude = parseFloat(coor[0]);
+          let longitude = parseFloat(coor[1]);
+          console.log(latitude,longitude)
           return (
             <Marker
               key={index}
               coordinate={{
-                latitude: parseFloat(coor[0]),
-                longitude: parseFloat(coor[1]),
+                latitude,
+                longitude,
               }}
-              onPress={() => onPressOpenPoint(item.ID)}
+              onPress={() => onPressOpenPoint(item.ID,latitude,longitude,icon?.img_estado_b64)}
             >
             <Image style={{height: 40, width: 28 }} source={{uri: icon?.img_estado_b64}} />
             </Marker>
