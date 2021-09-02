@@ -30,7 +30,7 @@ export const ItemMain = (props) => {
               }
             />
           </View>
-          <View style={{ margin: 12 }}>
+          <View style={{ margin: metrics.HEIGHT * 0.01 }}>
             <Text style={styles.titleSection} allowFontScaling={false}>
               {title}
             </Text>
@@ -44,7 +44,7 @@ export const ItemMain = (props) => {
 const styles = StyleSheet.create({
   titleSection: {
     fontSize: metrics.HEIGHT*0.018,
-    lineHeight: 23,
+    //lineHeight: 23,
     letterSpacing: 0.005,
     fontWeight: "bold",
     color: "#FFFFFF",

@@ -318,7 +318,7 @@ export const RegistreForm4 = (props) => {
     <View style={Styles.container}>
       <View style={[Styles.box, Styles.box1]}>
         <Text style={Styles.labelTitle1}>
-          ¿Te acompaña un dulto responsable?
+          ¿Te acompaña un adulto responsable?
         </Text>
         <View style={Styles.containerForm21}>
           <TouchableOpacity onPress={onPressSi}>
