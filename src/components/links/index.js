@@ -19,6 +19,18 @@ const Links = (props) => {
   const [show, setShow] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const { dataLink, dataLinkEtiquetas, getDataLink } = useContext(IOMContext);
+  const awesomeChildListRenderItem = (item) => (
+      <CardItemLink
+        {...props}
+        title={item.item.Titulo}
+        resume={item.item.Resumen}
+        content={item.item.Contenido}
+        image={item.item.Imagen}
+        date={item.item.Fecha}
+        links={item.item.EnlaceExterno}
+      />
+    );
+  const awesomeChildListKeyExtractor = (item) => item.Titulo;
 
   const onPressClose = () => {
     setShowFilterOption((prev) => !prev);
@@ -44,18 +56,8 @@ const Links = (props) => {
         <View style={[styles.box, styles.box2]}>
           <FlatList
             data={dataLink}
-            renderItem={(item) => (
-              <CardItemLink
-                {...props}
-                title={item.item.Titulo}
-                resume={item.item.Resumen}
-                content={item.item.Contenido}
-                image={item.item.Imagen}
-                date={item.item.Fecha}
-                links={item.item.EnlaceExterno}
-              />
-            )}
-            keyExtractor={(item) => item.Titulo}
+            renderItem={awesomeChildListRenderItem}
+            keyExtractor={awesomeChildListKeyExtractor}
           />
         </View>
       )}

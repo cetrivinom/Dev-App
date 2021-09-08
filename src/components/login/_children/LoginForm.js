@@ -43,9 +43,6 @@ const LoginForm = (props) => {
     }
   }, [auth]);*/
 
-  console.log("user", userData);
-  console.log("visibleLogin", visibleLogin);
-
   const { email, password } = user;
 
   const onPressLogin = () => {

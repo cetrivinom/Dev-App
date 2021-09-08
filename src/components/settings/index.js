@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import { View, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
 import Header from "../global/_children/Header";
 import LastUpdate from "../global/_children/LastUpdate";
@@ -11,6 +11,7 @@ const Settings = (props) => {
   const { dataPoint, getDataPoint, dataMapeoService, getDataMapeoService, dataMapeoState, getDataMapeoState } = useContext(IOMContext);
 
   useEffect(() => {
+    console.log('useEffect+')
     if(dataPoint && dataPoint.length < 1)
       getDataPoint();
     if(dataMapeoService && dataMapeoService.length < 1)
@@ -32,7 +33,7 @@ const Settings = (props) => {
     );
   }, []);
 
-  const mapMarkers = () => {
+  const mapMarkers =  () => {
     if (dataPoint != null) {
       return dataPoint.map((item, index) => {
         var icon = (dataMapeoState.find((state) => state.id_estado == item.Estado_id));

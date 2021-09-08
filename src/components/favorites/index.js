@@ -13,6 +13,20 @@ import Menu, {
 } from 'react-native-popup-menu';
 const { SlideInMenu } = renderers;
 
+const awesomeChildListRenderItem = (item) => (
+  <Menu style={styles.menu}>
+    <CardtemFavorite {...props} id={item.item.id} />
+    <MenuTrigger
+      style={styles.trigger}>
+      <Image source={require("../../resources/images/riMoreLine.png")} />
+    </MenuTrigger>
+    <MenuOptions optionsContainerStyle={{width:100}} customStyles={{ optionText: styles.text}}>
+      <MenuOption  onSelect={() => deleteItemById(item.item.id)} text='Borrar' />
+    </MenuOptions>
+  </Menu>
+)
+const awesomeChildListKeyExtractor = (item) => item.id;
+
 const Favorites = (props) => {
   var {dataFavorite, getDataFavorite, deleteFavorite } = useContext(IOMContext);
   useEffect(() => {
@@ -23,31 +37,18 @@ const Favorites = (props) => {
     deleteFavorite(id);
     dataFavorite=(dataFavorite.filter(item => item.id !== id));    
   }
-  console.log('dataFavorite',dataFavorite);
   return (
     
     <MenuProvider style={styles.container}>
       <View style={[styles.box, styles.box1]}>
         <Header {...props} showBack={false} title="Puntos favoritos" />
       </View>
-      
       {dataFavorite !== null && (
         <View style={[styles.box, styles.box2]}>
           <FlatList
             data={dataFavorite}
-            renderItem={(item) => (
-              <Menu style={styles.menu}>
-                <CardtemFavorite {...props} id={item.item.id} />
-                <MenuTrigger
-                  style={styles.trigger}>
-                  <Image source={require("../../resources/images/riMoreLine.png")} />
-                </MenuTrigger>
-                <MenuOptions optionsContainerStyle={{width:100}} customStyles={{ optionText: styles.text}}>
-                  <MenuOption  onSelect={() => deleteItemById(item.item.id)} text='Borrar' />
-                </MenuOptions>
-              </Menu>
-            )}
-            keyExtractor={(item) => item.id}
+            renderItem={awesomeChildListRenderItem}
+            keyExtractor={awesomeChildListKeyExtractor}
           />
         </View>
       )}

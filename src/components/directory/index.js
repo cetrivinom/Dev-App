@@ -11,6 +11,8 @@ import IOMContext from "../../../context/iomData/iomContext";
 const Directory = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
   const { dataDirectory, getDataDirectory } = useContext(IOMContext);
+  const awesomeChildListRenderItem = (item) => (<CardItemDirectory {...props} title={item.item.departamento} icon={item.item.icon} />)
+  const awesomeChildListKeyExtractor = (item) => item.departamento_id;
 
   useEffect(() => {
     getDataDirectory(searchTerm);
@@ -28,7 +30,6 @@ const Directory = (props) => {
     return 0;
   };
 
-  console.log('dataDirectory',dataDirectory);
   return (
     <View style={styles.wrapper}>
       <View style={[styles.box, styles.box1]}>
@@ -48,10 +49,8 @@ const Directory = (props) => {
             data={dataDirectory.sort(function(a,b) {
               return compareObjects(a, b, 'departamento')
             })}
-            renderItem={(item) => (
-              <CardItemDirectory {...props} title={item.item.departamento} icon={item.item.icon} />
-            )}
-            keyExtractor={(item) => item.departamento_id}
+            renderItem={awesomeChildListRenderItem}
+            keyExtractor={awesomeChildListKeyExtractor}
           />
         )}
       </View>

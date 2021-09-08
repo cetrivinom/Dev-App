@@ -12,6 +12,17 @@ import IOMContext from "../../../../context/iomData/iomContext";
 const DirectoryItem = (props) => {
   const { dataItem, getDataByDepartId } = useContext(IOMContext);
   const { otherParam = "" } = props.navigation.state.params || {};
+  const awesomeChildListRenderItem = (item) => (
+    <CardItemDirectoryDetail
+      {...props}
+      title={item.item.tipo_de_linea}
+      subTitle1={item.item.NombreOrganizacion}
+      subTitle2={item.item.telefono_}
+      subTitle3={item.item.horario}
+      subTitle={item.item.tipo_de_linea_id}
+    />
+  );
+  const awesomeChildListKeyExtractor = (item) => item.key;
 
   useEffect(() => {
     getDataByDepartId(otherParam);
@@ -23,17 +34,8 @@ const DirectoryItem = (props) => {
         <View style={[styles.box, styles.box2]}>
           <FlatList
             data={dataItem.LineasTelefonicas}
-            renderItem={(item) => (
-              <CardItemDirectoryDetail
-                {...props}
-                title={item.item.tipo_de_linea}
-                subTitle1={item.item.NombreOrganizacion}
-                subTitle2={item.item.telefono_}
-                subTitle3={item.item.horario}
-                subTitle={item.item.tipo_de_linea_id}
-              />
-            )}
-            keyExtractor={(item) => item.key}
+            renderItem={awesomeChildListRenderItem}
+            keyExtractor={awesomeChildListKeyExtractor}
           />
         </View>
       )}

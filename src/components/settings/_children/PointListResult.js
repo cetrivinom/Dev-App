@@ -164,6 +164,10 @@ const PointListResult = (props) => {
     props.navigation.navigate("PointListResultList");
   };
 
+  const awesomeChildListRenderItem = ({ item }) => (
+    <ItemCardPoint {...props} item={item} />
+  );
+  const awesomeChildListKeyExtractor = (item) => item.ID;
   const mapMarkers = () => {
     if (dataPointFilter != null) {
       return dataPointFilter.map((item, index) => {
@@ -172,7 +176,6 @@ const PointListResult = (props) => {
           let coor = item.Coordenadas.split(",");
           let latitude = parseFloat(coor[0]);
           let longitude = parseFloat(coor[1]);
-          console.log(latitude,longitude)
           return (
             <Marker
               key={index}
@@ -223,10 +226,8 @@ const PointListResult = (props) => {
             <FlatList
               horizontal
               data={dataPointFilter}
-              renderItem={({ item }) => (
-                <ItemCardPoint {...props} item={item} />
-              )}
-              keyExtractor={(item) => item.ID}
+              renderItem={awesomeChildListRenderItem}
+              keyExtractor={awesomeChildListKeyExtractor}
             />
           </View>
         </View>

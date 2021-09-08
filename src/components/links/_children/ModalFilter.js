@@ -38,6 +38,14 @@ const ModalFilter = ({
   openStatus
 }) => {
   const [searchFilter, setSearchFilter] = useState("");
+  const awesomeChildListRenderItem = (item) => (
+      <ItemMain
+        item={item.item}
+        setSearchTerm={setSearchTerm}
+        onClose={onClose}
+      />
+    );
+  const awesomeChildListKeyExtractor = (item, index) => index;
   useEffect(() => {
     setSearchFilter("");
 
@@ -96,14 +104,8 @@ const ModalFilter = ({
               <View style={styles.divider}></View>
               <FlatList
                 data={dataFilter}
-                renderItem={(item) => (
-                  <ItemMain
-                    item={item.item}
-                    setSearchTerm={setSearchTerm}
-                    onClose={onClose}
-                  />
-                )}
-                keyExtractor={(item, index) => index}
+                renderItem={awesomeChildListRenderItem}
+                keyExtractor={awesomeChildListKeyExtractor}
               />
             </View>
           </View>

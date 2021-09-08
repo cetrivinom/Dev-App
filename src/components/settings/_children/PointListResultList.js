@@ -103,6 +103,8 @@ export const ItemCardPoint = (props) => {
 
 const PointListResultList = (props) => {
   const { dataPointFilter } = useContext(IOMContext);
+  const awesomeChildListRenderItem = ({ item }) => <ItemCardPoint {...props} item={item} />;
+  const awesomeChildListKeyExtractor = (item) => item.ID;
   return (
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>
@@ -112,8 +114,8 @@ const PointListResultList = (props) => {
       <View style={[styles.box, styles.box2]}>
         <FlatList
           data={dataPointFilter}
-          renderItem={({ item }) => <ItemCardPoint {...props} item={item} />}
-          keyExtractor={(item) => item.ID}
+          renderItem={awesomeChildListRenderItem}
+          keyExtractor={awesomeChildListKeyExtractor}
         />
       </View>
     </View>
