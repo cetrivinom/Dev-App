@@ -38,7 +38,9 @@ const CardItemDirectoryDetail = (props) => {
       {open && (
         <View style={styles.form}>
           <Text style={styles.textDescripcion}>{descripcion}</Text>
+          <View style={styles.textWrap}>
           <Text style={styles.textsubTitle1}>{subTitle1}</Text>
+          </View>
           <View style={styles.form1}>
             <Image
               source={require("../../../resources/images/phone.png")}
@@ -81,6 +83,7 @@ const styles = StyleSheet.create({
   },
   form: {
     marginBottom: 10,
+    //marginRight:10,
   },
   textDescripcion: {
     fontSize: 13,
@@ -91,12 +94,16 @@ const styles = StyleSheet.create({
     textAlign: "justify",
     paddingBottom: 10,
   },
+  textWrap: {
+    flexDirection:'row'
+  },
   textsubTitle1: {
     fontSize: 17,
     fontWeight: "bold",
     lineHeight: 23,
     letterSpacing: 0.0015,
     color: "#007681",
+    flex: 0.95,
   },
   form1: {
     marginTop: 10,
@@ -109,6 +116,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.0025,
     color: "#003031",
     marginStart: 15,
+    flex: 0.95,
   },
 });
 

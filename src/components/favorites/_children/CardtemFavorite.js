@@ -8,7 +8,6 @@ import _ from 'lodash';
 const CardItemFavorite = (props) => {
   const { id = "" } = props || {};
   const { dataPoint, dataMapeoService, getDataPoint, dataMapeoState, getDataMapeoService } = useContext(IOMContext);
-
   useEffect(() => {
     if(dataPoint && dataPoint.length < 1){
       getDataPoint();
@@ -89,14 +88,14 @@ const CardItemFavorite = (props) => {
         <Image source={require("../../../resources/images/riMapPinFill.png")} />
         <Text style={styles.textTitle2}>{fav?.Estado}</Text>
       </View>
-        {_.map(fav?.Horario,(val,id) => {
-        return <View style={styles.containerForm}>
-          <Image source={require("../../../resources/images/riTimeFill.png")} />
-           <Text style={styles.textTitle2}>{dayWeek(val.day)}</Text>
-           <Text style={styles.textTitle3}>{val?.starthours/100+':00'+' - '+val?.endhours/100+':00'}</Text>
-      </View>
-        })
-        }
+{/*         {_.map(fav?.Horario,(val,id) => {
+          return <View style={styles.containerForm}>
+              <Image source={require("../../../resources/images/riTimeFill.png")} />
+              <Text style={styles.textTitle2}>{dayWeek(val.day)}</Text>
+              <Text style={styles.textTitle3}>{val?.starthours/100+':00'+' - '+val?.endhours/100+':00'}</Text>
+            </View>
+          })
+        } */}
     </TouchableOpacity>
   ) : null;
 };

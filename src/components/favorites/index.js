@@ -13,22 +13,10 @@ import Menu, {
 } from 'react-native-popup-menu';
 const { SlideInMenu } = renderers;
 
-const awesomeChildListRenderItem = (item) => (
-  <Menu style={styles.menu}>
-    <CardtemFavorite {...props} id={item.item.id} />
-    <MenuTrigger
-      style={styles.trigger}>
-      <Image source={require("../../resources/images/riMoreLine.png")} />
-    </MenuTrigger>
-    <MenuOptions optionsContainerStyle={{width:100}} customStyles={{ optionText: styles.text}}>
-      <MenuOption  onSelect={() => deleteItemById(item.item.id)} text='Borrar' />
-    </MenuOptions>
-  </Menu>
-)
-const awesomeChildListKeyExtractor = (item) => item.id;
-
 const Favorites = (props) => {
+
   var {dataFavorite, getDataFavorite, deleteFavorite } = useContext(IOMContext);
+
   useEffect(() => {
     getDataFavorite();
   }, []);
@@ -37,6 +25,22 @@ const Favorites = (props) => {
     deleteFavorite(id);
     dataFavorite=(dataFavorite.filter(item => item.id !== id));    
   }
+
+  const awesomeChildListRenderItem = (item) => (
+    <Menu style={styles.menu}>
+      <CardtemFavorite {...props} id={item.item.id} />
+      <MenuTrigger
+        style={styles.trigger}>
+        <Image source={require("../../resources/images/riMoreLine.png")} />
+      </MenuTrigger>
+      <MenuOptions optionsContainerStyle={{width:100}} customStyles={{ optionText: styles.text}}>
+        <MenuOption  onSelect={() => deleteItemById(item.item.id)} text='Borrar' />
+      </MenuOptions>
+    </Menu>
+  );
+
+  const awesomeChildListKeyExtractor = (item) => item.id;
+
   return (
     
     <MenuProvider style={styles.container}>
