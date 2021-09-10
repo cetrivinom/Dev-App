@@ -18,6 +18,7 @@ const Registre = (props) => {
     rePassword: "",
     gender: "",
     birdDate: moment().add(-30, "years").toDate(),
+    age: 30,
     oldMen: "",
   });
 

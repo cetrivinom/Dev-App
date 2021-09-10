@@ -20,7 +20,6 @@ import Styles from "./styles";
 export const Footer = (props) => {
   const { auth, user, message, signUp, updateUser } = useContext(AuthContext);
   const { setForm, formValue, title, data, setError, error } = props;
-  console.log('formValue',formValue);
   const onPressNext = () => {
     if (formValue !== 4 && !error) {
       setForm(formValue);
@@ -96,7 +95,6 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
       setForm(1);
     }
   };
-
   return (
     <View style={Styles.container}>
       <View style={[Styles.box, Styles.box1]}>
@@ -274,25 +272,42 @@ export const RegistreForm2 = ({ setForm, setData, data }) => {
  * @param {string} data.birdDate - propiedad fecha de nacimiento del usuario
  * @return {Object} <View /> Formulario que captura la informacion.
  */
-export const RegistreForm3 = ({ setForm, setData, data }) => {
+export const RegistreForm3 = ({ setForm, setData, data, props }) => {
   return (
     <View style={Styles.container}>
       <View style={[Styles.box, Styles.box1]}>
         <Text style={Styles.labelTitle}>Ingresa tu fecha de nacimiento</Text>
-        <View style={{ flex: 0.9, justifyContent: "center" }}>
+        <View style={{ flex: 1, justifyContent: "center" }}>
+          <View style={{ flex: 0.1, flexDirection:'row'}}>
+            <View style={{ flex: 0.32 }}>
+              <Text style={Styles.labelBirthdate}>Día</Text>
+            </View>
+            <View style={{ flex: 0.37 }}>
+              <Text style={Styles.labelBirthdate}>Mes</Text>
+            </View>
+            <View style={{ flex: 0.35 }}>
+              <Text style={Styles.labelBirthdate}>Año</Text>
+            </View>
+          </View>
           <DatePicker
             mode="date"
-            date={data.birdDate}
+            date={new Date(moment(data.birdDate!==''?data.birdDate:moment().add(-18, "years").toDate()))}
             maximumDate={moment().add(-16, "years").toDate()}
             minimumDate={moment().add(-120, "years").toDate()}
             onDateChange={(date) => {
-              setData({ ...data, birdDate: date});
+              const age = new Date(Date.now() - date.getTime());
+              setData({ ...data, birdDate: moment(date).format("YYYY-MM-DD"), age: Math.abs(age.getUTCFullYear() - 1970)});
             }}
             style={{ backgroundColor: "white" }}
           />
         </View>
       </View>
-      <Footer formValue={3} title="Siguiente" setForm={setForm} />
+      { data.age < 18 && (
+        <Footer formValue={3} title="Siguiente" setForm={setForm} />
+      )}
+      { data.age >= 18 && (
+        <Footer {...props} formValue={4} title="Finalizar" data={data} />
+      )}
     </View>
   );
 };

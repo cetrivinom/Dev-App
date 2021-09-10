@@ -28,6 +28,13 @@ export default StyleSheet.create({
     color: "#003031",
     marginBottom: 32,
   },
+  labelBirthdate:{ 
+    alignSelf:'center', 
+    alignItems: 'center', 
+    fontSize: 18,
+    lineHeight: 28,
+    color: "#003031"
+  },
   inputTextBox: {
     flex:1,
     borderColor: "#A1AAB2",
