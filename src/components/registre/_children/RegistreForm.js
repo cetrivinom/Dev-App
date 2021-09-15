@@ -11,6 +11,7 @@ import { DatePicker } from "react-native-wheel-datepicker";
 import moment from "moment";
 import AuthContext from "../../../../context/auth/authContext";
 import { validateEmail } from "../../../utilities/helpers";
+import { Snackbar } from "react-native-paper";
 import Styles from "./styles";
 /**
  * Componente Footer del registro, se llama la accion de signUp al terminar el registro
@@ -20,6 +21,8 @@ import Styles from "./styles";
 export const Footer = (props) => {
   const { auth, user, message, signUp, updateUser } = useContext(AuthContext);
   const { setForm, formValue, title, data, setError, error } = props;
+  const [visible, setVisible] = useState(false);
+  const onDismissSnackBar = () => setVisible(false);
   const onPressNext = () => {
     if (formValue !== 4 && !error) {
       setForm(formValue);
@@ -28,6 +31,8 @@ export const Footer = (props) => {
         if (user) {
           updateUser(user);
           props.navigation.navigate("Home");
+        }else{
+          setVisible(true);
         }
       });
       if (auth) {
@@ -51,6 +56,18 @@ export const Footer = (props) => {
       <View style={Styles.breadcums}>
         <Image source={formValue == 2 ? require("../../../resources/images/Breadcums2.png"):require("../../../resources/images/Breadcums3.png")} />
       </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        duration={3000}
+        action={{
+          label: "X",
+          onPress: () => {
+            // Do something
+          },
+        }}
+      >{message}
+      </Snackbar>
     </View>
   );
 };

@@ -137,11 +137,14 @@ const AuthState = (props) => {
           resolve(user);
         })
         .catch((error) => {
-          console.log('error',error);
+          console.log('errors',error,error.code);
           var message;
           switch(error.code) {
             case 'auth/weak-password':
               message = 'Password invalido';
+              break;
+            case 'auth/email-already-in-use':
+              message = 'El email ya se encuentrá registrado';
               break;
             default:
               message = ''+error;

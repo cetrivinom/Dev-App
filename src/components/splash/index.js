@@ -26,14 +26,20 @@ const Splash = (props) => {
       i += 1;
       return getDataLink(item);
     });
-    if(dataPoint && dataPoint.length < 1)
+    /*if(dataPoint && dataPoint.length < 1)
       getDataPoint();
     if(dataMapeoService && dataMapeoService.length < 1)
       getDataMapeoService();
     if(dataMapeoState && dataMapeoState.length < 1){
       getDataMapeoState();
-    }
+    }*/
     if (i === api.length) {
+      setTimeout(() => {
+        console.log('xxx')
+        getDataMapeoService();
+        getDataPoint();
+        getDataMapeoState();
+      }, 3000);
       setTimeout(() => {
         updateLastUpdate();
         props.navigation.navigate("Login");

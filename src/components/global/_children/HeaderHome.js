@@ -24,18 +24,15 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
     height: 186,
-  },
-  logo: {
-    top: 25,
-    width: 263,
-    height: 140,
-    resizeMode: 'contain',
+    alignContent: 'center',
+    alignItems: 'center'
   },
   logo2: {
-    width: 255,
+    width: 265,
     height: 136,
-    position: 'absolute',
-    left: 78,
+    //position: 'absolute',
+    resizeMode: 'contain',
+    //left: 78,
     top: 34,
   },
 });
