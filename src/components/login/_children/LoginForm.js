@@ -150,7 +150,7 @@ const LoginForm = (props) => {
               setErrorEmail("Ingrese un email valido");
             }    
           }}>
-          <Text style={Styles.labelForgetPassword}>¿Olvidaste tu contraseña</Text>
+          <Text style={Styles.labelForgetPassword}>¿Olvidaste tu contraseña?</Text>
         </TouchableOpacity>
         <TouchableHighlight style={Styles.btnIniciar} onPress={onPressLogin}>
           <Text style={Styles.labelLogin}>Iniciar sesión</Text>

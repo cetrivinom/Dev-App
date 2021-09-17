@@ -178,7 +178,8 @@ const FilterSetting = (props) => {
             openStatus
               ? dataPointState
               : openDepartamento
-              ? dataPointDepartamento.sort((a, b) => a.localeCompare(b))
+              ? dataPointDepartamento
+              //? dataPointDepartamento.sort((a, b) => a.localeCompare(b))
               : openMunicipio
               ? dataPoint
               : []
