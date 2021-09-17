@@ -30,6 +30,7 @@ const LoginForm = (props) => {
     signIn,
     getUser,
     getConfig,
+    passwordEmailRecovery,
     user: userData,
   } = useContext(AuthContext);
 
@@ -141,7 +142,16 @@ const LoginForm = (props) => {
         {errorPassword !== "" && (
           <Text style={Styles.labelError}>{errorPassword}</Text>
         )} */}
-        <Text style={Styles.labelForgetPassword}>¿Olvidaste tu contraseña</Text>
+        <TouchableOpacity
+          onPress={() => {
+            if(validateEmail(user.email)){ 
+              passwordEmailRecovery(user.email)
+            }else{
+              setErrorEmail("Ingrese un email valido");
+            }    
+          }}>
+          <Text style={Styles.labelForgetPassword}>¿Olvidaste tu contraseña</Text>
+        </TouchableOpacity>
         <TouchableHighlight style={Styles.btnIniciar} onPress={onPressLogin}>
           <Text style={Styles.labelLogin}>Iniciar sesión</Text>
         </TouchableHighlight>

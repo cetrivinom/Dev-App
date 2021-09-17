@@ -8,6 +8,7 @@ import {
   SIGN_OUT_ERROR,
   UPDATED_USER,
   UPDATED_PASS,
+  USER_PASSWORD_RECOVERY,
   UPDATED_USER_INPUT_CHANGE,
   UPDATED_PASS_INPUT_CHANGE,
   GET_CONFIG,
@@ -295,6 +296,27 @@ const AuthState = (props) => {
         });
       });
   };
+  /**
+   * metodo que restablece el password de una cuenta
+   * @param {String} email - email del usuario
+   */
+  const passwordEmailRecovery = (email) => {
+    auth()
+      .sendPasswordResetEmail(email)
+      .then(()=>  {
+        dispatch({
+          type: USER_PASSWORD_RECOVERY
+        });
+        alert('Se envio un correo a '+email+' para reestablecer la contraseña');
+      }).catch((error) => {
+        console.log('Error Action passwordEmailRecovery',error.message);
+          switch(error.code) {
+            case 'auth/user-not-found':        
+              alert('La cuenta '+email+' no se encuentra registrada');
+              break;
+          }
+      });
+  }
 
   return (
     <AuthContext.Provider
@@ -314,6 +336,7 @@ const AuthState = (props) => {
         getUser,
         updateUserInputChange,
         updatePassInputChange,
+        passwordEmailRecovery,
         updatePassword,
         getConfig,
       }}

@@ -39,7 +39,7 @@ const LastUpdate = () => {
   return (
     <View style={styles.container}>
       <View style={styles.containerForm}>
-        <Text style={styles.labelTitle1}>Ultima actualización </Text>
+        <Text style={styles.labelTitle1}>Última actualización </Text>
         <Text style={styles.labelTitle2}>{lastUpdate} </Text>
         <TouchableOpacity onPress={onPressUpdate}>
           <Image 

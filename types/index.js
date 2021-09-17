@@ -4,6 +4,7 @@ export const SIGN_UP = "SIGN_UP";
 export const SIGN_UP_ERROR = "SIGN_UP_ERROR";
 export const SIGN_OUT = "SIGN_OUT";
 export const SIGN_OUT_ERROR = "SIGN_OUT_ERROR";
+export const USER_PASSWORD_RECOVERY = "USER_PASSWORD_RECOVERY";
 export const UPDATED_USER = "UPDATED_USER";
 export const UPDATED_PASS = "UPDATED_PASS";
 export const UPDATED_USER_INPUT_CHANGE = "UPDATED_USER_INPUT_CHANGE";

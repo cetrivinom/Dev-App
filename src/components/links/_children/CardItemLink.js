@@ -34,6 +34,7 @@ const CardItemLink = (props) => {
           <View style={styles.containerDate}>
             <Image source={require("../../../resources/images/calendar.png")} />
             <Text style={styles.titleDate}>{date}</Text>
+            <Text style={styles.titleUpdateDate}>Fecha de actualización</Text>
           </View>
         </View>
       </View>
@@ -76,6 +77,15 @@ const styles = StyleSheet.create({
     color: "#A1AAB2",
     paddingTop: 2,
   },
+  titleUpdateDate: {
+    paddingStart: 6,
+    fontSize: 9,
+    lineHeight: 16,
+    fontWeight: "normal",
+    color: "#A1AAB2",
+    paddingTop: 2,
+  },
+  
 });
 
 export default CardItemLink;

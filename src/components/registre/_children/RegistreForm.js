@@ -309,7 +309,7 @@ export const RegistreForm3 = ({ setForm, setData, data, props }) => {
           <DatePicker
             mode="date"
             date={new Date(moment(data.birdDate!==''?data.birdDate:moment().add(-18, "years").toDate()))}
-            maximumDate={moment().add(-16, "years").toDate()}
+            maximumDate={moment().add(-7, "years").toDate()}
             minimumDate={moment().add(-120, "years").toDate()}
             onDateChange={(date) => {
               const age = new Date(Date.now() - date.getTime());

@@ -7,6 +7,7 @@ import {
   SIGN_OUT_ERROR,
   UPDATED_USER,
   UPDATED_PASS,
+  USER_PASSWORD_RECOVERY,
   UPDATED_USER_INPUT_CHANGE,
   UPDATED_PASS_INPUT_CHANGE,
   GET_CONFIG,
@@ -107,6 +108,8 @@ export default (state, action) => {
         ...state,
         config: action.payload,
       };
+    case USER_PASSWORD_RECOVERY:
+      return state;
     default:
       return state;
   }

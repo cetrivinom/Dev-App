@@ -11,7 +11,6 @@ const Settings = (props) => {
   const { dataPoint, getDataPoint, dataMapeoService, getDataMapeoService, dataMapeoState, getDataMapeoState } = useContext(IOMContext);
 
   useEffect(() => {
-    console.log('useEffect+')
     if(dataPoint && dataPoint.length < 1)
       getDataPoint();
     if(dataMapeoService && dataMapeoService.length < 1)

@@ -10,9 +10,8 @@ const HeaderFilterLink = ({ setShowFilterOption }) => {
     <View style={styles.container}>
       <View style={styles.containerForm}>
         <View style={styles.image}>
-          <Image source={require("../../../resources/images/filter.png")} />
         </View>
-        <Text style={styles.labelTitle1}>Tipo de contenido</Text>
+        <Text style={styles.labelTitle1}></Text>
         <TouchableOpacity onPress={onPressFilter}>
           <Text style={styles.labelTitle2}>Filtrar contenido</Text>
         </TouchableOpacity>

@@ -90,7 +90,9 @@ const styles = StyleSheet.create({
   },
   imgCover: {
     marginTop: 10,
-    width: "100%",
+    alignSelf: 'center',
+    width: 38,
+    height: 38,
     resizeMode: "contain",
   },
 });
