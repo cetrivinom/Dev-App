@@ -1,9 +1,7 @@
 import React, { useEffect, useContext } from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { StyleSheet, ImageBackground } from "react-native";
 import InitialContext from "../../../context/initialData/initialContext";
 import IOMContext from "../../../context/iomData/iomContext";
-import { metrics } from "../../utilities/Metrics";
-//import AsyncStorage from "@react-native-community/async-storage";
 
 const Splash = (props) => {
   const { getDataLink, updateLastUpdate } = useContext(InitialContext);
@@ -47,25 +45,18 @@ const Splash = (props) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Image
+      <ImageBackground
         source={require("../../resources/images/Splash.png")}
         style={styles.logo}
       />
-    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: "#00AAAD",
-  },
   logo: {
-    //top: 163,
-    height: metrics.HEIGHT * 0.9,
-    resizeMode: "contain",
+    flex: 1,
+    width: '100%',
+    height: '100%',
   },
 });
 

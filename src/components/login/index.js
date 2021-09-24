@@ -3,6 +3,7 @@ import { ImageBackground, Image } from "react-native";
 import LoginForm from "./_children/LoginForm";
 import AuthContext from "../../../context/auth/authContext";
 import IOMContext from "../../../context/iomData/iomContext";
+import NetInfo from '@react-native-community/netinfo';
 import Styles from "./styles";
 
 const Login = (props) => {
@@ -11,6 +12,12 @@ const Login = (props) => {
   const { getUserComments} = useContext(IOMContext);
 
   useEffect(() => {
+
+    NetInfo.fetch().then(state => {
+      if(!state.isConnected)
+        props.navigation.navigate("Home");
+    });
+    
     getConfig().then((config) => {
       if (config.anonymousAuth) {
         signInAnonymously().then((uid) => {
