@@ -5,15 +5,18 @@ import LastUpdate from "../global/_children/LastUpdate";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Geolocation from "@react-native-community/geolocation";
 import IOMContext from "../../../context/iomData/iomContext";
+import AuthContext from "../../../context/auth/authContext";
 
 const Settings = (props) => {
   const [position, setPosition] = useState(null);
   const { dataPoint, getDataPoint, dataMapeoService, getDataMapeoService, dataMapeoState, getDataMapeoState } = useContext(IOMContext);
+  const { config } = useContext(AuthContext);
 
   useEffect(() => {
-    if(dataPoint && dataPoint.length < 1)
-      getDataPoint();
-    if(dataMapeoService && dataMapeoService.length < 1)
+    //console.log('config',config);
+    if(dataPoint && dataPoint.length < 1){
+      getDataPoint(config.activeStates,config.activeVisible,config.activeType);
+    }if(dataMapeoService && dataMapeoService.length < 1)
       getDataMapeoService();
     if(dataMapeoState && dataMapeoState.length < 1)
       getDataMapeoState();

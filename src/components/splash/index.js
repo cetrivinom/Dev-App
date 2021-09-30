@@ -34,7 +34,7 @@ const Splash = (props) => {
     if (i === api.length) {
       setTimeout(() => {
         getDataMapeoService();
-        getDataPoint();
+        //getDataPoint();
         getDataMapeoState();
       }, 3000);
       setTimeout(() => {

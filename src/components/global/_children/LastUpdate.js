@@ -3,11 +3,13 @@ import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { metrics } from "../../../utilities/Metrics";
 import InitialContext from "../../../../context/initialData/initialContext";
 import IOMContext from "../../../../context/iomData/iomContext";
+import AuthContext from "../../../../context/auth/authContext";
 
 
 const LastUpdate = () => {
   const { lastUpdate, getDataLink, updateLastUpdate  } = useContext(InitialContext);
   const { getDataPoint, getDataMapeoService, getDataMapeoState } = useContext(IOMContext);
+  const { config } = useContext(AuthContext);
 
   const api = [
     "api-mapeo-estados.json",
@@ -27,7 +29,7 @@ const LastUpdate = () => {
     
     if (i === api.length) {
       setTimeout(() => {
-        getDataPoint();
+        getDataPoint(config.activeStates,config.activeVisible,config.activeType);
         getDataMapeoService();
         getDataMapeoState();
         updateLastUpdate();

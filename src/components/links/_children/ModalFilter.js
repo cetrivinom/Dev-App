@@ -54,7 +54,6 @@ const ModalFilter = ({
   if (data === null) {
     return null;
   }
-
  
   var dataFilter;
   if (openStatus == "municipio" && departamento !== null && departamento !== "" ) {

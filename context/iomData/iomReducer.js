@@ -32,7 +32,7 @@ export default (state, action) => {
         messageError: null,
       };
     case GET_DATA_POINT:
-      const dataPoint = JSON.parse(action.payload);
+      const dataPoint = action.payload;
       const uniqueState = [...new Set(dataPoint.map((item) => item.Estado))];
       const uniqueDepartamento = [...new Set(dataPoint.map((item) => item.Departamento)),];
       const uniqueMunicipio = [...new Set(dataPoint.map((item) => item.Municipio)),];
@@ -42,7 +42,7 @@ export default (state, action) => {
       };*/
       return {
         ...state,
-        dataPoint: JSON.parse(action.payload),
+        dataPoint: action.payload,
         dataPointState: uniqueState,
         dataPointDepartamento: uniqueDepartamento,
         dataPointMunicipio: uniqueMunicipio,

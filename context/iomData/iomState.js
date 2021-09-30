@@ -64,9 +64,18 @@ const IOMState = (props) => {
     }
   };
 
-  const getDataPoint = async () => {
+  const getDataPoint = async (state, visible, type) => {
     try {
-      const value = await AsyncStorage.getItem("api-mapeo.json");
+      const data = await AsyncStorage.getItem("api-mapeo.json");
+      const object = JSON.parse(data);
+      const value = object.filter(function(item) {
+        const textState = item.Estado_id;
+        const textType = item.Tipo_ubicacion;
+        const textVisible = item.Visible_publico;
+        return (state.indexOf(textState) > -1 && type.indexOf(textType) > -1 && visible.indexOf(textVisible) > -1 );
+      });
+      //console.log('value',value);
+      //console.log('value.filter',value.filter(data => data.Estado_id == "137"))
       if (value !== null) {
         dispatch({
           type: GET_DATA_POINT,

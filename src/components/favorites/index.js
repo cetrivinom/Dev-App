@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
   },
   box: {
     flex: 1,
+    marginBottom: 15,
   },
   //header
   box1: {
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     color: "#003031",
   },
   menu:{
-    marginTop:12,
+    marginTop: 12,
     display:'flex', 
     flexDirection:'row',
     borderBottomWidth: 3, 
