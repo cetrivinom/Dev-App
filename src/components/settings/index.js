@@ -13,7 +13,6 @@ const Settings = (props) => {
   const { config } = useContext(AuthContext);
 
   useEffect(() => {
-    //console.log('config',config);
     if(dataPoint && dataPoint.length < 1){
       getDataPoint(config.activeStates,config.activeVisible,config.activeType);
     }if(dataMapeoService && dataMapeoService.length < 1)

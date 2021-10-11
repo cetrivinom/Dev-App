@@ -8,23 +8,23 @@ import AuthContext from "../../../../context/auth/authContext";
 
 const LastUpdate = () => {
   const { lastUpdate, getDataLink, updateLastUpdate  } = useContext(InitialContext);
-  const { getDataPoint, getDataMapeoService, getDataMapeoState } = useContext(IOMContext);
+  const { getDataPoint, getDataMapeoService, getDataMapeoState, getDataDirectory } = useContext(IOMContext);
   const { config } = useContext(AuthContext);
 
   const api = [
-    "api-mapeo-estados.json",
-    "api-enlaces-de-interes.json",
-    "api-mapeo.json",
-    "api-lineas-telefonicas.json",
-    "api-lineas-telefonicas-servicios.json",
-    "api-mapeo-servicios.json",
+    config.apiMapeoEstados,
+    config.apiEnlacesInteres,
+    config.apiMapeo,
+    config.apiLineasTelefonicas,
+    config.apiLineasTelefonicasServicios,
+    config.apiMapeoServicios,
   ];
 
   const onPressUpdate = () => {
     let i = 0;
     api.map((item) => {
       i += 1;
-      return getDataLink(item);
+      return getDataLink(item,config.apiBaseURL);
     });
     
     if (i === api.length) {
@@ -32,6 +32,7 @@ const LastUpdate = () => {
         getDataPoint(config.activeStates,config.activeVisible,config.activeType);
         getDataMapeoService();
         getDataMapeoState();
+        //getDataDirectory();
         updateLastUpdate();
       }, 5000);
     }

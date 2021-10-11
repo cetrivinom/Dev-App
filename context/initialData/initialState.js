@@ -15,13 +15,14 @@ const InitialState = (props) => {
 
   const [state, dispatch] = useReducer(InitialReducer, initialState);
 
-  const getDataLink = async (apiName) => {
+  const getDataLink = async (apiName,baseURL) => {
     try {
       API.defaults.headers = {
         'Cache-Control': 'no-cache',
         'Pragma': 'no-cache',
         'Expires': '0',
       };
+      API.defaults.baseURL = baseURL;
       const response = await API.get(apiName);
       if (response.status === 200) {
         AsyncStorage.setItem(apiName, JSON.stringify(response.data));
@@ -30,6 +31,7 @@ const InitialState = (props) => {
         });
       }
     } catch (error) {
+      console.log('error',error)
       dispatch({
         type: GET_DATA_ERROR,
         payload: error,
