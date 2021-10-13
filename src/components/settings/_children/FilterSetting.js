@@ -45,6 +45,10 @@ const FilterSetting = (props) => {
   useEffect(() => {
     getDataMapeoService();
     var arr = [];
+    /*dataPoint.map((item) => {
+      if(item.Departamento == undefined)
+      console.log('item',item)
+    })*/
     dataMapeoService.map(index => {
 
       arr.push({ item: index.servicio, id: index.id_servicio });

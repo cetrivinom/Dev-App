@@ -72,7 +72,7 @@ const IOMState = (props) => {
         const textState = item.Estado_id;
         const textType = item.Tipo_ubicacion;
         const textVisible = item.Visible_publico;
-        return (state.indexOf(textState) > -1 && type.indexOf(textType) > -1 && visible.indexOf(textVisible) > -1 );
+        return (state.indexOf(textState) > -1 && type.indexOf(textType) > -1 && visible.indexOf(textVisible) > -1 && item.Departamento != undefined);
       });
       //console.log('value',value);
       //console.log('value.filter',value.filter(data => data.Estado_id == "137"))
