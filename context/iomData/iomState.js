@@ -74,8 +74,6 @@ const IOMState = (props) => {
         const textVisible = item.Visible_publico;
         return (state.indexOf(textState) > -1 && type.indexOf(textType) > -1 && visible.indexOf(textVisible) > -1 && item.Departamento != undefined);
       });
-      //console.log('value',value);
-      //console.log('value.filter',value.filter(data => data.Estado_id == "137"))
       if (value !== null) {
         dispatch({
           type: GET_DATA_POINT,

@@ -67,9 +67,9 @@ export const ItemCardPoint = (props) => {
       return element.id_servicio === val;
     });
 
-    let index = services.findIndex(item => item.b64 == service.img_servicio_b64);
+    //let index = services.findIndex(item => item.b64 == service.img_servicio_b64);
 
-    if(service && index < 0){
+    if(service && services.findIndex(item => item.b64 == service.img_servicio_b64) < 0){
       services.push({
         b64:service.img_servicio_b64,
         svg:<SvgCssUri

@@ -10,20 +10,23 @@ import IOMContext from "../../../../context/iomData/iomContext";
  * @return {Object} <View /> Item del Directorio
  */
 const DirectoryItem = (props) => {
-  const { dataItem, getDataByDepartId } = useContext(IOMContext);
+  const { dataItem, getDataByDepartId,dataDirectoryService } = useContext(IOMContext);
   const { otherParam = "" } = props.navigation.state.params || {};
-  const awesomeChildListRenderItem = (item) => (
-    <CardItemDirectoryDetail
-      {...props}
-      title={item.item.tipo_de_linea}
-      subTitle1={item.item.NombreOrganizacion}
-      subTitle2={item.item.telefono_}
-      subTitle3={item.item.horario}
-      subTitle={item.item.tipo_de_linea_id}
-    />
-  );
+  const awesomeChildListRenderItem = (item) => {
+    if(item.item.tipo_de_linea_id != undefined && dataDirectoryService.some(val => val.id === item.item.tipo_de_linea_id)){
+      //console.log('dataDirectoryService.item',dataDirectoryService.some(val => val.id === item.item.tipo_de_linea_id))
+    return (
+      <CardItemDirectoryDetail
+        {...props}
+        title={item.item.tipo_de_linea}
+        subTitle1={item.item.NombreOrganizacion}
+        subTitle2={item.item.telefono_}
+        subTitle3={item.item.horario}
+        subTitle={item.item.tipo_de_linea_id}
+      />
+    )}
+  };
   const awesomeChildListKeyExtractor = (item) => item.key;
-
   useEffect(() => {
     getDataByDepartId(otherParam);
   }, [otherParam]);

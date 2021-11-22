@@ -21,7 +21,6 @@ const CardItemDirectoryDetail = (props) => {
     getDataDirectoryItemService(subTitle);
   };
   const { descripcion = "" } = dataItemService || {};
-
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.containerItem} onPress={onPressOpen}>

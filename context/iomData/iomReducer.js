@@ -121,14 +121,14 @@ export default (state, action) => {
     case GET_DATA_DIRECTORY_SERVICE:
       return {
         ...state,
-        dataDirectoryService: JSON.parse(action.payload),
+        dataDirectoryService: JSON.parse(action.payload).filter((item) => item.visibilidad_servicio == 'SI'),
         dataItem: null,
         messageError: null,
       };
     case GET_DATA_MAPEO_SERVICE:
       return {
         ...state,
-        dataMapeoService: JSON.parse(action.payload),
+        dataMapeoService: JSON.parse(action.payload).filter((item) => item.visibilidad_servicio == 'SI'),
         messageError: null,
       };
     case GET_DATA_MAPEO_STATE:
