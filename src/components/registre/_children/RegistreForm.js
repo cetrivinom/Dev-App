@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableHighlight,
   TouchableOpacity,
+  Linking
 } from "react-native";
 import { DatePicker } from "react-native-wheel-datepicker";
 import moment from "moment";
@@ -13,6 +14,8 @@ import AuthContext from "../../../../context/auth/authContext";
 import { validateEmail } from "../../../utilities/helpers";
 import { Snackbar } from "react-native-paper";
 import Styles from "./styles";
+import database from '@react-native-firebase/database'
+import CheckBox from '@react-native-community/checkbox';
 /**
  * Componente Footer del registro, se llama la accion de signUp al terminar el registro
  * @param {Object} this.props - objeto de propiedades heredados de la clase padre.
@@ -31,7 +34,7 @@ export const Footer = (props) => {
         if (user) {
           updateUser(user);
           props.navigation.navigate("Home");
-        }else{
+        } else {
           setVisible(true);
         }
       });
@@ -54,7 +57,7 @@ export const Footer = (props) => {
         </View>
       </TouchableHighlight>
       <View style={Styles.breadcums}>
-        <Image source={formValue == 2 ? require("../../../resources/images/Breadcums2.png"):require("../../../resources/images/Breadcums3.png")} />
+        <Image source={formValue == 2 ? require("../../../resources/images/Breadcums2.png") : require("../../../resources/images/Breadcums3.png")} />
       </View>
       <Snackbar
         visible={visible}
@@ -85,6 +88,59 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
   const [errorPassword, setErrorPassword] = useState("");
   const [errorRePassword, setErrorRePassword] = useState("");
   const { email, password, rePassword } = data;
+  const [textoFin, setTextoFin] = useState([]);
+  const [variableContinuar, setVariablecontinuar] = useState(true);
+  const [isSelected, setSelection] = useState(false);
+  const generatePaymentField = () => {
+    var noGuest = 4;
+    var payments = [];
+
+
+    database()
+      .ref('config/TYC')
+      .once('value')
+      .then(snapshot => {
+        if (snapshot.val()) {
+
+          var textoa = snapshot.val().textotc;
+          var res = textoa.split(" ");
+          for (var i = 0; i < res.length; i++) {
+
+            if (res[i].match(/\[([\w\s]*)\]/g)) {
+              var param = res[i].replace(/[\[\]]/g, '')
+              var t = snapshot.child(param).val().texto
+              let supportedURL = snapshot.child(param).val().link;
+              payments.push(<Text key={i} style={Styles.labelTerminoLink} onPress={() => {
+                Linking.openURL(supportedURL);
+              }}>{t} </Text>)
+
+            } else {
+              payments.push(<Text key={i}  style={Styles.labelTermino} >{
+
+                res[i]
+
+
+              } </Text>)
+            }
+
+
+
+          }
+
+          setTextoFin(payments)
+
+        }
+      })
+
+    return textoFin;
+
+
+  }
+
+  useEffect(() => {
+    setTextoFin(generatePaymentField);
+  }, []);
+
 
   const onPressNext = () => {
     var ok = true;
@@ -100,7 +156,7 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
       setErrorPassword("Contraseña invalida");
       ok = false;
     }
-    if (password.length < 6 || rePassword.length < 6 ) {
+    if (password.length < 6 || rePassword.length < 6) {
       setErrorPassword("La contraseña debe tener al menos 6 caracteres");
       ok = false;
     }
@@ -112,6 +168,13 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
       setForm(1);
     }
   };
+
+  const setTerminos = () => {
+    console.log("entre")
+    setSelection(!isSelected)
+    setVariablecontinuar(!variableContinuar);
+  }
+
   return (
     <View style={Styles.container}>
       <View style={[Styles.box, Styles.box1]}>
@@ -135,9 +198,9 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
             }}
           />
         </View>
-          {errorEmail !== "" && (
-            <Text style={Styles.labelError}>{errorEmail}</Text>
-          )}
+        {errorEmail !== "" && (
+          <Text style={Styles.labelError}>{errorEmail}</Text>
+        )}
         <View style={Styles.SectionStyle}>
           <Image
             source={require('../../../resources/images/lock.png')}
@@ -160,9 +223,9 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
             }}
           />
         </View>
-          {errorPassword !== "" && (
-            <Text style={Styles.labelError}>{errorPassword}</Text>
-          )}
+        {errorPassword !== "" && (
+          <Text style={Styles.labelError}>{errorPassword}</Text>
+        )}
         <View style={Styles.SectionStyle}>
           <Image
             source={require('../../../resources/images/lock.png')}
@@ -185,12 +248,24 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
             }}
           />
         </View>
-          {errorRePassword !== "" && (
-            <Text style={Styles.labelError}>{errorRePassword}</Text>
-          )}
+        {errorRePassword !== "" && (
+          <Text style={Styles.labelError}>{errorRePassword}</Text>
+        )}
+
+        <View style={Styles.TerminosStyleDiv}>
+          <CheckBox
+            value={isSelected}
+            onValueChange={setTerminos}
+          />
+          {textoFin}
+        </View>
       </View>
+
+
       <View style={[Styles.box, Styles.box2]}>
-        <TouchableHighlight style={Styles.btnNext} onPress={onPressNext}>
+        <TouchableHighlight disabled={variableContinuar} style={!variableContinuar
+          ? Styles.btnNext
+          : Styles.btnNextDis} onPress={onPressNext}>
           <View>
             <Text style={Styles.labelNext}>Siguiente</Text>
             <Image
@@ -234,7 +309,7 @@ export const RegistreForm2 = ({ setForm, setData, data }) => {
                 data.gender === "M"
                   ? require("../../../resources/images/checkboxCircle.png")
                   : require("../../../resources/images/unCheckboxCircle.png")
-                }
+              }
             />
           </View>
         </TouchableOpacity>
@@ -253,7 +328,7 @@ export const RegistreForm2 = ({ setForm, setData, data }) => {
                 data.gender === "H"
                   ? require("../../../resources/images/checkboxCircle.png")
                   : require("../../../resources/images/unCheckboxCircle.png")
-                }
+              }
             />
           </View>
         </TouchableOpacity>
@@ -272,7 +347,7 @@ export const RegistreForm2 = ({ setForm, setData, data }) => {
                 data.gender === "O"
                   ? require("../../../resources/images/checkboxCircle.png")
                   : require("../../../resources/images/unCheckboxCircle.png")
-                }
+              }
             />
           </View>
         </TouchableOpacity>
@@ -295,7 +370,7 @@ export const RegistreForm3 = ({ setForm, setData, data, props }) => {
       <View style={[Styles.box, Styles.box1]}>
         <Text style={Styles.labelTitle}>Ingresa tu fecha de nacimiento</Text>
         <View style={{ flex: 1, justifyContent: "center" }}>
-          <View style={{ flex: 0.1, flexDirection:'row'}}>
+          <View style={{ flex: 0.1, flexDirection: 'row' }}>
             <View style={{ flex: 0.32 }}>
               <Text style={Styles.labelBirthdate}>Día</Text>
             </View>
@@ -308,21 +383,21 @@ export const RegistreForm3 = ({ setForm, setData, data, props }) => {
           </View>
           <DatePicker
             mode="date"
-            date={new Date(moment(data.birdDate!==''?data.birdDate:moment().add(-18, "years").toDate()))}
+            date={new Date(moment(data.birdDate !== '' ? data.birdDate : moment().add(-18, "years").toDate()))}
             maximumDate={moment().add(-7, "years").toDate()}
             minimumDate={moment().add(-120, "years").toDate()}
             onDateChange={(date) => {
               const age = new Date(Date.now() - date.getTime());
-              setData({ ...data, birdDate: moment(date).format("YYYY-MM-DD"), age: Math.abs(age.getUTCFullYear() - 1970)});
+              setData({ ...data, birdDate: moment(date).format("YYYY-MM-DD"), age: Math.abs(age.getUTCFullYear() - 1970) });
             }}
             style={{ backgroundColor: "white" }}
           />
         </View>
       </View>
-      { data.age < 18 && (
+      {data.age < 18 && (
         <Footer formValue={3} title="Siguiente" setForm={setForm} />
       )}
-      { data.age >= 18 && (
+      {data.age >= 18 && (
         <Footer {...props} formValue={4} title="Finalizar" data={data} />
       )}
     </View>

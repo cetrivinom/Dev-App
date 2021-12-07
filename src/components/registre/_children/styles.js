@@ -61,6 +61,10 @@ export default StyleSheet.create({
     backgroundColor: "#132A3E",
     height: 42,
     borderRadius: 25,
+  },btnNextDis: {
+    backgroundColor: "grey",
+    height: 42,
+    borderRadius: 25,
   },
   labelNext: {
     color: "#FFFFFF",
@@ -224,5 +228,23 @@ export default StyleSheet.create({
       width: 18,
       resizeMode: 'stretch',
       alignItems: 'center',
+  },
+  TerminosStyleDiv: {
+    flexDirection: 'row',
+    marginTop: 30,
+    
+  },
+  labelTerminoLink: {
+    fontSize: 12,
+    color: "#00AAAD",
+    lineHeight: 18,
+    paddingTop:5
+    
+  },
+  labelTermino: {
+    fontSize: 12,
+    color: "#003031",
+    lineHeight: 18,
+    paddingTop:5
   },
 });
