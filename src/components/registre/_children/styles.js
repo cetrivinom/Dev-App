@@ -231,20 +231,20 @@ export default StyleSheet.create({
   },
   TerminosStyleDiv: {
     flexDirection: 'row',
-    marginTop: 30,
+    marginTop: 20,
     
   },
   labelTerminoLink: {
     fontSize: 12,
     color: "#00AAAD",
     lineHeight: 18,
-    paddingTop:5
+    
     
   },
   labelTermino: {
     fontSize: 12,
     color: "#003031",
     lineHeight: 18,
-    paddingTop:5
+    
   },
 });

@@ -15,7 +15,7 @@ import { validateEmail } from "../../../utilities/helpers";
 import { Snackbar } from "react-native-paper";
 import Styles from "./styles";
 import database from '@react-native-firebase/database'
-import CheckBox from '@react-native-community/checkbox';
+import { CheckBox } from 'react-native-elements'
 /**
  * Componente Footer del registro, se llama la accion de signUp al terminar el registro
  * @param {Object} this.props - objeto de propiedades heredados de la clase padre.
@@ -254,8 +254,9 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
 
         <View style={Styles.TerminosStyleDiv}>
           <CheckBox
-            value={isSelected}
-            onValueChange={setTerminos}
+            containerStyle={{padding:0, margin:0}}
+            checked={isSelected}
+            onPress={() => setTerminos()}
           />
           {textoFin}
         </View>
