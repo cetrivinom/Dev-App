@@ -257,6 +257,9 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
             containerStyle={{padding:0, margin:0}}
             checked={isSelected}
             onPress={() => setTerminos()}
+            uncheckedColor ={'#425565'}
+            checkedColor='#00AAAD'
+            checkedIcon='check-square'
           />
           {textoFin}
         </View>
