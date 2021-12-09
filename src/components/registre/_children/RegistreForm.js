@@ -254,6 +254,7 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
 
         <View style={Styles.TerminosStyleDiv}>
           <CheckBox
+          checkedColor='#00AAAD'
             containerStyle={{padding:0, margin:0}}
             checked={isSelected}
             onPress={() => setTerminos()}
