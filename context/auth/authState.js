@@ -206,6 +206,7 @@ const AuthState = (props) => {
         birdDate: data.birdDate,
         gender: data.gender,
         oldMen: data.oldMen,
+        aceptaTyC:true
       })
       .then(() => {
         dispatch({
