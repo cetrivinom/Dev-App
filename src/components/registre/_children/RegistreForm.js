@@ -262,7 +262,9 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
             checkedColor='#00AAAD'
             checkedIcon='check-square'
           />
+          <View style={{flex:1, flexDirection:'row', marginRight:5, flexWrap:'wrap', justifyContent: 'flex-start'}}>
           {textoFin}
+          </View>
         </View>
       </View>
 
