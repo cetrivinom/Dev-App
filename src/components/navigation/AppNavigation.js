@@ -8,6 +8,8 @@ import Home from "../global/Home";
 import UpdateProfile from "../profile/_children/UpdateProfileForm";
 import DirectoryItem from "../directory/_children/DirectoryItem";
 import LinkItem from "../links/_children/LinkItem";
+import EnlaceItem from "../links/_children/EnlaceItem";
+import SocioItem from "../links/_children/SocioItem";
 import PointItem from "../settings/_children/PointItem";
 import PointNavigationApp from "../settings/_children/PointNavigationApp";
 import PointItemComents from "../settings/_children/PointItemComents";
@@ -105,6 +107,18 @@ const AppNavigation = createStackNavigator({
   },
   CardItemFavorite: {
     screen: CardItemFavorite,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  EnlaceItem: {
+    screen: EnlaceItem,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  SocioItem: {
+    screen: SocioItem,
     navigationOptions: {
       headerShown: false,
     },

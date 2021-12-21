@@ -35,7 +35,7 @@ const Main = (props) => {
           <ItemMain
             {...props}
             name="Links"
-            title="Enlaces de interés"
+            title="Contenido de interés"
             image="3"
           />
           <ItemMain

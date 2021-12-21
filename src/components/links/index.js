@@ -6,31 +6,41 @@ import {
   Text,
   Image,
   TouchableOpacity,
+  ScrollView
 } from "react-native";
+import { Tab, TabView } from 'react-native-elements';
 import Header from "../global/_children/Header";
 import CardItemLink from "./_children/CardItemLink";
 import HeaderFilterLink from "./_children/HeaderFilterLink";
 import ModalFilter from "./_children/ModalFilter";
 import IOMContext from "../../../context/iomData/iomContext";
 import { metrics } from "../../utilities/Metrics";
+import { CardEnlaceLink } from "./_children/CardEnlaceLink";
+import { CardSocioLink } from "./_children/CardSocioLink";
 
 const Links = (props) => {
   const [showFilterOption, setShowFilterOption] = useState(false);
   const [show, setShow] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const { dataLink, dataLinkEtiquetas, getDataLink } = useContext(IOMContext);
+  const { dataEnlace, getDataEnlace } = useContext(IOMContext);
+  const { dataSocio, getDataSocio } = useContext(IOMContext);
+  const { dataLink, dataLinkEtiquetas, getDataLink} = useContext(IOMContext);
+  const [index, setIndex] = useState(0);
   const awesomeChildListRenderItem = (item) => (
-      <CardItemLink
-        {...props}
-        title={item.item.Titulo}
-        resume={item.item.Resumen}
-        content={item.item.Contenido}
-        image={item.item.Imagen}
-        date={item.item.Fecha}
-        links={item.item.EnlaceExterno}
-      />
-    );
+    <CardItemLink
+      {...props}
+      title={item.item.Titulo}
+      resume={item.item.Resumen}
+      content={item.item.Contenido}
+      image={item.item.Imagen}
+      date={item.item.Fecha}
+      links={item.item.EnlaceExterno}
+    />
+  );
   const awesomeChildListKeyExtractor = (item) => item.Titulo;
+
+
+
 
   const onPressClose = () => {
     setShowFilterOption((prev) => !prev);
@@ -43,73 +53,136 @@ const Links = (props) => {
 
   useEffect(() => {
     getDataLink();
+    getDataEnlace();
+    getDataSocio();
+    console.log('dataEnlace',dataEnlace)
   }, []);
-  
+
   const toggleModal = () => setShow(!show);
   return (
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>
-        <Header {...props} showBack={false} title="Enlaces de interés" />
-        <HeaderFilterLink setShowFilterOption={setShowFilterOption} />
-      </View>
-      {dataLink !== null && (
-        <View style={[styles.box, styles.box2]}>
-          <FlatList
-            data={dataLink}
-            renderItem={awesomeChildListRenderItem}
-            keyExtractor={awesomeChildListKeyExtractor}
-          />
-        </View>
-      )}
-      {showFilterOption && (
-        <View style={styles.box3}>
-          <View style={styles.boxImage}>
-            <Image source={require("../../resources/images/linkIcon.png")} />
-          </View>
-          <View style={styles.box4}>
-            <TouchableOpacity onPress={onPressClose}>
-              <Image
-                source={require("../../resources/images/riCloseLine.png")}
-              />
-            </TouchableOpacity>
+        <Header {...props} showBack={false} title="Contenido de interés" />
 
-            <Text style={styles.text}>Filtrar contenido</Text>
-            <Image
-            />
-          </View>
-          <View style={styles.box5}>
-            <TouchableOpacity style={styles.box6} onPress={() => setShow(true)}>
-              <Text style={styles.textBox}>
-                {searchTerm != "" ? searchTerm : "Tipo de contenido"}
-              </Text>
-              <Image
-                source={require("../../resources/images/trailingIcon.png")}
+
+        <Tab indicatorStyle={{
+          backgroundColor: '#00AAAD',
+          height: 3,
+          color: '#00AAAD',
+
+        }} value={index} onChange={setIndex} >
+          <Tab.Item title="Noticias" buttonStyle={{ backgroundColor: '#FFFFFF' }} titleStyle={{ color: '#D0D4D8' }} />
+          <Tab.Item title="Enlaces" buttonStyle={{ backgroundColor: '#FFFFFF' }} titleStyle={{ color: '#D0D4D8' }} />
+          <Tab.Item title="Socios" buttonStyle={{ backgroundColor: '#FFFFFF' }} titleStyle={{ color: '#D0D4D8' }} />
+        </Tab>
+
+        <TabView value={index} onChange={setIndex} >
+          <TabView.Item >
+
+            <View>
+              <HeaderFilterLink setShowFilterOption={setShowFilterOption} />
+              {dataLink !== null && (
+
+                <FlatList
+                  data={dataLink}
+                  renderItem={awesomeChildListRenderItem}
+                  keyExtractor={awesomeChildListKeyExtractor}
+                />
+
+              )}
+              {showFilterOption && (
+                <View style={styles.box3}>
+                  <View style={styles.boxImage}>
+                    <Image source={require("../../resources/images/linkIcon.png")} />
+                  </View>
+                  <View style={styles.box4}>
+                    <TouchableOpacity onPress={onPressClose}>
+                      <Image
+                        source={require("../../resources/images/riCloseLine.png")}
+                      />
+                    </TouchableOpacity>
+
+                    <Text style={styles.text}>Filtrar contenido</Text>
+                    <Image
+                    />
+                  </View>
+                  <View style={styles.box5}>
+                    <TouchableOpacity style={styles.box6} onPress={() => setShow(true)}>
+                      <Text style={styles.textBox}>
+                        {searchTerm != "" ? searchTerm : "Tipo de contenido"}
+                      </Text>
+                      <Image
+                        source={require("../../resources/images/trailingIcon.png")}
+                      />
+                    </TouchableOpacity>
+                    <View style={styles.box7}>
+                      <TouchableOpacity
+                        style={[styles.caja1]}
+                        onPress={() => setSearchTerm("")}
+                      >
+                        <Text style={styles.textBoxCaja}>Borrar</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={[styles.caja1, styles.caja2]}
+                        onPress={onPressFilter}
+                      >
+                        <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>Filtrar</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              )}
+              <ModalFilter
+                onClose={() => setShow(false)}
+                show={show}
+                data={dataLinkEtiquetas}
+                setSearchTerm={setSearchTerm}
+                toggleModal={toggleModal}
               />
-            </TouchableOpacity>
-            <View style={styles.box7}>
-              <TouchableOpacity
-                style={[styles.caja1]}
-                onPress={() => setSearchTerm("")}
-              >
-                <Text style={styles.textBoxCaja}>Borrar</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.caja1, styles.caja2]}
-                onPress={onPressFilter}
-              >
-                <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>Filtrar</Text>
-              </TouchableOpacity>
             </View>
-          </View>
-        </View>
-      )}
-      <ModalFilter
-        onClose={() => setShow(false)}
-        show={show}
-        data={dataLinkEtiquetas}
-        setSearchTerm={setSearchTerm}
-        toggleModal={toggleModal}
-      />
+
+          </TabView.Item>
+          <TabView.Item style={{ width: '100%' }}>
+            <ScrollView>
+            <View style={styles.containerForm2}>
+
+              {dataEnlace !== null && dataEnlace.map(index => {
+                return (
+                  <CardEnlaceLink
+                  {...props}
+                  key = {index.titulo}
+                  title={index.titulo}
+                  image={index.img_enlace}
+                  links = {index.link}
+                  contenido={index.descripcion}
+                />
+                )
+              })}
+
+            </View>
+            </ScrollView>
+          </TabView.Item>
+          <TabView.Item style={{ width: '100%' }}>
+          <ScrollView>
+            <View style={styles.containerForm2}>
+
+              {dataSocio !== null && dataSocio.map(index => {
+                return (
+                  <CardSocioLink
+                  {...props}
+                  title={index.estado}
+                  image={index.img_socio}
+                  links = {index.field_website}
+                  contenido = {index.field_descripcion}
+                />
+                )
+              })}
+
+            </View>
+            </ScrollView>
+          </TabView.Item>
+        </TabView>
+      </View>
     </View>
   );
 };
@@ -117,6 +190,12 @@ const Links = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  containerForm2: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    padding:10
   },
   box: {
     flex: 1,
@@ -132,7 +211,7 @@ const styles = StyleSheet.create({
   },
   box3: {
     position: "absolute",
-    width:"100%",
+    width: "100%",
     height: 300,
     backgroundColor: "#FFFFFF",
     bottom: 0,
@@ -190,7 +269,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 42,
     borderWidth: 1,
-    width: metrics.WIDTH*0.4,
+    width: metrics.WIDTH * 0.4,
     borderRadius: 25,
     borderColor: "#A1AAB2",
   },

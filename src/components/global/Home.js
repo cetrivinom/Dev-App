@@ -41,7 +41,7 @@ export default createBottomTabNavigator(
     Links: {
       screen: Links,
       navigationOptions: {
-        tabBarLabel: 'Enlaces',
+        tabBarLabel: 'Contenido',
         tabBarIcon: ({tintColor}) => (
           <Icon name="md-open-outline" color={tintColor} size={24} />
         ),
