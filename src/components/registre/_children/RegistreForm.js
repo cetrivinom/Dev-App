@@ -66,7 +66,7 @@ export const Footer = (props) => {
         action={{
           label: "X",
           onPress: () => {
-            // Do something
+            setVisible(false);
           },
         }}
       >{message}
