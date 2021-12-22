@@ -16,6 +16,8 @@ import {
   NEW_COMMENT,
   NEW_FAVORITE,
   DELETE_COMMENT,
+  GET_DATA_ENLACE,
+  GET_DATA_SOCIO
 } from "../../types";
 import moment from 'moment';
 import IOMReducer from "./iomReducer";
@@ -34,6 +36,8 @@ const IOMState = (props) => {
     dataPointMunicipio: null,
     dataPointFilter: null,
     dataDirectory: null,
+    dataEnlace: null,
+    dataSocio: null,
     dataDirectoryService: null,
     dataMapeoService: [],
     dataMapeoState: [],
@@ -150,6 +154,41 @@ const IOMState = (props) => {
         dispatch({
           type: GET_DATA_DIRECTORY_SERVICE,
           payload: value,
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: GET_DATA_ERROR,
+        payload: error,
+      });
+    }
+  };
+
+  const getDataEnlace = async (item) => {
+    try {
+      const value = await AsyncStorage.getItem("api_enlaces.json");
+      if (value !== null) {
+        dispatch({
+          type: GET_DATA_ENLACE,
+          value,
+          item,
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: GET_DATA_ERROR,
+        payload: error,
+      });
+    }
+  };
+  const getDataSocio = async (item) => {
+    try {
+      const value = await AsyncStorage.getItem("api_socios.json");
+      if (value !== null) {
+        dispatch({
+          type: GET_DATA_SOCIO,
+          value,
+          item,
         });
       }
     } catch (error) {
@@ -305,6 +344,8 @@ const postsItems = postsFav.filter(function(e){ return e.id !== point});
         dataPointMunicipio: state.dataPointMunicipio,
         dataPointFilter: state.dataPointFilter,
         dataDirectory: state.dataDirectory,
+        dataEnlace: state.dataEnlace,
+        dataSocio: state.dataSocio,
         dataDirectoryService: state.dataDirectoryService,
         dataFavorite: state.dataFavorite,
         dataItem: state.dataItem,
@@ -316,6 +357,8 @@ const postsItems = postsFav.filter(function(e){ return e.id !== point});
         getDataLink,
         getDataPoint,
         getDataDirectory,
+        getDataEnlace,
+        getDataSocio,
         getDataFavorite,
         getDataPointById,
         getDataByDepartId,

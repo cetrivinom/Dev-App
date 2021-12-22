@@ -15,6 +15,8 @@ import {
   NEW_FAVORITE,
   NEW_COMMENT,
   DELETE_COMMENT,
+  GET_DATA_ENLACE,
+  GET_DATA_SOCIO
 } from "../../types";
 
 export default (state, action) => {
@@ -112,7 +114,22 @@ export default (state, action) => {
         dataItem: null,
         messageError: null,
       };
-    case GET_DATA_DIRECTORY_ITEM:
+      case GET_DATA_ENLACE:
+        return {
+          ...state,
+          dataEnlace: JSON.parse(action.value),
+          dataItem: null,
+          messageError: null,
+        };
+
+        case GET_DATA_SOCIO:
+        return {
+          ...state,
+          dataSocio: JSON.parse(action.value),
+          dataItem: null,
+          messageError: null,
+        };
+      case GET_DATA_DIRECTORY_ITEM:
       return {
         ...state,
         message: null,

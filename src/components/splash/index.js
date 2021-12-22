@@ -14,6 +14,8 @@ const Splash = (props) => {
     "api-lineas-telefonicas.json",
     "api-lineas-telefonicas-servicios.json",
     "api-mapeo-servicios.json",
+    "api_enlaces.json",
+    "api_socios.json"
   ];
 
 
@@ -31,6 +33,8 @@ const Splash = (props) => {
         config.apiLineasTelefonicas,
         config.apiLineasTelefonicasServicios,
         config.apiMapeoServicios,
+        config.apiMapeoEnlaces,
+        config.apiMapeoSocios
       ];
       api.map((item) => {
         i += 1;
