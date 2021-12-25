@@ -170,7 +170,6 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
   };
 
   const setTerminos = () => {
-    console.log("entre")
     setSelection(!isSelected)
     setVariablecontinuar(!variableContinuar);
   }

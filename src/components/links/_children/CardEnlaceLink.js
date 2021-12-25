@@ -9,7 +9,7 @@ export const CardEnlaceLink = (props) => {
         title = "",
         contenido = "",
         image = "",
-        links = "",
+        links = [],
       } = props || {};
   const onPressCard = () => {
     props.navigation.navigate("EnlaceItem", { title, contenido, image, links });

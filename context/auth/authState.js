@@ -18,6 +18,7 @@ import AuthContext from "./authContext";
 import database from "@react-native-firebase/database";
 import auth from "@react-native-firebase/auth";
 import analytics from "@react-native-firebase/analytics";
+import moment from "moment";
 /**
  * Maneja las operacion de signIn, signOut, signUp, registro y consulta de usuarios contra firebase authentication y firebase real-time
  */
@@ -138,7 +139,6 @@ const AuthState = (props) => {
           resolve(user);
         })
         .catch((error) => {
-          console.log('errors',error,error.code);
           var message;
           switch(error.code) {
             case 'auth/weak-password':
@@ -206,7 +206,8 @@ const AuthState = (props) => {
         birdDate: data.birdDate,
         gender: data.gender,
         oldMen: data.oldMen,
-        aceptaTyC:true
+        aceptaTyC: true,
+        timestamp: moment().format('DD/MM/YY, HH:mm:ss')
       })
       .then(() => {
         dispatch({
@@ -310,7 +311,6 @@ const AuthState = (props) => {
         });
         alert('Se envio un correo a '+email+' para reestablecer la contraseña');
       }).catch((error) => {
-        console.log('Error Action passwordEmailRecovery',error.message);
           switch(error.code) {
             case 'auth/user-not-found':        
               alert('La cuenta '+email+' no se encuentra registrada');

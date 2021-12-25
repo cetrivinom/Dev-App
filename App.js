@@ -64,19 +64,16 @@ async function requestUserPermission() {
     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
   if (enabled) {
-    console.log('Authorization status:', authStatus);
     getFMCToken()
   }
 }
 
 const getFMCToken = async () => {
   let checkToken = await AsyncStorage.getItem('fcmToken');
-  console.log('the old token',checkToken);
   if(!checkToken){
     try{
       const fcmToken = await messaging().getToken()
       if(!!fcmToken){
-        console.log('fcmtoken generado', fcmToken);
         await AsyncStorage.setItem('fcmToken',fcmToken)
       }
     } catch (error){
@@ -86,28 +83,16 @@ const getFMCToken = async () => {
 };
 
 export const notificationListener = async () => {
-  console.log('notificationListener')
   messaging().onNotificationOpenedApp(remoteMessage => {
-    console.log(
-      'Notification caused app to open from background state:',
-      remoteMessage.notification,
-    );
-    console.log('background notification',remoteMessage.notification)
   });
 
   // Check whether an initial notification is available
   messaging()
     .getInitialNotification()
     .then(remoteMessage => {
-      console.log('getInitialNotification',remoteMessage)
       if (remoteMessage) {
         setVisible(true);
         setMessage(remoteMessage);
-        console.log(
-          'Notification caused app to open from quit state:',
-          remoteMessage.notification,
-        );
-        console.log('remote notification',remoteMessage.notification)
       }
     })
 }

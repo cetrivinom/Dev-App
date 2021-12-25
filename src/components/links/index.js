@@ -55,7 +55,6 @@ const Links = (props) => {
     getDataLink();
     getDataEnlace();
     getDataSocio();
-    console.log('dataEnlace',dataEnlace)
   }, []);
 
   const toggleModal = () => setShow(!show);
@@ -69,15 +68,16 @@ const Links = (props) => {
           backgroundColor: '#00AAAD',
           height: 3,
           color: '#00AAAD',
-
-        }} value={index} onChange={setIndex} >
-          <Tab.Item title="Noticias" buttonStyle={{ backgroundColor: '#FFFFFF' }} titleStyle={{ color: '#D0D4D8' }} />
-          <Tab.Item title="Enlaces" buttonStyle={{ backgroundColor: '#FFFFFF' }} titleStyle={{ color: '#D0D4D8' }} />
-          <Tab.Item title="Socios" buttonStyle={{ backgroundColor: '#FFFFFF' }} titleStyle={{ color: '#D0D4D8' }} />
+        }}
+         
+        value={index} onChange={setIndex} >
+          <Tab.Item title="Noticias" buttonStyle={{ backgroundColor: '#FFFFFF' }} titleStyle={index==0? styles.tabItemStyleEnable:styles.tabItemStyleDisable} />
+          <Tab.Item title="Enlaces" buttonStyle={{ backgroundColor: '#FFFFFF' }} titleStyle={index==1? styles.tabItemStyleEnable:styles.tabItemStyleDisable} />
+          <Tab.Item title="Socios" buttonStyle={{ backgroundColor: '#FFFFFF' }} titleStyle={index==2? styles.tabItemStyleEnable:styles.tabItemStyleDisable} />
         </Tab>
 
         <TabView value={index} onChange={setIndex} >
-          <TabView.Item >
+          <TabView.Item onMoveShouldSetResponder={(e) => e.stopPropagation()}>
 
             <View>
               <HeaderFilterLink setShowFilterOption={setShowFilterOption} />
@@ -142,7 +142,7 @@ const Links = (props) => {
             </View>
 
           </TabView.Item>
-          <TabView.Item style={{ width: '100%' }}>
+          <TabView.Item style={{ width: '100%' }} onMoveShouldSetResponder={(e) => e.stopPropagation()}>
             <ScrollView>
             <View style={styles.containerForm2}>
 
@@ -162,7 +162,7 @@ const Links = (props) => {
             </View>
             </ScrollView>
           </TabView.Item>
-          <TabView.Item style={{ width: '100%' }}>
+          <TabView.Item style={{ width: '100%' }} onMoveShouldSetResponder={(e) => e.stopPropagation()}>
           <ScrollView>
             <View style={styles.containerForm2}>
 
@@ -286,6 +286,18 @@ const styles = StyleSheet.create({
   textBoxCajaNegra: {
     color: "#FFFFFF",
   },
+  tabItemStyleEnable:{ 
+    fontSize: 16, 
+    lineHeight: 19,
+    letterSpacing: 0.005, 
+    color: '#00AAAD' 
+  },
+  tabItemStyleDisable:{ 
+    fontSize: 16, 
+    lineHeight: 19,
+    letterSpacing: 0.005, 
+    color: '#A1AAB2' 
+  }
 });
 
 export default Links;

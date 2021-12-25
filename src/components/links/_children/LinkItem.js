@@ -70,6 +70,7 @@ const LinkItem = (props) => {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+    backgroundColor:'white'
   },
   container: {
     marginTop: 24,
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
   },
   image: {
     position: "absolute",
-    top: metrics.HEIGHT * 0.04,
+    top: metrics.HEIGHT * 0.05,
     left: 20,
     zIndex: 10,
   },

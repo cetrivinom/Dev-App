@@ -20,7 +20,7 @@ const EnlaceItem = (props) => {
     title = "",
     contenido = "",
     image = "",
-    links = "",
+    links = [],
   } = props.navigation.state.params || {};
 
   const regex = /(<([^>]+)>)/gi;
@@ -28,7 +28,7 @@ const EnlaceItem = (props) => {
   return (
     <ScrollView style={styles.wrapper}>
       <TouchableOpacity style={styles.image} onPress={onPressClose}>
-        <Text>X</Text>
+        <Image source={require("../../../resources/images/fab.png")} />
       </TouchableOpacity>
       <View style={styles.container}>
         <Text style={styles.textTitle}>{title}</Text>
@@ -37,17 +37,24 @@ const EnlaceItem = (props) => {
         
         
         <View style={styles.viewLink}>
-        <Text style={styles.textEnlace}>Enlaces:</Text>
-          <TouchableOpacity
+          <Text style={styles.textEnlace}>Enlaces:</Text>
+        </View>
+        <View>
+          {_.map(links,(val,id) => {
+            const link = val.indexOf('enlace:');
+            const url = val.substring(link+7,val.length)
+            const desc = val.substring(7,link-1)
+            return <TouchableOpacity
+                key={id}
                 style={styles.boxOpenLink}
-                onPress={() => Linking.openURL(links)}
+                onPress={() => Linking.openURL(url)}
               >
-                <Text style={styles.textOpenLink}>{title}</Text>
+                <Text style={styles.textOpenLink}>{desc}</Text>
                 <Image
                   source={require("../../../resources/images/riExternalLinkFill.png")}
                 />
               </TouchableOpacity>
-          
+          })}
         </View>
       </View>
     </ScrollView>
@@ -57,9 +64,10 @@ const EnlaceItem = (props) => {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+    backgroundColor:'white'
   },
   container: {
-    marginTop: 74,
+    marginTop: metrics.HEIGHT * 0.11,
     marginHorizontal: 16,
   },
   textTitle: {
@@ -119,7 +127,7 @@ const styles = StyleSheet.create({
   },
   image: {
     position: "absolute",
-    top: metrics.HEIGHT * 0.04,
+    top: metrics.HEIGHT * 0.05,
     left: 20,
     zIndex: 10,
   },

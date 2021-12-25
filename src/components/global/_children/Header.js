@@ -32,8 +32,12 @@ const Header = (props) => {
               <Image source={require("../../../resources/images/left.png")} />
             </TouchableOpacity>
           )}
-          <Text style={styles.labelTitle}>{title}</Text>
+          <View style={{flex:0.2}}/>
+          <View style={{flex:0.8}}> 
+            <Text style={styles.labelTitle}>{title}</Text>
+          </View>
           {!showBack && (
+          <View style={{flex:0.2}}> 
             <TouchableOpacity onPress={onPressProfile} style={styles.image}>
               <Image 
                 style={{
@@ -44,6 +48,7 @@ const Header = (props) => {
                 source={require("../../../resources/images/profile.png")} />
               <Text style={styles.textPerfil}>Mi Perfil</Text>
             </TouchableOpacity>
+          </View>
           )}
         </View>
       </View>
@@ -78,11 +83,11 @@ const styles = StyleSheet.create({
     right: metrics.WIDTH * 0.53,
   },
   image: {
-    position: "absolute",
-    flexDirection: "column",
+    //position: "absolute",
+    //flexDirection: "column",
     alignItems:'center',
-    right: -metrics.WIDTH * 0.24,
-    top: -metrics.HEIGHT * 0.007,
+    //right: -metrics.WIDTH * 0.24,
+    //top: -metrics.HEIGHT * 0.007,
   },
   textPerfil:{
     color:'#FFFFFF',
