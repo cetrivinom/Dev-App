@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   cardBodyTwo: {
     backgroundColor: "#FFFFFF",
     //flexDirection: "column",
-    height: metrics.HEIGHT * 0.25,
+    height: metrics.HEIGHT * 0.18,
     width: metrics.WIDTH * 0.40,
     borderRadius: 8,
     shadowColor: "#030912",
