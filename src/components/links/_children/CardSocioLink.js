@@ -23,13 +23,14 @@ export const CardSocioLink = (props) => {
     <Pressable onPress={onPressCard} style={styles.wraper}>
       <View style={{ borderRadius: 8}}>
         <View style={styles.cardBodyTwo }>
-          <View style={{ flex: 1, padding:25}}>
+          <View style={{ flex: 1, padding:25, justifyContent: 'center',
+    alignItems: 'center',}}>
           <Image
-          style={{width: 120,height:100}}
+          style={{width: 120,height:60}}
           source={{
             uri: `${image}`,
           }}
-          resizeMode="stretch"
+          resizeMode="contain"
         />
           </View>
           <View style={{ position:"absolute", left:"30%", backgroundColor:"#000000", bottom:-10, paddingTop:5,paddingBottom:5,paddingLeft:10,paddingRight:10, borderRadius:10,  zIndex:2}}>

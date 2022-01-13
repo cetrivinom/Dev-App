@@ -18,6 +18,8 @@ const LastUpdate = () => {
     config.apiLineasTelefonicas,
     config.apiLineasTelefonicasServicios,
     config.apiMapeoServicios,
+    config.apiMapeoEnlaces,
+    config.apiMapeoSocios
   ];
 
   const onPressUpdate = () => {
@@ -32,6 +34,7 @@ const LastUpdate = () => {
         getDataPoint(config.activeStates,config.activeVisible,config.activeType);
         getDataMapeoService();
         getDataMapeoState();
+        
         //getDataDirectory();
         updateLastUpdate();
       }, 5000);
