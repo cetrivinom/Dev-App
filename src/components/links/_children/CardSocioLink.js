@@ -23,13 +23,14 @@ export const CardSocioLink = (props) => {
     <Pressable onPress={onPressCard} style={styles.wraper}>
       <View style={{ borderRadius: 8}}>
         <View style={styles.cardBodyTwo }>
-          <View style={{ flex: 1, padding:25}}>
+          <View style={{ flex: 1, padding:25, justifyContent: 'center',
+    alignItems: 'center',}}>
           <Image
-          style={{width: 120,height:100}}
+          style={{width: 120,height:60}}
           source={{
             uri: `${image}`,
           }}
-          resizeMode="stretch"
+          resizeMode="contain"
         />
           </View>
           <View style={{ position:"absolute", left:"30%", backgroundColor:"#000000", bottom:-10, paddingTop:5,paddingBottom:5,paddingLeft:10,paddingRight:10, borderRadius:10,  zIndex:2}}>
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
   cardBodyTwo: {
     backgroundColor: "#FFFFFF",
     //flexDirection: "column",
-    height: metrics.HEIGHT * 0.25,
+    height: metrics.HEIGHT * 0.18,
     width: metrics.WIDTH * 0.40,
     borderRadius: 8,
     shadowColor: "#030912",
