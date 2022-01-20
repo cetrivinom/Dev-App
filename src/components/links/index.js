@@ -147,6 +147,7 @@ const Links = (props) => {
             <View style={styles.containerForm2}>
 
               {dataEnlace !== null && dataEnlace.map(index => {
+                console.log(index)
                 return (
                   <CardEnlaceLink
                   {...props}

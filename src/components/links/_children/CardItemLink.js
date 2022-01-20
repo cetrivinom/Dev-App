@@ -31,11 +31,11 @@ const CardItemLink = (props) => {
         />
         <View style={styles.containeImageText}>
           <Text style={styles.titleSection}>{_resume + "..."}</Text>
-          <View style={styles.containerDate}>
+{/*           <View style={styles.containerDate}>
             <Image source={require("../../../resources/images/calendar.png")} />
             <Text style={styles.titleDate}>{date}</Text>
             <Text style={styles.titleUpdateDate}>Fecha de actualización</Text>
-          </View>
+          </View> */}
         </View>
       </View>
     </TouchableOpacity>

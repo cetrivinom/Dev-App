@@ -32,29 +32,29 @@ const SocioItem = (props) => {
       </TouchableOpacity>
 
       <View style={styles.container}>
-      <Image
-          style={{width: "100%",height:200}}
-          source={{
-            uri: `${image}`,
-          }}
-          resizeMode="stretch"
-        />
+        <View style={{justifyContent: 'center',alignItems: 'center',}}>
+          <Image
+              style={{width: 240,height:120}}
+              source={{
+                uri: `${image}`,
+              }}
+              resizeMode="contain"
+            />
         <Text style={styles.textTitle}>{title}</Text>
         <Text style={styles.textContent}>{_content}</Text>
-
-
-
         <View style={styles.viewLink}>
           <TouchableOpacity
             style={styles.boxOpenLink}
             onPress={() => Linking.openURL(links)}
           >
-            <Text style={styles.textOpenLink}>{title}</Text>
+            {/* <Text style={styles.textOpenLink}>{title}</Text> */}
+            <Text style={styles.textOpenLink}>ir al sitio web</Text>
+            
             <Image
               source={require("../../../resources/images/riExternalLinkFill.png")}
             />
           </TouchableOpacity>
-
+        </View>
         </View>
       </View>
     </ScrollView>
@@ -69,14 +69,16 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 74,
     marginHorizontal: 16,
+    //backgroundColor: 'red'
   },
   textTitle: {
     fontSize: 16,
     fontWeight: "bold",
+    textAlign: 'center',
     color: "#132A3E",
     lineHeight: 23,
     letterSpacing: 0.0015,
-    paddingTop: 20
+    paddingTop: 30
   },
   textEnlace: {
     fontSize: 16,

@@ -15,6 +15,8 @@ export const CardEnlaceLink = (props) => {
     props.navigation.navigate("EnlaceItem", { title, contenido, image, links });
   };
 
+  console.log(image)
+
   const regex = /(<([^>]+)>)/gi;
   const result = title.replace(regex, "");
   let _title = result.substring(0, 60);
@@ -23,20 +25,22 @@ export const CardEnlaceLink = (props) => {
     <Pressable onPress={onPressCard} style={styles.wraper}>
       <View style={{ borderRadius: 8 }}>
         <View style={styles.cardBodyTwo}>
-          <View style={{ flex: 1 }}>
-          <Image
-          style={styles.containeImage}
-          source={{
-            uri: `https://mapeo-de-servicios.gifmm-colombia.site${image}`,
-          }}
-        />
+          <View style={{ flex: 0.4 }}>
+            <Image
+              style={styles.containeImage}
+              source={{
+                uri: `https://mapeo-de-servicios.gifmm-colombia.site${image}`,
+              }}
+            />
           </View>
-          <View style={{ margin: metrics.HEIGHT * 0.01 }}>
+          <View style={{flex: 0.6, alignItems: 'center', justifyContent: 'center', alignItems:'center' }}>
             <Text style={styles.titleSection} allowFontScaling={false}>
               {_title}
             </Text>
+          </View>
+          <View style={{   backgroundColor:"#000000", bottom:-10, paddingTop:5,paddingBottom:5,paddingLeft:10,paddingRight:10, borderRadius:10, marginLeft:30, marginRight:30}}>
             <Text style={styles.verMas} allowFontScaling={false}>
-              {"Ver más >"}
+              {"Ver más"}
             </Text>
           </View>
         </View>
@@ -54,14 +58,14 @@ const styles = StyleSheet.create({
     color: "#003031",
     textAlign: "center",
     textAlignVertical:"center",
-    padding:10
+    padding:5
   },
   verMas: {
     fontSize: metrics.HEIGHT*0.015,
     //lineHeight: 23,
     letterSpacing: 0.005,
     fontWeight: "bold",
-    color: "#902857",
+    color: "#FFFFFF",
     textAlign: "center",
   },
   wraper: {
@@ -90,7 +94,7 @@ const styles = StyleSheet.create({
   cardBodyTwo: {
     backgroundColor: "#FFFFFF",
     //flexDirection: "column",
-    height: metrics.HEIGHT * 0.25,
+    height: metrics.HEIGHT * 0.18,
     width: metrics.WIDTH * 0.40,
     borderRadius: 8,
     shadowColor: "#030912",
@@ -103,8 +107,8 @@ const styles = StyleSheet.create({
     elevation: 7,
   },
   containeImage: {
-    width: 40,
-    height: 40,
+    width: 32,
+    height: 32,
     marginTop:10,
     marginLeft:10
   },
