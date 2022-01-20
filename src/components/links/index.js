@@ -40,8 +40,6 @@ const Links = (props) => {
   const awesomeChildListKeyExtractor = (item) => item.Titulo;
 
 
-
-
   const onPressClose = () => {
     setShowFilterOption((prev) => !prev);
   };
@@ -170,6 +168,7 @@ const Links = (props) => {
                 return (
                   <CardSocioLink
                   {...props}
+                  key = {index.id_estado}
                   title={index.estado}
                   image={index.img_socio}
                   links = {index.field_website}

@@ -28,11 +28,13 @@ const Header = (props) => {
       <View style={styles.container}>
         <View style={styles.containerForm}>
           {showBack && (
+
+          <View style={{flex:0.2}}>
             <TouchableOpacity onPress={onPressBack} style={styles.logo}>
               <Image source={require("../../../resources/images/left.png")} />
             </TouchableOpacity>
+            </View>
           )}
-          <View style={{flex:0.2}}/>
           <View style={{flex:0.8}}> 
             <Text style={styles.labelTitle}>{title}</Text>
           </View>
@@ -79,8 +81,9 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
   logo: {
-    position: "absolute",
-    right: metrics.WIDTH * 0.53,
+    marginLeft: 20
+    //position: "absolute",
+    //right: metrics.WIDTH * 0.53,
   },
   image: {
     //position: "absolute",
