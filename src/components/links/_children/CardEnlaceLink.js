@@ -15,8 +15,6 @@ export const CardEnlaceLink = (props) => {
     props.navigation.navigate("EnlaceItem", { title, contenido, image, links });
   };
 
-  console.log(image)
-
   const regex = /(<([^>]+)>)/gi;
   const result = title.replace(regex, "");
   let _title = result.substring(0, 60);

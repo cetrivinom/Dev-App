@@ -40,21 +40,22 @@ const SocioItem = (props) => {
               }}
               resizeMode="contain"
             />
-        <Text style={styles.textTitle}>{title}</Text>
-        <Text style={styles.textContent}>{_content}</Text>
-        <View style={styles.viewLink}>
-          <TouchableOpacity
-            style={styles.boxOpenLink}
-            onPress={() => Linking.openURL(links)}
-          >
-            {/* <Text style={styles.textOpenLink}>{title}</Text> */}
-            <Text style={styles.textOpenLink}>ir al sitio web</Text>
-            
-            <Image
-              source={require("../../../resources/images/riExternalLinkFill.png")}
-            />
-          </TouchableOpacity>
-        </View>
+          <Text style={styles.textTitle}>{title}</Text>
+          <Text style={styles.textContent}>{_content}</Text>
+          {links ? (
+          <View style={styles.viewLink}>
+            <TouchableOpacity
+              style={styles.boxOpenLink}
+              onPress={() => Linking.openURL(links)}
+            >
+              <Text style={styles.textOpenLink}>ir al sitio web</Text>
+              
+              <Image
+                source={require("../../../resources/images/riExternalLinkFill.png")}
+              />
+            </TouchableOpacity>
+          </View>
+          ):(<View></View>)}
         </View>
       </View>
     </ScrollView>
