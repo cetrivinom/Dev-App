@@ -8,7 +8,7 @@ import AuthContext from "../../../../context/auth/authContext";
 
 const LastUpdate = () => {
   const { lastUpdate, getDataLink, updateLastUpdate  } = useContext(InitialContext);
-  const { getDataPoint, getDataMapeoService, getDataMapeoState, getDataDirectory } = useContext(IOMContext);
+  const { getDataPoint, getDataMapeoService, getDataMapeoState, getDataDirectory, getDataSocio } = useContext(IOMContext);
   const { config } = useContext(AuthContext);
 
   const api = [
@@ -34,7 +34,7 @@ const LastUpdate = () => {
         getDataPoint(config.activeStates,config.activeVisible,config.activeType);
         getDataMapeoService();
         getDataMapeoState();
-        
+        getDataSocio();
         //getDataDirectory();
         updateLastUpdate();
       }, 5000);
