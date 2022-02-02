@@ -3,6 +3,7 @@ import React, { useState, useContext } from "react";
 import { StyleSheet, Text, Image, View, TouchableOpacity } from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
 import { metrics } from "../../../utilities/Metrics";
+import _ from 'lodash';
 
 const CardItemDirectoryDetail = (props) => {
   const { dataItemService, getDataDirectoryItemService } =
@@ -13,6 +14,7 @@ const CardItemDirectoryDetail = (props) => {
     subTitle1 = "Humanity & Inclusion",
     subTitle2 = "3004255896 - 3148866747",
     subTitle3 = "Lunes - Viernes: 8:30 a.m. a 4:30 p.m.",
+    lines = [],
   } = props || {};
   const [open, setOpen] = useState(false);
 
@@ -36,25 +38,30 @@ const CardItemDirectoryDetail = (props) => {
       </TouchableOpacity>
       {open && (
         <View style={styles.form}>
-          <Text style={styles.textDescripcion}>{descripcion}</Text>
-          <View style={styles.textWrap}>
-          <Text style={styles.textsubTitle1}>{subTitle1}</Text>
-          </View>
-          <View style={styles.form1}>
-            <Image
-              source={require("../../../resources/images/phone.png")}
-              style={styles.image2}
-            />
-            <Text style={styles.textTitle2}>{subTitle2.length>0?subTitle2[0].value:''}</Text>
-          </View>
-          <View style={styles.form1}>
-            <Image
-              source={require("../../../resources/images/riTimeFill.png")}
-              style={styles.image2}
-            />
-            <Text style={styles.textTitle2}>{subTitle3}</Text>
-          </View>
+          {_.map(lines,(val,id) => {
+            return <View>
+              <Text style={styles.textDescripcion}>{descripcion}</Text>
+              <View style={styles.textWrap}>
+                <Text style={styles.textsubTitle1}>{val.NombreOrganizacion}</Text>
+              </View>
+              <View style={styles.form1}>
+                <Image
+                  source={require("../../../resources/images/phone.png")}
+                  style={styles.image2}
+                />
+                <Text style={styles.textTitle2}>{val.telefono_.length>0?val.telefono_[0].value:''}</Text>
+              </View>
+              <View style={styles.form1}>
+                <Image
+                  source={require("../../../resources/images/riTimeFill.png")}
+                  style={styles.image2}
+                />
+                <Text style={styles.textTitle2}>{val.horario}</Text>
+              </View>
+            </View>
+          })}
         </View>
+        
       )}
     </View>
   );
