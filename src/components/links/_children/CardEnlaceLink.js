@@ -38,7 +38,7 @@ export const CardEnlaceLink = (props) => {
           </View>
           <View style={{   backgroundColor:"#000000", bottom:-10, paddingTop:5,paddingBottom:5,paddingLeft:10,paddingRight:10, borderRadius:10, marginLeft:30, marginRight:30}}>
             <Text style={styles.verMas} allowFontScaling={false}>
-              {"Ver más"}
+              {"+ Ver más"}
             </Text>
           </View>
         </View>

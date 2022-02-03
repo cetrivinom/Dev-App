@@ -4,6 +4,7 @@ import { StyleSheet, View, FlatList } from "react-native";
 import CardItemDirectoryDetail from "./CardItemDirectoryDetail";
 import HeaderItem from "../../global/_children/HeaderItem";
 import IOMContext from "../../../../context/iomData/iomContext";
+import _ from 'lodash';
 /**
  * Componente que construye los Items del Directorio, itera sobre el objeto del JSON
  * @param {Object} this.props - objeto de propiedades heredados de la clase padre.
@@ -14,17 +15,19 @@ const DirectoryItem = (props) => {
   const { otherParam = "" } = props.navigation.state.params || {};
   const awesomeChildListRenderItem = (item) => {
     if(item.item.tipo_de_linea_id != undefined && dataDirectoryService.some(val => val.id === item.item.tipo_de_linea_id)){
-      //console.log('dataDirectoryService.item',dataDirectoryService.some(val => val.id === item.item.tipo_de_linea_id))
-    return (
-      <CardItemDirectoryDetail
-        {...props}
-        title={item.item.tipo_de_linea}
-        subTitle1={item.item.NombreOrganizacion}
-        subTitle2={item.item.telefono_}
-        subTitle3={item.item.horario}
-        subTitle={item.item.tipo_de_linea_id}
-      />
-    )}
+      //console.log('*',item.item.tipo_de_linea_id,dataItem.LineasTelefonicas.filter(itemLine => itemLine.tipo_de_linea_id.includes(item.item.tipo_de_linea_id)));
+      return (
+        <CardItemDirectoryDetail
+          {...props}
+          title={item.item.tipo_de_linea}
+          subTitle1={item.item.NombreOrganizacion}
+          subTitle2={item.item.telefono_}
+          subTitle3={item.item.horario}
+          subTitle={item.item.tipo_de_linea_id}
+          lines={dataItem.LineasTelefonicas.filter(itemLine => itemLine.tipo_de_linea_id.includes(item.item.tipo_de_linea_id))}
+        />
+      )
+    }
   };
   const awesomeChildListKeyExtractor = (item) => item.key;
   useEffect(() => {
@@ -36,7 +39,7 @@ const DirectoryItem = (props) => {
       {dataItem !== null && (
         <View style={[styles.box, styles.box2]}>
           <FlatList
-            data={dataItem.LineasTelefonicas}
+            data={_.uniqBy(dataItem.LineasTelefonicas,'tipo_de_linea_id')}
             renderItem={awesomeChildListRenderItem}
             keyExtractor={awesomeChildListKeyExtractor}
           />
