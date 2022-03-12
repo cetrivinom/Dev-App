@@ -27,7 +27,9 @@ const PointItem = (props) => {
   const { dataItem, getDataPointById, dataComments, deleteUserComment } = useContext(IOMContext);
   const [ visible, setVisible ] = useState(false);
   const { user } = useContext(authContext);
-  const { id = "", latitude = "", longitude = "", uri ="" } = props.navigation.state.params || {};
+  let { id = "", latitude = "", longitude = "", uri ="" } = props.navigation.state.params || {};
+  latitude = isNaN(latitude)?"":latitude;
+  longitude = isNaN(longitude)?"":longitude;
 
   const {
     Nombre_punto = "",
@@ -182,7 +184,7 @@ const PointItem = (props) => {
           <MenuProvider style={styles.box5}>
             <Text style={styles.textComentario}>Tus comentarios</Text>
             {dataComments
-              .filter((data) => data.pointID === id)
+              ?.filter((data) => data.pointID === id)
               .map((filtered) =>
                 filtered.comments.map((l, i) => (
                   <View style={styles.cajaDireccion1} key={l.commentID}>

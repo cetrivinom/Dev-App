@@ -11,7 +11,7 @@ import {
   USER_PASSWORD_RECOVERY,
   UPDATED_USER_INPUT_CHANGE,
   UPDATED_PASS_INPUT_CHANGE,
-  GET_CONFIG,
+  GET_CONFIG, DEFAULT_CONFIG
 } from "../../types";
 import AuthReducer from "./authReducer";
 import AuthContext from "./authContext";
@@ -281,6 +281,18 @@ const AuthState = (props) => {
     });
   };
   /**
+   * metodo que consulta los parametros de configuracion contra la base de datos por default
+   */
+   const getDefaultConfig = () => {
+    return new Promise((resolve, reject) => {
+      dispatch({
+        type: GET_CONFIG,
+        payload: DEFAULT_CONFIG,
+      });
+      resolve(DEFAULT_CONFIG);
+    });
+  };
+  /**
    * metodo que hace signOut contra firebase
    */
   const signOut = () => {
@@ -340,6 +352,7 @@ const AuthState = (props) => {
         passwordEmailRecovery,
         updatePassword,
         getConfig,
+        getDefaultConfig,
       }}
     >
       {props.children}
