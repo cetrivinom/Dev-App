@@ -50,16 +50,40 @@ export const ItemCardPoint = (props) => {
     ID: id = "",
     Nombre_punto = "",
     Estado = "",
+    Estado_id = "",
     time = "8:00am - 5:00pm",
     Coordenadas = "",
     Direccion = "",
     point = 5,
     Servicios = [],
   } = props.item || {};
-
-  const { dataMapeoService, getDataMapeoService } = useContext(IOMContext);
-  let _Nombre_punto = Nombre_punto.substring(0, 25);  
+  const { dataMapeoService, getDataMapeoService, dataMapeoState } = useContext(IOMContext);
+  let _Nombre_punto = Nombre_punto.substring(0, 80);  
   const unique = [...new Set(Servicios.map(item => item.Servicio_id))];
+
+
+  const onPressOpenPoint = (id) => {
+    let coor = Coordenadas.split(",");
+    let latitude = parseFloat(coor[0]);
+    let longitude = parseFloat(coor[1]);
+    let icon = (dataMapeoState.find((state) => state.id_estado == Estado_id));
+    let uri = icon?.img_estado_b64;
+    props.navigation.navigate("PointItem", { id, latitude, longitude, uri});
+  };
+
+  const onPressOpenNavigationApps = () => {
+    let coor = Coordenadas.split(",");
+    let latitude = parseFloat(coor[0]);
+    let longitude = parseFloat(coor[1]);
+    props.navigation.navigate("PointNavigationApp", {
+      id,
+      Nombre_punto,
+      Direccion,
+      latitude,
+      longitude,
+    });
+  };
+
   var services = [];
   _.map(unique,(val,id) => {
     var service = dataMapeoService.find((element) => {
@@ -84,15 +108,41 @@ export const ItemCardPoint = (props) => {
   return Nombre_punto !== "" ? (
     <View style={styles.container1}>
       <View style={styles.containerFormTitle}>
-        <Text style={styles.textTitle}>{_Nombre_punto + "..."}</Text>
+        <Text style={styles.textTitle}>{_Nombre_punto}</Text>
       </View>
-      <View style={styles.containerForm}>{_.map(services,(val) => {
-        return val.svg
-      })}</View>
-      <View style={styles.containerForm}>
-        <Image source={require("../../../resources/images/riMapPinFill.png")} />
-        <Text style={styles.textTitle2}>{Estado}</Text>
+
+      <View style={{flex : 1, flexDirection:'row'}}>
+        <View style={{flex:0.7}}>
+          <View style={styles.containerForm}>{_.map(services,(val) => {
+            return val.svg
+          })}</View>
+          <View style={styles.containerForm}>
+            <Image source={require("../../../resources/images/riMapPinFill.png")} />
+            <Text style={styles.textTitle2}>{Estado}</Text>
+          </View>
+        </View>
+        <View style={{flex:0.3}}>
+
+          <View style={styles.box7}>
+            <TouchableOpacity
+              style={[styles.caja1, styles.caja2]}
+              onPress={() => onPressOpenPoint(id)}
+            >
+              <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
+                Ver más
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.caja1, {marginTop:10}]}
+              onPress={onPressOpenNavigationApps}
+            >
+              <Text style={[styles.textBoxCaja]}>¿Cómo llegar?</Text>
+            </TouchableOpacity>
+          </View>
+
+        </View>
       </View>
+
       <View style={styles.containerForm}>
         <Image source={require("../../../resources/images/riTimeFill.png")} />
         <Text style={styles.textTitle2}>{time}</Text>
@@ -196,6 +246,34 @@ const styles = StyleSheet.create({
     color: "#003031",
     marginTop: 2,
     marginStart: 10.5,
+  },
+  box7: {
+    //flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  caja1: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 34,
+    borderWidth: 1,
+    width: metrics.WIDTH * 0.28,
+    borderRadius: 25,
+    borderColor: "#A1AAB2",
+    //marginStart: 10,
+  },
+  caja2: {
+    backgroundColor: "#132A3E",
+  },
+
+  textBoxCaja: {
+    fontSize: 13,
+    fontWeight: "bold",
+    lineHeight: 18,
+    letterSpacing: 0.0125,
+    color: "#132A3E",
+  },
+  textBoxCajaNegra: {
+    color: "#FFFFFF",
   },
 });
 
