@@ -31,4 +31,18 @@ export const DELETE_COMMENT = "DELETE_COMMENT";
 export const UPDATED_LAST_UPDATE = "UPDATED_LAST_UPDATE";
 export const GET_DATA_ENLACE = "GET_DATA_ENLACE";
 export const GET_DATA_SOCIO = "GET_DATA_SOCIO";
-
+export const DEFAULT_CONFIG = { anonymousAuth: false, 
+    activeStates: "135,137",
+    activeType: "FIJA,MÓVIL,FIJA_EA",
+    activeVisible: "✔",
+    anonymousAuth: false,
+    apiBaseURL: "https://mapeo-de-servicios.gifmm-colombia.site/sites/default/files/appgifmm/",
+    apiEnlacesInteres: "api-enlaces-de-interes.json",
+    apiLineasTelefonicas: "api-lineas-telefonicas.json",
+    apiLineasTelefonicasServicios: "api-lineas-telefonicas-servicios.json",
+    apiMapeo: "api-mapeo.json",
+    apiMapeoEnlaces: "api_enlaces.json",
+    apiMapeoEstados: "api-mapeo-estados.json",
+    apiMapeoServicios: "api-mapeo-servicios.json",
+    apiMapeoSocios: "api_socios.json",
+    TYC: {s1:{ texto: "Tratamiento de datos personales", link: "https://gifmm-contigo.com/terminos-y-condiciones.html" }, s2:{ texto: "Política de privacidad", link: "https://gifmm-contigo.com/aviso-de-privacidad.html" }, textotc: "Acepto los [s1] y la [s2]"} }
