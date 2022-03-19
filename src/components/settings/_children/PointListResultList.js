@@ -118,11 +118,10 @@ export const ItemCardPoint = (props) => {
           })}</View>
           <View style={styles.containerForm}>
             <Image source={require("../../../resources/images/riMapPinFill.png")} />
-            <Text style={styles.textTitle2}>{Estado}</Text>
+            <Text numberOfLines={1} style={styles.textTitle2}>{Estado}</Text>
           </View>
         </View>
         <View style={{flex:0.3}}>
-
           <View style={styles.box7}>
             <TouchableOpacity
               style={[styles.caja1, styles.caja2]}
@@ -239,13 +238,14 @@ const styles = StyleSheet.create({
     color: "#003031",
   },
   textTitle2: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "normal",
     lineHeight: 16,
-    letterSpacing: 0.0025,
+    letterSpacing: 0.0015,
     color: "#003031",
     marginTop: 2,
     marginStart: 10.5,
+    width: metrics.WIDTH * 0.55
   },
   box7: {
     //flexDirection: "row",

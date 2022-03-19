@@ -28,8 +28,9 @@ const PointItem = (props) => {
   const [ visible, setVisible ] = useState(false);
   const { user } = useContext(authContext);
   let { id = "", latitude = "", longitude = "", uri ="" } = props.navigation.state.params || {};
-  latitude = isNaN(latitude)?"":latitude;
-  longitude = isNaN(longitude)?"":longitude;
+  latitude = isNaN(latitude)?0:latitude;
+  longitude = isNaN(longitude)?0:longitude;
+  //console.log('l_l',latitude,longitude);
 
   const {
     Nombre_punto = "",
