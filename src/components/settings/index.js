@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
-import { View, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text, Image, Platform, PermissionsAndroid } from "react-native";
 import Header from "../global/_children/Header";
 import LastUpdate from "../global/_children/LastUpdate";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
@@ -8,30 +8,54 @@ import IOMContext from "../../../context/iomData/iomContext";
 import AuthContext from "../../../context/auth/authContext";
 
 const Settings = (props) => {
-  const [position, setPosition] = useState(null);
+  const [position, setPosition] = useState({
+    latitude: 0.0,
+    longitude: 0.0,
+  });
   const { dataPoint, getDataPoint, dataMapeoService, getDataMapeoService, dataMapeoState, getDataMapeoState } = useContext(IOMContext);
   const { config } = useContext(AuthContext);
+  
+  //Validamos que se tenga permisos de ubicacion en el dispositivo
+  useEffect(async () => {
+    try {
+      await (hasLocationPermission())
+    } catch (e) {
+      console.log('Error: ', e);
+    }
+  }, []);
+  //obteniendo ubicacion actual del dispositivo
+  useEffect(async () => {
+    try {
+      await (getLocation())
+    } catch (e) {
+      console.log('Error: ', e);
+    }
+  }, []);
 
   useEffect(() => {
     if(dataPoint && dataPoint.length < 1){
       getDataPoint(config.activeStates,config.activeVisible,config.activeType);
-    }if(dataMapeoService && dataMapeoService.length < 1)
+    }
+    if(dataMapeoService && dataMapeoService.length < 1){
       getDataMapeoService();
-    if(dataMapeoState && dataMapeoState.length < 1)
+    }
+    if(dataMapeoState && dataMapeoState.length < 1){
       getDataMapeoState();
+    }/*
     Geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
+      ({coords}) => {
         setPosition({
-          latitude,
-          longitude,
+          latitude: coords.latitude,
+          longitude: coords.longitude,
         });
+        console.log('Posicion Obtenida',coords )
       },
-      (error) => {
+      error => {
+        console.log('Errorrrrrrrrr')
         console.log(error.code, error.message);
       },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-    );
+      {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
+    );*/
   }, []);
 
   const mapMarkers =  () => {
@@ -74,6 +98,52 @@ const Settings = (props) => {
     );
   }
 
+  const hasLocationPermission = async () => {
+    if (Platform.OS === 'android') {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Permisos de ubicación',
+          message: 'La aplicación requiere permisos de ubicación',
+          buttonNegative: 'Cancelar',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        // Si el usuario acepta los permisos de ubicación, obtenemos la posición del usuario
+        console.log('entro 1 obtiene permisos');
+        //await (getLocation())
+      } else {
+        //this.logIn();
+        console.log('entro 2');
+      }
+      //return true;
+    } else if (Platform.OS === 'ios') {
+      await Geolocation.requestAuthorization('always');
+      //getLocation(true);
+      console.log('entro 3');
+    }
+    return true;
+  };
+
+  const getLocation = async () => {
+    let wPos =  Geolocation.watchPosition(
+      ({coords}) => {
+        setPosition({
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+        });
+        console.log('getLocation watch Pos',coords)
+      },
+      error => {
+        console.log('Error getLocation wPos', error)
+      },
+      {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
+    )
+    console.log('+********************************')
+    console.log('wPos', wPos)
+  };
+
   return (
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>
@@ -85,6 +155,7 @@ const Settings = (props) => {
           style={styles.map}
           provider={PROVIDER_GOOGLE}
           showsUserLocation={true}
+          showsMyLocationButton={true}
           initialRegion={{
             latitude: 4.570868,
             longitude: -74.297333,
