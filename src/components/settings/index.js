@@ -1,20 +1,29 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
-import { View, StyleSheet, TouchableOpacity, Text, Image, Platform, PermissionsAndroid } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text, Image, Platform, PermissionsAndroid, Dimensions } from "react-native";
 import Header from "../global/_children/Header";
 import LastUpdate from "../global/_children/LastUpdate";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Geolocation from "@react-native-community/geolocation";
 import IOMContext from "../../../context/iomData/iomContext";
 import AuthContext from "../../../context/auth/authContext";
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { grey100 } from "react-native-paper/lib/typescript/styles/colors";
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 const Settings = (props) => {
   const [position, setPosition] = useState({
-    latitude: 0.0,
-    longitude: 0.0,
+    latitude: 4.570868,
+    longitude: -74.297333,
+    latitudeDelta: 1,
+    longitudeDelta: 10,
+
   });
+  const [marginBottomV, setMarginBottomV] = useState(0);
   const { dataPoint, getDataPoint, dataMapeoService, getDataMapeoService, dataMapeoState, getDataMapeoState } = useContext(IOMContext);
   const { config } = useContext(AuthContext);
-  
+
+  const mapRef = React.createRef();
   //Validamos que se tenga permisos de ubicacion en el dispositivo
   useEffect(async () => {
     try {
@@ -23,23 +32,20 @@ const Settings = (props) => {
       console.log('Error: ', e);
     }
   }, []);
-  //obteniendo ubicacion actual del dispositivo
+
+
   useEffect(async () => {
-    try {
-      await (getLocation())
-    } catch (e) {
-      console.log('Error: ', e);
-    }
+    setMarginBottomV(1);
   }, []);
 
   useEffect(() => {
-    if(dataPoint && dataPoint.length < 1){
-      getDataPoint(config.activeStates,config.activeVisible,config.activeType);
+    if (dataPoint && dataPoint.length < 1) {
+      getDataPoint(config.activeStates, config.activeVisible, config.activeType);
     }
-    if(dataMapeoService && dataMapeoService.length < 1){
+    if (dataMapeoService && dataMapeoService.length < 1) {
       getDataMapeoService();
     }
-    if(dataMapeoState && dataMapeoState.length < 1){
+    if (dataMapeoState && dataMapeoState.length < 1) {
       getDataMapeoState();
     }/*
     Geolocation.getCurrentPosition(
@@ -58,7 +64,7 @@ const Settings = (props) => {
     );*/
   }, []);
 
-  const mapMarkers =  () => {
+  const mapMarkers = () => {
     if (dataPoint != null) {
       return dataPoint.map((item, index) => {
         var icon = (dataMapeoState.find((state) => state.id_estado == item.Estado_id));
@@ -73,9 +79,9 @@ const Settings = (props) => {
                 latitude,
                 longitude,
               }}
-              onPress={() => onPressOpenPoint(item.ID,latitude,longitude,icon?.img_estado_b64)}
+              onPress={() => onPressOpenPoint(item.ID, latitude, longitude, icon?.img_estado_b64)}
             >
-              <Image style={{width: 28, height: 40}} source={{uri: icon?.img_estado_b64}}/>
+              <Image style={{ width: 28, height: 40 }} source={{ uri: icon?.img_estado_b64 }} />
             </Marker>
           );
         }
@@ -83,8 +89,8 @@ const Settings = (props) => {
     }
   };
 
-  const onPressOpenPoint = (id,latitude,longitude,uri) => {
-    props.navigation.navigate("PointItem", { id, latitude,longitude,uri});
+  const onPressOpenPoint = (id, latitude, longitude, uri) => {
+    props.navigation.navigate("PointItem", { id, latitude, longitude, uri });
   };
 
   const onPressOpen = () => {
@@ -126,23 +132,32 @@ const Settings = (props) => {
     return true;
   };
 
+  // metodo para hacer zoom a la posicion actual del usuario. Se llama desde el custom button del mapa.
   const getLocation = async () => {
-    let wPos =  Geolocation.watchPosition(
-      ({coords}) => {
-        setPosition({
+    let wPos = Geolocation.getCurrentPosition(
+      ({ coords }) => {
+
+        mapRef.current?.animateToRegion({
           latitude: coords.latitude,
           longitude: coords.longitude,
-        });
-        console.log('getLocation watch Pos',coords)
+          latitudeDelta: 0.002,
+          longitudeDelta: 0.001,
+        },1000);
+        
       },
       error => {
-        console.log('Error getLocation wPos', error)
+        
       },
-      {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
+      { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 },
     )
-    console.log('+********************************')
-    console.log('wPos', wPos)
+    
   };
+
+  const viewRegion = (region) => {
+
+  }
+
+
 
   return (
     <View style={styles.container}>
@@ -150,21 +165,39 @@ const Settings = (props) => {
         <Header {...props} showBack={false} title="Puntos de servicio" />
         <LastUpdate />
       </View>
-      <View style={[styles.box, styles.box2]}>
+      <View style={{ flex: 1, flex: Platform.OS === "ios" ? 5.8 : 7.3, marginBottom: marginBottomV }}>
         <MapView
+          ref={mapRef}
           style={styles.map}
           provider={PROVIDER_GOOGLE}
           showsUserLocation={true}
           showsMyLocationButton={true}
+          zoomControlEnabled={true}
+          zoomEnabled
           initialRegion={{
             latitude: 4.570868,
             longitude: -74.297333,
             latitudeDelta: 1,
             longitudeDelta: 10,
           }}
+          region={position}
+          onRegionChange={region => viewRegion(region)}
+
+
+
         >
           {dataPoint !== null && mapMarkers()}
         </MapView>
+        <View style={styles.overlayM}>
+          <TouchableOpacity>
+            <Icon
+              name="crosshairs"
+              onPress={getLocation}
+              size={50}
+              color="grey"
+            />
+          </TouchableOpacity>
+        </View>
         <View style={styles.overlay}>
           <TouchableOpacity style={styles.overlay2} onPress={onPressOpen}>
             <Image
@@ -222,6 +255,13 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     letterSpacing: 0.0125,
     marginLeft: 5,
+  },
+  overlayM: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    backgroundColor: "#D8DFE1"
+
   },
 });
 
