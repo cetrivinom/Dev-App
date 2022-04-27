@@ -6,10 +6,7 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Geolocation from "@react-native-community/geolocation";
 import IOMContext from "../../../context/iomData/iomContext";
 import AuthContext from "../../../context/auth/authContext";
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { grey100 } from "react-native-paper/lib/typescript/styles/colors";
-const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Settings = (props) => {
   const [position, setPosition] = useState({
@@ -171,7 +168,7 @@ const Settings = (props) => {
           style={styles.map}
           provider={PROVIDER_GOOGLE}
           showsUserLocation={true}
-          showsMyLocationButton={true}
+          showsMyLocationButton={false}
           zoomControlEnabled={true}
           zoomEnabled
           initialRegion={{
@@ -191,10 +188,10 @@ const Settings = (props) => {
         <View style={styles.overlayM}>
           <TouchableOpacity>
             <Icon
-              name="crosshairs"
+              name="crosshairs-gps"
               onPress={getLocation}
-              size={50}
-              color="grey"
+              size={25}
+              color="#838485"
             />
           </TouchableOpacity>
         </View>
@@ -260,8 +257,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 10,
     right: 10,
-    backgroundColor: "#D8DFE1"
-
+    backgroundColor: "rgba(232, 236, 237, 0.7)",
+    height: 40,
+    width: 40,
+    justifyContent: 'center',
+      alignItems: 'center'
+    
   },
 });
 
