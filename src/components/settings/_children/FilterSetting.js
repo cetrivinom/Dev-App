@@ -141,11 +141,13 @@ const FilterSetting = (props) => {
 
           <SelectBox
             label=""
+            inputPlaceholder="Buscar"
             options={arregloServicios}
             selectedValues={selectedService}
             onMultiSelect={onMultiChange()}
             onTapClose={onMultiChange()}
             isMulti
+            placeholder="Buscar"
           />
 
           <View style={styles.box7}>

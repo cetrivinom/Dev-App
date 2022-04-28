@@ -47,6 +47,20 @@ export const LastUpdate = (props) => {
   );
 };
 
+const militaryTimeTo12Hour = (s) => {
+
+   
+
+  if(s.toString().length == 4) s = `${s.toString()}`; // 930 -> 0930
+  if(s.toString().length == 3) s = `0${s.toString()}`; // 930 -> 0930
+  if(s.toString().length == 1) s = `000${s.toString()}`; // 930 -> 0930
+
+  const hour = parseInt(s.toString().substring(0, 2), 10);
+  const min = s.toString().substring(2, 4);
+  if(hour < 12) return `${hour % 12}:${min} AM`;
+  return `${hour % 12 || 12}:${min} PM`;
+}
+
 export const ItemCardPoint = (props) => {
   const {
     ID: id = "",
@@ -57,26 +71,120 @@ export const ItemCardPoint = (props) => {
     Coordenadas = "",
     Direccion = "",
     Servicios = [],
+    Horario = []
   } = props.item || {};
+
+
+  let lunesAViernes = [];
+  Horario && Horario.map((i, index) => {
+    if (i.day !== 0 && i.day != 6) {
+      let dato = {}
+      dato.id = index + 1;
+      dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
+        "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
+          "Viernes" : "Sabado";
+      dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
+      dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
+      lunesAViernes.push(dato);
+    }
+
+  })
+
+  let sabadoDomingo = [];
+  Horario && Horario.map((i, index) => {
+    if (i.day === 0 || i.day === 6) {
+      let dato = {}
+      dato.id = index + 1;
+      dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
+        "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
+          "Viernes" : "Sabado";
+      dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
+      dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
+      sabadoDomingo.push(dato);
+    }
+
+  })
+
+
+
+
+  let timeLV = lunesAViernes.reduce((groups, groupDay) => {
+
+
+    const openingtime = groupDay.starthours + " - " + groupDay.endhours;
+    const openingTimeIncludedInAGroup = groups.find(singleDay =>
+      singleDay.hours === openingtime)
+
+
+    const id = openingTimeIncludedInAGroup && openingTimeIncludedInAGroup.id
+
+    if (id) {
+      return groups.map(item => item.id === id
+        ? { ...item, days: item.days.concat(groupDay.day) }
+        : item)
+    }
+
+    return groups.concat({
+      id: Math.random(),
+      hours: openingtime,
+      days: [groupDay.day]
+    })
+
+
+  }, [])
+
+
+
+  let timeSD = sabadoDomingo.reduce((groups, groupDay) => {
+
+
+    const openingtime = groupDay.starthours + " - " + groupDay.endhours;
+    const openingTimeIncludedInAGroup = groups.find(singleDay =>
+      singleDay.hours === openingtime)
+
+
+    const id = openingTimeIncludedInAGroup && openingTimeIncludedInAGroup.id
+
+    if (id) {
+      return groups.map(item => item.id === id
+        ? { ...item, days: item.days.concat(groupDay.day) }
+        : item)
+    }
+
+    return groups.concat({
+      id: Math.random(),
+      hours: openingtime,
+      days: [groupDay.day]
+    })
+
+
+  }, [])
+
+
+
+
+
+
+
   const { dataMapeoService, dataMapeoState } = useContext(IOMContext);
   let _Nombre_punto = Nombre_punto.substring(0, 25);
   const unique = [...new Set(Servicios.map(item => item.Servicio_id))];
   var services = [];
-  _.map(unique,(val,id) => {
+  _.map(unique, (val, id) => {
     var service = dataMapeoService.find((element) => {
       return element.id_servicio === val;
     });
 
     //let index = services.findIndex(item => item.b64 == service.img_servicio_b64);
 
-    if(service && services.findIndex(item => item.b64 == service.img_servicio_b64) < 0){
+    if (service && services.findIndex(item => item.b64 == service.img_servicio_b64) < 0) {
       services.push({
-        b64:service.img_servicio_b64,
-        svg:<SvgCssUri
-            key={service.id_servicio}
-            height='32'
-            width='32'
-            uri={Platform.OS==='ios'?service.img_servicio_b64:'https://mapeo-de-servicios.gifmm-colombia.site'+service.img_servicio}
+        b64: service.img_servicio_b64,
+        svg: <SvgCssUri
+          key={service.id_servicio}
+          height='32'
+          width='32'
+          uri={Platform.OS === 'ios' ? service.img_servicio_b64 : 'https://mapeo-de-servicios.gifmm-colombia.site' + service.img_servicio}
         />
       });
     }
@@ -88,7 +196,7 @@ export const ItemCardPoint = (props) => {
     let longitude = parseFloat(coor[1]);
     let icon = (dataMapeoState.find((state) => state.id_estado == Estado_id));
     let uri = icon?.img_estado_b64;
-    props.navigation.navigate("PointItem", { id, latitude, longitude, uri});
+    props.navigation.navigate("PointItem", { id, latitude, longitude, uri });
   };
 
   const onPressOpenNavigationApps = () => {
@@ -114,9 +222,9 @@ export const ItemCardPoint = (props) => {
               source={require("../../../resources/images/riBookmarkLine2.png")}
             />
           </View>
-          <View style={styles.containerForm}>{_.map(services,(val) => {
-        return val.svg
-      })}</View>
+          <View style={styles.containerForm}>{_.map(services, (val) => {
+            return val.svg
+          })}</View>
           <View style={styles.containerForm}>
             <Image
               source={require("../../../resources/images/riMapPinFill.png")}
@@ -125,12 +233,26 @@ export const ItemCardPoint = (props) => {
               {capitalize(Estado.toLowerCase())}
             </Text>
           </View>
-          <View style={styles.containerForm}>
-            <Image
-              source={require("../../../resources/images/riTimeFill.png")}
-            />
-            <Text style={styles.textTitle2}>{time}</Text>
-          </View>
+          {timeLV && timeLV.map(group => (
+              <View style={styles.containerForm} key={group.id}>
+                <Image
+                  source={require("../../../resources/images/riTimeFill.png")}
+                />
+                <Text style={styles.textTitle2}>{group.days.length === 1
+                  ? group.days
+                  : group.days[0] + " - " + group.days[group.days.length - 1]}: {group.hours}</Text>
+              </View>
+            ))}
+            {timeSD && timeSD.map(group => (
+              <View style={styles.containerForm} key={group.id}>
+                <Image
+                  source={require("../../../resources/images/riTimeFill.png")}
+                />
+                <Text style={styles.textTitle2}>{group.days.length === 1
+                  ? group.days
+                  : group.days[0] + " - " + group.days[group.days.length - 1]}: {group.hours}</Text>
+              </View>
+            ))}
           <View style={styles.box7}>
             <TouchableOpacity
               style={[styles.caja1, styles.caja2]}
@@ -183,9 +305,9 @@ const PointListResult = (props) => {
                 latitude,
                 longitude,
               }}
-              onPress={() => onPressOpenPoint(item.ID,latitude,longitude,icon?.img_estado_b64)}
+              onPress={() => onPressOpenPoint(item.ID, latitude, longitude, icon?.img_estado_b64)}
             >
-            <Image style={{height: 40, width: 28 }} source={{uri: icon?.img_estado_b64}} />
+              <Image style={{ height: 40, width: 28 }} source={{ uri: icon?.img_estado_b64 }} />
             </Marker>
           );
         }
@@ -327,7 +449,7 @@ const styles = StyleSheet.create({
   overlay: {
     position: "absolute",
     flexDirection: "row",
-    bottom: Platform.OS === "ios" ? metrics.HEIGHT * 0.27 : metrics.HEIGHT * 0.33 ,
+    bottom: Platform.OS === "ios" ? metrics.HEIGHT * 0.27 : metrics.HEIGHT * 0.33,
     height: metrics.HEIGHT * 0.057,
     width: "100%",
     justifyContent: "flex-end",

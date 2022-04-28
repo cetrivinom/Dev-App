@@ -45,6 +45,20 @@ export const LastUpdate = (props) => {
   );
 };
 
+const militaryTimeTo12Hour = (s) => {
+
+   
+
+  if(s.toString().length == 4) s = `${s.toString()}`; // 930 -> 0930
+  if(s.toString().length == 3) s = `0${s.toString()}`; // 930 -> 0930
+  if(s.toString().length == 1) s = `000${s.toString()}`; // 930 -> 0930
+
+  const hour = parseInt(s.toString().substring(0, 2), 10);
+  const min = s.toString().substring(2, 4);
+  if(hour < 12) return `${hour % 12}:${min} AM`;
+  return `${hour % 12 || 12}:${min} PM`;
+}
+
 export const ItemCardPoint = (props) => {
   const {
     ID: id = "",
@@ -56,7 +70,95 @@ export const ItemCardPoint = (props) => {
     Direccion = "",
     point = 5,
     Servicios = [],
+    Horario = []
   } = props.item || {};
+
+  let lunesAViernes = [];
+  Horario && Horario.map((i, index) => {
+    if (i.day !== 0 && i.day != 6) {
+      let dato = {}
+      dato.id = index + 1;
+      dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
+        "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
+          "Viernes" : "Sabado";
+      dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
+      dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
+      lunesAViernes.push(dato);
+    }
+
+  })
+
+  let sabadoDomingo = [];
+  Horario && Horario.map((i, index) => {
+    if (i.day === 0 || i.day === 6) {
+      let dato = {}
+      dato.id = index + 1;
+      dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
+        "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
+          "Viernes" : "Sabado";
+      dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
+      dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
+      sabadoDomingo.push(dato);
+    }
+
+  })
+
+
+
+
+  let timeLV = lunesAViernes.reduce((groups, groupDay) => {
+
+
+    const openingtime = groupDay.starthours + " - " + groupDay.endhours;
+    const openingTimeIncludedInAGroup = groups.find(singleDay =>
+      singleDay.hours === openingtime)
+
+
+    const id = openingTimeIncludedInAGroup && openingTimeIncludedInAGroup.id
+
+    if (id) {
+      return groups.map(item => item.id === id
+        ? { ...item, days: item.days.concat(groupDay.day) }
+        : item)
+    }
+
+    return groups.concat({
+      id: Math.random(),
+      hours: openingtime,
+      days: [groupDay.day]
+    })
+
+
+  }, [])
+
+
+
+  let timeSD = sabadoDomingo.reduce((groups, groupDay) => {
+
+
+    const openingtime = groupDay.starthours + " - " + groupDay.endhours;
+    const openingTimeIncludedInAGroup = groups.find(singleDay =>
+      singleDay.hours === openingtime)
+
+
+    const id = openingTimeIncludedInAGroup && openingTimeIncludedInAGroup.id
+
+    if (id) {
+      return groups.map(item => item.id === id
+        ? { ...item, days: item.days.concat(groupDay.day) }
+        : item)
+    }
+
+    return groups.concat({
+      id: Math.random(),
+      hours: openingtime,
+      days: [groupDay.day]
+    })
+
+
+  }, [])
+
+
   const { dataMapeoService, getDataMapeoService, dataMapeoState } = useContext(IOMContext);
   let _Nombre_punto = Nombre_punto.substring(0, 80);  
   const unique = [...new Set(Servicios.map(item => item.Servicio_id))];
@@ -142,10 +244,26 @@ export const ItemCardPoint = (props) => {
         </View>
       </View>
 
-      <View style={styles.containerForm}>
-        <Image source={require("../../../resources/images/riTimeFill.png")} />
-        <Text style={styles.textTitle2}>{time}</Text>
-      </View>
+      {timeLV && timeLV.map(group => (
+              <View style={styles.containerForm} key={group.id}>
+                <Image
+                  source={require("../../../resources/images/riTimeFill.png")}
+                />
+                <Text style={styles.textTitle2}>{group.days.length === 1
+                  ? group.days
+                  : group.days[0] + " - " + group.days[group.days.length - 1]}: {group.hours}</Text>
+              </View>
+            ))}
+            {timeSD && timeSD.map(group => (
+              <View style={styles.containerForm} key={group.id}>
+                <Image
+                  source={require("../../../resources/images/riTimeFill.png")}
+                />
+                <Text style={styles.textTitle2}>{group.days.length === 1
+                  ? group.days
+                  : group.days[0] + " - " + group.days[group.days.length - 1]}: {group.hours}</Text>
+              </View>
+            ))}
     </View>
   ) : null;
 };
