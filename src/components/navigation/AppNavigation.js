@@ -1,3 +1,4 @@
+import React from 'react';
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import Splash from "../splash";
@@ -17,6 +18,7 @@ import FilterSetting from "../settings/_children/FilterSetting";
 import PointListResult from "../settings/_children/PointListResult";
 import PointListResultList from "../settings/_children/PointListResultList";
 import CardItemFavorite from "../favorites/_children/CardtemFavorite";
+import analytics from "@react-native-firebase/analytics";
 /**
  * Stack de navegacion, esta librería de React Navigation permite configurar la navegación del app
  */
@@ -125,4 +127,34 @@ const AppNavigation = createStackNavigator({
   },
 });
 
-export default createAppContainer(AppNavigation);
+const AppContainer = createAppContainer(AppNavigation);
+//export default createAppContainer(AppNavigation);
+function getActiveRouteName(navigationState) {
+  if (!navigationState) {
+    return null;
+  }
+  const route = navigationState.routes[navigationState.index];
+
+  if (route.routes) {
+    return getActiveRouteName(route);
+  }
+  return route.routeName;
+}
+
+export default () => {
+  return <AppContainer
+      onNavigationStateChange={(prevState, currentState, action) => {
+          const currentRouteName = getActiveRouteName(currentState);
+          const previousRouteName = getActiveRouteName(prevState);
+          
+          if (previousRouteName !== currentRouteName) {
+            //console.log('logScreenView',currentRouteName, currentRouteName);
+            //analytics().logScreenView(currentRouteName, currentRouteName);
+            analytics().logScreenView({
+              screen_name: currentRouteName,
+              screen_class: currentRouteName,
+            });
+          }
+        }}
+  />
+}
