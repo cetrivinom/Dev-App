@@ -6,7 +6,7 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Geolocation from "@react-native-community/geolocation";
 import IOMContext from "../../../context/iomData/iomContext";
 import AuthContext from "../../../context/auth/authContext";
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Settings = (props) => {
   const [position, setPosition] = useState({
@@ -188,10 +188,9 @@ const Settings = (props) => {
         <View style={styles.overlayM}>
           <TouchableOpacity>
             <Icon
-              name="crosshairs-gps"
+              name="locate-outline"
               onPress={getLocation}
               size={25}
-              color="#838485"
             />
           </TouchableOpacity>
         </View>
