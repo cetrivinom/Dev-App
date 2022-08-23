@@ -22,6 +22,8 @@ import {
 import moment from 'moment';
 import IOMReducer from "./iomReducer";
 import IOMContext from "./iomContext";
+import axios from "axios";
+//import API from "../../config/axios";
 import AsyncStorage from "@react-native-community/async-storage";
 import database from "@react-native-firebase/database";
 import _ from 'lodash';
@@ -266,9 +268,40 @@ const IOMState = (props) => {
     });
   };
 
-  const createUserComment = (uid,id,comment) => {
+  const createUserComment = async (user,id,comment,config) => {
+    console.log('response2',user,id,comment,config,config.apiDrupalLoginURL,config.apiDrupalUser,config.apiDrupalPass);
+    //API.defaults.baseURL = 'http://dev-mapeo.us.tempcloudsite.com/user/';
+    axios.get(config.apiDrupalTokenURL).then(
+      response => {
+        console.log('response apiDrupalTokenURL',response.data);
+        const headers = {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-Csrf-Token': response.data
+        }
+        axios.post(config.apiDrupalCommentURL,
+        { "entity_id": [{"target_id": id}],
+        "uid": [{"target_id": config.apiDrupalUserUID}],
+        "status": {"value": "1"},
+        "entity_type": [{"value": "node"}],
+        "comment_type": [{"target_id": "comment"}],
+        "field_name": [{"value": "field_alertas"}],
+        "field_usuario_app": [{"value": user.email}],
+        "subject": [{"value": "Comentario desde APP GIFMM | "+user.email}],
+        "comment_body": [{"value": comment,"format": "simple"}]}, 
+        {headers: headers}).then(
+          response => {
+            console.log('response apiDrupalCommentURL',response.data);
+          }
+        ).catch(error => {
+          console.log('error comment',error);
+        });
+      }
+    ).catch(error => {
+      console.log('error apiDrupalTokenURL',error);
+    });
     var date = moment().format('YYYY-MM-DD, hh:mm:ss a');
-    database().ref('/comments/'+uid+'/'+id).push({
+    database().ref('/comments/'+user.uid+'/'+id).push({
       comment,
       date
     }).then(()=> 
@@ -277,6 +310,7 @@ const IOMState = (props) => {
       })
     );
   }
+
 
   const deleteUserComment = (uid,id,key) => {
     database().ref('/comments/'+uid+'/'+id+'/'+key).remove()

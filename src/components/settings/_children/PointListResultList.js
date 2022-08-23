@@ -230,7 +230,7 @@ export const ItemCardPoint = (props) => {
               onPress={() => onPressOpenPoint(id)}
             >
               <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
-                Ver más
+                Conocer más
               </Text>
             </TouchableOpacity>
             <TouchableOpacity

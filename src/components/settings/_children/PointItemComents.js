@@ -14,7 +14,7 @@ import IOMContext from "../../../../context/iomData/iomContext";
 
 const PointItemComents = (props) => {
   const { id = "", Nombre_punto = "" } = props.navigation.state.params || {};
-  const { user } = useContext(AuthContext);
+  const { user,config } = useContext(AuthContext);
   const { createUserComment } = useContext(IOMContext);
   const [comment, setComment] = useState('');
 
@@ -24,7 +24,7 @@ const PointItemComents = (props) => {
 
   const onPressPublic = () => {
     if(comment.length>1)
-    createUserComment(user.uid,id,comment);
+    createUserComment(user,id,comment,config);
     props.navigation.goBack();
   };
 
@@ -221,6 +221,7 @@ const styles = StyleSheet.create({
   },
   inputTextBox: {
     borderColor: "#A1AAB2",
+    color: 'black',
     //fontFamily: "Roboto",
     marginTop:metrics.HEIGHT*0.02,
     borderRadius: 3.5,

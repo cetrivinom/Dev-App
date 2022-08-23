@@ -32,16 +32,20 @@ export const LastUpdate = (props) => {
     <View style={styles.containerHeader}>
       <View style={styles.containerFormHeader}>
         <View style={styles.containerFormHeader2}>
-          <Image
+          <Image style={{flex:0.1}}
             source={require("../../../resources/images/riMapPinLine2.png")}
           />
           <Text style={styles.textTitle2}>
             {departamento + "/" + municipio + "/" + statusPoint}
           </Text>
         </View>
-        <TouchableOpacity onPress={onPressClose}>
-          <Text style={styles.labelTitle2}>Volver a filtrar</Text>
-        </TouchableOpacity>
+
+        <View style={{flex:0.25,marginLeft:5}}>
+          <TouchableOpacity onPress={onPressClose} >
+            <Text style={styles.labelTitle2}>Volver a filtrar</Text>
+          </TouchableOpacity>
+
+        </View>
       </View>
     </View>
   );
@@ -259,7 +263,7 @@ export const ItemCardPoint = (props) => {
               onPress={() => onPressOpenPoint(id)}
             >
               <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
-                Ver más
+                Conocer más
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -440,6 +444,7 @@ const styles = StyleSheet.create({
   textTitle2: {
     fontSize: 14,
     fontWeight: "normal",
+    flex:0.9,
     lineHeight: 16,
     letterSpacing: 0.0025,
     color: "#003031",
@@ -449,7 +454,7 @@ const styles = StyleSheet.create({
   overlay: {
     position: "absolute",
     flexDirection: "row",
-    bottom: Platform.OS === "ios" ? metrics.HEIGHT * 0.27 : metrics.HEIGHT * 0.33,
+    bottom: Platform.OS === "ios" ? metrics.HEIGHT * 0.37 : metrics.HEIGHT * 0.43,
     height: metrics.HEIGHT * 0.057,
     width: "100%",
     justifyContent: "flex-end",
@@ -475,19 +480,21 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   containerHeader: {
-    height: metrics.HEIGHT * 0.06,
+    height: metrics.HEIGHT * 0.03,
     backgroundColor: "#FFFFFF",
   },
   containerFormHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 5,
-    paddingHorizontal: 15,
+    flex:1,
+    //padding: 5,
+    //paddingHorizontal: 5,
   },
   containerFormHeader2: {
     flexDirection: "row",
-    alignItems: "center",
+    //alignItems: "center",
+    flex:0.75,
   },
   labelTitle1: {
     fontSize: 12,
