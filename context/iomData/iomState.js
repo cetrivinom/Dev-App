@@ -269,37 +269,53 @@ const IOMState = (props) => {
   };
 
   const createUserComment = async (user,id,comment,config) => {
-    console.log('response2',user,id,comment,config,config.apiDrupalLoginURL,config.apiDrupalUser,config.apiDrupalPass);
-    //API.defaults.baseURL = 'http://dev-mapeo.us.tempcloudsite.com/user/';
-    axios.get(config.apiDrupalTokenURL).then(
-      response => {
-        console.log('response apiDrupalTokenURL',response.data);
-        const headers = {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-Csrf-Token': response.data
+
+    const dataV = { "entity_id": [{"target_id": id}],
+    "uid": [{"target_id": config.apiDrupalUserUID}],
+    "status": {"value": "1"},
+    "entity_type": [{"value": "node"}],
+    "comment_type": [{"target_id": "comment"}],
+    "field_name": [{"value": "field_alertas"}],
+    "field_usuario_app": [{"value": user.email}],
+    "subject": [{"value": "Comentario desde APP GIFMM | "+user.email}],
+    "comment_body": [{"value": comment,"format": "simple"}]};
+
+
+    axios.post(config.apiDrupalLoginURL,
+      {"name":"integrador", "pass":"oj*4^IQUE5r#"}).then(
+        response => {
+          console.log('response apiDrupalLoginURL',response.data);
+            throw error;
         }
-        axios.post(config.apiDrupalCommentURL,
-        { "entity_id": [{"target_id": id}],
-        "uid": [{"target_id": config.apiDrupalUserUID}],
-        "status": {"value": "1"},
-        "entity_type": [{"value": "node"}],
-        "comment_type": [{"target_id": "comment"}],
-        "field_name": [{"value": "field_alertas"}],
-        "field_usuario_app": [{"value": user.email}],
-        "subject": [{"value": "Comentario desde APP GIFMM | "+user.email}],
-        "comment_body": [{"value": comment,"format": "simple"}]}, 
-        {headers: headers}).then(
+      ).catch(error => {
+        //console.log('error en login',error)
+        axios.get(config.apiDrupalTokenURL).then(
           response => {
-            console.log('response apiDrupalCommentURL',response.data);
+            console.log('response apiDrupalTokenURL',response.data);
+            const headers = {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'X-Csrf-Token': response.data
+            }
+    
+            console.log('dataV',JSON.stringify(dataV));
+            axios.post(config.apiDrupalCommentURL,
+            dataV, 
+            {headers: headers}).then(
+              response => {
+                //console.log('response apiDrupalCommentURL',response.data);
+              }
+            ).catch(error => {
+              console.log('error comment',error);
+            });
           }
         ).catch(error => {
-          console.log('error comment',error);
+          console.log('error apiDrupalTokenURL',error);
         });
-      }
-    ).catch(error => {
-      console.log('error apiDrupalTokenURL',error);
-    });
+      });
+
+    
+
     var date = moment().format('YYYY-MM-DD, hh:mm:ss a');
     database().ref('/comments/'+user.uid+'/'+id).push({
       comment,
