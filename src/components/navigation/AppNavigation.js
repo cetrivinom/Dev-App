@@ -95,7 +95,7 @@ const AppNavigation = createStackNavigator({
       headerShown: false,
     },
   },
-  PointListResult: {
+  /*PointListResult: {
     screen: PointListResult,
     navigationOptions: {
       headerShown: false,
@@ -106,7 +106,7 @@ const AppNavigation = createStackNavigator({
     navigationOptions: {
       headerShown: false,
     },
-  },
+  },*/
   CardItemFavorite: {
     screen: CardItemFavorite,
     navigationOptions: {

@@ -1,5 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
+
+import { createStackNavigator } from "react-navigation-stack";
 import Icon from 'react-native-vector-icons/Ionicons';
 import Main from './Main';
 import Directory from '../directory';
@@ -7,6 +9,36 @@ import Settings from '../settings';
 import Links from '../links';
 import Favorites from '../favorites';
 import Profile from '../profile';
+import FilterSetting from "../settings/_children/FilterSetting";
+import PointListResult from "../settings/_children/PointListResult";
+import PointListResultList from "../settings/_children/PointListResultList";
+
+const SettingsStack = createStackNavigator({
+  Settings: {
+    screen: Settings,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  /*FilterSetting: {
+    screen: FilterSetting,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },*/
+  PointListResult: {
+    screen: PointListResult,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  PointListResultList: {
+    screen: PointListResultList,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+});
 
 export default createBottomTabNavigator(
   {
@@ -21,7 +53,7 @@ export default createBottomTabNavigator(
       },
     },
     Settings: {
-      screen: Settings,
+      screen: SettingsStack,
       navigationOptions: {
         tabBarLabel: 'Puntos de servicio',
         tabBarIcon: ({tintColor}) => (
