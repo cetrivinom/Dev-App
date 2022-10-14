@@ -54,7 +54,7 @@ const IOMState = (props) => {
 
   const getDataLink = async (item) => {
     try {
-      const value = await AsyncStorage.getItem("api-enlaces-de-interes.json");
+      const value = await AsyncStorage.getItem("api-enlaces-de-interes");
       if (value !== null) {
         dispatch({
           type: GET_DATA_LINK,
@@ -72,7 +72,7 @@ const IOMState = (props) => {
 
   const getDataPoint = async (state, visible, type) => {
     try {
-      const data = await AsyncStorage.getItem("api-mapeo.json");
+      const data = await AsyncStorage.getItem("mapeo-api");
       const object = JSON.parse(data);
       const value = object.filter(function(item) {
         const textState = item.Estado_id;
@@ -96,7 +96,7 @@ const IOMState = (props) => {
 
   const getDataMapeoService = async () => {
     try {
-      const value = await AsyncStorage.getItem("api-mapeo-servicios.json");
+      const value = await AsyncStorage.getItem("api-mapeo-servicios");
       if (value !== null) {
         dispatch({
           type: GET_DATA_MAPEO_SERVICE,
@@ -120,7 +120,7 @@ const IOMState = (props) => {
 
   const getDataDirectory = async (item) => {
     try {
-      const value = await AsyncStorage.getItem("api-lineas-telefonicas.json");
+      const value = await AsyncStorage.getItem("api-lineas-telefonicas");
       getDataDirectoryService();
       if (value !== null) {
         dispatch({
@@ -149,9 +149,7 @@ const IOMState = (props) => {
 
   const getDataDirectoryService = async () => {
     try {
-      const value = await AsyncStorage.getItem(
-        "api-lineas-telefonicas-servicios.json"
-      );
+      const value = await AsyncStorage.getItem("api-lineas-telefonicas-servicios");
       if (value !== null) {
         dispatch({
           type: GET_DATA_DIRECTORY_SERVICE,
@@ -168,7 +166,7 @@ const IOMState = (props) => {
 
   const getDataEnlace = async (item) => {
     try {
-      const value = await AsyncStorage.getItem("api_enlaces.json");
+      const value = await AsyncStorage.getItem("api-enlaces");
       if (value !== null) {
         dispatch({
           type: GET_DATA_ENLACE,
@@ -185,7 +183,7 @@ const IOMState = (props) => {
   };
   const getDataSocio = async (item) => {
     try {
-      const value = await AsyncStorage.getItem("api_socios.json");
+      const value = await AsyncStorage.getItem("api-mapeo-socios");
       if (value !== null) {
         dispatch({
           type: GET_DATA_SOCIO,
@@ -235,7 +233,7 @@ const IOMState = (props) => {
 
   const getDataMapeoState = async () => {
     try {
-      const value = await AsyncStorage.getItem("api-mapeo-estados.json");
+      const value = await AsyncStorage.getItem("api-mapeo-estados");
       if (value !== null) {
         dispatch({
           type: GET_DATA_MAPEO_STATE,

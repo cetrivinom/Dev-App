@@ -136,8 +136,8 @@ android {
         applicationId "com.iom"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 24
-        versionName "1.024"
+        versionCode 27
+        versionName "1.027"
     }
     splits {
         abi {
