@@ -12,21 +12,21 @@ const LastUpdate = () => {
   const { config } = useContext(AuthContext);
 
   const api = [
-    config.apiMapeoEstados,
-    config.apiEnlacesInteres,
-    config.apiMapeo,
-    config.apiLineasTelefonicas,
-    config.apiLineasTelefonicasServicios,
-    config.apiMapeoServicios,
-    config.apiMapeoEnlaces,
-    config.apiMapeoSocios
+    {name:'api-mapeo-estados.json',val:config.apiMapeoEstados},
+    {name:'api-enlaces-de-interes.json',val:config.apiEnlacesInteres},
+    {name:'api-mapeo.json',val:config.apiMapeo},
+    {name:'api-lineas-telefonicas.json',val:config.apiLineasTelefonicas},
+    {name:'api-lineas-telefonicas-servicios.json',val:config.apiLineasTelefonicasServicios},
+    {name:'api-mapeo-servicios.json',val:config.apiMapeoServicios},
+    {name:'api_enlaces.json',val:config.apiMapeoEnlaces},
+    {name:'api_socios.json',val:config.apiMapeoSocios}
   ];
 
   const onPressUpdate = () => {
     let i = 0;
     api.map((item) => {
       i += 1;
-      return getDataLink(item,config.apiBaseURL);
+      return getDataLink(item.name,item.val);
     });
     
     if (i === api.length) {

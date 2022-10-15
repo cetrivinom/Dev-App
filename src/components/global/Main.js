@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext, useEffect }  from "react";
 import { ImageBackground, Text, View, StyleSheet } from "react-native";
 import { ItemMain } from "./_children/Card";
 import LastUpdate from "./_children/LastUpdate";
 import HeaderHome from "./_children/HeaderHome";
+import AuthContext from "../../../context/auth/authContext";
 
 const Main = (props) => {
+  const { config } = useContext(AuthContext);
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -44,12 +47,15 @@ const Main = (props) => {
             title="Puntos guardados"
             image="4"
           />
+          {!config.anonymousAuth && (
           <ItemMain
             {...props}
             name="Profile"
             title="Mi Perfil"
             image="5"
           />
+          )}
+          
         </View>
         <View style={styles.containerFooter}>
           <LastUpdate />

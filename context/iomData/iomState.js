@@ -284,14 +284,12 @@ const IOMState = (props) => {
     axios.post(config.apiDrupalLoginURL,
       {"name":"integrador", "pass":"oj*4^IQUE5r#"}).then(
         response => {
-          console.log('response apiDrupalLoginURL',response.data);
             throw error;
         }
       ).catch(error => {
         //console.log('error en login',error)
         axios.get(config.apiDrupalTokenURL).then(
           response => {
-            console.log('response apiDrupalTokenURL',response.data);
             const headers = {
               'Content-Type': 'application/json',
               'Accept': 'application/json',

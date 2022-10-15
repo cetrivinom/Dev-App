@@ -62,7 +62,7 @@ async function requestUserPermission() {
   const enabled =
     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
+  console.log('e',enabled)
   if (enabled) {
     getFMCToken()
   }
@@ -70,11 +70,14 @@ async function requestUserPermission() {
 
 const getFMCToken = async () => {
   let checkToken = await AsyncStorage.getItem('fcmToken');
+  //console.log('checkToken',checkToken)
+  //alert('checkToken '+checkToken)
   if(!checkToken){
     try{
       const fcmToken = await messaging().getToken()
+      //alert('token',fcmToken)
       if(!!fcmToken){
-        await AsyncStorage.setItem('fcmToken',fcmToken)
+        await AsyncStorage.setItem('fcmToken '+fcmToken)
       }
     } catch (error){
       console.log('error getFMCToken' , error);
