@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { metrics } from "../../../utilities/Metrics";
+import AuthContext from "../../../../context/auth/authContext";
 
 const Header = (props) => {
   const {
@@ -10,6 +11,7 @@ const Header = (props) => {
     showBack = true,
     title = "Regístrate",
   } = props;
+  const { config } = useContext(AuthContext);
   const onPressBack = () => {
     if (form === null || form === 0) {
       navigation.navigate("Login");
@@ -38,7 +40,7 @@ const Header = (props) => {
           <View style={{flex:0.8}}> 
             <Text style={styles.labelTitle}>{title}</Text>
           </View>
-          {!showBack && (
+          {!showBack && !config.anonymousAuth &&(
           <View style={{flex:0.2}}> 
             <TouchableOpacity onPress={onPressProfile} style={styles.image}>
               <Image 
