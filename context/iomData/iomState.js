@@ -54,7 +54,7 @@ const IOMState = (props) => {
 
   const getDataLink = async (item) => {
     try {
-      const value = await AsyncStorage.getItem("api-enlaces-de-interes");
+      const value = await AsyncStorage.getItem("api-enlaces-de-interes.json");
       if (value !== null) {
         dispatch({
           type: GET_DATA_LINK,
@@ -72,7 +72,7 @@ const IOMState = (props) => {
 
   const getDataPoint = async (state, visible, type) => {
     try {
-      const data = await AsyncStorage.getItem("mapeo-api");
+      const data = await AsyncStorage.getItem("api-mapeo.json");
       const object = JSON.parse(data);
       const value = object.filter(function(item) {
         const textState = item.Estado_id;
@@ -96,7 +96,7 @@ const IOMState = (props) => {
 
   const getDataMapeoService = async () => {
     try {
-      const value = await AsyncStorage.getItem("api-mapeo-servicios");
+      const value = await AsyncStorage.getItem("api-mapeo-servicios.json");
       if (value !== null) {
         dispatch({
           type: GET_DATA_MAPEO_SERVICE,
@@ -120,7 +120,7 @@ const IOMState = (props) => {
 
   const getDataDirectory = async (item) => {
     try {
-      const value = await AsyncStorage.getItem("api-lineas-telefonicas");
+      const value = await AsyncStorage.getItem("api-lineas-telefonicas.json");
       getDataDirectoryService();
       if (value !== null) {
         dispatch({
@@ -149,7 +149,7 @@ const IOMState = (props) => {
 
   const getDataDirectoryService = async () => {
     try {
-      const value = await AsyncStorage.getItem("api-lineas-telefonicas-servicios");
+      const value = await AsyncStorage.getItem("api-lineas-telefonicas-servicios.json");
       if (value !== null) {
         dispatch({
           type: GET_DATA_DIRECTORY_SERVICE,
@@ -166,7 +166,7 @@ const IOMState = (props) => {
 
   const getDataEnlace = async (item) => {
     try {
-      const value = await AsyncStorage.getItem("api-enlaces");
+      const value = await AsyncStorage.getItem("api_enlaces.json");
       if (value !== null) {
         dispatch({
           type: GET_DATA_ENLACE,
@@ -183,7 +183,7 @@ const IOMState = (props) => {
   };
   const getDataSocio = async (item) => {
     try {
-      const value = await AsyncStorage.getItem("api-mapeo-socios");
+      const value = await AsyncStorage.getItem("api_socios.json");
       if (value !== null) {
         dispatch({
           type: GET_DATA_SOCIO,
@@ -233,7 +233,7 @@ const IOMState = (props) => {
 
   const getDataMapeoState = async () => {
     try {
-      const value = await AsyncStorage.getItem("api-mapeo-estados");
+      const value = await AsyncStorage.getItem("api-mapeo-estados.json");
       if (value !== null) {
         dispatch({
           type: GET_DATA_MAPEO_STATE,
@@ -282,14 +282,12 @@ const IOMState = (props) => {
     axios.post(config.apiDrupalLoginURL,
       {"name":"integrador", "pass":"oj*4^IQUE5r#"}).then(
         response => {
-          console.log('response apiDrupalLoginURL',response.data);
             throw error;
         }
       ).catch(error => {
         //console.log('error en login',error)
         axios.get(config.apiDrupalTokenURL).then(
           response => {
-            console.log('response apiDrupalTokenURL',response.data);
             const headers = {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
