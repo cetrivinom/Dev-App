@@ -12,16 +12,16 @@ import {
 import { metrics } from "../../../utilities/Metrics";
 import _ from 'lodash';
 
-const SocioItem = (props) => {
+const SocioItem = ({ route, navigation }) => {
   const onPressClose = () => {
-    props.navigation.goBack();
+    navigation.goBack();
   };
   const {
     title = "",
     contenido = "",
     image = "",
     links = "",
-  } = props.navigation.state.params || {};
+  } = route.params || {};
 
   const regex = /(<([^>]+)>)/gi;
   const _content = contenido.replace(regex, "");

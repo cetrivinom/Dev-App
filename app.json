@@ -1,4 +1,11 @@
 {
-  "name": "IOM",
-  "displayName": "IOM"
+  "expo": {
+    "name": "iom",
+    "slug": "iom",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "iom"
 }

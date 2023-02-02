@@ -11,10 +11,11 @@ const CardItemLink = (props) => {
     date = "DD/MM/AAAA",
     image = "",
     links = [],
+    navigation
   } = props || {};
 
   const onPressOpen = () => {
-    props.navigation.navigate("LinkItem", { resume, date, content, image, links });
+    navigation.navigate("LinkItem", { resume, date, content, image, links });
   };
   const regex = /(<([^>]+)>)/gi;
   const result = resume.replace(regex, "");

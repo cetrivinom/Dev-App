@@ -18,7 +18,7 @@ import { metrics } from "../../utilities/Metrics";
 import { CardEnlaceLink } from "./_children/CardEnlaceLink";
 import { CardSocioLink } from "./_children/CardSocioLink";
 
-const Links = (props) => {
+const Links = ({ route, navigation }) => {
   const [showFilterOption, setShowFilterOption] = useState(false);
   const [show, setShow] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,13 +28,13 @@ const Links = (props) => {
   const [index, setIndex] = useState(0);
   const awesomeChildListRenderItem = (item) => (
     <CardItemLink
-      {...props}
       title={item.item.Titulo}
       resume={item.item.Resumen}
       content={item.item.Contenido}
       image={item.item.Imagen}
       date={item.item.Fecha}
       links={item.item.EnlaceExterno}
+      navigation={navigation}
     />
   );
   const awesomeChildListKeyExtractor = (item) => item.Titulo;
@@ -59,7 +59,7 @@ const Links = (props) => {
   return (
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>
-        <Header {...props} showBack={false} title="Contenido de interés" />
+        <Header showBack={false} title="Contenido de interés" navigation={navigation} />
 
 
         <Tab indicatorStyle={{
@@ -147,12 +147,12 @@ const Links = (props) => {
               {dataEnlace !== null && dataEnlace.map(index => {
                 return (
                   <CardEnlaceLink
-                  {...props}
                   key = {index.titulo}
                   title={index.titulo}
                   image={index.img_enlace}
                   links = {index.link}
                   contenido={index.descripcion}
+                  navigation={navigation}
                 />
                 )
               })}
@@ -167,12 +167,12 @@ const Links = (props) => {
               {dataSocio !== null && dataSocio.map(index => {
                 return (
                   <CardSocioLink
-                  {...props}
                   key = {index.id_estado}
                   title={index.estado}
                   image={index.img_socio}
                   links = {index.field_website}
                   contenido = {index.field_descripcion}
+                  navigation={navigation}
                 />
                 )
               })}

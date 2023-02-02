@@ -5,14 +5,15 @@ import { metrics } from "../../../utilities/Metrics";
 
 export const CardSocioLink = (props) => {
 
-    const {
-        title = "",
-        contenido = "",
-        image = "",
-        links = "",
-      } = props || {};
+  const {
+    title = "",
+    contenido = "",
+    image = "",
+    links = "",
+    navigation
+  } = props || {};
   const onPressCard = () => {
-    props.navigation.navigate("SocioItem", { title, contenido, image, links });
+    navigation.navigate("SocioItem", { title, contenido, image, links });
   };
 
   const regex = /(<([^>]+)>)/gi;
@@ -21,25 +22,29 @@ export const CardSocioLink = (props) => {
 
   return (
     <Pressable onPress={onPressCard} style={styles.wraper}>
-      <View style={{ borderRadius: 8}}>
-        <View style={styles.cardBodyTwo }>
-          <View style={{ flex: 1, padding:25, justifyContent: 'center',
-    alignItems: 'center',}}>
-          <Image
-          style={{width: 120,height:60}}
-          source={{
-            uri: `${image}`,
-          }}
-          resizeMode="contain"
-        />
+      <View style={{ borderRadius: 8 }}>
+        <View style={styles.cardBodyTwo}>
+          <View style={{
+            flex: 1, padding: 25, justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            {image !== undefined && image !=="" ?
+              <Image
+                style={{ width: 120, height: 60 }}
+                source={{
+                  uri: `${image}`,
+                }}
+                resizeMode="contain"
+              />
+              : null}
           </View>
-          <View style={{   backgroundColor:"#000000", bottom:-10, paddingTop:5,paddingBottom:5,paddingLeft:10,paddingRight:10, borderRadius:10, marginLeft:30, marginRight:30}}>
+          <View style={{ backgroundColor: "#000000", bottom: -10, paddingTop: 5, paddingBottom: 5, paddingLeft: 10, paddingRight: 10, borderRadius: 10, marginLeft: 30, marginRight: 30 }}>
             <Text style={styles.verMas} allowFontScaling={false}>
               {"+ Ver socio"}
             </Text>
           </View>
         </View>
-        
+
       </View>
     </Pressable>
   );
@@ -47,17 +52,17 @@ export const CardSocioLink = (props) => {
 
 const styles = StyleSheet.create({
   titleSection: {
-    fontSize: metrics.HEIGHT*0.018,
+    fontSize: metrics.HEIGHT * 0.018,
     //lineHeight: 23,
     letterSpacing: 0.005,
     fontWeight: "bold",
     color: "#003031",
     textAlign: "center",
-    textAlignVertical:"center",
-    padding:10
+    textAlignVertical: "center",
+    padding: 10
   },
   verMas: {
-    fontSize: metrics.HEIGHT*0.015,
+    fontSize: metrics.HEIGHT * 0.015,
     //lineHeight: 23,
     letterSpacing: 0.005,
     fontWeight: "bold",
@@ -101,14 +106,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3.84,
     elevation: 7,
-    
-    
+
+
   },
   containeImage: {
     width: 120,
     height: 100,
     overflow: "hidden",
     resizeMode: "stretch",
-    
+
   },
 });

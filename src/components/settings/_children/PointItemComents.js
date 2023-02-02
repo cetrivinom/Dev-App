@@ -12,20 +12,20 @@ import { metrics } from "../../../utilities/Metrics";
 import AuthContext from "../../../../context/auth/authContext";
 import IOMContext from "../../../../context/iomData/iomContext";
 
-const PointItemComents = (props) => {
-  const { id = "", Nombre_punto = "" } = props.navigation.state.params || {};
+const PointItemComents = ({ route, navigation }) => {
+  const { id = "", Nombre_punto = "" } = route.params || {};
   const { user,config } = useContext(AuthContext);
   const { createUserComment } = useContext(IOMContext);
   const [comment, setComment] = useState('');
 
   const onPressClose = () => {
-    props.navigation.goBack();
+    navigation.goBack();
   };
 
   const onPressPublic = () => {
     if(comment.length>1)
     createUserComment(user,id,comment,config);
-    props.navigation.goBack();
+    navigation.goBack();
   };
 
   return (

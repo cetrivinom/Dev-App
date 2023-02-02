@@ -5,12 +5,12 @@ import IOMContext from "../../../../context/iomData/iomContext";
 
 
 const HeaderItem = (props) => {
-  const { title = "", id = "", showSaveOpt = true } = props || {};
+  const { title = "", id = "", showSaveOpt = true, navigation } = props || {};
   const { createFavorite, dataFavorite } = useContext(IOMContext);
   const [ isFavorite, setIsFavorite] = useState(false);
 
   const onPressClose = () => {
-    props.navigation.goBack();
+    navigation.goBack();
   };
   const onPressSave = () => {
     createFavorite({id});
@@ -19,7 +19,7 @@ const HeaderItem = (props) => {
 
   useEffect(() => {
     let index = dataFavorite.findIndex(favorite => favorite.id == id);
-    if (index > 0)
+    if (index >= 0)
     setIsFavorite(true);
   });
   

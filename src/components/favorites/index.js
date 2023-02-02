@@ -43,7 +43,7 @@ const Favorites = (props) => {
 
   return (
     
-    <MenuProvider style={styles.container}>
+    <MenuProvider skipInstanceCheck={true} style={styles.container}>
       <View style={[styles.box, styles.box1]}>
         <Header {...props} showBack={false} title="Puntos favoritos" />
       </View>

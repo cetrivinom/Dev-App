@@ -10,15 +10,14 @@ import _ from 'lodash';
  * @param {Object} this.props - objeto de propiedades heredados de la clase padre.
  * @return {Object} <View /> Item del Directorio
  */
-const DirectoryItem = (props) => {
+const DirectoryItem = ({ route, navigation }) => {
   const { dataItem, getDataByDepartId,dataDirectoryService } = useContext(IOMContext);
-  const { otherParam = "" } = props.navigation.state.params || {};
+  const { otherParam = "" } = route.params || {};
   const awesomeChildListRenderItem = (item) => {
     if(item.item.tipo_de_linea_id != undefined && dataDirectoryService.some(val => val.id === item.item.tipo_de_linea_id)){
       //console.log('*',item.item.tipo_de_linea_id,dataItem.LineasTelefonicas.filter(itemLine => itemLine.tipo_de_linea_id.includes(item.item.tipo_de_linea_id)));
       return (
         <CardItemDirectoryDetail
-          {...props}
           title={item.item.tipo_de_linea}
           subTitle1={item.item.NombreOrganizacion}
           subTitle2={item.item.telefono_}
@@ -35,7 +34,7 @@ const DirectoryItem = (props) => {
   }, [otherParam]);
   return (
     <View style={styles.wrapper}>
-      <HeaderItem {...props} title={otherParam} showSaveOpt={false} />
+      <HeaderItem  title={otherParam} showSaveOpt={false} navigation={navigation} />
       {dataItem !== null && (
         <View style={[styles.box, styles.box2]}>
           <FlatList

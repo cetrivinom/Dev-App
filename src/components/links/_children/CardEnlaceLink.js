@@ -10,9 +10,10 @@ export const CardEnlaceLink = (props) => {
         contenido = "",
         image = "",
         links = [],
+        navigation
       } = props || {};
   const onPressCard = () => {
-    props.navigation.navigate("EnlaceItem", { title, contenido, image, links });
+    navigation.navigate("EnlaceItem", { title, contenido, image, links });
   };
 
   const regex = /(<([^>]+)>)/gi;

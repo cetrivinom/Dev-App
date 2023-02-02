@@ -23,7 +23,7 @@ const Main = (props) => {
         <View style={styles.containerForm}>
           <ItemMain
             {...props}
-            name="Settings"
+            name="SettingsStack"
             title="Puntos de servicio"
             image="1"
           />

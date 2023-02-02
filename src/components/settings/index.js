@@ -22,17 +22,27 @@ const Settings = (props) => {
 
   const mapRef = React.createRef();
   //Validamos que se tenga permisos de ubicacion en el dispositivo
-  useEffect(async () => {
-    try {
-      await (hasLocationPermission())
-    } catch (e) {
-      console.log('Error: ', e);
+  useEffect( () => {
+
+    async function localiza () {
+
+      try {
+        await (hasLocationPermission())
+      } catch (e) {
+        console.log('Error: ', e);
+      }
+
     }
+    localiza();
   }, []);
 
 
-  useEffect(async () => {
-    setMarginBottomV(1);
+  useEffect( () => {
+    async function margin () {
+      setMarginBottomV(1);
+    }
+    margin();
+    
   }, []);
 
   useEffect(() => {

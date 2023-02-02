@@ -16,14 +16,14 @@ import { metrics } from "../../../utilities/Metrics";
 import { SvgCssUri } from 'react-native-svg';
 import _ from 'lodash';
 
-export const LastUpdate = (props) => {
+export const LastUpdate = ({ route, navigation }) => {
   const {
     departamento = "",
     municipio = "",
     statusPoint = "",
-  } = props.navigation.state.params || {};
+  } = route.params || {};
   const onPressClose = () => {
-    props.navigation.navigate("FilterSetting");
+    navigation.navigate("FilterSetting");
   };
 
   return (

@@ -12,9 +12,9 @@ import {
 import { metrics } from "../../../utilities/Metrics";
 import _ from 'lodash';
 
-const LinkItem = (props) => {
+const LinkItem = ({ route, navigation }) => {
   const onPressClose = () => {
-    props.navigation.goBack();
+    navigation.goBack();
   };
   const {
     resume = "",
@@ -22,7 +22,7 @@ const LinkItem = (props) => {
     content = "",
     image = "",
     links = [],
-  } = props.navigation.state.params || {};
+  } = route.params || {};
 
   const regex = /(<([^>]+)>)/gi;
   const _resume = resume.replace(regex, "");

@@ -23,11 +23,11 @@ import Menu, {
 } from 'react-native-popup-menu';
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
-const PointItem = (props) => {
+const PointItem = ({ route, navigation }) => {
   const { dataItem, getDataPointById, dataComments, deleteUserComment } = useContext(IOMContext);
   const [visible, setVisible] = useState(false);
   const { user } = useContext(authContext);
-  let { id = "", latitude = "", longitude = "", uri = "" } = props.navigation.state.params || {};
+  let { id = "", latitude = "", longitude = "", uri = "" } = route.params || {};
   latitude = isNaN(latitude) ? 0 : latitude;
   longitude = isNaN(longitude) ? 0 : longitude;
   //console.log('l_l',latitude,longitude);
@@ -47,6 +47,7 @@ const PointItem = (props) => {
   const [scheduleToShowSD, setScheduleToShowSD] = useState([])
 
   useEffect(() => {
+    console.log(id)
     getDataPointById(id);
   }, [id]);
 
@@ -163,7 +164,7 @@ const militaryTimeTo12Hour = (s) => {
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
   const onPressOpenComents = () => {
-    props.navigation.navigate("PointItemComents", { id, Nombre_punto });
+    navigation.navigate("PointItemComents", { id, Nombre_punto });
   };
 
 
@@ -192,7 +193,7 @@ const militaryTimeTo12Hour = (s) => {
     /*let coor = Coordenadas.split(",");
     let latitude = parseFloat(coor[0]);
     let longitude = parseFloat(coor[1]);*/
-    props.navigation.navigate("PointNavigationApp", {
+    navigation.navigate("PointNavigationApp", {
       id,
       Nombre_punto,
       Direccion,
@@ -203,7 +204,7 @@ const militaryTimeTo12Hour = (s) => {
 
   return (
     <View style={styles.wrapper}>
-      <HeaderItem {...props} title="Información de punto" id={id} />
+      <HeaderItem   title="Información de punto" id={id} navigation={navigation} />
 
       <View style={[styles.box, styles.box2]}>
         <ScrollView style={{ flex: 1 }}>
@@ -296,7 +297,6 @@ const militaryTimeTo12Hour = (s) => {
             <Text style={styles.textHorario}>Servicios</Text>
             {Servicios.map((l, i) => (
               <ServiceItem
-                {...props}
                 key={i}
                 Servicio={l.Servicio}
                 Servicio_id={l.Servicio_id}
@@ -306,7 +306,7 @@ const militaryTimeTo12Hour = (s) => {
             ))}
           </View>
           <View style={styles.divider}></View>
-          <MenuProvider style={styles.box5}>
+          <MenuProvider  skipInstanceCheck={true} style={styles.box5}>
             <Text style={styles.textComentario}>Tus comentarios</Text>
             {dataComments
               ?.filter((data) => data.pointID === id)
