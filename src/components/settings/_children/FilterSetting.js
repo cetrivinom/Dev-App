@@ -40,7 +40,7 @@ const FilterSetting = (props) => {
   
   const [arregloServicios, setArregloServicios] = useState([]);
 
-  //dataPoint.map(d => (console.log('Nombre_punto:',d.Nombre_punto,'Departamento'))) 
+  
 
   useEffect(() => {
     getDataMapeoService();

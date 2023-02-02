@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from "react";
+import React, { useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -11,12 +11,14 @@ import {
 } from "react-native";
 import { metrics } from "../../../utilities/Metrics";
 import _ from 'lodash';
+import AuthContext from "../../../../context/auth/authContext";
 
 const LinkItem = ({ route, navigation }) => {
   const onPressClose = () => {
     navigation.goBack();
   };
   const {
+    title = "",
     resume = "",
     date = "",
     content = "",
@@ -25,8 +27,10 @@ const LinkItem = ({ route, navigation }) => {
   } = route.params || {};
 
   const regex = /(<([^>]+)>)/gi;
+  const _title = title.replace(regex, "");
   const _resume = resume.replace(regex, "");
   const _content = content.replace(regex, "");
+  const { config } = useContext(AuthContext);
   return (
     <ScrollView style={styles.wrapper}>
       <TouchableOpacity style={styles.image} onPress={onPressClose}>
@@ -35,11 +39,11 @@ const LinkItem = ({ route, navigation }) => {
       <Image
         style={styles.containeImage}
         source={{
-          uri: `https://dev-mapeo.us.tempcloudsite.com${image}`,
+          uri: config.photoBaseURL+image,
         }}
       />
       <View style={styles.container}>
-        <Text style={styles.textTitle}>{_resume}</Text>
+      <Text style={styles.textTitle}>{_title}</Text>
         <View style={styles.containerDate}>
           <Image source={require("../../../resources/images/calendar.png")} />
           <Text style={styles.titleDate}>{date}</Text>

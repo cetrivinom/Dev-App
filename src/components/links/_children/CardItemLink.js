@@ -1,7 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from "react";
 import { StyleSheet, Text, Image, View, TouchableOpacity } from "react-native";
 import { metrics } from "../../../utilities/Metrics";
+import React, { useContext } from "react";
+import AuthContext from "../../../../context/auth/authContext";
+import analytics from '@react-native-firebase/analytics';
 
 const CardItemLink = (props) => {
   const {
@@ -15,8 +17,13 @@ const CardItemLink = (props) => {
   } = props || {};
 
   const onPressOpen = () => {
-    navigation.navigate("LinkItem", { resume, date, content, image, links });
+    analytics().logSelectContent({
+      content_type: 'news_opened',
+      item_id: title,
+    })
+    props.navigation.navigate("LinkItem", { title, resume, date, content, image, links });
   };
+  const { config } = useContext(AuthContext);
   const regex = /(<([^>]+)>)/gi;
   const result = resume.replace(regex, "");
   let _resume = result.substring(0, 60);
@@ -27,12 +34,12 @@ const CardItemLink = (props) => {
         <Image
           style={styles.containeImage}
           source={{
-            uri: `https://dev-mapeo.us.tempcloudsite.com${image}`,
+            uri: config.photoBaseURL+image,
           }}
         />
         <View style={styles.containeImageText}>
-          <Text style={styles.titleSection}>{_resume + "..."}</Text>
-{/*           <View style={styles.containerDate}>
+        <Text style={styles.titleSection}>{title + "..."}</Text>
+          {/*           <View style={styles.containerDate}>
             <Image source={require("../../../resources/images/calendar.png")} />
             <Text style={styles.titleDate}>{date}</Text>
             <Text style={styles.titleUpdateDate}>Fecha de actualización</Text>
@@ -86,7 +93,7 @@ const styles = StyleSheet.create({
     color: "#A1AAB2",
     paddingTop: 2,
   },
-  
+
 });
 
 export default CardItemLink;

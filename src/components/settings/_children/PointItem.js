@@ -30,7 +30,7 @@ const PointItem = ({ route, navigation }) => {
   let { id = "", latitude = "", longitude = "", uri = "" } = route.params || {};
   latitude = isNaN(latitude) ? 0 : latitude;
   longitude = isNaN(longitude) ? 0 : longitude;
-  //console.log('l_l',latitude,longitude);
+  
 
   const {
     Nombre_punto = "",
