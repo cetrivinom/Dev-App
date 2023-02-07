@@ -62,7 +62,7 @@ const Header = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: metrics.HEIGHT * 0.066,
+    height: metrics.HEIGHT * 0.08,
     alignItems: "center",
     backgroundColor: "#00AAAD",
     justifyContent: "center",

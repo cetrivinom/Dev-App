@@ -177,7 +177,7 @@ const Settings = (props) => {
         <Header {...props} showBack={false} title="Puntos de servicio" />
         <LastUpdate />
       </View>
-      <View style={{ flex: 1, flex: Platform.OS === "ios" ? 5.8 : 7.3, marginBottom: marginBottomV }}>
+      <View style={{ flex: 1, flex: Platform.OS === "ios" ? 5.8 : 7.3, marginBottom: marginBottomV, marginTop:0 }}>
         <MapView
           ref={mapRef}
           style={styles.map}

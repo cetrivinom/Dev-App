@@ -53,7 +53,8 @@ function SettingsStack() {
 
 function HomeBar() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator screenOptions={{ headerShown: false, tabBarActiveTintColor: '#00AAAD',
+    tabBarInactiveTintColor: '#003031' }} >
       <Tab.Screen name="Inicio" component={Main} options={{
         tabBarIcon: ({ color, number, focused }) => {
           return (
