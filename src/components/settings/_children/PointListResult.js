@@ -16,6 +16,7 @@ import { metrics } from "../../../utilities/Metrics";
 import { capitalize } from "../../../utilities/helpers";
 import { SvgCssUri } from 'react-native-svg';
 import _ from 'lodash';
+import HeaderPoint from "../../global/_children/HeaderPoint";
 
 
 export const LastUpdate = ({ route, navigation }) => {
@@ -322,7 +323,7 @@ const PointListResult = (props) => {
   return (
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>
-        <Header {...props} showBack={false} title="Puntos de servicio" />
+        <HeaderPoint {...props}  title="Puntos de servicio" />
         <LastUpdate {...props} />
       </View>
       <View style={[styles.box, styles.box2]}>
@@ -480,7 +481,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   containerHeader: {
-    height: metrics.HEIGHT * 0.03,
+    height: metrics.HEIGHT * 0.05,
     backgroundColor: "#FFFFFF",
   },
   containerFormHeader: {

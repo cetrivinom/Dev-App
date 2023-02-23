@@ -8,6 +8,7 @@ import IOMContext from "../../../context/iomData/iomContext";
 import AuthContext from "../../../context/auth/authContext";
 import Icon from 'react-native-vector-icons/Ionicons';
 import analytics from '@react-native-firebase/analytics';
+import HeaderPoint from "../global/_children/HeaderPoint";
 
 const Settings = (props) => {
   const [position, setPosition] = useState({
@@ -174,7 +175,7 @@ const Settings = (props) => {
   return (
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>
-        <Header {...props} showBack={false} title="Puntos de servicio" />
+        <HeaderPoint {...props} title="Puntos de servicio" />
         <LastUpdate />
       </View>
       <View style={{ flex: 1, flex: Platform.OS === "ios" ? 5.8 : 7.3, marginBottom: marginBottomV, marginTop:0 }}>

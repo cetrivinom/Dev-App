@@ -11,9 +11,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Splash from "./src/components/splash";
+import UpdateVersion from "./src/components/splash/UpdateVersion";
 import Main from "./src/components/global/Main";
 import Directory from "./src/components/directory";
 import Login from "./src/components/login";
+import LoginRegisterScreen from "./src/components/splash/LoginRegisterScreen";
 import Registre from "./src/components/registre";
 import Profile from "./src/components/profile";
 import UpdateProfile from "./src/components/profile/_children/UpdateProfileForm";
@@ -146,7 +148,9 @@ const App = () => {
           <NavigationContainer>
             <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
               <Stack.Screen name="Splash" component={Splash} />
+              <Stack.Screen name="UpdateVersion" component={UpdateVersion} />
               <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="LoginRegisterScreen" component={LoginRegisterScreen} />
               <Stack.Screen name="Registre" component={Registre} />
               <Stack.Screen name="Profile" component={Profile} />
               <Stack.Screen name="Home" component={HomeBar} />

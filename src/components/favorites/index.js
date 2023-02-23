@@ -1,5 +1,5 @@
-import React, { useEffect, useContext, useState } from "react";
-import { View, FlatList, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
+import React, { useEffect, useContext, useState, useRef, useCallback } from "react";
+import { View, FlatList, StyleSheet, TouchableOpacity, Text, Image, ActivityIndicator } from "react-native";
 import Header from "../global/_children/Header";
 import CardtemFavorite from "./_children/CardtemFavorite";
 import IOMContext from "../../../context/iomData/iomContext";
@@ -11,19 +11,56 @@ import Menu, {
   MenuTrigger,
   renderers
 } from 'react-native-popup-menu';
+import database from "@react-native-firebase/database";
+import AuthContext from "../../../context/auth/authContext";
 const { SlideInMenu } = renderers;
 
 const Favorites = (props) => {
 
-  var {dataPoint,getDataPoint,dataMapeoService,getDataMapeoService,dataFavorite, getDataFavorite, deleteFavorite } = useContext(IOMContext);
+  const mountedRef = useRef(true);
 
+  const { user, getUser, deleteFavoriteF, createFavoriteF } = useContext(AuthContext);
+  const [dataFavorite, setDataFavorite] = useState([]);
+  const [dataFavoriteL, setDataFavoriteL] = useState([]);
   useEffect(() => {
-    getDataFavorite();
-  }, []);
+    let loop = setInterval(() => {
+      setInformacion();
+    }, 1000);
+    return () => clearInterval(loop);
+  }, [])
 
-  const deleteItemById = id => {
-    deleteFavorite(id);
-    dataFavorite=(dataFavorite.filter(item => item.id !== id));    
+  const setInformacion = async () => {
+
+
+    await database()
+      .ref("/favorites/" + user.uid)
+      .once("value", (snapshot) => {
+        if (snapshot.hasChildren()) {
+          let dataF = snapshot;
+          let array = [];
+
+          dataF && dataF.forEach((child) => {
+            let data = {};
+            data.id = child.val().id;
+            data.k = child.key;
+            array.push(data)
+          });
+          setDataFavorite(array);
+          setDataFavoriteL(array);
+        }
+      })
+
+
+  }
+
+  const deleteItemById = k => {
+
+
+    let a = (dataFavoriteL.filter(item => item.k === k));
+
+
+    deleteFavoriteF(user, a[0]);
+    setInformacion();
   }
 
   const awesomeChildListRenderItem = (item) => (
@@ -33,24 +70,29 @@ const Favorites = (props) => {
         style={styles.trigger}>
         <Image source={require("../../resources/images/riMoreLine.png")} />
       </MenuTrigger>
-      <MenuOptions optionsContainerStyle={{width:100}} customStyles={{ optionText: styles.text}}>
-        <MenuOption  onSelect={() => deleteItemById(item.item.id)} text='Borrar' />
+      <MenuOptions optionsContainerStyle={{ width: 100 }} customStyles={{ optionText: styles.text }}>
+        <MenuOption onSelect={() => deleteItemById(item.item.k)} text='Borrar' />
       </MenuOptions>
     </Menu>
   );
 
-  const awesomeChildListKeyExtractor = (item) => item.id;
+  const awesomeChildListKeyExtractor = (item) => item.k;
 
   return (
-    
+
     <MenuProvider skipInstanceCheck={true} style={styles.container}>
       <View style={[styles.box, styles.box1]}>
         <Header {...props} showBack={false} title="Puntos favoritos" />
       </View>
-      {dataFavorite !== null && (
+      {dataFavorite.length === 0 ?
+        <View style={[styles.container]}>
+          <ActivityIndicator size="large" />
+        </View>
+        : null}
+      {dataFavoriteL && (
         <View style={[styles.box, styles.box2]}>
           <FlatList
-            data={dataFavorite}
+            data={dataFavoriteL}
             renderItem={awesomeChildListRenderItem}
             keyExtractor={awesomeChildListKeyExtractor}
           />
@@ -111,11 +153,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#003031",
   },
-  menu:{
+  menu: {
     marginTop: 12,
-    display:'flex', 
-    flexDirection:'row',
-    borderBottomWidth: 3, 
+    display: 'flex',
+    flexDirection: 'row',
+    borderBottomWidth: 3,
     borderColor: "#E7EAEC"
   },
 });

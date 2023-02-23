@@ -2,7 +2,7 @@
 import React, { useContext, useEffect } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import CardItemDirectoryDetail from "./CardItemDirectoryDetail";
-import HeaderItem from "../../global/_children/HeaderItem";
+import HeaderPoint from "../../global/_children/HeaderPoint";
 import IOMContext from "../../../../context/iomData/iomContext";
 import _ from 'lodash';
 /**
@@ -13,11 +13,11 @@ import _ from 'lodash';
 const DirectoryItem = ({ route, navigation }) => {
   const { dataItem, getDataByDepartId,dataDirectoryService } = useContext(IOMContext);
   const { otherParam = "" } = route.params || {};
-  const awesomeChildListRenderItem = (item) => {
+  const awesomeChildListRenderItem = (item, index) => {
     if(item.item.tipo_de_linea_id != undefined && dataDirectoryService.some(val => val.id === item.item.tipo_de_linea_id)){
       //console.log('*',item.item.tipo_de_linea_id,dataItem.LineasTelefonicas.filter(itemLine => itemLine.tipo_de_linea_id.includes(item.item.tipo_de_linea_id)));
       return (
-        <CardItemDirectoryDetail
+        <CardItemDirectoryDetail key={index}
           title={item.item.tipo_de_linea}
           subTitle1={item.item.NombreOrganizacion}
           subTitle2={item.item.telefono_}
@@ -34,7 +34,7 @@ const DirectoryItem = ({ route, navigation }) => {
   }, [otherParam]);
   return (
     <View style={styles.wrapper}>
-      <HeaderItem  title={otherParam} showSaveOpt={false} navigation={navigation} />
+      <HeaderPoint  title={otherParam} showSaveOpt={false} navigation={navigation} />
       {dataItem !== null && (
         <View style={[styles.box, styles.box2]}>
           <FlatList

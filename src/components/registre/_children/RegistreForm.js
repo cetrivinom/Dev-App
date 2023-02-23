@@ -187,10 +187,11 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
             style={
               errorEmail !== "" ? Styles.inputTextBoxError : Styles.inputTextBox
             }
+            value={email}
             placeholder="Correo electrónico"
             placeholderTextColor="#a9a9a9"
             onChangeText={(e) => {
-              setData({ ...data, email: e });
+              setData({ ...data, email: e.trim() });
               setErrorEmail("");
               setErrorPassword("");
               setErrorRePassword("");

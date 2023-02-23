@@ -1,9 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState, useContext } from "react";
-import { StyleSheet, Text, Image, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, Image, View, TouchableOpacity, Linking } from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
 import { metrics } from "../../../utilities/Metrics";
 import _ from 'lodash';
+import { width } from "deprecated-react-native-prop-types/DeprecatedImagePropType";
 
 const CardItemDirectoryDetail = (props) => {
   const { dataItemService, getDataDirectoryItemService } =
@@ -28,7 +29,7 @@ const CardItemDirectoryDetail = (props) => {
       <TouchableOpacity style={styles.containerItem} onPress={onPressOpen}>
         <Text style={styles.textTitle}>{title}</Text>
         <Image
-          style={{marginRight:10}}
+          style={{ marginRight: 10 }}
           source={
             !open
               ? require("../../../resources/images/riArrowDownsLine.png")
@@ -38,33 +39,61 @@ const CardItemDirectoryDetail = (props) => {
       </TouchableOpacity>
       {open && (
         <View style={styles.form}>
-          {_.map(lines,(val,id) => {
-            return <View>
+          {_.map(lines, (val, id) => {
+            return <View key={id}>
               <Text style={styles.textDescripcion}>{descripcion}</Text>
               <View style={styles.textWrap}>
                 <Text style={styles.textsubTitle1}>{val.NombreOrganizacion}</Text>
               </View>
-              {val.telefono_.length > 0  && (
-              <View style={styles.form1}>
-                <Image
-                  source={require("../../../resources/images/phone.png")}
-                  style={styles.image2}
-                />
-                <Text style={styles.textTitle2}>{val.telefono_.length>0?val.telefono_[0].value:''}</Text>
-              </View>)}
-              {val.horario.length > 0  && (
-              <View style={styles.form1}>
-                <Image
-                  source={require("../../../resources/images/riTimeFill.png")}
-                  style={styles.image2}
-                />
-                <Text style={styles.textTitle2}>{val.horario}</Text>
-              </View>
+              {val.descripcion_servicio !== "" && (
+                <View style={styles.form1}>
+                  <Text style={styles.textsubTitle1}>Descripcion del servicio</Text>
+                </View>
               )}
+              {val.descripcion_servicio !== "" && (
+                <View style={styles.textWrap2}>
+                  <Text style={styles.textDescripcion}>{val.descripcion_servicio}</Text>
+                </View>
+              )}
+              {val.telefono_.length > 0 && (
+                <View style={styles.form1}>
+                  <Image
+                    source={require("../../../resources/images/phone.png")}
+                    style={styles.image2}
+                  />
+                  <Text style={styles.textTitle2}>{val.telefono_.length > 0 ? val.telefono_[0].value : ''}</Text>
+                </View>)}
+              {val.horario.length > 0 && (
+                <View style={styles.form1}>
+                  <Image
+                    source={require("../../../resources/images/riTimeFill.png")}
+                    style={styles.image2}
+                  />
+                  <Text style={styles.textTitle2}>{val.horario}</Text>
+                </View>
+              )}
+              {val.url_servicio.length > 0 && (
+                <View style={styles.form1}>
+                  <Text style={styles.textsubTitle1}>Enlaces</Text>
+                </View>
+              )}
+              {val.url_servicio.length > 0 && (
+                <View style={styles.textWrap}>
+                  <TouchableOpacity
+                    key={id}
+                    style={styles.boxOpenLink}
+                    onPress={() => Linking.openURL(val.url_servicio[0].uri)}
+                  >
+                    <Text style={styles.textOpenLink}>{val.url_servicio[0].title}</Text>
+                    <Image
+                      source={require("../../../resources/images/riExternalLinkFill.png")}
+                    />
+                  </TouchableOpacity>
+                </View>)}
             </View>
           })}
         </View>
-        
+
       )}
     </View>
   );
@@ -75,6 +104,24 @@ const styles = StyleSheet.create({
     borderWidth: 0.54,
     borderColor: "#A1AAB2",
     paddingLeft: metrics.WIDTH * 0.05,
+  },
+  textOpenLink: {
+    fontSize: 15,
+    color: "#00AAAD",
+    lineHeight: 18,
+    letterSpacing: 0.00125,
+    marginRight: 10,
+    paddingTop: 5,
+    textDecorationLine: "underline",
+    textDecorationStyle: "solid",
+    textDecorationColor: "#00AAAD",
+  },
+  
+  boxOpenLink: {
+    justifyContent: "flex-start",
+    paddingVertical: metrics.HEIGHT * 0.01,
+    flexDirection: "row",
+    alignItems: "center",
   },
   containerItem: {
     flex: 1,
@@ -90,6 +137,18 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     color: "#003031",
   },
+  textDescripcion: {
+    fontSize: 18,
+    lineHeight: 24,
+    letterSpacing: 0.12,
+    color: "#003031"
+  },
+  textDescripcionT: {
+    fontSize: 18,
+    lineHeight: 24,
+    letterSpacing: 0.12,
+    color: "#003031"
+  },
   form: {
     marginBottom: 10,
     //marginRight:10,
@@ -104,7 +163,12 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   textWrap: {
-    flexDirection:'row'
+    flexDirection: 'row'
+  },
+  textWrap2: {
+    flexDirection: 'row',
+    margin:'auto',
+    width:metrics.WIDTH * 0.9,
   },
   textsubTitle1: {
     fontSize: 17,
@@ -113,6 +177,13 @@ const styles = StyleSheet.create({
     letterSpacing: 0.0015,
     color: "#007681",
     flex: 0.95,
+  },
+  textsubTitle2: {
+    fontSize: 16,
+    fontWeight: "bold",
+    lineHeight: 23,
+    letterSpacing: 0.0015,
+    color: "#007681",
   },
   form1: {
     marginTop: 10,

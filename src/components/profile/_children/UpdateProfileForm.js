@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState,useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -14,6 +14,9 @@ import AuthContext from "../../../../context/auth/authContext";
 import { Snackbar } from "react-native-paper";
 
 export const Footer = (props) => {
+  const {
+    navigation
+  } = props || {};
   const {user,  updateUser,updatePassword,updatePassInputChange,pass } = useContext(AuthContext);
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState('');
@@ -23,7 +26,7 @@ export const Footer = (props) => {
     if(pass && pass.currentPass.length > 1 && pass.newPass.length > 1){
       updatePassword(pass).then((result) => {
         if(result.value){
-          props.navigation.navigate("Profile");
+          navigation.navigate("Profile");
         }
         else{
           setVisible(true);
@@ -34,7 +37,7 @@ export const Footer = (props) => {
       });
     }else {
       updateUser(user);
-      props.navigation.navigate("Profile");
+      navigation.navigate("Profile");
     }
   };
 
@@ -197,7 +200,7 @@ export const UpdatePassword= (props) => {
 };
 
 const ShowComponentToUpdate = (props) => {
-  const { field = "" } = props.navigation.state.params || {};
+  const { field = "", navigation } = props || {};
   if (field == "genero") {
     return <UpdateGender {...props}></UpdateGender>;
   } else if (field == "birthdate") {
@@ -207,9 +210,17 @@ const ShowComponentToUpdate = (props) => {
   } else return null;
 };
 
-const UpdateProfileForm = (props) => {
+const UpdateProfileForm = ({ route, navigation }) => {
+  const {
+    field=""
+  } = route.params || {};
+
+  useEffect(() => {
+    console.log(field)
+  }, []);
+
   const onPressBack = () => {
-    props.navigation.navigate("Profile");
+    navigation.navigate("Profile");
   };
   return (
     <View style={Styles.wrapper}>
@@ -222,11 +233,14 @@ const UpdateProfileForm = (props) => {
               <Image source={require("../../../resources/images/left.png")} />
             </TouchableOpacity>
             <Text style={Styles.labelTitleHeader}>Editar Perfil</Text>
+            
           </View>
         </View>
       </View>
-      <ShowComponentToUpdate {...props}></ShowComponentToUpdate>
-      <Footer {...props} />
+      <Text style={Styles.labelTitleHeader}>{field}</Text>
+      <ShowComponentToUpdate field={field} 
+              navigation={navigation}></ShowComponentToUpdate>
+      <Footer navigation={navigation}/>
     </View>
   );
 };

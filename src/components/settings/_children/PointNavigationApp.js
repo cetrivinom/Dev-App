@@ -1,23 +1,25 @@
 import React from "react";
-import { View } from "react-native";
+import {  StyleSheet,View, Text } from "react-native";
 import {
   NavigationApps,
   actions,
   googleMapsTravelModes,
   mapsTravelModes,
 } from "react-native-navigation-apps";
+import { metrics } from "../../../utilities/Metrics";
 
-const PointNavigationApp = (props) => {
+const PointNavigationApp = ({ route, navigation }) => {
   const {
     id = "",
     Nombre_punto = "",
     Direccion = "",
     latitude = "",
     longitude,
-  } = props.navigation.state.params || {};
+  } = route.params || {};
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text style={styles.caja1Text}>Haz clic en la aplicación de tu preferencia</Text>
       <NavigationApps
         row
         modalProps={{ animationType: "slide", transparent: false }}
@@ -52,5 +54,18 @@ const PointNavigationApp = (props) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+
+  caja1Text: {
+    fontSize: metrics.HEIGHT * 0.024,
+    fontWeight: "bold",
+    color: "#003031",
+    lineHeight: metrics.HEIGHT * 0.033,
+    letterSpacing: 0.0015,
+    alignSelf: "center",
+    marginBottom:15
+  },
+})
 
 export default PointNavigationApp;

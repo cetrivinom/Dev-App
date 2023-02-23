@@ -84,8 +84,9 @@ const LoginForm = (props) => {
           }
             placeholder="Correo electrónico"
             placeholderTextColor="#a9a9a9"
+            value={email}
             onChangeText={(e) => {
-              setUser({ ...user, email: e });
+              setUser({ ...user, email: e.trim() });
               setErrorEmail("");
               setErrorPassword("");
             }}

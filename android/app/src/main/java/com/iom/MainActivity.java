@@ -9,7 +9,29 @@ import com.facebook.react.ReactRootView;
 
 import expo.modules.ReactActivityDelegateWrapper;
 
+import android.util.Log;
+import android.view.WindowManager;
+import android.content.res.Configuration;
+import android.content.Context;
+import android.util.DisplayMetrics;
+
 public class MainActivity extends ReactActivity {
+
+public void adjustFontScale(Context context, Configuration configuration) {
+    if (configuration.fontScale != 1) {
+        configuration.fontScale = 1;
+
+
+        configuration.densityDpi = 432;
+
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        wm.getDefaultDisplay().getMetrics(metrics);
+        metrics.scaledDensity = configuration.fontScale * metrics.density;
+        context.getResources().updateConfiguration(configuration, metrics);
+    }
+}
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     // Set the theme to AppTheme BEFORE onCreate to support 
@@ -17,6 +39,8 @@ public class MainActivity extends ReactActivity {
     // This is required for expo-splash-screen.
     setTheme(R.style.AppTheme);
     super.onCreate(null);
+    adjustFontScale(getApplicationContext(),getResources().getConfiguration());
+   
   }
 
   /**

@@ -2,29 +2,69 @@ import React, { useContext, useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { metrics } from "../../../utilities/Metrics";
 import IOMContext from "../../../../context/iomData/iomContext";
-
-
+import AuthContext from "../../../../context/auth/authContext";
+import database from "@react-native-firebase/database";
 const HeaderItem = (props) => {
   const { title = "", id = "", showSaveOpt = true, navigation } = props || {};
-  const { createFavorite, dataFavorite } = useContext(IOMContext);
-  const [ isFavorite, setIsFavorite] = useState(false);
+  const { createFavorite, dataFavorite, deleteFavoriteId } = useContext(IOMContext);
+  const {user,  getUser, deleteFavoriteF, createFavoriteF } = useContext(AuthContext);
+  const [isFavorite, setIsFavorite] = useState(false);
+const [favorito, setFavorito] = useState({});
 
   const onPressClose = () => {
-    navigation.goBack();
+    navigation.navigate("SettingsStack")
   };
   const onPressSave = () => {
-    createFavorite({id});
-    setIsFavorite(true);
+    if (isFavorite) {
+
+      deleteFavoriteF(user,favorito);
+      
+    }else{
+      createFavoriteF(user,id);
+      
+    }
+    setIsFavorite(!isFavorite);
   };
 
   useEffect(() => {
-    let index = dataFavorite.findIndex(favorite => favorite.id == id);
-    if (index >= 0)
-    setIsFavorite(true);
-  });
-  
+    setInformacion()
+  }, [])
+
+  const setInformacion = async () => {
+
+
+    await database()
+      .ref("/favorites/" + user.uid)
+      .once("value", (snapshot) => {
+        if (snapshot.hasChildren()) {
+          let dataF = snapshot;
+          let array = [];
+
+          dataF && dataF.forEach((child) => {
+            let data = {};
+            data.id = child.val().id;
+            data.k = child.key;
+            array.push(data)
+          });
+
+          let a = array.find(item => item.id === id);
+
+          if(a!==undefined && a.length!==0){
+            setFavorito(a)
+            setIsFavorite(true)
+          }
+          else{
+            setIsFavorite(false)
+          }
+          
+        }
+      })
+
+
+  }
+
   return (
-    <View style={[styles.box, styles.box1]}> 
+    <View style={[styles.box, styles.box1]}>
       <View style={styles.statusBarBackground}>
       </View>
       <View style={styles.boxImage}>
@@ -37,13 +77,13 @@ const HeaderItem = (props) => {
           />
         </TouchableOpacity>
         <Text style={styles.textTitle}>{title}</Text>
-          <TouchableOpacity onPress={onPressSave}>
-            {showSaveOpt && (
-              <Image
-                source={isFavorite?require("../../../resources/images/riBookmarkLine2.png"):require("../../../resources/images/riBookmarkLine.png")}
-              />
-            )}
-          </TouchableOpacity>
+        <TouchableOpacity onPress={onPressSave}>
+          {showSaveOpt && (
+            <Image
+              source={isFavorite ? require("../../../resources/images/riBookmarkLine2.png") : require("../../../resources/images/riBookmarkLine.png")}
+            />
+          )}
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -75,8 +115,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginHorizontal: 21,
     marginBottom: 30,
-  },  
-  statusBarBackground:{
+  },
+  statusBarBackground: {
     height: (Platform.OS === 'ios') ? metrics.WIDTH * 0.06 : 0,
     //backgroundColor: "#00AAAD",
   },

@@ -42,6 +42,7 @@ const Profile = (props) => {
               field="birthdate"
               subTitle={user ? user.birdDate : ""}
               showImge
+              navigation={navigation}
             />
             <CardItemProfile
               {...props}
@@ -57,6 +58,7 @@ const Profile = (props) => {
                   : ""
               }
               showImge
+              navigation={navigation}
             />
             <CardItemProfile
               {...props}
@@ -64,6 +66,7 @@ const Profile = (props) => {
               field="password"
               subTitle="****************"
               showImge
+              navigation={navigation}
             />
             <View style={styles.containerBodyLogOff}>
               <TouchableOpacity onPress={onPressLogOff}>

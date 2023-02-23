@@ -11,7 +11,10 @@ import {
   USER_PASSWORD_RECOVERY,
   UPDATED_USER_INPUT_CHANGE,
   UPDATED_PASS_INPUT_CHANGE,
-  GET_CONFIG, DEFAULT_CONFIG
+  GET_CONFIG, DEFAULT_CONFIG,
+  NEW_FAVORITE,
+  GET_DATA_FAVORITES,
+  GET_DATA_ERROR
 } from "../../types";
 import AuthReducer from "./authReducer";
 import AuthContext from "./authContext";
@@ -140,7 +143,7 @@ const AuthState = (props) => {
         })
         .catch((error) => {
           var message;
-          switch(error.code) {
+          switch (error.code) {
             case 'auth/weak-password':
               message = 'Password invalido';
               break;
@@ -148,7 +151,7 @@ const AuthState = (props) => {
               message = 'El email ya se encuentrá registrado';
               break;
             default:
-              message = ''+error;
+              message = '' + error;
               break;
           }
           dispatch({
@@ -166,27 +169,27 @@ const AuthState = (props) => {
    */
   const updatePassword = async (pass) => {
     return new Promise((resolve, reject) => {
-      const emailCred  = auth.EmailAuthProvider.credential(
+      const emailCred = auth.EmailAuthProvider.credential(
         auth().currentUser.email, pass.currentPass);
       auth().currentUser.reauthenticateWithCredential(emailCred)
         .then(() => {
-          auth().currentUser.updatePassword(pass.newPass).then((response) =>{
-            analytics().logEvent("updatePassword", { 
-              user:auth().currentUser.email,
-              result: "true" 
+          auth().currentUser.updatePassword(pass.newPass).then((response) => {
+            analytics().logEvent("updatePassword", {
+              user: auth().currentUser.email,
+              result: "true"
             });
-            resolve({value:true});
+            resolve({ value: true });
           })
-          .catch((error) => {
-            resolve({value:false,message:'la nueva contraseña no es valida'});
-          });
+            .catch((error) => {
+              resolve({ value: false, message: 'la nueva contraseña no es valida' });
+            });
         })
         .catch((error) => {
-          analytics().logEvent("updatePassword", { 
-            user:auth().currentUser.email,
-            result: "false" 
+          analytics().logEvent("updatePassword", {
+            user: auth().currentUser.email,
+            result: "false"
           });
-          resolve({value:false,message:'la contraseña actual no es valida'});
+          resolve({ value: false, message: 'la contraseña actual no es valida' });
         });
     });
   };
@@ -259,6 +262,67 @@ const AuthState = (props) => {
         alert(error);
       });
   };
+
+  const getDataFavorite = async (uid) => {
+
+    
+
+    await database()
+      .ref("/favorites/"+uid)
+      .once("value", (snapshot) => {
+        if (snapshot.hasChildren()) {
+          dispatch({
+            type: GET_DATA_FAVORITES,
+            payload: snapshot.val(),
+          });
+
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
+  const deleteFavoriteF = (user, a) => {
+
+   
+
+    database()
+      .ref("/favorites/" + user.uid + "/" + a.k)
+      .remove()
+      .then(() => {
+        console.log("Eliminado")
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+
+
+  }
+
+  const createFavoriteF = (user, favoriteId) => {
+
+    let data = {
+      id:favoriteId
+    }
+
+    database()
+      .ref("favorites/" + user.uid)
+      .push(data)
+      .then((value) => {
+        dispatch({
+          type: NEW_FAVORITE,
+          payload: value,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+
+  }
+
+
   /**
    * metodo que consulta los parametros de configuracion contra la base de datos realtime.firebase
    */
@@ -268,10 +332,10 @@ const AuthState = (props) => {
         .ref("/configApp/")
         .once("value", (snapshot) => {
           if (snapshot.hasChildren())
-          dispatch({
-            type: GET_CONFIG,
-            payload: snapshot.val(),
-          });
+            dispatch({
+              type: GET_CONFIG,
+              payload: snapshot.val(),
+            });
           resolve(snapshot.val());
         })
         .catch((error) => {
@@ -283,7 +347,7 @@ const AuthState = (props) => {
   /**
    * metodo que consulta los parametros de configuracion contra la base de datos por default
    */
-   const getDefaultConfig = () => {
+  const getDefaultConfig = () => {
     return new Promise((resolve, reject) => {
       dispatch({
         type: GET_CONFIG,
@@ -317,17 +381,17 @@ const AuthState = (props) => {
   const passwordEmailRecovery = (email) => {
     auth()
       .sendPasswordResetEmail(email)
-      .then(()=>  {
+      .then(() => {
         dispatch({
           type: USER_PASSWORD_RECOVERY
         });
-        alert('Se envio un correo a '+email+' para reestablecer la contraseña');
+        alert('Se envio un correo a ' + email + ' para reestablecer la contraseña');
       }).catch((error) => {
-          switch(error.code) {
-            case 'auth/user-not-found':        
-              alert('La cuenta '+email+' no se encuentra registrada');
-              break;
-          }
+        switch (error.code) {
+          case 'auth/user-not-found':
+            alert('La cuenta ' + email + ' no se encuentra registrada');
+            break;
+        }
       });
   }
 
@@ -353,6 +417,9 @@ const AuthState = (props) => {
         updatePassword,
         getConfig,
         getDefaultConfig,
+        deleteFavoriteF,
+        createFavoriteF,
+        getDataFavorite
       }}
     >
       {props.children}

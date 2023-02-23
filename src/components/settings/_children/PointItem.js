@@ -47,7 +47,6 @@ const PointItem = ({ route, navigation }) => {
   const [scheduleToShowSD, setScheduleToShowSD] = useState([])
 
   useEffect(() => {
-    console.log(id)
     getDataPointById(id);
   }, [id]);
 

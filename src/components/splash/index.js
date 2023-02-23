@@ -4,7 +4,9 @@ import InitialContext from "../../../context/initialData/initialContext";
 import IOMContext from "../../../context/iomData/iomContext";
 import AuthContext from "../../../context/auth/authContext";
 import NetInfo from '@react-native-community/netinfo';
-
+import VersionCheck from "react-native-version-check";
+import { Linking } from 'react-native';
+import { StackActions, useNavigation } from "@react-navigation/native";
 const Splash = (props) => {
   const { getDataLink, updateLastUpdate } = useContext(InitialContext);
   const { getConfig, getDefaultConfig } = useContext(AuthContext);
@@ -20,47 +22,63 @@ const Splash = (props) => {
   ];
 
   const { dataPoint, getDataPoint, dataMapeoService, getDataMapeoService, dataMapeoState, getDataMapeoState } = useContext(IOMContext);
-
+  const navigation = useNavigation()
   useEffect(() => {
     let i = 0;
 
+    var current = VersionCheck.getCurrentVersion().toString();
+    getConfig().then((config) => {
 
-  NetInfo.fetch().then(state => {
-    if(!state.isConnected){
-      getDefaultConfig().then((config) => {
-        props.navigation.navigate("Home");
-      });
-    }else{
-      getConfig().then((config) => {
-        api = [
-          {name:'api-mapeo-estados.json',val:config.apiMapeoEstados},
-          {name:'api-enlaces-de-interes.json',val:config.apiEnlacesInteres},
-          {name:'api-mapeo.json',val:config.apiMapeo},
-          {name:'api-lineas-telefonicas.json',val:config.apiLineasTelefonicas},
-          {name:'api-lineas-telefonicas-servicios.json',val:config.apiLineasTelefonicasServicios},
-          {name:'api-mapeo-servicios.json',val:config.apiMapeoServicios},
-          {name:'api_enlaces.json',val:config.apiMapeoEnlaces},
-          {name:'api_socios.json',val:config.apiMapeoSocios}
-        ];
-        api.map((item) => {
-          i += 1;
-          return getDataLink(item.name,item.val);
+      
+
+      if (config.versionApp.toString() !== current.toString()) {
+        navigation.dispatch(navigation.navigate("UpdateVersion"))
+      } else {
+
+        NetInfo.fetch().then(state => {
+          if (!state.isConnected) {
+            getDefaultConfig().then((config) => {
+              props.navigation.navigate("Home");
+            });
+          } else {
+            getConfig().then((config) => {
+              api = [
+                { name: 'api-mapeo-estados.json', val: config.apiMapeoEstados },
+                { name: 'api-enlaces-de-interes.json', val: config.apiEnlacesInteres },
+                { name: 'api-mapeo.json', val: config.apiMapeo },
+                { name: 'api-lineas-telefonicas.json', val: config.apiLineasTelefonicas },
+                { name: 'api-lineas-telefonicas-servicios.json', val: config.apiLineasTelefonicasServicios },
+                { name: 'api-mapeo-servicios.json', val: config.apiMapeoServicios },
+                { name: 'api_enlaces.json', val: config.apiMapeoEnlaces },
+                { name: 'api_socios.json', val: config.apiMapeoSocios }
+              ];
+              api.map((item) => {
+                i += 1;
+                return getDataLink(item.name, item.val);
+              });
+              if (i === api.length) {
+                setTimeout(() => {
+                  getDataMapeoService();
+                  getDataMapeoState();
+                }, 3000);
+                setTimeout(() => {
+                  updateLastUpdate();
+                  props.navigation.navigate("Login");
+                }, 2000);
+              }
+            });
+          }
         });
-        if (i === api.length) {
-          setTimeout(() => {
-            getDataMapeoService();
-            getDataMapeoState();
-          }, 3000);
-          setTimeout(() => {
-            updateLastUpdate();
-            props.navigation.navigate("Login");
-          }, 2000);
-        }
-      });
-    }
-  });
 
-    
+      }
+
+
+    })
+
+
+
+
+
 
     /*if(dataPoint && dataPoint.length < 1)
       getDataPoint();
@@ -69,14 +87,14 @@ const Splash = (props) => {
     if(dataMapeoState && dataMapeoState.length < 1){
       getDataMapeoState();
     }*/
-    
+
   }, []);
 
   return (
-      <ImageBackground
-        source={require("../../resources/images/Splash.png")}
-        style={styles.logo}
-      />
+    <ImageBackground
+      source={require("../../resources/images/Splash.png")}
+      style={styles.logo}
+    />
   );
 };
 

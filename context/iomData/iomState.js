@@ -74,7 +74,7 @@ const IOMState = (props) => {
     try {
       const data = await AsyncStorage.getItem("api-mapeo.json");
       const object = JSON.parse(data);
-      const value = object.filter(function(item) {
+      const value = object.filter(function (item) {
         const textState = item.Estado_id;
         const textType = item.Tipo_ubicacion;
         const textVisible = item.Visible_publico;
@@ -137,13 +137,14 @@ const IOMState = (props) => {
     }
   };
 
-  const getDataPointFilter = (departamento, municipio, estado, typeService) => {
+  const getDataPointFilter = (departamento, municipio, estado, typeService, nombre) => {
     dispatch({
       type: GET_DATA_DIRECTORY_FILTER,
       departamento,
       municipio,
       estado,
-      typeService
+      typeService,
+      nombre
     });
   }
 
@@ -249,15 +250,15 @@ const IOMState = (props) => {
   };
 
   const getUserComments = (uid) => {
-    database().ref('/comments/'+uid).on('value',snapshot => {
+    database().ref('/comments/' + uid).on('value', snapshot => {
       let res = [];
       snapshot.forEach((value) => {
-        const pointID= value.key;
+        const pointID = value.key;
         let comments = [];
-        value.forEach((item) =>{
-          comments.push({commentID:item.key,date:item.val().date,comment:item.val().comment});
+        value.forEach((item) => {
+          comments.push({ commentID: item.key, date: item.val().date, comment: item.val().comment });
         });
-        res.push({pointID,comments});
+        res.push({ pointID, comments });
       });
       dispatch({
         type: GET_USER_COMMENTS,
@@ -266,23 +267,25 @@ const IOMState = (props) => {
     });
   };
 
-  const createUserComment = async (user,id,comment,config) => {
+  const createUserComment = async (user, id, comment, config) => {
 
-    const dataV = { "entity_id": [{"target_id": id}],
-    "uid": [{"target_id": config.apiDrupalUserUID}],
-    "status": {"value": "1"},
-    "entity_type": [{"value": "node"}],
-    "comment_type": [{"target_id": "comment"}],
-    "field_name": [{"value": "field_alertas"}],
-    "field_usuario_app": [{"value": user.email}],
-    "subject": [{"value": "Comentario desde APP GIFMM | "+user.email}],
-    "comment_body": [{"value": comment,"format": "simple"}]};
+    const dataV = {
+      "entity_id": [{ "target_id": id }],
+      "uid": [{ "target_id": config.apiDrupalUserUID }],
+      "status": { "value": "1" },
+      "entity_type": [{ "value": "node" }],
+      "comment_type": [{ "target_id": "comment" }],
+      "field_name": [{ "value": "field_alertas" }],
+      "field_usuario_app": [{ "value": user.email }],
+      "subject": [{ "value": "Comentario desde APP GIFMM | " + user.email }],
+      "comment_body": [{ "value": comment, "format": "simple" }]
+    };
 
 
     axios.post(config.apiDrupalLoginURL,
-      {"name":"integrador", "pass":"oj*4^IQUE5r#"}).then(
+      { "name": "integrador", "pass": "oj*4^IQUE5r#" }).then(
         response => {
-            throw error;
+          throw error;
         }
       ).catch(error => {
         //console.log('error en login',error)
@@ -293,30 +296,30 @@ const IOMState = (props) => {
               'Accept': 'application/json',
               'X-Csrf-Token': response.data
             }
-    
-            console.log('dataV',JSON.stringify(dataV));
+
+            console.log('dataV', JSON.stringify(dataV));
             axios.post(config.apiDrupalCommentURL,
-            dataV, 
-            {headers: headers}).then(
-              response => {
-                //console.log('response apiDrupalCommentURL',response.data);
-              }
-            ).catch(error => {
-              console.log('error comment',error);
-            });
+              dataV,
+              { headers: headers }).then(
+                response => {
+                  //console.log('response apiDrupalCommentURL',response.data);
+                }
+              ).catch(error => {
+                console.log('error comment', error);
+              });
           }
         ).catch(error => {
-          console.log('error apiDrupalTokenURL',error);
+          console.log('error apiDrupalTokenURL', error);
         });
       });
 
-    
+
 
     var date = moment().format('YYYY-MM-DD, hh:mm:ss a');
-    database().ref('/comments/'+user.uid+'/'+id).push({
+    database().ref('/comments/' + user.uid + '/' + id).push({
       comment,
       date
-    }).then(()=> 
+    }).then(() =>
       dispatch({
         type: NEW_COMMENT
       })
@@ -324,29 +327,47 @@ const IOMState = (props) => {
   }
 
 
-  const deleteUserComment = (uid,id,key) => {
-    database().ref('/comments/'+uid+'/'+id+'/'+key).remove()
-    .then(()=> 
-      dispatch({
-        type: DELETE_COMMENT
-      })
-    );
+  const deleteUserComment = (uid, id, key) => {
+    database().ref('/comments/' + uid + '/' + id + '/' + key).remove()
+      .then(() =>
+        dispatch({
+          type: DELETE_COMMENT
+        })
+      );
   }
 
   const createFavorite = async (point) => {
     try {
-        var value = JSON.parse(await AsyncStorage.getItem("favorites"));
-        if(!value)
-          value=[];
-        let index = value.findIndex(favorite => favorite.id == point.id);
-        if(index == -1 && point.id >= 0) {
-          value.push(point);
-          AsyncStorage.setItem("favorites", JSON.stringify(value));
-          dispatch({
-            type: NEW_FAVORITE,
-            payload: value,
-          });
-        }
+      var value = JSON.parse(await AsyncStorage.getItem("favorites"));
+      if (!value)
+        value = [];
+      let index = value.findIndex(favorite => favorite.id == point.id);
+      if (index == -1 && point.id >= 0) {
+        value.push(point);
+        AsyncStorage.setItem("favorites", JSON.stringify(value));
+        dispatch({
+          type: NEW_FAVORITE,
+          payload: value,
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: GET_DATA_ERROR,
+        payload: error,
+      });
+    }
+  };
+
+  const deleteFavoriteId = async (point) => {
+
+    //AsyncStorage.removeItem('favorites')
+    try {
+      const posts = await AsyncStorage.getItem('favorites');
+      let postsFav = JSON.parse(posts);
+      const postsItems = postsFav.filter(function (e) { return e.id !== point });
+
+      await AsyncStorage.setItem('favorites', JSON.stringify(postsItems));
+
     } catch (error) {
       dispatch({
         type: GET_DATA_ERROR,
@@ -361,8 +382,8 @@ const IOMState = (props) => {
     try {
       const posts = await AsyncStorage.getItem('favorites');
       let postsFav = JSON.parse(posts);
-const postsItems = postsFav.filter(function(e){ return e.id !== point});
-      
+      const postsItems = postsFav.filter(function (e) { return e.id !== point });
+
       await AsyncStorage.setItem('favorites', JSON.stringify(postsItems));
       const value = await AsyncStorage.getItem("favorites");
       if (value !== null) {
@@ -371,7 +392,7 @@ const postsItems = postsFav.filter(function(e){ return e.id !== point});
           payload: value,
         });
       }
-    } catch(error) {
+    } catch (error) {
       dispatch({
         type: GET_DATA_ERROR,
         payload: error,
@@ -416,7 +437,8 @@ const postsItems = postsFav.filter(function(e){ return e.id !== point});
         createUserComment,
         createFavorite,
         deleteFavorite,
-        deleteUserComment
+        deleteUserComment,
+        deleteFavoriteId
       }}
     >
       {props.children}

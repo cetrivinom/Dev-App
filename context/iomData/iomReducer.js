@@ -20,7 +20,7 @@ import {
 } from "../../types";
 
 export default (state, action) => {
-  
+
   switch (action.type) {
     case GET_DATA_LINK:
       const dataLink = JSON.parse(action.value);
@@ -55,6 +55,8 @@ export default (state, action) => {
       };
     case GET_DATA_DIRECTORY_FILTER:
 
+    
+
       if (action.typeService.length > 0) {
 
         const array = [];
@@ -79,6 +81,8 @@ export default (state, action) => {
 
         })
 
+        
+
         return {
 
 
@@ -88,48 +92,100 @@ export default (state, action) => {
             .filter((item) => item.Departamento.toLowerCase().includes(action.departamento.toLowerCase()))
             .filter((item) => item.Municipio.toLowerCase().includes(action.municipio.toLowerCase()))
             .filter((item) => item.Estado.toLowerCase().includes(action.estado.toLowerCase()))
+            .filter((item) => item.Nombre_punto.toLowerCase().includes(action.nombre.toLowerCase()))
+            
 
         };
       }
       else {
-     return {
+        return {
 
-        ...state,
-        dataPointFilter: state.dataPoint
-          .filter((item) => item.Departamento.toLowerCase().includes(action.departamento.toLowerCase()))
-          .filter((item) => item.Municipio.toLowerCase().includes(action.municipio.toLowerCase()))
-          .filter((item) => item.Estado.toLowerCase().includes(action.estado.toLowerCase()))
+          ...state,
+          dataPointFilter: state.dataPoint
+            .filter((item) => item.Departamento.toLowerCase().includes(action.departamento.toLowerCase()))
+            .filter((item) => item.Municipio.toLowerCase().includes(action.municipio.toLowerCase()))
+            .filter((item) => item.Estado.toLowerCase().includes(action.estado.toLowerCase()))
+            .filter((item) => item.Nombre_punto.toLowerCase().includes(action.nombre.toLowerCase()))
           //.filter((item) => item.Servicios.some((o) => o.Servicio.toLowerCase().includes(action.typeService.toLowerCase()))),
-      };
-    }
+        };
+      }
     case GET_DATA_POINT_ID:
       return {
         ...state,
         dataItem: state.dataPoint.find((item) => item.ID == action.payload),
       };
     case GET_DATA_DIRECTORY:
+
+      var busqueda = action.item.toLowerCase();
+      const array = JSON.parse(action.value);
+      let array_concat = [];
+      const array3 = [];
+
+      if (busqueda !== undefined && busqueda !== null && busqueda != "") {
+
+        array.map(element => {
+          var todos = false;
+
+          element.LineasTelefonicas.map(item => {
+
+            let tipo_linea = item.tipo_de_linea.toLowerCase()
+
+            if (tipo_linea.includes(busqueda)) {
+              todos = true;
+            }
+
+
+          })
+          if (todos) {
+            array3.push(element);
+          }
+
+
+        })
+
+        let value = [];
+
+        if (array3.length === 0) {
+          value = array.filter((item) => {
+
+            let depart = item.departamento.toLowerCase();
+
+            return depart.includes(busqueda)
+
+          });
+
+        }
+
+
+        array_concat = array3.concat(value);
+
+      }
+      else {
+        array_concat = array;
+      }
       return {
         ...state,
-        dataDirectory: JSON.parse(action.value).filter((item) => item.departamento.toLowerCase().includes(action.item.toLowerCase())),
+        dataDirectory: array_concat,
+        //dataDirectory: JSON.parse(action.value).filter((item) => item.departamento.toLowerCase().includes(action.item.toLowerCase())),
         dataItem: null,
         messageError: null,
       };
-      case GET_DATA_ENLACE:
-        return {
-          ...state,
-          dataEnlace: JSON.parse(action.value),
-          dataItem: null,
-          messageError: null,
-        };
+    case GET_DATA_ENLACE:
+      return {
+        ...state,
+        dataEnlace: JSON.parse(action.value),
+        dataItem: null,
+        messageError: null,
+      };
 
-        case GET_DATA_SOCIO:
-        return {
-          ...state,
-          dataSocio: JSON.parse(action.value),
-          dataItem: null,
-          messageError: null,
-        };
-      case GET_DATA_DIRECTORY_ITEM:
+    case GET_DATA_SOCIO:
+      return {
+        ...state,
+        dataSocio: JSON.parse(action.value),
+        dataItem: null,
+        messageError: null,
+      };
+    case GET_DATA_DIRECTORY_ITEM:
       return {
         ...state,
         message: null,
@@ -163,7 +219,7 @@ export default (state, action) => {
     case GET_DATA_FAVORITES:
       return {
         ...state,
-        dataFavorite: JSON.parse(action.payload),
+        dataFavorite: action.payload,
         dataItem: null,
         messageError: null,
       };
@@ -192,11 +248,11 @@ export default (state, action) => {
       return {
         ...state
       };
-/*     case DELETE_FAVORITE:
-      return {
-        ...state,
-        dataFavorite: action.payload,
-      }; */
+    /*     case DELETE_FAVORITE:
+          return {
+            ...state,
+            dataFavorite: action.payload,
+          }; */
     default:
       return state;
   }

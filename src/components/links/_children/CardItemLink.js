@@ -28,6 +28,14 @@ const CardItemLink = (props) => {
   const result = resume.replace(regex, "");
   let _resume = result.substring(0, 60);
 
+  function unescapeHtml(safe) {
+    return safe.replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#039;/g, "'"); 
+
+  }
   return (
     <TouchableOpacity onPress={onPressOpen}>
       <View style={styles.container}>
@@ -38,7 +46,7 @@ const CardItemLink = (props) => {
           }}
         />
         <View style={styles.containeImageText}>
-        <Text style={styles.titleSection}>{title + "..."}</Text>
+        <Text style={styles.titleSection}>{unescapeHtml(title) + "..."}</Text>
           {/*           <View style={styles.containerDate}>
             <Image source={require("../../../resources/images/calendar.png")} />
             <Text style={styles.titleDate}>{date}</Text>

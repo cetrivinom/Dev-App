@@ -31,6 +31,16 @@ const LinkItem = ({ route, navigation }) => {
   const _resume = resume.replace(regex, "");
   const _content = content.replace(regex, "");
   const { config } = useContext(AuthContext);
+
+  function unescapeHtml(safe) {
+    return safe.replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#039;/g, "'"); 
+
+  }
+
   return (
     <ScrollView style={styles.wrapper}>
       <TouchableOpacity style={styles.image} onPress={onPressClose}>
@@ -43,12 +53,12 @@ const LinkItem = ({ route, navigation }) => {
         }}
       />
       <View style={styles.container}>
-      <Text style={styles.textTitle}>{_title}</Text>
+      <Text style={styles.textTitle}>{unescapeHtml(_title)}</Text>
         <View style={styles.containerDate}>
           <Image source={require("../../../resources/images/calendar.png")} />
           <Text style={styles.titleDate}>{date}</Text>
         </View>
-        <Text style={styles.textContent}>{_content}</Text>
+        <Text style={styles.textContent}>{unescapeHtml(_content)}</Text>
         <View style={styles.viewLink}>
           {_.map(links,(val,id) => {
             const link = val.indexOf('enlace:');
@@ -57,9 +67,9 @@ const LinkItem = ({ route, navigation }) => {
             return <TouchableOpacity
                 key={id}
                 style={styles.boxOpenLink}
-                onPress={() => Linking.openURL(url)}
+                onPress={() => Linking.openURL(unescapeHtml(url))}
               >
-                <Text style={styles.textOpenLink}>{desc}</Text>
+                <Text style={styles.textOpenLink}>{unescapeHtml(desc)}</Text>
                 <Image
                   source={require("../../../resources/images/riExternalLinkFill.png")}
                 />

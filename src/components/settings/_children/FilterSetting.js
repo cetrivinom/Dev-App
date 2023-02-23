@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState, useContext, useEffect } from "react";
-import HeaderItem from "../../global/_children/HeaderItem";
+import HeaderPoint from "../../global/_children/HeaderItem";
 import ModalFilter from "../../links/_children/ModalFilter";
 import {
   StyleSheet,
@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
+  TextInput
 } from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
 import { metrics } from "../../../utilities/Metrics";
@@ -37,6 +38,7 @@ const FilterSetting = (props) => {
   const [municipio, setMunicipio] = useState("");
   const [departamento, setDepartamento] = useState("");
   const [selectedService, setSelectedService] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   
   const [arregloServicios, setArregloServicios] = useState([]);
 
@@ -67,10 +69,11 @@ const FilterSetting = (props) => {
     setDepartamento("");
     setOpenDepartamento(false);
     setOpenMunicipio(false);
+    setSearchTerm("")
   };
 
   const onPressFilter = () => {
-    getDataPointFilter(departamento, municipio, statusPoint, selectedService);
+    getDataPointFilter(departamento, municipio, statusPoint, selectedService, searchTerm);
     props.navigation.navigate("PointListResult", {
       departamento,
       municipio,
@@ -83,8 +86,18 @@ const FilterSetting = (props) => {
 
   return (
       <View style={styles.wrapper}>
-        <HeaderItem {...props} title="Filtrar puntos de servicio" showSaveOpt={false} />
+        <HeaderPoint {...props} title="Filtrar puntos de servicio" showSaveOpt={false} />
         <View style={[styles.box, styles.box2]}>
+        <TextInput
+            style={styles.inputTextBox}
+            onChangeText={(e) => setSearchTerm(e)}
+            placeholderTextColor="#a9a9a9"
+            placeholder="Nombre"
+            clearButtonMode="always"
+            value={searchTerm}
+          />
+
+<View style={styles.divider}></View>
           <TouchableOpacity
             style={styles.box6}
             onPress={() => {
@@ -149,6 +162,10 @@ const FilterSetting = (props) => {
             isMulti
             placeholder="Buscar"
           />
+
+
+          
+      
 
           <View style={styles.box7}>
             <TouchableOpacity style={[styles.caja1]} onPress={onPressCancel}>
@@ -300,6 +317,15 @@ const styles = StyleSheet.create({
   },
   textBoxCajaNegra: {
     color: "#FFFFFF",
+  },
+  inputTextBox: {
+    height: 46,
+    borderColor: "#E7EAEC",
+    backgroundColor: "#E7EAEC",
+    borderRadius: 25,
+    borderWidth: 1,
+    paddingLeft: 15,
+    color: "#000",
   },
 });
 
