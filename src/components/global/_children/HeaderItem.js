@@ -4,8 +4,11 @@ import { metrics } from "../../../utilities/Metrics";
 import IOMContext from "../../../../context/iomData/iomContext";
 import AuthContext from "../../../../context/auth/authContext";
 import database from "@react-native-firebase/database";
+import analytics from '@react-native-firebase/analytics';
+
+
 const HeaderItem = (props) => {
-  const { title = "", id = "", showSaveOpt = true, navigation } = props || {};
+  const { title = "", id = "", showSaveOpt = true, navigation, nombre="" } = props || {};
   const { createFavorite, dataFavorite, deleteFavoriteId } = useContext(IOMContext);
   const {user,  getUser, deleteFavoriteF, createFavoriteF } = useContext(AuthContext);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -20,6 +23,17 @@ const [favorito, setFavorito] = useState({});
       deleteFavoriteF(user,favorito);
       
     }else{
+
+      let nombreA = nombre.replace(/ /g, "_") + "|Crear_Favorito";
+
+      console.log(nombreA)
+
+      analytics().logScreenView({
+        screen_name: nombreA,
+        screen_class: nombreA,
+      });
+
+
       createFavoriteF(user,id);
       
     }

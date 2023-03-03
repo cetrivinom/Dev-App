@@ -18,6 +18,7 @@ const DirectoryItem = ({ route, navigation }) => {
       //console.log('*',item.item.tipo_de_linea_id,dataItem.LineasTelefonicas.filter(itemLine => itemLine.tipo_de_linea_id.includes(item.item.tipo_de_linea_id)));
       return (
         <CardItemDirectoryDetail key={index}
+          departamento = {otherParam}
           title={item.item.tipo_de_linea}
           subTitle1={item.item.NombreOrganizacion}
           subTitle2={item.item.telefono_}

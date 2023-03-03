@@ -22,6 +22,7 @@ import Menu, {
   MenuTrigger
 } from 'react-native-popup-menu';
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import analytics from '@react-native-firebase/analytics';
 
 const PointItem = ({ route, navigation }) => {
   const { dataItem, getDataPointById, dataComments, deleteUserComment } = useContext(IOMContext);
@@ -47,6 +48,8 @@ const PointItem = ({ route, navigation }) => {
   const [scheduleToShowSD, setScheduleToShowSD] = useState([])
 
   useEffect(() => {
+    
+
     getDataPointById(id);
   }, [id]);
 
@@ -203,7 +206,7 @@ const militaryTimeTo12Hour = (s) => {
 
   return (
     <View style={styles.wrapper}>
-      <HeaderItem   title="Información de punto" id={id} navigation={navigation} />
+      <HeaderItem   title="Información de punto" id={id} navigation={navigation} nombre={Nombre_punto} />
 
       <View style={[styles.box, styles.box2]}>
         <ScrollView style={{ flex: 1 }}>

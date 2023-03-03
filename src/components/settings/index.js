@@ -88,7 +88,7 @@ const Settings = (props) => {
                 latitude,
                 longitude,
               }}
-              onPress={() => onPressOpenPoint(item.ID, latitude, longitude, icon?.img_estado_b64)}
+              onPress={() => onPressOpenPoint(item.ID, latitude, longitude, icon?.img_estado_b64, item.Nombre_punto)}
             >
               <Image style={{ width: 28, height: 40 }} source={{ uri: icon?.img_estado_b64 }} />
             </Marker>
@@ -98,7 +98,18 @@ const Settings = (props) => {
     }
   };
 
-  const onPressOpenPoint = (id, latitude, longitude, uri) => {
+  const onPressOpenPoint = (id, latitude, longitude, uri, nombre) => {
+
+    let nombreA = nombre.replace(/ /g, "_")+"|Mapeo_De_Servicios_Colombia_GIFMM";
+
+    console.log(nombreA)
+
+    analytics().logScreenView({
+      screen_name: nombreA,
+      screen_class: nombreA,
+    });
+
+    analytics().logEvent('screen_view', { screen_name: nombreA });
     analytics().logSelectContent({
       content_type: 'point_opened',
       item_id: id,

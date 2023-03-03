@@ -11,7 +11,7 @@ import IOMContext from "../../../context/iomData/iomContext";
 const Directory = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
   const { dataDirectory, getDataDirectory } = useContext(IOMContext);
-  const awesomeChildListRenderItem = (item,index) => (<CardItemDirectory {...props} key={index} title={item.item.departamento} icon={item.item.icon} />)
+  const awesomeChildListRenderItem = (item,index) => (<CardItemDirectory {...props} key={item.item.departamento} title={item.item.departamento} icon={item.item.icon} />)
   const awesomeChildListKeyExtractor = (item) => item.departamento_id;
 
   useEffect(() => {

@@ -17,6 +17,16 @@ const CardItemLink = (props) => {
   } = props || {};
 
   const onPressOpen = () => {
+
+    let nombreA = "Noticias|"+ title.replace(/ /g, "_")+"|Contenido_Interes";
+
+      console.log(nombreA)
+
+      analytics().logScreenView({
+        screen_name: nombreA,
+        screen_class: nombreA,
+      });
+
     analytics().logSelectContent({
       content_type: 'news_opened',
       item_id: title,

@@ -26,9 +26,10 @@ const Links = ({ route, navigation }) => {
   const { dataSocio, getDataSocio } = useContext(IOMContext);
   const { dataLink, dataLinkEtiquetas, getDataLink} = useContext(IOMContext);
   const [index, setIndex] = useState(0);
-  const awesomeChildListRenderItem = (item) => (
+  const awesomeChildListRenderItem = (item, index) => (
     <CardItemLink
-      title={item.item.Titulo}
+    key = {item.item.id}
+    title={item.item.Titulo}
       resume={item.item.Resumen}
       content={item.item.Contenido}
       image={item.item.Imagen}
@@ -37,7 +38,7 @@ const Links = ({ route, navigation }) => {
       navigation={navigation}
     />
   );
-  const awesomeChildListKeyExtractor = (item) => item.Titulo;
+  const awesomeChildListKeyExtractor = (item) => item.id;
 
 
   const onPressClose = () => {
@@ -147,7 +148,7 @@ const Links = ({ route, navigation }) => {
               {dataEnlace !== null && dataEnlace.map(index => {
                 return (
                   <CardEnlaceLink
-                  key = {index.titulo}
+                  key = {index.id}
                   title={index.titulo}
                   image={index.img_enlace}
                   links = {index.link}

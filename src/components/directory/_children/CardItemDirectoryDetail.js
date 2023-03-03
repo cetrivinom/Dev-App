@@ -5,11 +5,13 @@ import IOMContext from "../../../../context/iomData/iomContext";
 import { metrics } from "../../../utilities/Metrics";
 import _ from 'lodash';
 import { width } from "deprecated-react-native-prop-types/DeprecatedImagePropType";
+import analytics from '@react-native-firebase/analytics';
 
 const CardItemDirectoryDetail = (props) => {
   const { dataItemService, getDataDirectoryItemService } =
     useContext(IOMContext);
   const {
+    departamento = "",
     title = "",
     subTitle = "",
     subTitle1 = "Humanity & Inclusion",
@@ -20,6 +22,16 @@ const CardItemDirectoryDetail = (props) => {
   const [open, setOpen] = useState(false);
 
   const onPressOpen = () => {
+
+    let nombreA = departamento.replace(/ /g, "_") +"|"+title.replace(/ /g, "_") + "|Lineas Telefonicas";
+
+      console.log(nombreA)
+
+      analytics().logScreenView({
+        screen_name: nombreA,
+        screen_class: nombreA,
+      });
+
     setOpen((prev) => !prev);
     getDataDirectoryItemService(subTitle);
   };

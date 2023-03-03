@@ -2,7 +2,7 @@
 import React from "react";
 import { StyleSheet, Text, Pressable, Image, View } from "react-native";
 import { metrics } from "../../../utilities/Metrics";
-
+import analytics from '@react-native-firebase/analytics';
 export const CardSocioLink = (props) => {
 
   const {
@@ -13,6 +13,16 @@ export const CardSocioLink = (props) => {
     navigation
   } = props || {};
   const onPressCard = () => {
+
+    let nombreA = "Socios|"+ title.replace(/ /g, "_")+"|Contenido_Interes";
+
+    console.log(nombreA)
+
+    analytics().logScreenView({
+      screen_name: nombreA,
+      screen_class: nombreA,
+    });
+
     navigation.navigate("SocioItem", { title, contenido, image, links });
   };
 

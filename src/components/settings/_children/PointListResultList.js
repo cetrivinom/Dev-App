@@ -16,6 +16,7 @@ import { metrics } from "../../../utilities/Metrics";
 import { SvgCssUri } from 'react-native-svg';
 import _ from 'lodash';
 import HeaderPoint from "../../global/_children/HeaderPoint";
+import analytics from '@react-native-firebase/analytics';
 
 export const LastUpdate = ({ route, navigation }) => {
   const {
@@ -165,7 +166,17 @@ export const ItemCardPoint = (props) => {
   const unique = [...new Set(Servicios.map(item => item.Servicio_id))];
 
 
-  const onPressOpenPoint = (id) => {
+  const onPressOpenPoint = (id, nombre) => {
+
+    let nombreA = nombre.replace(/ /g, "_")+"|Mapeo_De_Servicios_Colombia_GIFMM";
+
+    console.log(nombreA)
+
+    analytics().logScreenView({
+      screen_name: nombreA,
+      screen_class: nombreA,
+    });
+    
     let coor = Coordenadas.split(",");
     let latitude = parseFloat(coor[0]);
     let longitude = parseFloat(coor[1]);
@@ -228,7 +239,7 @@ export const ItemCardPoint = (props) => {
           <View style={styles.box7}>
             <TouchableOpacity
               style={[styles.caja1, styles.caja2]}
-              onPress={() => onPressOpenPoint(id)}
+              onPress={() => onPressOpenPoint(id, Nombre_punto)}
             >
               <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
                 Conocer más

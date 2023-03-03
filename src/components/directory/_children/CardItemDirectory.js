@@ -7,10 +7,17 @@ import analytics from '@react-native-firebase/analytics';
 const CardItemDirectory = (props) => {
   const { title = "", icon = "" } = props || {};
   const onPressOpen = () => {
-    analytics().logSelectContent({
-      content_type: 'directory_opened',
-      item_id: title,
-    })
+    
+    let nombreA = title.replace(/ /g, "_") + "|Lineas Telefonicas";
+
+      console.log(nombreA)
+
+      analytics().logScreenView({
+        screen_name: nombreA,
+        screen_class: nombreA,
+      });
+    
+    
     props.navigation.navigate("DirectoryItem", {
       otherParam: title,
     });

@@ -17,6 +17,7 @@ import { capitalize } from "../../../utilities/helpers";
 import { SvgCssUri } from 'react-native-svg';
 import _ from 'lodash';
 import HeaderPoint from "../../global/_children/HeaderPoint";
+import analytics from '@react-native-firebase/analytics';
 
 
 export const LastUpdate = ({ route, navigation }) => {
@@ -195,7 +196,17 @@ export const ItemCardPoint = (props) => {
     }
   });
 
-  const onPressOpenPoint = (id) => {
+  const onPressOpenPoint = (id,nombre) => {
+
+    let nombreA = nombre.replace(/ /g, "_")+"|Mapeo_De_Servicios_Colombia_GIFMM";
+
+    console.log(nombreA)
+
+    analytics().logScreenView({
+      screen_name: nombreA,
+      screen_class: nombreA,
+    });
+
     let coor = Coordenadas.split(",");
     let latitude = parseFloat(coor[0]);
     let longitude = parseFloat(coor[1]);
@@ -261,7 +272,7 @@ export const ItemCardPoint = (props) => {
           <View style={styles.box7}>
             <TouchableOpacity
               style={[styles.caja1, styles.caja2]}
-              onPress={() => onPressOpenPoint(id)}
+              onPress={() => onPressOpenPoint(id,_Nombre_punto)}
             >
               <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
                 Conocer más
@@ -283,7 +294,17 @@ export const ItemCardPoint = (props) => {
 const PointListResult = (props) => {
   const { dataPointFilter, dataMapeoState } = useContext(IOMContext);
 
-  const onPressOpenPoint = (id, latitude, longitude, uri) => {
+  const onPressOpenPoint = (id, latitude, longitude, uri, nombre) => {
+
+    let nombreA = nombre.replace(/ /g, "_")+"|Mapeo_De_Servicios_Colombia_GIFMM";
+
+    console.log(nombreA)
+
+    analytics().logScreenView({
+      screen_name: nombreA,
+      screen_class: nombreA,
+    });
+    
     props.navigation.navigate("PointItem", { id, latitude, longitude, uri });
   };
 
@@ -310,7 +331,7 @@ const PointListResult = (props) => {
                 latitude,
                 longitude,
               }}
-              onPress={() => onPressOpenPoint(item.ID, latitude, longitude, icon?.img_estado_b64)}
+              onPress={() => onPressOpenPoint(item.ID, latitude, longitude, icon?.img_estado_b64, item.Nombre_punto)}
             >
               <Image style={{ height: 40, width: 28 }} source={{ uri: icon?.img_estado_b64 }} />
             </Marker>

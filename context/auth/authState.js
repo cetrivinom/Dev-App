@@ -48,6 +48,7 @@ const AuthState = (props) => {
         .signInWithEmailAndPassword(data.email, data.password)
         .then((response) => {
           var user = { ...data, uid: response.user.uid };
+          
           analytics().logEvent("signIn", { email: data.email, result: "true" });
           dispatch({
             type: LOG_IN,

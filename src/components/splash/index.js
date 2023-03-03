@@ -27,6 +27,7 @@ const Splash = (props) => {
     let i = 0;
 
     var current = VersionCheck.getCurrentVersion().toString();
+    //var current ="1.031";
     getConfig().then((config) => {
 
       

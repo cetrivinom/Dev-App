@@ -4,8 +4,9 @@ import { StyleSheet } from "react-native";
 import { metrics } from "../../utilities/Metrics";
 import { Linking } from 'react-native';
 import AuthContext from "../../../context/auth/authContext";
-
+import { StackActions, useNavigation } from "@react-navigation/native";
 const UpdateVersion = () => {
+    const navigation = useNavigation()
     const { getConfig, getDefaultConfig } = useContext(AuthContext);
     const [appStore, setAppStore] = useState("");
     const [playStore, setPlayStore] = useState("");
@@ -27,7 +28,9 @@ const UpdateVersion = () => {
 
     const onPressSalir = () => {
 
-        BackHandler.exitApp();
+        getDefaultConfig().then((config) => {
+            navigation.navigate("Home");
+          });
 
     }
 
