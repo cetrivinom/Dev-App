@@ -6,201 +6,195 @@ import {
   TextInput,
   TouchableHighlight,
   TouchableOpacity,
+  ScrollView
 } from "react-native";
 import AuthContext from "../../../../context/auth/authContext";
 import { Snackbar } from "react-native-paper";
 import { validateEmail } from "../../../utilities/helpers";
 import Styles from "./styles";
-
+import { metrics } from "../../../utilities/Metrics";
+import { StyleSheet } from "react-native";
+import { useWindowDimensions } from 'react-native';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import LoginFormD from "./LoginFormD";
+import LoginFormR from "./LoginFormR";
 const LoginForm = (props) => {
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
+
+  const [index, setIndex] = React.useState(0);
+
+  const layout = useWindowDimensions();
+  const [routes] = React.useState([
+    { key: 'registro', title: 'Regístrarme' },
+    { key: 'ingresar', title: 'Ingresar' },
+  ]);
+
+
+  const RegistreRoute = () => (
+
+    <LoginFormR />
+
+  );
+
+  const LoginRoute = () => (
+    <LoginFormD />
+  );
+
+  const renderLabel = ({ route, focused, color }) => {
+    return (
+      <View>
+        <Text
+          style={[focused ? styles.activeTabTextColor : styles.tabTextColor]}
+        >
+          {route.title}
+        </Text>
+        
+        <View style={{
+          height: 0,               // height is '0' so that the view will not occupy space
+          width: 100,              // as much as you want to 'Stretch' the underline
+          borderTopColor: '#FFFFFF',
+          borderTopWidth: 2,
+          marginTop:5    // 'Gap' between the content & the underline 
+      }} />
+      
+      </View>
+
+
+    )
+  }
+
+  const renderScene = SceneMap({
+    ingresar: LoginRoute,
+    registro: RegistreRoute,
   });
-  const [errorEmail, setErrorEmail] = useState("");
-  const [errorPassword, setErrorPassword] = useState("");
-  const [visible, setVisible] = useState(false);
-  const [visibleLogin, setVisibleLogin] = useState(false);
 
-  const onDismissSnackBar = () => setVisible(false);
-  const {
-    auth,
-    message,
-    config,
-    signIn,
-    getUser,
-    getConfig,
-    passwordEmailRecovery,
-    user: userData,
-  } = useContext(AuthContext);
+  const renderTabBar = props => (
+    <TabBar
+      {...props}
+      style={{
+        backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: "#00AAAD", elevation: 0,
+        shadowOpacity: 0, borderTopLeftRadius: 16, borderTopRightRadius: 16,
+        borderBottomWidth: 0
+      }}
+      renderLabel={renderLabel}
+      indicatorStyle={{
+        height: null,
+        top: 0,
+        backgroundColor: '#00AAAD',
+        borderTopLeftRadius: 16, borderTopRightRadius: 16
+      }}
 
-  const onPressRegistre = () => {
-    props.navigation.navigate("Registre");
-  };
+    />
+  );
 
-  /*useEffect(() => {
-    if (auth) {
-      props.navigation.navigate("Home");
-    }
-  }, [auth]);*/
-
-  const { email, password } = user;
-
-  const onPressLogin = () => {
-    var ok = true;
-    if (!validateEmail(email)) {
-      setErrorEmail("Correo electrónico invalido");
-      ok = false;
-    }
-    if (password === "") {
-      setErrorPassword("Contraseña invalida");
-      ok = false;
-    }
-
-    if (ok) {
-      signIn(user).then((uid) => {
-        if (uid) {
-          getUser(uid);
-        }
-      });
-      if (message !== null) {
-        setVisible(true);
-      }
-    }
-  };
 
   return (
-    <View style={Styles.container}>
-      <Text style={Styles.labelInicio}>Inicia sesión</Text>
-      <View style={Styles.containerForm}>
-        <View style={Styles.SectionStyle}>
-          <Image
-            source={require('../../../resources/images/email.png')}
-            style={Styles.ImageStyle}
-          />
-          <TextInput
-          style={
-            errorEmail !== "" ? Styles.inputTextBoxError : Styles.inputTextBox
-          }
-            placeholder="Correo electrónico"
-            placeholderTextColor="#a9a9a9"
-            value={email}
-            onChangeText={(e) => {
-              setUser({ ...user, email: e.trim() });
-              setErrorEmail("");
-              setErrorPassword("");
-            }}
-          />
-          {errorEmail !== "" && (
-            <Text style={Styles.labelError}>{errorEmail}</Text>
-          )}
-        </View>
-{/*         <TextInput
-          style={
-            errorEmail !== "" ? Styles.inputTextBoxError : Styles.inputTextBox
-          }
-          placeholder="Correo electrónico"
-          onChangeText={(e) => {
-            setUser({ ...user, email: e });
-            setErrorEmail("");
-            setErrorPassword("");
-          }}
-        /> */}
-        <View style={Styles.SectionStyle}>
-          <Image
-            source={require('../../../resources/images/lock.png')}
-            style={Styles.ImageStyle2}
-          />
-          <TextInput
-            style={
-              errorEmail !== "" ? Styles.inputTextBoxError : Styles.inputTextBox
-            }
-            secureTextEntry={true}
-            placeholderTextColor="#a9a9a9"
-            placeholder="Contraseña"
-            onChangeText={(e) => {
-              setUser({ ...user, password: e });
-              setErrorPassword("");
-            }}
-          />
-          {errorPassword !== "" && (
-            <Text style={Styles.labelError}>{errorPassword}</Text>
-          )}
-        </View>
-{/*         <TextInput
-          style={
-            errorPassword !== ""
-              ? Styles.inputTextBoxError
-              : Styles.inputTextBox
-          }
-          secureTextEntry={true}
-          placeholder="Contraseña"
-          onChangeText={(e) => {
-            setUser({ ...user, password: e });
-            setErrorPassword("");
-          }}
+    <View style={{ flex: 1 }} >
+      {/* START FIX */}
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <TabView
+          renderTabBar={renderTabBar}
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={{ width: metrics.WIDTH * 0.80 }}
+
+
+
+
         />
-        {errorPassword !== "" && (
-          <Text style={Styles.labelError}>{errorPassword}</Text>
-        )} */}
-        <TouchableOpacity
-          onPress={() => {
-            if(validateEmail(user.email)){ 
-              passwordEmailRecovery(user.email)
-            }else{
-              setErrorEmail("Ingrese un email valido");
-            }    
-          }}>
-          <Text style={Styles.labelForgetPassword}>¿Olvidaste tu contraseña?</Text>
-        </TouchableOpacity>
-        <TouchableHighlight style={Styles.btnIniciar} onPress={onPressLogin}>
-          <Text style={Styles.labelLogin}>Iniciar sesión</Text>
-        </TouchableHighlight>
-        <View style={Styles.noCuenta}>
-          <Text style={Styles.labelAccount}>¿No tienes una cuenta? </Text>
-          <TouchableOpacity onPress={onPressRegistre}>
-            <Text style={Styles.labelRegistrate}>Regístrate</Text>
-          </TouchableOpacity>
-        </View>
-        {/*<View>
-          <Text style={Styles.labelIngresa}>O ingresa con:</Text>
-          <View style={Styles.containerSocial}>
-            <View>
-              <TouchableOpacity style={Styles.btnSocialAccountGoogle}>
-                <Image
-                  source={require("../../../resources/images/GoogleIcon.png")}
-                />
-                <Text style={Styles.labelSocial}>Google</Text>
-              </TouchableOpacity>
-            </View>
-            <View>
-              <TouchableOpacity style={Styles.btnSocialAccountFacebook}>
-                <Image
-                  source={require("../../../resources/images/FacebookIcon.png")}
-                />
-                <Text style={Styles.labelSocial}>Facebook</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>*/}
-        <View style={Styles.s}>
-          <Snackbar
-            visible={visible}
-            onDismiss={onDismissSnackBar}
-            duration={3000}
-            action={{
-              label: "X",
-              onPress: () => {
-                // Do something
-              },
-            }}
-          >
-            No existe usuario con estas credenciales
-          </Snackbar>
-        </View>
-      </View>
+      </ScrollView>
     </View>
+
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignContent: 'center'
+
+  },
+  containerTop: {
+    flex: 1,
+    backgroundColor: "#00AAAD",
+  },
+
+  divider: {
+    width: metrics.WIDTH * 0.5,
+  },
+
+  containerForm: {
+    marginHorizontal: 16,
+  },
+  s: {
+    marginTop: 40,
+  },
+  labelInicio: {
+    fontSize: 22,
+    fontWeight: "700",
+    lineHeight: 28,
+    letterSpacing: 0.0015,
+    textAlign: "center",
+    color: "#000",
+    marginTop: 12,
+    marginBottom: 32,
+  },
+  labelAccount: {
+    fontSize: 16,
+    fontWeight: "normal",
+    lineHeight: 19,
+    letterSpacing: 0.005,
+    textAlign: "center",
+    color: "#003031",
+  },
+  labelForgetPassword: {
+    fontSize: 16,
+    lineHeight: 19,
+    letterSpacing: 0.005,
+    textDecorationLine: "underline",
+    marginBottom: 32,
+    marginTop: 30,
+  },
+  labelIngresa: {
+    textAlign: "center",
+    color: "#003031",
+    fontSize: 16,
+    fontWeight: "normal",
+    lineHeight: 19,
+    letterSpacing: 0.005,
+    marginLeft: 8,
+    marginBottom: 16,
+  },
+  labelLogin: {
+    color: "#FFFFFF",
+    fontSize: 15,
+    fontWeight: "bold",
+    lineHeight: 18,
+    letterSpacing: 0.00125,
+    textAlign: "center",
+    paddingVertical: 12,
+  },
+  activeTabTextColor: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: "bold",
+    lineHeight: 19,
+    letterSpacing: 0.005,
+    textAlign: "center",
+
+
+  },
+  tabTextColor: {
+    color: '#A1AAB2',
+    fontSize: 16,
+    fontWeight: "bold",
+    lineHeight: 19,
+    letterSpacing: 0.005,
+    textAlign: "center",
+
+  },
+
+
+})
 
 export default LoginForm;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import Header from "../global/_children/Header";
 import {
@@ -10,7 +10,10 @@ import {
 import moment from "moment";
 import Styles from "./styles";
 
-const Registre = (props) => {
+const Registre = ({ route, navigation }) => {
+
+  const { emailA } = route.params || {};
+  
   const [form, setForm] = useState(null);
   const [data, setData] = useState({
     email: "",
@@ -21,6 +24,13 @@ const Registre = (props) => {
     age: 30,
     oldMen: "",
   });
+
+  useEffect(() => {
+
+    console.log(emailA)
+    setData({ ...data, email: emailA });
+
+  }, []);
 
   const renderSwitch = (param) => {
     switch (param) {
@@ -35,8 +45,7 @@ const Registre = (props) => {
       case 3:
         return (
           <RegistreForm4
-            {...props}
-            setForm={setForm}
+           setForm={setForm}
             data={data}
             setData={setData}
           />
@@ -51,7 +60,7 @@ const Registre = (props) => {
   return (
     <View style={Styles.container}>
       <View style={[Styles.box, Styles.box1]}>
-        <Header {...props} form={form} setForm={setForm} />
+        <Header  form={form} setForm={setForm} navigation = {navigation} />
       </View>
       <View style={[Styles.box, Styles.box2]}>{renderSwitch(form)}</View>
     </View>

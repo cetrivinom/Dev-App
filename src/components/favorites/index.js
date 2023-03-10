@@ -59,7 +59,7 @@ const Favorites = (props) => {
     let a = (dataFavoriteL.filter(item => item.k === k));
 
 
-    deleteFavoriteF(user, a[0]);
+    deleteFavoriteF(user, a[0].id);
     setInformacion();
   }
 
@@ -84,7 +84,7 @@ const Favorites = (props) => {
       <View style={[styles.box, styles.box1]}>
         <Header {...props} showBack={false} title="Puntos favoritos" />
       </View>
-      {dataFavorite.length === 0 ?
+      {!dataFavoriteL?
         <View style={[styles.container]}>
           <ActivityIndicator size="large" />
         </View>

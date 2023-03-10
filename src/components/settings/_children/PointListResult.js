@@ -18,7 +18,7 @@ import { SvgCssUri } from 'react-native-svg';
 import _ from 'lodash';
 import HeaderPoint from "../../global/_children/HeaderPoint";
 import analytics from '@react-native-firebase/analytics';
-
+import HeaderPointItem from "./HeaderPointItem";
 
 export const LastUpdate = ({ route, navigation }) => {
   const {
@@ -232,12 +232,7 @@ export const ItemCardPoint = (props) => {
     <View style={styles.overlay3}>
       <View style={styles.overlay4}>
         <View style={styles.container55}>
-          <View style={styles.containerFormTitle}>
-            <Text style={styles.textTitle}>{_Nombre_punto + "..."}</Text>
-            <Image
-              source={require("../../../resources/images/riBookmarkLine2.png")}
-            />
-          </View>
+          <HeaderPointItem id={id}  nombre={_Nombre_punto}/>
           <View style={styles.containerForm}>{_.map(services, (val) => {
             return val.svg
           })}</View>

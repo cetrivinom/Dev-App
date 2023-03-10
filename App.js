@@ -71,7 +71,7 @@ function HomeBar() {
       <Tab.Screen name="SettingsStack" component={SettingsStack} options={{
         tabBarIcon: ({ color, number, focused }) => {
           return (
-            <Icon name="md-location" color={color} size={24} />
+            <Icon name="md-location" color={color} size={30} />
           );
         },
         tabBarLabel: 'Puntos de Servicio'
@@ -81,7 +81,7 @@ function HomeBar() {
       <Tab.Screen name="Directory" component={Directory} options={{
         tabBarIcon: ({ color, number, focused }) => {
           return (
-            <Icon name="md-call-outline" color={color} size={24} />
+            <Icon name={focused?"call-sharp":"call-outline"} color={color} size={24} />
 
           );
 
@@ -103,7 +103,7 @@ function HomeBar() {
       <Tab.Screen name="Favorites" component={Favorites} options={{
         tabBarIcon: ({ color, number, focused }) => {
           return (
-            <Icon name="bookmark-outline" color={color} size={24} />
+            <Icon name={focused?"bookmark":"bookmark-outline"} color={color} size={24} />
 
           );
 

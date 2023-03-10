@@ -3,7 +3,6 @@ import {
   View,
   Text,
   Image,
-  TextInput,
   TouchableHighlight,
   TouchableOpacity,
   Linking
@@ -12,10 +11,11 @@ import  DatePicker  from "react-native-date-picker";
 import moment from "moment";
 import AuthContext from "../../../../context/auth/authContext";
 import { validateEmail } from "../../../utilities/helpers";
-import { Snackbar } from "react-native-paper";
+import { Snackbar, TextInput, HelperText } from "react-native-paper";
 import Styles from "./styles";
 import database from '@react-native-firebase/database'
 import { CheckBox } from 'react-native-elements'
+import { metrics } from "../../../utilities/Metrics";
 /**
  * Componente Footer del registro, se llama la accion de signUp al terminar el registro
  * @param {Object} this.props - objeto de propiedades heredados de la clase padre.
@@ -115,7 +115,7 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
               }}>{t} </Text>)
 
             } else {
-              payments.push(<Text key={i}  style={Styles.labelTermino} >{
+              payments.push(<Text key={i} style={Styles.labelTermino} >{
 
                 res[i]
 
@@ -174,96 +174,98 @@ export const RegistreForm1 = ({ setForm, setData, data }) => {
     setVariablecontinuar(!variableContinuar);
   }
 
+  const [passwordVisibility, setPasswordVisibility] = useState(true);
+  const [passwordVisibilityR, setPasswordVisibilityR] = useState(true);
+
   return (
     <View style={Styles.container}>
       <View style={[Styles.box, Styles.box1]}>
-        <Text style={Styles.labelTitle}>Ingresa los datos de tu cuenta</Text>
-        <View style={Styles.SectionStyle}>
-          <Image
-            source={require('../../../resources/images/email.png')}
-            style={Styles.ImageStyle}
-          />
-          <TextInput
-            style={
-              errorEmail !== "" ? Styles.inputTextBoxError : Styles.inputTextBox
+        <Text style={Styles.labelTitle}>Crea una contraseña</Text>
+        <Text style={Styles.labelSubTitle}>Usarás ésta contraseña para iniciar sesión en ésta app</Text>
+
+        <TextInput
+          secureTextEntry={passwordVisibility}
+          onChangeText={(e) => {
+            setData({ ...data, password: e });
+            setErrorEmail("");
+            setErrorPassword("");
+            setErrorRePassword("");
+          }}
+          mode="outlined"
+          label="Contraseña"
+          outlineColor={errorPassword !== "" ? "#8F3D40" : "#A1AAB2"}
+          activeOutlineColor={errorPassword !== "" ? "#8F3D40" : "#A1AAB2"}
+          style={{ backgroundColor: "#FFFFFF" }}
+          textColor={"#A1AAB2"}
+          placeholderTextColor='#425565'
+          theme={{
+            colors: {
+              onSurfaceVariant: '#A1AAB2',
+              placeholder: "#A1AAB2"
             }
-            value={email}
-            placeholder="Correo electrónico"
-            placeholderTextColor="#a9a9a9"
-            onChangeText={(e) => {
-              setData({ ...data, email: e.trim() });
-              setErrorEmail("");
-              setErrorPassword("");
-              setErrorRePassword("");
+          }}
+          left={<TextInput.Icon icon="lock-outline" iconColor="#A1AAB2" />}
+          right={<TextInput.Icon
+            icon={passwordVisibility ? "eye" : "eye-off"} // where <Icon /> is any component from vector-icons or anything else
+            iconColor="#A1AAB2"
+            onPress={() => {
+              setPasswordVisibility(!passwordVisibility)
             }}
-          />
-        </View>
-        {errorEmail !== "" && (
-          <Text style={Styles.labelError}>{errorEmail}</Text>
-        )}
-        <View style={Styles.SectionStyle}>
-          <Image
-            source={require('../../../resources/images/lock.png')}
-            style={Styles.ImageStyle2}
-          />
-          <TextInput
-            style={
-              errorPassword !== ""
-                ? Styles.inputTextBoxError
-                : Styles.inputTextBox
+          />}
+        />
+        <HelperText style={Styles.labelError}
+          type="error" visible={errorPassword !== ""}>
+          {errorPassword}
+        </HelperText>
+
+
+
+        <TextInput
+          secureTextEntry={passwordVisibilityR}
+          onChangeText={(e) => {
+            setData({ ...data, rePassword: e });
+            setErrorEmail("");
+            setErrorPassword("");
+            setErrorRePassword("");
+          }} mode="outlined"
+          label="Repetir contraseña"
+          outlineColor={errorRePassword !== "" ? "#8F3D40" : "#A1AAB2"}
+          activeOutlineColor={errorRePassword !== "" ? "#8F3D40" : "#A1AAB2"}
+          style={{ backgroundColor: "#FFFFFF" }}
+          textColor={"#A1AAB2"}
+          placeholderTextColor='#425565'
+          theme={{
+            colors: {
+              onSurfaceVariant: '#A1AAB2',
+              placeholder: "#A1AAB2"
             }
-            secureTextEntry={true}
-            placeholder="Contraseña"
-            placeholderTextColor="#a9a9a9"
-            onChangeText={(e) => {
-              setData({ ...data, password: e });
-              setErrorEmail("");
-              setErrorPassword("");
-              setErrorRePassword("");
+          }}
+          left={<TextInput.Icon icon="lock-outline" iconColor="#A1AAB2" />}
+          right={<TextInput.Icon
+            icon={passwordVisibilityR ? "eye" : "eye-off"} // where <Icon /> is any component from vector-icons or anything else
+            iconColor="#A1AAB2"
+            onPress={() => {
+              setPasswordVisibilityR(!passwordVisibilityR)
             }}
-          />
-        </View>
-        {errorPassword !== "" && (
-          <Text style={Styles.labelError}>{errorPassword}</Text>
-        )}
-        <View style={Styles.SectionStyle}>
-          <Image
-            source={require('../../../resources/images/lock.png')}
-            style={Styles.ImageStyle2}
-          />
-          <TextInput
-            style={
-              errorRePassword !== ""
-                ? Styles.inputTextBoxError
-                : Styles.inputTextBox
-            }
-            secureTextEntry={true}
-            placeholder="Repetir contraseña"
-            placeholderTextColor="#a9a9a9"
-            onChangeText={(e) => {
-              setData({ ...data, rePassword: e });
-              setErrorEmail("");
-              setErrorPassword("");
-              setErrorRePassword("");
-            }}
-          />
-        </View>
-        {errorRePassword !== "" && (
-          <Text style={Styles.labelError}>{errorRePassword}</Text>
-        )}
+          />}
+        />
+        <HelperText style={Styles.labelError}
+          type="error" visible={errorRePassword !== ""}>
+          {errorRePassword}
+        </HelperText>
+
 
         <View style={Styles.TerminosStyleDiv}>
           <CheckBox
-          checkedColor='#00AAAD'
-            containerStyle={{padding:0, margin:0}}
+            checkedColor='#00AAAD'
+            containerStyle={{ padding: 0, margin: 0 }}
             checked={isSelected}
             onPress={() => setTerminos()}
-            uncheckedColor ={'#425565'}
-            checkedColor='#00AAAD'
+            uncheckedColor={'#425565'}
             checkedIcon='check-square'
           />
-          <View style={{flex:1, flexDirection:'row', marginRight:5, flexWrap:'wrap', justifyContent: 'flex-start'}}>
-          {textoFin}
+          <View style={{ flex: 1, flexDirection: 'row', marginRight: 5, flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+            {textoFin}
           </View>
         </View>
       </View>
@@ -372,33 +374,25 @@ export const RegistreForm2 = ({ setForm, setData, data }) => {
  * @return {Object} <View /> Formulario que captura la informacion.
  */
 export const RegistreForm3 = ({ setForm, setData, data, props }) => {
+  const [selectedDate, setSelectedDate] = useState('');
   return (
     <View style={Styles.container}>
       <View style={[Styles.box, Styles.box1]}>
         <Text style={Styles.labelTitle}>Ingresa tu fecha de nacimiento</Text>
-        <View style={{ flex: 1, justifyContent: "center" }}>
-          <View style={{ flex: 0.1, flexDirection: 'row' }}>
-            <View style={{ flex: 0.32 }}>
-              <Text style={Styles.labelBirthdate}>Día</Text>
-            </View>
-            <View style={{ flex: 0.37 }}>
-              <Text style={Styles.labelBirthdate}>Mes</Text>
-            </View>
-            <View style={{ flex: 0.35 }}>
-              <Text style={Styles.labelBirthdate}>Año</Text>
-            </View>
-          </View>
+        <View style={{ flex: 1, justifyContent: "flex-start" }}>
+
           <DatePicker
-            mode="date"
-            date={new Date(moment(data.birdDate !== '' ? data.birdDate : moment().add(-18, "years").toDate()))}
-            maximumDate={moment().add(-7, "years").toDate()}
-            minimumDate={moment().add(-120, "years").toDate()}
-            onDateChange={(date) => {
-              const age = new Date(Date.now() - date.getTime());
-              setData({ ...data, birdDate: moment(date).format("YYYY-MM-DD"), age: Math.abs(age.getUTCFullYear() - 1970) });
-            }}
-            style={{ backgroundColor: "white" }}
+           mode="date"
+           date={new Date(moment(data.birdDate !== '' ? data.birdDate : moment().add(-18, "years").toDate()))}
+           maximumDate={moment().add(-7, "years").toDate()}
+           minimumDate={moment().add(-120, "years").toDate()}
+           onDateChange={(date) => {
+             const age = new Date(Date.now() - date.getTime());
+             setData({ ...data, birdDate: moment(date).format("YYYY-MM-DD"), age: Math.abs(age.getUTCFullYear() - 1970) });
+           }}
+           style={{ backgroundColor: "white" }}
           />
+
         </View>
       </View>
       {data.age < 18 && (

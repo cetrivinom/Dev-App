@@ -6,8 +6,8 @@ import { metrics } from "../../../utilities/Metrics";
 export default StyleSheet.create({
   container: {
     flex: 1,
-    marginRight: 15,
-    marginLeft: 17,
+    paddingHorizontal: 15,
+    backgroundColor:"#FFFFFF"
   },
   box: {
     flex: 1,
@@ -26,6 +26,14 @@ export default StyleSheet.create({
     lineHeight: 28,
     letterSpacing: 0.0015,
     color: "#003031",
+    marginBottom: 16,
+  },
+  labelSubTitle: {
+    fontSize: 16,
+    fontWeight: "400",
+    lineHeight: 19,
+    letterSpacing: 0.005,
+    color: "#A1AAB2",
     marginBottom: 32,
   },
   labelBirthdate:{ 
@@ -54,7 +62,6 @@ export default StyleSheet.create({
     lineHeight: 14,
     letterSpacing: 0.004,
     marginTop: 5,
-    marginBottom: 20,
     paddingLeft: 15,
   },
   btnNext: {
@@ -62,12 +69,13 @@ export default StyleSheet.create({
     height: 42,
     borderRadius: 25,
   },btnNextDis: {
-    backgroundColor: "grey",
+    backgroundColor: "#E7EAEC",
     height: 42,
     borderRadius: 25,
+
   },
   labelNext: {
-    color: "#FFFFFF",
+    color: "#D0D4D8",
     fontSize: 15,
     fontWeight: "bold",
     lineHeight: 18,

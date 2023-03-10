@@ -48,7 +48,7 @@ const AuthState = (props) => {
         .signInWithEmailAndPassword(data.email, data.password)
         .then((response) => {
           var user = { ...data, uid: response.user.uid };
-          
+
           analytics().logEvent("signIn", { email: data.email, result: "true" });
           dispatch({
             type: LOG_IN,
@@ -266,10 +266,10 @@ const AuthState = (props) => {
 
   const getDataFavorite = async (uid) => {
 
-    
+
 
     await database()
-      .ref("/favorites/"+uid)
+      .ref("/favorites/" + uid)
       .once("value", (snapshot) => {
         if (snapshot.hasChildren()) {
           dispatch({
@@ -284,19 +284,46 @@ const AuthState = (props) => {
       });
   };
 
-  const deleteFavoriteF = (user, a) => {
-
-   
+  const deleteFavoriteF = (user, id) => {
 
     database()
-      .ref("/favorites/" + user.uid + "/" + a.k)
-      .remove()
-      .then(() => {
-        console.log("Eliminado")
+      .ref("/favorites/" + user.uid)
+      .once("value", (snapshot) => {
+        if (snapshot.hasChildren()) {
+          let dataF = snapshot;
+          let array = [];
+
+          dataF && dataF.forEach((child) => {
+            let data = {};
+            data.id = child.val().id;
+            data.k = child.key;
+            array.push(data)
+          });
+
+          console.log(id)
+          console.log(array)
+
+          let aa = array.find(item => item.id === id);
+          console.log(aa)
+
+          if (aa !== undefined && aa.length !== 0) {
+
+            database()
+              .ref("/favorites/" + user.uid + "/" + aa.k)
+              .remove()
+              .then(() => {
+                console.log("Eliminado")
+              })
+              .catch((error) => {
+                console.log(error)
+              });
+
+          }
+
+        }
       })
-      .catch((error) => {
-        console.log(error)
-      });
+
+
 
 
   }
@@ -304,7 +331,7 @@ const AuthState = (props) => {
   const createFavoriteF = (user, favoriteId) => {
 
     let data = {
-      id:favoriteId
+      id: favoriteId
     }
 
     database()

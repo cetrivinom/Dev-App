@@ -7,22 +7,20 @@ import database from "@react-native-firebase/database";
 import analytics from '@react-native-firebase/analytics';
 
 
-const HeaderItem = (props) => {
-  const { title = "", id = "", showSaveOpt = true, navigation, nombre="" } = props || {};
+const HeaderPointItem = (props) => {
+  const { id = "", nombre = "" } = props || {};
   const { createFavorite, dataFavorite, deleteFavoriteId } = useContext(IOMContext);
-  const {user,  getUser, deleteFavoriteF, createFavoriteF } = useContext(AuthContext);
+  const { user, getUser, deleteFavoriteF, createFavoriteF } = useContext(AuthContext);
   const [isFavorite, setIsFavorite] = useState(false);
-const [favorito, setFavorito] = useState({});
+  const [favorito, setFavorito] = useState({});
 
-  const onPressClose = () => {
-    navigation.navigate("SettingsStack")
-  };
+  
   const onPressSave = () => {
     if (isFavorite) {
 
-      deleteFavoriteF(user,id);
-      
-    }else{
+      deleteFavoriteF(user, id);
+
+    } else {
 
       let nombreA = nombre.replace(/ /g, "_") + "|Crear_Favorito";
 
@@ -34,8 +32,8 @@ const [favorito, setFavorito] = useState({});
       });
 
 
-      createFavoriteF(user,id);
-      
+      createFavoriteF(user, id);
+
     }
     setIsFavorite(!isFavorite);
   };
@@ -63,14 +61,14 @@ const [favorito, setFavorito] = useState({});
 
           let a = array.find(item => item.id === id);
 
-          if(a!==undefined && a.length!==0){
+          if (a !== undefined && a.length !== 0) {
             setFavorito(a)
             setIsFavorite(true)
           }
-          else{
+          else {
             setIsFavorite(false)
           }
-          
+
         }
       })
 
@@ -78,28 +76,20 @@ const [favorito, setFavorito] = useState({});
   }
 
   return (
-    <View style={[styles.box, styles.box1]}>
-      <View style={styles.statusBarBackground}>
-      </View>
-      <View style={styles.boxImage}>
-        <Image source={require("../../../resources/images/linkIcon.png")} />
-      </View>
-      <View style={styles.box4}>
-        <TouchableOpacity onPress={onPressClose}>
+
+
+    <View style={styles.containerFormTitle}>
+      <Text style={styles.textTitle}>{nombre}</Text>
+      <TouchableOpacity onPress={onPressSave}>
+        
           <Image
-            source={require("../../../resources/images/riCloseLine.png")}
+            source={isFavorite ? require("../../../resources/images/riBookmarkLine2.png") : require("../../../resources/images/riBookmarkLine.png")}
           />
-        </TouchableOpacity>
-        <Text style={styles.textTitle}>{title}</Text>
-        <TouchableOpacity onPress={onPressSave}>
-          {showSaveOpt && (
-            <Image
-              source={isFavorite ? require("../../../resources/images/riBookmarkLine2.png") : require("../../../resources/images/riBookmarkLine.png")}
-            />
-          )}
-        </TouchableOpacity>
-      </View>
+        
+      </TouchableOpacity>
     </View>
+
+
   );
 };
 
@@ -117,12 +107,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textTitle: {
-    fontSize: 20,
-    fontWeight: "500",
-    color: "#003031",
-    alignItems: 'center',
-    //lineHeight: 28,
+    fontSize: 18,
+    lineHeight: 23,
     letterSpacing: 0.0015,
+    fontWeight: "bold",
+    color: "#003031",
   },
   box4: {
     flexDirection: "row",
@@ -134,6 +123,11 @@ const styles = StyleSheet.create({
     height: (Platform.OS === 'ios') ? metrics.WIDTH * 0.06 : 0,
     //backgroundColor: "#00AAAD",
   },
+  containerFormTitle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingBottom: 10,
+  },
 });
 
-export default HeaderItem;
+export default HeaderPointItem;

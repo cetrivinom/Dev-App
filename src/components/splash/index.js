@@ -7,6 +7,7 @@ import NetInfo from '@react-native-community/netinfo';
 import VersionCheck from "react-native-version-check";
 import { Linking } from 'react-native';
 import { StackActions, useNavigation } from "@react-navigation/native";
+import LoginRegisterScreen from "./LoginRegisterScreen";
 const Splash = (props) => {
   const { getDataLink, updateLastUpdate } = useContext(InitialContext);
   const { getConfig, getDefaultConfig } = useContext(AuthContext);

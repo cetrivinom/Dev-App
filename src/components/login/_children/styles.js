@@ -39,7 +39,16 @@ export default StyleSheet.create({
     letterSpacing: 0.005,
     textDecorationLine: "underline",
     marginBottom: 32,
+    color:"#FFFFFF"
+  },
+  labelWelcome: {
+    fontSize: 22,
+    lineHeight: 28,
+    letterSpacing:  0.0015,
+    fontWeight: "normal",
+    marginBottom: 10,
     marginTop: 30,
+    color:"#FFFFFF"
   },
   labelIngresa: {
     textAlign: "center",
@@ -71,10 +80,10 @@ export default StyleSheet.create({
   },
   inputTextBox: {
     flex:1,
-    borderColor: "#A1AAB2",
+    borderColor: "#E7EAEC",
     color: 'black',
     fontSize: 16,
-    color: "#000",
+    color: "#FFFFFF",
   },
   inputTextBoxError: {
     flex:1,
@@ -84,7 +93,7 @@ export default StyleSheet.create({
     fontSize: 16,
   },
   labelError: {
-    color: "#DD3338",
+    color: "#8F3D40",
     fontSize: 12,
     lineHeight: 14,
     letterSpacing: 0.004,
@@ -96,7 +105,13 @@ export default StyleSheet.create({
     backgroundColor: "#132A3E",
     height: 42,
     borderRadius: 25,
+  },
+  btnIniciarR: {
+    backgroundColor: "#132A3E",
+    height: 42,
+    borderRadius: 25,
     marginBottom: 24,
+    marginTop:32
   },
   btnSocialAccountGoogle: {
     flexDirection: "row",
@@ -144,15 +159,15 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#A1AAB2',
+    borderColor: '#E7EAEC',
     height: 56,
     borderRadius: 5,
     marginTop: 30,
   },
   ImageStyle: {
       margin: 14,
-      height: 24,
-      width: 24,
+      height: 20,
+      width: 20,
       resizeMode: 'stretch',
       alignItems: 'center',
   },
