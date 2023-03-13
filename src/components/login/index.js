@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     lineHeight: 28,
     letterSpacing: 0.0015,
     textAlign: "center",
-    color: "#000",
+    color: "#003031",
     marginBottom: 8
   },
 

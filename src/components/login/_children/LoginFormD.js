@@ -168,7 +168,7 @@ const LoginFormD = (props) => {
           <ActivityIndicator size="large" />
 
           :
-          <TouchableHighlight style={Styles.btnIniciar} onPress={onPressLogin}>
+          <TouchableHighlight style={Styles.btnIniciar} onPress={onPressLogin} disabled={loading}>
             <Text style={Styles.labelLogin}>Iniciar sesión</Text>
           </TouchableHighlight>
 

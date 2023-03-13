@@ -139,8 +139,8 @@ export const UpdateBirthDate = (props) => {
     <View style={[Styles.box, Styles.box2]}>
       <View style={Styles.container}>
         <Text style={Styles.labelTitle}>Ingresa tu fecha de nacimiento</Text>
-        <View style={{ flex: 0.9, justifyContent: "center" }}>
-          <DatePicker
+        <View style={{ flex: 1, justifyContent: "center", marginTop:20, borderWidth:1 }}>
+        <DatePicker
             mode="date"
             date={new Date(moment(user.birdDate!==''?user.birdDate:moment().add(-18, "years").toDate()))}
             maximumDate={moment().add(-16, "years").toDate()}
@@ -148,7 +148,7 @@ export const UpdateBirthDate = (props) => {
             onDateChange={(date) => {
               updateUserInputChange({ 'field': 'birdDate', 'value': moment(date).format("YYYY-MM-DD")});
             }}
-            style={{ backgroundColor: "white" }}
+            style={{ backgroundColor: "white", marginTop:30 }}
           />
         </View>
       </View>
@@ -237,7 +237,6 @@ const UpdateProfileForm = ({ route, navigation }) => {
           </View>
         </View>
       </View>
-      <Text style={Styles.labelTitleHeader}>{field}</Text>
       <ShowComponentToUpdate field={field} 
               navigation={navigation}></ShowComponentToUpdate>
       <Footer navigation={navigation}/>

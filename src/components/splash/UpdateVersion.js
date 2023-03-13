@@ -29,7 +29,7 @@ const UpdateVersion = () => {
     const onPressSalir = () => {
 
         getDefaultConfig().then((config) => {
-            navigation.navigate("Home");
+            navigation.navigate("Login");
           });
 
     }
