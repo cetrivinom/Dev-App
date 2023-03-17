@@ -76,12 +76,14 @@ const styles = StyleSheet.create({
     color: "#132A3E",
     lineHeight: 23,
     letterSpacing: 0.0015,
+    fontFamily:'Dosis-Regular'
   },
   textEnlace: {
     fontSize: 16,
     color: "#132A3E",
     lineHeight: 23,
     letterSpacing: 0.0015,
+    fontFamily:'Dosis-Regular'
   },
   textContent: {
     marginTop: 20,
@@ -90,6 +92,7 @@ const styles = StyleSheet.create({
     color: "#003031",
     lineHeight: 16,
     letterSpacing: 0.0025,
+    fontFamily:'Dosis-Regular'
   },
   boxOpenLink: {
     justifyContent: "flex-start",
@@ -107,6 +110,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     textDecorationStyle: "solid",
     textDecorationColor: "#00AAAD",
+    fontFamily:'Dosis-Regular'
   },
   viewLink: {
     marginTop: metrics.HEIGHT * 0.05,
@@ -124,6 +128,7 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     color: "#A1AAB2",
     paddingTop: 2,
+    fontFamily:'Dosis-Regular'
   },
   image: {
     position: "absolute",

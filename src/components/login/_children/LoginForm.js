@@ -41,7 +41,7 @@ const LoginForm = (props) => {
 
   const renderLabel = ({ route, focused, color }) => {
     return (
-      <View>
+      <View style={{flex:1, margin:0, justifyContent:'space-evenly'}}>
         <Text
           style={[focused ? styles.activeTabTextColor : styles.tabTextColor]}
         >
@@ -49,15 +49,13 @@ const LoginForm = (props) => {
         </Text>
         
         <View style={{
-          height: 0,               // height is '0' so that the view will not occupy space
-          width: 100,              // as much as you want to 'Stretch' the underline
-          borderTopColor: '#FFFFFF',
-          borderTopWidth: 2,
-          marginTop:5    // 'Gap' between the content & the underline 
+          width: 100,  
+          height:10,            // as much as you want to 'Stretch' the underline
+          borderBottomColor: '#FFFFFF',
+          borderBottomWidth: 2
       }} />
       
       </View>
-
 
     )
   }
@@ -80,7 +78,7 @@ const LoginForm = (props) => {
         height: null,
         top: 0,
         backgroundColor: '#00AAAD',
-        borderTopLeftRadius: 16, borderTopRightRadius: 16
+        borderTopLeftRadius: 16, borderTopRightRadius: 16,
       }}
 
     />
@@ -138,6 +136,7 @@ const styles = StyleSheet.create({
     color: "#000",
     marginTop: 12,
     marginBottom: 32,
+    fontFamily: 'Dosis-Regular'
   },
   labelAccount: {
     fontSize: 16,
@@ -146,6 +145,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.005,
     textAlign: "center",
     color: "#003031",
+    fontFamily: 'Dosis-Regular'
   },
   labelForgetPassword: {
     fontSize: 16,
@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     marginBottom: 32,
     marginTop: 30,
+    fontFamily: 'Dosis-Regular'
   },
   labelIngresa: {
     textAlign: "center",
@@ -164,6 +165,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.005,
     marginLeft: 8,
     marginBottom: 16,
+    fontFamily: 'Dosis-Regular'
   },
   labelLogin: {
     color: "#FFFFFF",
@@ -173,24 +175,27 @@ const styles = StyleSheet.create({
     letterSpacing: 0.00125,
     textAlign: "center",
     paddingVertical: 12,
+    fontFamily: 'Dosis-Regular'
   },
   activeTabTextColor: {
     color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: "bold",
-    lineHeight: 19,
+    fontSize: 22,
+    fontWeight: "500",
+    lineHeight: 27.81,
     letterSpacing: 0.005,
     textAlign: "center",
+    fontFamily: 'Dosis-Regular'
 
 
   },
   tabTextColor: {
     color: '#A1AAB2',
-    fontSize: 16,
-    fontWeight: "bold",
-    lineHeight: 19,
+    fontSize: 22,
+    fontWeight: "500",
+    lineHeight: 27.81,
     letterSpacing: 0.005,
     textAlign: "center",
+    fontFamily: 'Dosis-Regular'
 
   },
 

@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.12,
     paddingRight: 20,
     color: "#003031",
+    width:metrics.WIDTH*0.8
   },
   textDescripcion: {
     fontSize: 18,

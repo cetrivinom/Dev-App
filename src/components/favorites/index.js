@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState, useRef, useCallback } from "react";
 import { View, FlatList, StyleSheet, TouchableOpacity, Text, Image, ActivityIndicator } from "react-native";
-import Header from "../global/_children/Header";
+import Header from "../global/_children/HeaderBack";
 import CardtemFavorite from "./_children/CardtemFavorite";
 import IOMContext from "../../../context/iomData/iomContext";
 import AsyncStorage from '@react-native-community/async-storage'
@@ -82,7 +82,7 @@ const Favorites = (props) => {
 
     <MenuProvider skipInstanceCheck={true} style={styles.container}>
       <View style={[styles.box, styles.box1]}>
-        <Header {...props} showBack={false} title="Puntos favoritos" />
+        <Header {...props} showBack={true} title="Puntos favoritos" />
       </View>
       {!dataFavoriteL?
         <View style={[styles.container]}>
@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.0015,
     fontWeight: "bold",
     color: "#003031",
+    fontFamily:'Dosis-Regular'
   },
   menu: {
     marginTop: 12,

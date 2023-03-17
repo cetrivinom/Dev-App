@@ -18,7 +18,8 @@ import { SvgCssUri } from 'react-native-svg';
 import _ from 'lodash';
 import HeaderPoint from "../../global/_children/HeaderPoint";
 import analytics from '@react-native-firebase/analytics';
-import HeaderPointItem from "./HeaderPointItem";
+import HeaderPointItemBox from "./HeaderPointItemBox";
+import { ScrollView } from "react-navigation";
 
 export const LastUpdate = ({ route, navigation }) => {
   const {
@@ -34,7 +35,7 @@ export const LastUpdate = ({ route, navigation }) => {
     <View style={styles.containerHeader}>
       <View style={styles.containerFormHeader}>
         <View style={styles.containerFormHeader2}>
-          <Image style={{flex:0.1}}
+          <Image style={{flex:0.1, resizeMode:'contain'}}
             source={require("../../../resources/images/riMapPinLine2.png")}
           />
           <Text style={styles.textTitle2}>
@@ -212,7 +213,7 @@ export const ItemCardPoint = (props) => {
     let longitude = parseFloat(coor[1]);
     let icon = (dataMapeoState.find((state) => state.id_estado == Estado_id));
     let uri = icon?.img_estado_b64;
-    props.navigation.navigate("PointItem", { id, latitude, longitude, uri });
+    props.navigation.navigate("PointItem", { id, latitude, longitude, uri, from:"SettingsStack" });
   };
 
   const onPressOpenNavigationApps = () => {
@@ -229,10 +230,11 @@ export const ItemCardPoint = (props) => {
   };
 
   return (
+   
     <View style={styles.overlay3}>
       <View style={styles.overlay4}>
         <View style={styles.container55}>
-          <HeaderPointItem id={id}  nombre={_Nombre_punto}/>
+          <HeaderPointItemBox id={id}  nombre={_Nombre_punto}/>
           <View style={styles.containerForm}>{_.map(services, (val) => {
             return val.svg
           })}</View>
@@ -288,6 +290,11 @@ export const ItemCardPoint = (props) => {
 
 const PointListResult = (props) => {
   const { dataPointFilter, dataMapeoState } = useContext(IOMContext);
+  const {
+    departamento = "",
+    municipio = "",
+    statusPoint = "",
+  } = props.route.params || {};
 
   const onPressOpenPoint = (id, latitude, longitude, uri, nombre) => {
 
@@ -300,11 +307,12 @@ const PointListResult = (props) => {
       screen_class: nombreA,
     });
     
-    props.navigation.navigate("PointItem", { id, latitude, longitude, uri });
+    props.navigation.navigate("PointItem", { id, latitude, longitude, uri, from:"SettingsStack" });
   };
 
   const onPressSeeAll = () => {
-    props.navigation.navigate("PointListResultList");
+    
+    props.navigation.navigate("PointListResultList",{departamento,municipio,statusPoint});
   };
 
   const awesomeChildListRenderItem = ({ item }) => (
@@ -402,7 +410,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF",
     borderRadius: 8,
-    maxWidth: 340,
+    
     marginHorizontal: 5,
   },
   overlay4: {
@@ -414,6 +422,7 @@ const styles = StyleSheet.create({
   container55: {
     marginVertical: 12,
     marginHorizontal: 12,
+    
   },
   containerFormTitle: {
     flexDirection: "row",
@@ -440,10 +449,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 34,
     borderWidth: 1,
-    width: 150,
     borderRadius: 25,
     borderColor: "#A1AAB2",
     marginStart: 10,
+    paddingHorizontal:10
   },
   caja2: {
     backgroundColor: "#132A3E",
@@ -469,9 +478,9 @@ const styles = StyleSheet.create({
     marginStart: 10.5,
   },
   overlay: {
-    position: "absolute",
+    position: "relative",
     flexDirection: "row",
-    bottom: Platform.OS === "ios" ? metrics.HEIGHT * 0.37 : metrics.HEIGHT * 0.43,
+    marginTop:metrics.HEIGHT*0.30,
     height: metrics.HEIGHT * 0.057,
     width: "100%",
     justifyContent: "flex-end",

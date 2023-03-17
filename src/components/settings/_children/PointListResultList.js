@@ -15,7 +15,7 @@ import HeaderItem from "../../global/_children/HeaderItem";
 import { metrics } from "../../../utilities/Metrics";
 import { SvgCssUri } from 'react-native-svg';
 import _ from 'lodash';
-import HeaderPoint from "../../global/_children/HeaderPoint";
+import HeaderPoint from "../../global/_children/HeaderPointFil";
 import analytics from '@react-native-firebase/analytics';
 import HeaderPointItem from "./HeaderPointItem";
 
@@ -183,7 +183,7 @@ export const ItemCardPoint = (props) => {
     let longitude = parseFloat(coor[1]);
     let icon = (dataMapeoState.find((state) => state.id_estado == Estado_id));
     let uri = icon?.img_estado_b64;
-    props.navigation.navigate("PointItem", { id, latitude, longitude, uri});
+    props.navigation.navigate("PointItem", { id, latitude, longitude, uri, from:"SettingsStack"});
   };
 
   const onPressOpenNavigationApps = () => {

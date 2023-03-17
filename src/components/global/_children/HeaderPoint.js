@@ -26,13 +26,13 @@ const HeaderPoint = (props) => {
         <View style={styles.containerForm}>
           
 
-          <View style={{flex:0.2}}>
+          <View style={{flex:0.2, alignItems:'center', justifyContent:'center'}}>
             <TouchableOpacity onPress={onPressBack} style={styles.logo}>
               <Image source={require("../../../resources/images/left.png")} />
             </TouchableOpacity>
             </View>
           
-          <View style={{flex:0.8}}> 
+          <View style={{flex:0.8, alignItems:'center', justifyContent:'center'}}> 
             <Text style={styles.labelTitle}>{title}</Text>
           </View>
           {!config.anonymousAuth &&(
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.0015,
     textAlign: "center",
     color: "#FFFFFF",
+    fontFamily:'Dosis-Medium',
   },
   logo: {
     marginLeft: 20

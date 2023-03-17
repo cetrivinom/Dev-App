@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { View, StyleSheet, TextInput, FlatList } from "react-native";
-import Header from "../global/_children/Header";
+import Header from "../global/_children/HeaderBack";
 import CardItemDirectory from "./_children/CardItemDirectory";
 import IOMContext from "../../../context/iomData/iomContext";
 /**
@@ -33,7 +33,7 @@ const Directory = (props) => {
   return (
     <View style={styles.wrapper}>
       <View style={[styles.box, styles.box1]}>
-        <Header {...props} showBack={false} title="Lineas telefónicas"/>
+        <Header {...props} showBack={true} title="Lineas telefónicas" from="Directory"/>
       </View>
       <View style={[styles.box, styles.box2]}>
         <View style={styles.containerSearch}>

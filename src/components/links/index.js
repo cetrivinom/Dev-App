@@ -9,7 +9,7 @@ import {
   ScrollView
 } from "react-native";
 import { Tab, TabView } from 'react-native-elements';
-import Header from "../global/_children/Header";
+import Header from "../global/_children/HeaderBack";
 import CardItemLink from "./_children/CardItemLink";
 import HeaderFilterLink from "./_children/HeaderFilterLink";
 import ModalFilter from "./_children/ModalFilter";
@@ -60,7 +60,7 @@ const Links = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>
-        <Header showBack={false} title="Contenido de interés" navigation={navigation} />
+        <Header showBack={true} title="Contenido de interés" navigation={navigation} />
 
 
         <Tab indicatorStyle={{
@@ -257,6 +257,7 @@ const styles = StyleSheet.create({
     color: "#425565",
     lineHeight: 19,
     letterSpacing: 0.005,
+    fontFamily:'Dosis-Regular'
   },
   box7: {
     flexDirection: "row",
@@ -282,6 +283,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     lineHeight: 18,
     letterSpacing: 0.0125,
+    fontFamily:'Dosis-Regular'
   },
   textBoxCajaNegra: {
     color: "#FFFFFF",
@@ -290,13 +292,15 @@ const styles = StyleSheet.create({
     fontSize: 16, 
     lineHeight: 19,
     letterSpacing: 0.005, 
-    color: '#00AAAD' 
+    color: '#00AAAD',
+    textTransform:'capitalize'
   },
   tabItemStyleDisable:{ 
     fontSize: 16, 
     lineHeight: 19,
     letterSpacing: 0.005, 
-    color: '#A1AAB2' 
+    color: '#A1AAB2',
+    textTransform:'capitalize'
   }
 });
 

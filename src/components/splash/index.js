@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { StyleSheet, ImageBackground } from "react-native";
 import InitialContext from "../../../context/initialData/initialContext";
 import IOMContext from "../../../context/iomData/iomContext";
@@ -24,90 +24,113 @@ const Splash = (props) => {
 
   const { dataPoint, getDataPoint, dataMapeoService, getDataMapeoService, dataMapeoState, getDataMapeoState } = useContext(IOMContext);
   const navigation = useNavigation()
+
+  const [authLoaded, setAuthLoaded] = useState(false);
+
   useEffect(() => {
-    let i = 0;
-
-    var current = VersionCheck.getCurrentVersion().toString();
-    //var current ="1.031";
-    getConfig().then((config) => {
-
-      
-
-      if (config.versionApp.toString() !== current.toString()) {
+    setTimeout(() => {
+      setAuthLoaded(true);
+    }, 2000);
+  }, []);
 
 
-        getConfig().then((config) => {
-          api = [
-            { name: 'api-mapeo-estados.json', val: config.apiMapeoEstados },
-            { name: 'api-enlaces-de-interes.json', val: config.apiEnlacesInteres },
-            { name: 'api-mapeo.json', val: config.apiMapeo },
-            { name: 'api-lineas-telefonicas.json', val: config.apiLineasTelefonicas },
-            { name: 'api-lineas-telefonicas-servicios.json', val: config.apiLineasTelefonicasServicios },
-            { name: 'api-mapeo-servicios.json', val: config.apiMapeoServicios },
-            { name: 'api_enlaces.json', val: config.apiMapeoEnlaces },
-            { name: 'api_socios.json', val: config.apiMapeoSocios }
-          ];
-          api.map((item) => {
-            i += 1;
-            return getDataLink(item.name, item.val);
+  useEffect(() => {
+
+    if (authLoaded) {
+
+      let i = 0;
+
+      var current = VersionCheck.getCurrentVersion().toString();
+
+      NetInfo.fetch().then(state => {
+        if (!state.isConnected) {
+          getDefaultConfig().then((config) => {
+            props.navigation.navigate("Login");
           });
-          if (i === api.length) {
-            setTimeout(() => {
-              getDataMapeoService();
-              getDataMapeoState();
-            }, 3000);
-            setTimeout(() => {
-              updateLastUpdate();
-              navigation.dispatch(navigation.navigate("UpdateVersion"))
-            }, 2000);
-          }
-        });
-          
+        } else {
 
-        
-      } else {
 
-        NetInfo.fetch().then(state => {
-          if (!state.isConnected) {
-            getDefaultConfig().then((config) => {
-              props.navigation.navigate("Home");
-            });
-          } else {
-            getConfig().then((config) => {
-              api = [
-                { name: 'api-mapeo-estados.json', val: config.apiMapeoEstados },
-                { name: 'api-enlaces-de-interes.json', val: config.apiEnlacesInteres },
-                { name: 'api-mapeo.json', val: config.apiMapeo },
-                { name: 'api-lineas-telefonicas.json', val: config.apiLineasTelefonicas },
-                { name: 'api-lineas-telefonicas-servicios.json', val: config.apiLineasTelefonicasServicios },
-                { name: 'api-mapeo-servicios.json', val: config.apiMapeoServicios },
-                { name: 'api_enlaces.json', val: config.apiMapeoEnlaces },
-                { name: 'api_socios.json', val: config.apiMapeoSocios }
-              ];
-              api.map((item) => {
-                i += 1;
-                return getDataLink(item.name, item.val);
+          //var current ="1.031";
+          getConfig().then((config) => {
+
+
+
+            if (config.versionApp.toString() !== current.toString()) {
+
+
+              getConfig().then((config) => {
+                api = [
+                  { name: 'api-mapeo-estados.json', val: config.apiMapeoEstados },
+                  { name: 'api-enlaces-de-interes.json', val: config.apiEnlacesInteres },
+                  { name: 'api-mapeo.json', val: config.apiMapeo },
+                  { name: 'api-lineas-telefonicas.json', val: config.apiLineasTelefonicas },
+                  { name: 'api-lineas-telefonicas-servicios.json', val: config.apiLineasTelefonicasServicios },
+                  { name: 'api-mapeo-servicios.json', val: config.apiMapeoServicios },
+                  { name: 'api_enlaces.json', val: config.apiMapeoEnlaces },
+                  { name: 'api_socios.json', val: config.apiMapeoSocios }
+                ];
+                api.map((item) => {
+                  i += 1;
+                  return getDataLink(item.name, item.val);
+                });
+                if (i === api.length) {
+                  setTimeout(() => {
+                    getDataMapeoService();
+                    getDataMapeoState();
+                  }, 3000);
+                  setTimeout(() => {
+                    updateLastUpdate();
+                    navigation.dispatch(navigation.replace("UpdateVersion"))
+                  }, 2000);
+                }
               });
-              if (i === api.length) {
-                setTimeout(() => {
-                  getDataMapeoService();
-                  getDataMapeoState();
-                }, 3000);
-                setTimeout(() => {
-                  updateLastUpdate();
-                  props.navigation.navigate("Login");
-                }, 2000);
-              }
-            });
-          }
-        });
-
-      }
 
 
-    })
 
+            } else {
 
+              NetInfo.fetch().then(state => {
+                if (!state.isConnected) {
+                  getDefaultConfig().then((config) => {
+                    props.navigation.navigate("Home");
+                  });
+                } else {
+                  getConfig().then((config) => {
+                    api = [
+                      { name: 'api-mapeo-estados.json', val: config.apiMapeoEstados },
+                      { name: 'api-enlaces-de-interes.json', val: config.apiEnlacesInteres },
+                      { name: 'api-mapeo.json', val: config.apiMapeo },
+                      { name: 'api-lineas-telefonicas.json', val: config.apiLineasTelefonicas },
+                      { name: 'api-lineas-telefonicas-servicios.json', val: config.apiLineasTelefonicasServicios },
+                      { name: 'api-mapeo-servicios.json', val: config.apiMapeoServicios },
+                      { name: 'api_enlaces.json', val: config.apiMapeoEnlaces },
+                      { name: 'api_socios.json', val: config.apiMapeoSocios }
+                    ];
+                    api.map((item) => {
+                      i += 1;
+                      return getDataLink(item.name, item.val);
+                    });
+                    if (i === api.length) {
+                      setTimeout(() => {
+                        getDataMapeoService();
+                        getDataMapeoState();
+                      }, 3000);
+                      setTimeout(() => {
+                        updateLastUpdate();
+                        props.navigation.replace("Login");
+                      }, 2000);
+                    }
+                  });
+                }
+              });
+
+            }
+          })
+        }
+
+      })
+
+    }
 
 
 
@@ -120,7 +143,7 @@ const Splash = (props) => {
       getDataMapeoState();
     }*/
 
-  }, []);
+  }, [authLoaded, props.navigation]);
 
   return (
     <ImageBackground

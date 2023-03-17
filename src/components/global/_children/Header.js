@@ -37,7 +37,7 @@ const Header = (props) => {
             </TouchableOpacity>
             </View>
           )}
-          <View style={{flex:0.8}}> 
+          <View style={{flex:0.8, alignItems:'center', justifyContent:'center'}}> 
             <Text style={styles.labelTitle}>{title}</Text>
           </View>
           {!showBack && !config.anonymousAuth &&(
@@ -76,11 +76,11 @@ const styles = StyleSheet.create({
   },
   labelTitle: {
     fontSize: 22,
-    fontWeight: "500",
     lineHeight: 28,
     letterSpacing: 0.0015,
     textAlign: "center",
-    color: "#FFFFFF",
+    color: "#FFFFFF",    
+    fontFamily:'Dosis-Medium',
   },
   logo: {
     marginLeft: 20
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     letterSpacing:0.04,
     lineHeight:14,
     marginTop:3,
+    fontFamily:'Dosis-Regular'
   },
 });
 

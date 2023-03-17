@@ -55,11 +55,12 @@ const styles = StyleSheet.create({
     //flex: 0.2
   },
   cardTitle: {
-    fontSize: 18,
+    fontSize: 22,
     lineHeight: 28,
-    fontWeight: 'bold',
     color: "#00AAAD",
     letterSpacing: 0.0015,
+    fontFamily:'Dosis-Bold',
+    textTransform:'capitalize'
   },
   imageMap: {
     position: 'absolute',

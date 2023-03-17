@@ -8,14 +8,19 @@ import analytics from '@react-native-firebase/analytics';
 
 
 const HeaderItem = (props) => {
-  const { title = "", id = "", showSaveOpt = true, navigation, nombre="" } = props || {};
+  const { title = "", id = "", showSaveOpt = true, navigation, nombre="", from="" } = props || {};
   const { createFavorite, dataFavorite, deleteFavoriteId } = useContext(IOMContext);
   const {user,  getUser, deleteFavoriteF, createFavoriteF } = useContext(AuthContext);
   const [isFavorite, setIsFavorite] = useState(false);
 const [favorito, setFavorito] = useState({});
 
   const onPressClose = () => {
-    navigation.navigate("SettingsStack")
+    if(from==="Favorites"){
+      navigation.navigate(from)
+    }else{
+      navigation.goBack();
+    }
+    
   };
   const onPressSave = () => {
     if (isFavorite) {
@@ -117,12 +122,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "500",
     color: "#003031",
     alignItems: 'center',
     //lineHeight: 28,
     letterSpacing: 0.0015,
+    fontFamily:'Dosis-Medium',
   },
   box4: {
     flexDirection: "row",

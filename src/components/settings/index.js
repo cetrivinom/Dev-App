@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
-import { View, StyleSheet, TouchableOpacity, Text, Image, Platform, PermissionsAndroid, Dimensions } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text, Image, Platform, PermissionsAndroid, Dimensions, BackHandler } from "react-native";
 import Header from "../global/_children/Header";
 import LastUpdate from "../global/_children/LastUpdate";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
@@ -9,6 +9,7 @@ import AuthContext from "../../../context/auth/authContext";
 import Icon from 'react-native-vector-icons/Ionicons';
 import analytics from '@react-native-firebase/analytics';
 import HeaderPoint from "../global/_children/HeaderPoint";
+import { metrics } from "../../utilities/Metrics";
 
 const Settings = (props) => {
   const [position, setPosition] = useState({
@@ -23,6 +24,18 @@ const Settings = (props) => {
   const { config } = useContext(AuthContext);
 
   const mapRef = React.createRef();
+
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", handleBackButtonClick);
+    };
+  }, []);
+
+  function handleBackButtonClick() {
+    props.navigation.navigate("Home")
+    return true;
+  }
   //Validamos que se tenga permisos de ubicacion en el dispositivo
   useEffect( () => {
 
@@ -114,7 +127,7 @@ const Settings = (props) => {
       content_type: 'point_opened',
       item_id: id,
     })
-    props.navigation.navigate("PointItem", { id, latitude, longitude, uri });
+    props.navigation.navigate("PointItem", { id, latitude, longitude, uri, from:"SettingsStack" });
   };
 
   const onPressOpen = () => {
@@ -186,7 +199,7 @@ const Settings = (props) => {
   return (
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>
-        <HeaderPoint {...props} title="Puntos de servicio" />
+        <Header {...props} showBack={false} title="Puntos de servicio" />
         <LastUpdate />
       </View>
       <View style={{ flex: 1, flex: Platform.OS === "ios" ? 5.8 : 7.3, marginBottom: marginBottomV, marginTop:0 }}>
@@ -251,7 +264,7 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
-    //marginTop: 10,
+    marginTop: 10,
   },
   overlay: {
     position: "absolute",
@@ -269,7 +282,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
-    maxWidth: 238,
+    maxWidth: metrics.WIDTH*0.7,
     padding: 10,
   },
   textFilter: {
@@ -277,7 +290,6 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     color: "#FFFFFF",
     letterSpacing: 0.0125,
-    marginLeft: 5,
   },
   overlayM: {
     position: "absolute",

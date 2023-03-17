@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -24,6 +24,24 @@ const LoginFormR = (props) => {
   const [user, setUser] = useState({
     email: "",
   });
+
+useEffect(() => {
+
+    
+  /*database().ref('/users').on('value', snapshot => {
+    let res = [];
+    snapshot.forEach((value) => {
+      const id = value.key;
+      const email = value.val().email;
+      res.push({ id, email });
+    });
+      
+    console.log(res)
+  });*/
+  }, []);
+
+  
+
   const [errorEmail, setErrorEmail] = useState("");
   const [visible, setVisible] = useState(false);
   const [visibleLogin, setVisibleLogin] = useState(false);
@@ -39,6 +57,7 @@ const LoginFormR = (props) => {
     getConfig,
     passwordEmailRecovery,
     user: userData,
+    getUserByEmail
   } = useContext(AuthContext);
 
 
@@ -52,7 +71,9 @@ const LoginFormR = (props) => {
       ok = false;
     }
 
-    console.log(email)
+    let a = getUserByEmail(email)
+
+    console.log(a)
 
     if (ok) {
       navigation.navigate("Registre", { emailA: email })
@@ -105,7 +126,7 @@ const LoginFormR = (props) => {
 
 
       <TouchableHighlight style={Styles.btnIniciarR} onPress={onPressRegister}>
-        <Text style={Styles.labelLogin}>Registrarme</Text>
+        <Text style={Styles.labelLogin}>Siguiente</Text>
       </TouchableHighlight>
     </View>
     </ImageBackground>
@@ -143,6 +164,7 @@ const styles = StyleSheet.create({
     color: "#000",
     marginTop: 12,
     marginBottom: 32,
+    fontFamily:'Dosis-Regular'
   },
   labelAccount: {
     fontSize: 16,
@@ -151,6 +173,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.005,
     textAlign: "center",
     color: "#003031",
+    fontFamily:'Dosis-Regular'
   },
   labelForgetPassword: {
     fontSize: 16,
@@ -159,6 +182,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     marginBottom: 32,
     marginTop: 30,
+    fontFamily:'Dosis-Regular'
   },
   labelIngresa: {
     textAlign: "center",
@@ -169,6 +193,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.005,
     marginLeft: 8,
     marginBottom: 16,
+    fontFamily:'Dosis-Regular'
   },
   labelLogin: {
     color: "#FFFFFF",
@@ -178,6 +203,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.00125,
     textAlign: "center",
     paddingVertical: 12,
+    fontFamily:'Dosis-Regular'
   },
   activeTabTextColor: {
     color: '#FFFFFF'
@@ -187,6 +213,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: "#00AAAD",
+    fontFamily:'Roboto-Regular'
 
   }
 

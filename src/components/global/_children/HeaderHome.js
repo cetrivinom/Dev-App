@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, ImageBackground, StyleSheet, Image} from 'react-native';
+import { metrics } from '../../../utilities/Metrics';
 
 const HeaderHome = () => {
   return (
@@ -19,21 +20,22 @@ const HeaderHome = () => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
+    width:metrics.WIDTH,
+    height:metrics.HEIGHT*0.30,
   },
   image: {
     flex: 1,
     resizeMode: 'cover',
-    height: 186,
     alignContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   logo2: {
-    width: 265,
-    height: 136,
+    width: metrics.WIDTH * 0.64,
+    height:metrics.HEIGHT*0.20,
     //position: 'absolute',
     resizeMode: 'contain',
     //left: 78,
-    top: 34,
+    top: 0,
   },
 });
 

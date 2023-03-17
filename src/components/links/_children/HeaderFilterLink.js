@@ -46,11 +46,12 @@ const styles = StyleSheet.create({
     textAlign: "left",
     letterSpacing: 0.005,
     marginStart: 48,
+    fontFamily:'Dosis-Regular'
   },
   labelTitle2: {
     fontSize: 13,
     fontWeight: "bold",
-    color: "#FEC800",
+    color: "#902857",
     lineHeight: 14,
     textAlign: "right",
     letterSpacing: 0.004,

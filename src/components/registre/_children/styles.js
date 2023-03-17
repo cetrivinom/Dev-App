@@ -6,8 +6,7 @@ import { metrics } from "../../../utilities/Metrics";
 export default StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 15,
-    backgroundColor:"#FFFFFF"
+    paddingHorizontal: 15
   },
   box: {
     flex: 1,
@@ -22,11 +21,11 @@ export default StyleSheet.create({
   labelTitle: {
     marginTop: 40,
     fontSize: 22,
-    fontWeight: "bold",
     lineHeight: 28,
     letterSpacing: 0.0015,
     color: "#003031",
     marginBottom: 16,
+    fontFamily:'Dosis-Bold'
   },
   labelSubTitle: {
     fontSize: 16,
@@ -35,13 +34,15 @@ export default StyleSheet.create({
     letterSpacing: 0.005,
     color: "#A1AAB2",
     marginBottom: 32,
+    fontFamily:'Dosis-Regular'
   },
   labelBirthdate:{ 
     alignSelf:'center', 
     alignItems: 'center', 
     fontSize: 18,
     lineHeight: 28,
-    color: "#003031"
+    color: "#003031",
+    fontFamily:'Dosis-Regular'
   },
   inputTextBox: {
     flex:1,
@@ -49,12 +50,14 @@ export default StyleSheet.create({
     color: 'black',
     fontSize: 16,
     color: "#000",
+    fontFamily:'Dosis-Regular'
   },
   inputTextBoxError: {
     flex:1,
     borderColor: "#A1AAB2",
     color: 'black',
     fontSize: 16,
+    fontFamily:'Dosis-Regular'
   },
   labelError: {
     color: "#DD3338",
@@ -63,6 +66,7 @@ export default StyleSheet.create({
     letterSpacing: 0.004,
     marginTop: 5,
     paddingLeft: 15,
+    fontFamily:'Dosis-Regular'
   },
   btnNext: {
     backgroundColor: "#132A3E",
@@ -83,6 +87,7 @@ export default StyleSheet.create({
     textAlign: "center",
     paddingVertical: 12,
     width: "100%",
+    fontFamily:'Dosis-Regular'
   },
   righLine: {
     position: "absolute",
@@ -92,6 +97,7 @@ export default StyleSheet.create({
   breadcums: {
     marginTop: 30,
     alignSelf: "center",
+    paddingHorizontal: 30,
   },
   containerForm: {
     backgroundColor: "#E7EAEC",
@@ -153,6 +159,7 @@ export default StyleSheet.create({
     letterSpacing: 0.00125,
     color: "#003031",
     marginBottom: 96,
+    fontFamily:'Dosis-Regular'
   },
   labelItemYes: {
     fontSize: 15,
@@ -160,6 +167,7 @@ export default StyleSheet.create({
     lineHeight: 18,
     letterSpacing: 0.00125,
     color: "#00AAAD",
+    fontFamily:'Dosis-Regular'
   },
   labelItemYes1: {
     color: "#FFFFFF",
@@ -170,12 +178,14 @@ export default StyleSheet.create({
     lineHeight: 18,
     letterSpacing: 0.0015,
     color: "#902857",
+    fontFamily:'Dosis-Regular'
   },
   labelItem: {
     fontSize: 18,
     marginLeft:15,
     letterSpacing: 0.0015,
     color: "#003031",
+    fontFamily:'Dosis-Regular'
   },
   SectionStyle1: {
     flexDirection: 'row',

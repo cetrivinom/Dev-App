@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
     color: "#003031",
     textAlign: "center",
     textAlignVertical: "center",
-    padding: 10
+    padding: 10,
+    fontFamily:'Dosis-Regular'
   },
   verMas: {
     fontSize: metrics.HEIGHT * 0.015,
@@ -78,6 +79,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#FFFFFF",
     textAlign: "center",
+    fontFamily:'Dosis-Regular'
   },
   wraper: {
     width: "50%",

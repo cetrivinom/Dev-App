@@ -86,7 +86,7 @@ const FilterSetting = (props) => {
 
   return (
       <View style={styles.wrapper}>
-        <HeaderPoint {...props} title="Filtrar puntos de servicio" showSaveOpt={false} />
+        <HeaderPoint {...props} title="Filtrar puntos de servicio" showSaveOpt={false} from={"Settings"} />
         <View style={[styles.box, styles.box2]}>
         <TextInput
             style={styles.inputTextBox}

@@ -61,9 +61,9 @@ export const CardEnlaceLink = (props) => {
 const styles = StyleSheet.create({
   titleSection: {
     fontSize: metrics.HEIGHT*0.018,
+    fontFamily:'Dosis-Bold',
     //lineHeight: 23,
     letterSpacing: 0.005,
-    fontWeight: "bold",
     color: "#003031",
     textAlign: "center",
     textAlignVertical:"center",
@@ -73,9 +73,10 @@ const styles = StyleSheet.create({
     fontSize: metrics.HEIGHT*0.015,
     //lineHeight: 23,
     letterSpacing: 0.005,
-    fontWeight: "bold",
+    fontWeight: "700",
     color: "#FFFFFF",
     textAlign: "center",
+    fontFamily:'Roboto'
   },
   wraper: {
     width: "50%",

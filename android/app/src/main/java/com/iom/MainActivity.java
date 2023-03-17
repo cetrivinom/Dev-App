@@ -18,18 +18,14 @@ import android.util.DisplayMetrics;
 public class MainActivity extends ReactActivity {
 
 public void adjustFontScale(Context context, Configuration configuration) {
-    if (configuration.fontScale != 1) {
-        configuration.fontScale = 1;
 
+  configuration.fontScale = (float) 0.8;
+  DisplayMetrics metrics = getResources().getDisplayMetrics();
+  WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
+  wm.getDefaultDisplay().getMetrics(metrics);
+  metrics.scaledDensity = configuration.fontScale * metrics.density;
+  getBaseContext().getResources().updateConfiguration(configuration, metrics);
 
-        configuration.densityDpi = 432;
-
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        wm.getDefaultDisplay().getMetrics(metrics);
-        metrics.scaledDensity = configuration.fontScale * metrics.density;
-        context.getResources().updateConfiguration(configuration, metrics);
-    }
 }
 
   @Override

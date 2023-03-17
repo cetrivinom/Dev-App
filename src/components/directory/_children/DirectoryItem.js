@@ -2,7 +2,7 @@
 import React, { useContext, useEffect } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import CardItemDirectoryDetail from "./CardItemDirectoryDetail";
-import HeaderPoint from "../../global/_children/HeaderPoint";
+import HeaderDirectory from "../../global/_children/HeaderDirectory";
 import IOMContext from "../../../../context/iomData/iomContext";
 import _ from 'lodash';
 /**
@@ -35,7 +35,7 @@ const DirectoryItem = ({ route, navigation }) => {
   }, [otherParam]);
   return (
     <View style={styles.wrapper}>
-      <HeaderPoint  title={otherParam} showSaveOpt={false} navigation={navigation} />
+      <HeaderDirectory  title={otherParam} showSaveOpt={false} navigation={navigation} />
       {dataItem !== null && (
         <View style={[styles.box, styles.box2]}>
           <FlatList

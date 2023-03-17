@@ -55,18 +55,7 @@ const Login = (props) => {
           style={styles.logo}
         />
         <Text style={styles.labelInicio}>¡Hola, te damos la bienvenida!</Text>
-        <View
-          style={{
-            borderBottomColor: '#003031',
-            borderBottomWidth: 2,
-            marginLeft: metrics.WIDTH * 0.30,
-            marginRight: metrics.WIDTH * 0.30,
-            marginBottom: 40
-          }}
-        />
-
-
-
+       
         <LoginForm {...props} />
 
 
@@ -89,7 +78,7 @@ const styles = StyleSheet.create({
   },
   containerTop: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#E6F7F7",
     paddingHorizontal: 20
 
   },
@@ -100,13 +89,14 @@ const styles = StyleSheet.create({
     height: metrics.HEIGHT * 0.19,
   },
   labelInicio: {
-    fontSize: 22,
-    fontWeight: "700",
-    lineHeight: 28,
+    fontSize: 27,
+    fontWeight: "400",
+    lineHeight: 34,
     letterSpacing: 0.0015,
     textAlign: "center",
-    color: "#003031",
-    marginBottom: 8
+    color: "#007681",
+    marginBottom: 44,
+    fontFamily:'Dosis-Regular'
   },
 
 

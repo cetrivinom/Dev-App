@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     color: "#007681",
     lineHeight: 23,
     letterSpacing: 0.0015,
+    fontFamily:'Dosis-Regular'
   },
   textContent: {
     fontSize: 14,
@@ -103,6 +104,7 @@ const styles = StyleSheet.create({
     color: "#003031",
     lineHeight: 16,
     letterSpacing: 0.0025,
+    fontFamily:'Dosis-Regular'
   },
   boxOpenLink: {
     justifyContent: "flex-start",
@@ -118,6 +120,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.00125,
     marginRight: 10,
     paddingTop: 5,
+    fontFamily:'Dosis-Regular'
   },
   viewLink: {
     marginTop: metrics.HEIGHT * 0.05,
@@ -135,6 +138,7 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     color: "#A1AAB2",
     paddingTop: 2,
+    fontFamily:'Dosis-Regular'
   },
   image: {
     position: "absolute",

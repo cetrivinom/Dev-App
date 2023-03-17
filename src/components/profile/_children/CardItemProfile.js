@@ -36,13 +36,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   labelTitle: {
-    fontSize: 17,
+    fontSize: 18,
     lineHeight: 23,
     letterSpacing: 0.0015,
     color: "#003031",
+    fontFamily:'Dosis-Regular'
   },
   labelSubTitle: {
-    fontSize: 13,
+    fontSize: 14,
     lineHeight: 16,
     letterSpacing: 0.0025,
     color: "#A1AAB2",

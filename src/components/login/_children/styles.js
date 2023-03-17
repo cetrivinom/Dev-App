@@ -24,6 +24,7 @@ export default StyleSheet.create({
     color: "#003031",
     marginTop: 24,
     marginBottom: 32,
+    fontFamily:'Dosis-Regular'
   },
   labelAccount: {
     fontSize: 16,
@@ -32,6 +33,7 @@ export default StyleSheet.create({
     letterSpacing: 0.005,
     textAlign: "center",
     color: "#003031",
+    fontFamily:'Dosis-Regular'
   },
   labelForgetPassword: {
     fontSize: 16,
@@ -39,7 +41,7 @@ export default StyleSheet.create({
     letterSpacing: 0.005,
     textDecorationLine: "underline",
     marginBottom: 32,
-    color:"#FFFFFF"
+    color:"#FFFFFF",
   },
   labelWelcome: {
     fontSize: 22,
@@ -47,8 +49,9 @@ export default StyleSheet.create({
     letterSpacing:  0.0015,
     fontWeight: "normal",
     marginBottom: 10,
-    marginTop: 30,
-    color:"#FFFFFF"
+    marginTop: 10,
+    color:"#FFFFFF",
+    fontFamily:'Dosis-Regular'
   },
   labelIngresa: {
     textAlign: "center",
@@ -59,15 +62,17 @@ export default StyleSheet.create({
     letterSpacing: 0.005,
     marginLeft: 8,
     marginBottom: 16,
+    fontFamily:'Dosis-Regular'
   },
   labelLogin: {
     color: "#FFFFFF",
     fontSize: 15,
-    fontWeight: "bold",
+    fontWeight: "700",
     lineHeight: 18,
     letterSpacing: 0.00125,
     textAlign: "center",
     paddingVertical: 12,
+    fontFamily:'Roboto-Regular'
   },
   labelSocial: {
     fontSize: 15,
@@ -77,6 +82,7 @@ export default StyleSheet.create({
     textAlign: "center",
     paddingVertical: 12,
     paddingLeft: 5,
+    fontFamily:'Dosis-Regular'
   },
   inputTextBox: {
     flex:1,
@@ -84,6 +90,7 @@ export default StyleSheet.create({
     color: 'black',
     fontSize: 16,
     color: "#FFFFFF",
+    fontFamily:'Dosis-Regular'
   },
   inputTextBoxError: {
     flex:1,
@@ -91,6 +98,7 @@ export default StyleSheet.create({
     color: 'black',
     borderWidth: 1,
     fontSize: 16,
+    fontFamily:'Dosis-Regular'
   },
   labelError: {
     color: "#8F3D40",
@@ -100,15 +108,14 @@ export default StyleSheet.create({
     marginTop: 5,
     marginBottom: 20,
     paddingLeft: 15,
+    fontFamily:'Dosis-Regular'
   },
   btnIniciar: {
     backgroundColor: "#132A3E",
-    height: 42,
     borderRadius: 25,
   },
   btnIniciarR: {
     backgroundColor: "#132A3E",
-    height: 42,
     borderRadius: 25,
     marginBottom: 24,
     marginTop:32
@@ -153,6 +160,7 @@ export default StyleSheet.create({
     lineHeight: 19,
     letterSpacing: 0.005,
     marginLeft: 8,
+    fontFamily:'Dosis-Regular'
   },
   SectionStyle: {
     flexDirection: 'row',

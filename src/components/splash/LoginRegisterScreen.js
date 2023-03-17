@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
     color: "#003031",
     marginTop: 12,
     marginBottom: 32,
+    fontFamily:'Dosis-Regular'
   },
   labelAccount: {
     fontSize: 16,
@@ -138,6 +139,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.005,
     textAlign: "center",
     color: "#003031",
+    fontFamily:'Dosis-Regular'
   },
   labelForgetPassword: {
     fontSize: 16,
@@ -146,6 +148,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     marginBottom: 32,
     marginTop: 30,
+    fontFamily:'Dosis-Regular'
   },
   labelIngresa: {
     textAlign: "center",
@@ -156,6 +159,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.005,
     marginLeft: 8,
     marginBottom: 16,
+    fontFamily:'Dosis-Regular'
   },
   labelLogin: {
     color: "#FFFFFF",
@@ -165,6 +169,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.00125,
     textAlign: "center",
     paddingVertical: 12,
+    fontFamily:'Dosis-Regular'
   },
 
 })

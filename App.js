@@ -29,6 +29,7 @@ import CardItemFavorite from "./src/components/favorites/_children/CardtemFavori
 import EnlaceItem from "./src/components/links/_children/EnlaceItem";
 import SocioItem from "./src/components/links/_children/SocioItem";
 import Icon from 'react-native-vector-icons/Ionicons';
+import Icon2 from 'react-native-vector-icons/EvilIcons';
 import Links from "./src/components/links";
 import Favorites from "./src/components/favorites";
 import Settings from "./src/components/settings";
@@ -55,7 +56,7 @@ function SettingsStack() {
 
 function HomeBar() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false, tabBarActiveTintColor: '#00AAAD',
+    <Tab.Navigator screenOptions={{ headerShown: false, tabBarActiveTintColor: '#00AAAD', tabBarStyle:{borderWidth:0},
     tabBarInactiveTintColor: '#003031' }} >
       <Tab.Screen name="Inicio" component={Main} options={{
         tabBarIcon: ({ color, number, focused }) => {
@@ -71,7 +72,7 @@ function HomeBar() {
       <Tab.Screen name="SettingsStack" component={SettingsStack} options={{
         tabBarIcon: ({ color, number, focused }) => {
           return (
-            <Icon name="md-location" color={color} size={30} />
+            <Icon name={focused?"md-location":"md-location-outline"} color={color} size={30} />
           );
         },
         tabBarLabel: 'Puntos de Servicio'
@@ -120,6 +121,8 @@ const App = () => {
   const [message, setMessage] = useState('xxx');
   const onDismissSnackBar = () => setVisible(false);
   useEffect(() => {
+    console.log("Entre");
+    
     requestUserPermission();
     notificationListener();
     /*console.log('ue messagin')

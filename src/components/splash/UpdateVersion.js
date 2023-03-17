@@ -29,7 +29,7 @@ const UpdateVersion = () => {
     const onPressSalir = () => {
 
         getDefaultConfig().then((config) => {
-            navigation.navigate("Login");
+            navigation.replace("Login");
           });
 
     }
@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
         color: "#003031",
         marginTop: 24,
         marginBottom: 32,
+        fontFamily:'Dosis-Regular'
     },
     labelLogin: {
         color: "#FFFFFF",
@@ -135,6 +136,7 @@ const styles = StyleSheet.create({
         letterSpacing: 0.00125,
         textAlign: "center",
         paddingVertical: 12,
+        fontFamily:'Dosis-Regular'
     },
     btnIniciar: {
         backgroundColor: "#132A3E",

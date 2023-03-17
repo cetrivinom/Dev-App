@@ -56,14 +56,14 @@ const styles = StyleSheet.create({
   textTitle2: {
     flex: 1, 
     flexWrap: 'wrap',
-    fontSize: 14,
-    fontWeight: "bold",
-    lineHeight: 16,
+    fontSize: 18,
+    lineHeight: 23,
     letterSpacing: 0.0025,
     color: "#007681",
     marginTop: 2,
     marginBottom: 5,
     marginStart: 10.5,
+    fontFamily:'Dosis-Bold',
   },
   containerForm2: {
     paddingLeft: 45,

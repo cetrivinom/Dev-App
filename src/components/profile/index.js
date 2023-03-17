@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.0015,
     textAlign: "center",
     color: "#FFFFFF",
+    fontFamily:'Dosis-Regular'
   },
   labelTitleLogOff: {
     fontSize: 15,

@@ -18,9 +18,8 @@ export default StyleSheet.create({
   },
   container: {
     marginTop: 40,
-    marginRight: 15,
-    marginLeft: 17,
-  },
+    marginHorizontal: 15
+    },
   containerBodyLogOff: {
     marginTop: 20,
     marginLeft: 10,
@@ -41,6 +40,7 @@ export default StyleSheet.create({
     letterSpacing: 0.0015,
     textAlign: "center",
     color: "#FFFFFF",
+    fontFamily:'Dosis-Regular'
   },
   labelTitleLogOff: {
     fontSize: 15,
@@ -48,6 +48,7 @@ export default StyleSheet.create({
     lineHeight: 18,
     letterSpacing: 0.00125,
     color: "#00AAAD",
+    fontFamily:'Dosis-Regular'
   },
   iconLeft: {
     position: "absolute",
@@ -55,17 +56,18 @@ export default StyleSheet.create({
   },
   labelTitle: {
     fontSize: 22,
-    fontWeight: "bold",
     lineHeight: 28,
     letterSpacing: 0.0015,
     color: "#003031",
     marginBottom: 32,
+    fontFamily:'Dosis-Bold'
   },
   labelItem: {
     fontSize: 18,
     marginLeft:15,
     letterSpacing: 0.0015,
     color: "#003031",
+    fontFamily:'Dosis-Regular'
   },
   labelSaveButton: {
     fontSize: 15,
@@ -75,6 +77,7 @@ export default StyleSheet.create({
     letterSpacing: 0.0015,
     color: "#00AAAD",
     marginBottom: 32,
+    fontFamily:'Dosis-Regular'
   },
 
   containerForm1: {

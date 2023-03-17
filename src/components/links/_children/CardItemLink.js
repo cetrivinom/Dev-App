@@ -84,12 +84,13 @@ const styles = StyleSheet.create({
     paddingStart: 5,
   },
   titleSection: {
-    fontSize: 17,
+    fontSize: 18,
     lineHeight: 23,
     letterSpacing: 0.0015,
-    fontWeight: "bold",
     color: "#007681",
     marginRight: 48,
+    fontFamily:'Dosis-Bold',
+    textTransform:'capitalize'
   },
   containerDate: {
     flexDirection: "row",
@@ -102,6 +103,7 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     color: "#A1AAB2",
     paddingTop: 2,
+    fontFamily:'Dosis-Regular'
   },
   titleUpdateDate: {
     paddingStart: 6,
@@ -110,6 +112,7 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     color: "#A1AAB2",
     paddingTop: 2,
+    fontFamily:'Dosis-Regular'
   },
 
 });

@@ -45,7 +45,7 @@ const CardItemFavorite = (props) => {
       let longitude = parseFloat(coor[1]);
       let icon = (dataMapeoState.find((state) => state.id_estado == fav.Estado_id));
       let uri = icon?.img_estado_b64;
-      props.navigation.navigate("PointItem", { id, latitude, longitude, uri });
+      props.navigation.navigate("PointItem", { id, latitude, longitude, uri, from:"Favorites" });
     }
   };
 
@@ -133,8 +133,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 23,
     letterSpacing: 0.0015,
-    fontWeight: "bold",
     color: "#003031",
+    fontFamily:'Dosis-Bold'
   },
   textTitle2: {
     fontSize: 14,

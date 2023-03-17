@@ -46,9 +46,9 @@ const styles = StyleSheet.create({
     fontSize: metrics.HEIGHT*0.018,
     //lineHeight: 23,
     letterSpacing: 0.005,
-    fontWeight: "bold",
     color: "#FFFFFF",
     textAlign: "center",
+    fontFamily:'Dosis-Bold'
   },
   wraper: {
     width: "50%",

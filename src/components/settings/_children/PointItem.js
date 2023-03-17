@@ -28,7 +28,7 @@ const PointItem = ({ route, navigation }) => {
   const { dataItem, getDataPointById, dataComments, deleteUserComment } = useContext(IOMContext);
   const [visible, setVisible] = useState(false);
   const { user } = useContext(authContext);
-  let { id = "", latitude = "", longitude = "", uri = "" } = route.params || {};
+  let { id = "", latitude = "", longitude = "", uri = "", from ="" } = route.params || {};
   latitude = isNaN(latitude) ? 0 : latitude;
   longitude = isNaN(longitude) ? 0 : longitude;
   
@@ -206,7 +206,7 @@ const militaryTimeTo12Hour = (s) => {
 
   return (
     <View style={styles.wrapper}>
-      <HeaderItem   title="Información de punto" id={id} navigation={navigation} nombre={Nombre_punto} />
+      <HeaderItem   title="Información de punto" id={id} navigation={navigation} nombre={Nombre_punto} from = {from} />
 
       <View style={[styles.box, styles.box2]}>
         <ScrollView style={{ flex: 1 }}>
@@ -296,7 +296,7 @@ const militaryTimeTo12Hour = (s) => {
 
           <View style={styles.divider}></View>
           <View style={styles.box5}>
-            <Text style={styles.textHorario}>Servicios</Text>
+            <Text style={styles.textServicio}>Servicios</Text>
             {Servicios.map((l, i) => (
               <ServiceItem
                 key={i}
@@ -387,11 +387,12 @@ const styles = StyleSheet.create({
   caja1Text: {
     width: metrics.WIDTH * 0.61,
     fontSize: metrics.HEIGHT * 0.024,
-    fontWeight: "bold",
     color: "#003031",
     lineHeight: metrics.HEIGHT * 0.033,
     letterSpacing: 0.0015,
     alignSelf: "stretch",
+    fontFamily:'Dosis-Bold',
+    textTransform:'capitalize'
   },
   text: {
     fontSize: 15,
@@ -438,15 +439,23 @@ const styles = StyleSheet.create({
   },
   textHorario: {
     fontSize: 17,
-    fontWeight: "bold",
+    fontFamily:'Dosis-Bold',
     lineHeight: 23,
     color: "#007681",
     letterSpacing: 0.0015,
     marginBottom: 8,
   },
+  textServicio: {
+    fontSize: 22,
+    fontFamily:'Dosis-Bold',
+    lineHeight: 28,
+    color: "#007681",
+    letterSpacing: 0.0015,
+    marginBottom: 8,
+  },
   textComentario: {
-    fontSize: 17,
-    fontWeight: "bold",
+    fontSize: 18,
+    fontFamily:'Dosis-Bold',
     lineHeight: 23,
     color: "#003031",
     letterSpacing: 0.0015,

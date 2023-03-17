@@ -1,30 +1,37 @@
 import React, { useContext, useEffect }  from "react";
-import { ImageBackground, Text, View, StyleSheet } from "react-native";
+import { ImageBackground, Text, View, StyleSheet, BackHandler, ScrollView } from "react-native";
 import { ItemMain } from "./_children/Card";
 import LastUpdate from "./_children/LastUpdate";
 import HeaderHome from "./_children/HeaderHome";
 import AuthContext from "../../../context/auth/authContext";
+import { metrics } from "../../utilities/Metrics";
 
 const Main = (props) => {
   const { navigation } = props;
   const { user, signOut, config } = useContext(AuthContext);
 
   useEffect(() => {
-    if (!config.anonymousAuth && user && !user.email) {
-      signOut();
-      navigation.navigate("Registre");
-    }
 
+    
+    BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", handleBackButtonClick);
+    };
   }, []);
 
+  function handleBackButtonClick() {
+    props.navigation.navigate("Splash")
+
+  }
+
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        //source={require("../../resources/images/Background.png")}
-        style={styles.image}
-      >
-        <HeaderHome />
-        <Text style={styles.labelTitle}>¡Te damos la bienvenida!</Text>
+    <ScrollView style={styles.container}>
+      
+      <View style = {{height:metrics.HEIGHT * 0.30, width:metrics.WIDTH}}>
+    <HeaderHome/>
+      </View>
+      <View style = {{height:metrics.HEIGHT * 0.70, width:metrics.WIDTH}}>
+      <Text style={styles.labelTitle}>¡Te damos la bienvenida!</Text>
         <Text style={styles.labelDescripcion}>
           Queremos brindarte la mejor ayuda, por eso hemos preparado las
           siguientes funciones para ti:
@@ -66,11 +73,13 @@ const Main = (props) => {
           )}
           
         </View>
-        <View style={styles.containerFooter}>
-          <LastUpdate />
+        
+      </View>
+      <View style={styles.containerFooter}>
+        <LastUpdate />
         </View>
-      </ImageBackground>
-    </View>
+      
+    </ScrollView>
   );
 };
 
@@ -78,16 +87,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
+    height:metrics.HEIGHT,
+    width:metrics.WIDTH
+    
   },
   containerForm: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
+    height:metrics.HEIGHT * 0.12,
+    marginTop:metrics.HEIGHT * 0.05
   },
   containerForm2: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
+    height: metrics.HEIGHT * 0.15,
+    marginTop:metrics.HEIGHT * 0.05,
+    marginBottom:10
   },
   labelTitle: {
     fontSize: 27,
@@ -96,8 +113,8 @@ const styles = StyleSheet.create({
     letterSpacing: 0.0015,
     textAlign: "center",
     color: "#007681",
-    marginTop: 240,
-    marginBottom: 24,
+    marginTop: metrics.HEIGHT * 0.05,
+    fontFamily:'Dosis-Regular'
   },
   labelDescripcion: {
     fontSize: 15,
@@ -106,11 +123,11 @@ const styles = StyleSheet.create({
     letterSpacing: 0.005,
     marginRight: 19,
     marginLeft: 13,
-    marginBottom: 56,
+    textAlign: "center",
   },
   image: {
     flex: 1,
-    resizeMode: "cover",
+    borderWidth:1
   },
   logo: {
     top: 25,
@@ -119,10 +136,12 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   containerFooter: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0,
+    position:'absolute',
+    bottom:0,
+    letft:0,
+    right:0,
+    width:metrics.WIDTH,
+    height:metrics.HEIGHT*0.05
   },
 });
 

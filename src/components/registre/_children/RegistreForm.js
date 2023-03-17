@@ -379,8 +379,7 @@ export const RegistreForm3 = ({ setForm, setData, data, props }) => {
     <View style={Styles.container}>
       <View style={[Styles.box, Styles.box1]}>
         <Text style={Styles.labelTitle}>Ingresa tu fecha de nacimiento</Text>
-        <View style={{ flex: 1, justifyContent: "flex-start" }}>
-
+        
           <DatePicker
            mode="date"
            date={new Date(moment(data.birdDate !== '' ? data.birdDate : moment().add(-18, "years").toDate()))}
@@ -390,10 +389,11 @@ export const RegistreForm3 = ({ setForm, setData, data, props }) => {
              const age = new Date(Date.now() - date.getTime());
              setData({ ...data, birdDate: moment(date).format("YYYY-MM-DD"), age: Math.abs(age.getUTCFullYear() - 1970) });
            }}
-           style={{ backgroundColor: "white" }}
+           style={{ backgroundColor: "white" , width:metrics.WIDTH * 0.92}}
+           textColor="#000000"
           />
 
-        </View>
+        
       </View>
       {data.age < 18 && (
         <Footer formValue={3} title="Siguiente" setForm={setForm} />

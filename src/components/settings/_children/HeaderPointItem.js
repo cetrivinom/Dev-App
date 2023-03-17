@@ -110,8 +110,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 23,
     letterSpacing: 0.0015,
-    fontWeight: "bold",
+    fontFamily:'Dosis-Bold',
     color: "#003031",
+    textTransform:'capitalize',
+    width:metrics.WIDTH*0.8
   },
   box4: {
     flexDirection: "row",

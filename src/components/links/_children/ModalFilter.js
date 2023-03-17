@@ -167,6 +167,7 @@ const styles = StyleSheet.create({
     lineHeight: 23,
     letterSpacing: 0.0015,
     marginStart: 12,
+    fontFamily:'Dosis-Regular'
   },
   cardItemBuscar: {
     fontSize: 16,
@@ -176,6 +177,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.005,
     marginStart: 12,
     height: 55,
+    fontFamily:'Dosis-Regular'
   },
   divider: {
     height: 3,

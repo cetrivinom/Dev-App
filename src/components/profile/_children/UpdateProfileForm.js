@@ -12,6 +12,7 @@ import Styles from "./styles";
 import moment from "moment";
 import AuthContext from "../../../../context/auth/authContext";
 import { Snackbar } from "react-native-paper";
+import { metrics } from "../../../utilities/Metrics";
 
 export const Footer = (props) => {
   const {
@@ -139,7 +140,6 @@ export const UpdateBirthDate = (props) => {
     <View style={[Styles.box, Styles.box2]}>
       <View style={Styles.container}>
         <Text style={Styles.labelTitle}>Ingresa tu fecha de nacimiento</Text>
-        <View style={{ flex: 1, justifyContent: "center", marginTop:20, borderWidth:1 }}>
         <DatePicker
             mode="date"
             date={new Date(moment(user.birdDate!==''?user.birdDate:moment().add(-18, "years").toDate()))}
@@ -148,9 +148,10 @@ export const UpdateBirthDate = (props) => {
             onDateChange={(date) => {
               updateUserInputChange({ 'field': 'birdDate', 'value': moment(date).format("YYYY-MM-DD")});
             }}
-            style={{ backgroundColor: "white", marginTop:30 }}
+            style={{ backgroundColor: "white", width:metrics.WIDTH * 0.92 }}
+            textColor="#000000"
           />
-        </View>
+        
       </View>
     </View>
   );
