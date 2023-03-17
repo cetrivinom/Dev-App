@@ -226,7 +226,7 @@ export const ItemCardPoint = (props) => {
           
 
       <View style={{flex : 1, flexDirection:'row'}}>
-        <View style={{flex:0.7}}>
+        <View style={{flex:0.6}}>
           <View style={styles.containerForm}>{_.map(services,(val) => {
             return val.svg
           })}</View>
@@ -235,7 +235,7 @@ export const ItemCardPoint = (props) => {
             <Text numberOfLines={1} style={styles.textTitle2}>{Estado}</Text>
           </View>
         </View>
-        <View style={{flex:0.3}}>
+        <View style={{flex:0.4, alignItems:'flex-end'}}>
           <View style={styles.box7}>
             <TouchableOpacity
               style={[styles.caja1, styles.caja2]}
@@ -396,7 +396,7 @@ const styles = StyleSheet.create({
   },
 
   textBoxCaja: {
-    fontSize: 13,
+    fontSize: 10,
     fontWeight: "bold",
     lineHeight: 18,
     letterSpacing: 0.0125,

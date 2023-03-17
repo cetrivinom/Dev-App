@@ -395,7 +395,6 @@ const styles = StyleSheet.create({
     textTransform:'capitalize'
   },
   text: {
-    fontSize: 15,
     fontWeight: "bold",
     lineHeight: 18,
     color: "#FFFFFF",

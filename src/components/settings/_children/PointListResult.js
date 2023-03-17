@@ -19,7 +19,7 @@ import _ from 'lodash';
 import HeaderPoint from "../../global/_children/HeaderPoint";
 import analytics from '@react-native-firebase/analytics';
 import HeaderPointItemBox from "./HeaderPointItemBox";
-import { ScrollView } from "react-navigation";
+
 
 export const LastUpdate = ({ route, navigation }) => {
   const {
