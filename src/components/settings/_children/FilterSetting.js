@@ -85,7 +85,7 @@ const FilterSetting = (props) => {
   const toggleModal = () => setShow(!show);
 
   return (
-      <View style={styles.wrapper}>
+      <ScrollView style={styles.wrapper}>
         <HeaderPoint {...props} title="Filtrar puntos de servicio" showSaveOpt={false} from={"Settings"} />
         <View style={[styles.box, styles.box2]}>
         <TextInput
@@ -147,6 +147,8 @@ const FilterSetting = (props) => {
             />
           </TouchableOpacity>
 
+          
+
           <View style={styles.divider}></View>
 
 
@@ -155,12 +157,14 @@ const FilterSetting = (props) => {
           <SelectBox
             label=""
             inputPlaceholder="Buscar"
-            options={arregloServicios}
+            listOptionProps={{nestedScrollEnabled: true}}
+          options={arregloServicios}
             selectedValues={selectedService}
             onMultiSelect={onMultiChange()}
             onTapClose={onMultiChange()}
             isMulti
             placeholder="Buscar"
+            hideInputFilter={false}
           />
 
 
@@ -228,7 +232,7 @@ const FilterSetting = (props) => {
             ? 'municipio'
             : null}
         />
-      </View>
+      </ScrollView>
     
   );
 };

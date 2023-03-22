@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   FlatList,
   Platform,
+  Linking
 } from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
 import { metrics } from "../../../utilities/Metrics";
@@ -220,13 +221,16 @@ export const ItemCardPoint = (props) => {
     let coor = Coordenadas.split(",");
     let latitude = parseFloat(coor[0]);
     let longitude = parseFloat(coor[1]);
-    props.navigation.navigate("PointNavigationApp", {
-      id,
-      Nombre_punto,
-      Direccion,
-      latitude,
-      longitude,
+    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+    const latLng = `${latitude},${longitude}`;
+    const label = 'Custom Label';
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`
     });
+
+
+    Linking.openURL(url);
   };
 
   return (
@@ -320,7 +324,7 @@ const PointListResult = (props) => {
   );
   const awesomeChildListKeyExtractor = (item) => item.ID;
   const mapMarkers = () => {
-    if (dataPointFilter != null) {
+    if (dataPointFilter !== null && dataPointFilter !== undefined && dataPointFilter.length !==0) {
       return dataPointFilter.map((item, index) => {
         if (item.Coordenadas !== "") {
           var icon = (dataMapeoState.find((state) => state.id_estado == item.Estado_id));
@@ -334,9 +338,11 @@ const PointListResult = (props) => {
                 latitude,
                 longitude,
               }}
+              image={{ width: 28, height: 40 , uri: icon?.img_estado_b64} }
+              
               onPress={() => onPressOpenPoint(item.ID, latitude, longitude, icon?.img_estado_b64, item.Nombre_punto)}
             >
-              <Image style={{ height: 40, width: 28 }} source={{ uri: icon?.img_estado_b64 }} />
+              
             </Marker>
           );
         }

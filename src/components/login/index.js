@@ -39,7 +39,7 @@ const Login = (props) => {
     });
 
     if (auth) {
-      props.navigation.navigate("Home");
+      props.navigation.replace("Home");
     }
   }, [auth]);
 

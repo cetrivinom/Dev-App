@@ -6,7 +6,8 @@ import {
   Image,
   View,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  Linking
 } from "react-native";
 import HeaderItem from "../../global/_children/HeaderItem";
 import IOMContext from "../../../../context/iomData/iomContext";
@@ -28,10 +29,10 @@ const PointItem = ({ route, navigation }) => {
   const { dataItem, getDataPointById, dataComments, deleteUserComment } = useContext(IOMContext);
   const [visible, setVisible] = useState(false);
   const { user } = useContext(authContext);
-  let { id = "", latitude = "", longitude = "", uri = "", from ="" } = route.params || {};
+  let { id = "", latitude = "", longitude = "", uri = "", from = "" } = route.params || {};
   latitude = isNaN(latitude) ? 0 : latitude;
   longitude = isNaN(longitude) ? 0 : longitude;
-  
+
 
   const {
     Nombre_punto = "",
@@ -48,7 +49,7 @@ const PointItem = ({ route, navigation }) => {
   const [scheduleToShowSD, setScheduleToShowSD] = useState([])
 
   useEffect(() => {
-    
+
 
     getDataPointById(id);
   }, [id]);
@@ -58,108 +59,108 @@ const PointItem = ({ route, navigation }) => {
 
     let lunesAViernes = [];
     Horario && Horario.map((i, index) => {
-        if (i.day !== 0 && i.day != 6) {
-            let dato = {}
-            dato.id = index + 1;
-            dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
-                "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
-                    "Viernes" : "Sabado";
-            dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
-            dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
-            lunesAViernes.push(dato);
-        }
+      if (i.day !== 0 && i.day != 6) {
+        let dato = {}
+        dato.id = index + 1;
+        dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
+          "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
+            "Viernes" : "Sabado";
+        dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
+        dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
+        lunesAViernes.push(dato);
+      }
 
     })
 
     let sabadoDomingo = [];
     Horario && Horario.map((i, index) => {
-        if (i.day === 0 || i.day === 6) {
-            let dato = {}
-            dato.id = index + 1;
-            dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
-                "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
-                    "Viernes" : "Sabado";
-            dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
-            dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
-            sabadoDomingo.push(dato);
-        }
+      if (i.day === 0 || i.day === 6) {
+        let dato = {}
+        dato.id = index + 1;
+        dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
+          "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
+            "Viernes" : "Sabado";
+        dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
+        dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
+        sabadoDomingo.push(dato);
+      }
 
     })
 
 
 
     setScheduleToShowLV(
-        lunesAViernes.reduce((groups, groupDay) => {
+      lunesAViernes.reduce((groups, groupDay) => {
 
 
-            const openingtime = groupDay.starthours + " - " + groupDay.endhours;
-            const openingTimeIncludedInAGroup = groups.find(singleDay =>
-                singleDay.hours === openingtime)
+        const openingtime = groupDay.starthours + " - " + groupDay.endhours;
+        const openingTimeIncludedInAGroup = groups.find(singleDay =>
+          singleDay.hours === openingtime)
 
 
-            const id = openingTimeIncludedInAGroup && openingTimeIncludedInAGroup.id
+        const id = openingTimeIncludedInAGroup && openingTimeIncludedInAGroup.id
 
-            if (id) {
-                return groups.map(item => item.id === id
-                    ? { ...item, days: item.days.concat(groupDay.day) }
-                    : item)
-            }
+        if (id) {
+          return groups.map(item => item.id === id
+            ? { ...item, days: item.days.concat(groupDay.day) }
+            : item)
+        }
 
-            return groups.concat({
-                id: Math.random(),
-                hours: openingtime,
-                days: [groupDay.day]
-            })
+        return groups.concat({
+          id: Math.random(),
+          hours: openingtime,
+          days: [groupDay.day]
+        })
 
 
-        }, [])
+      }, [])
     )
 
     setScheduleToShowSD(
-        sabadoDomingo.reduce((groups, groupDay) => {
+      sabadoDomingo.reduce((groups, groupDay) => {
 
 
-            const openingtime = groupDay.starthours + " - " + groupDay.endhours;
-            const openingTimeIncludedInAGroup = groups.find(singleDay =>
-                singleDay.hours === openingtime)
+        const openingtime = groupDay.starthours + " - " + groupDay.endhours;
+        const openingTimeIncludedInAGroup = groups.find(singleDay =>
+          singleDay.hours === openingtime)
 
 
-            const id = openingTimeIncludedInAGroup && openingTimeIncludedInAGroup.id
+        const id = openingTimeIncludedInAGroup && openingTimeIncludedInAGroup.id
 
-            if (id) {
-                return groups.map(item => item.id === id
-                    ? { ...item, days: item.days.concat(groupDay.day) }
-                    : item)
-            }
+        if (id) {
+          return groups.map(item => item.id === id
+            ? { ...item, days: item.days.concat(groupDay.day) }
+            : item)
+        }
 
-            return groups.concat({
-                id: Math.random(),
-                hours: openingtime,
-                days: [groupDay.day]
-            })
+        return groups.concat({
+          id: Math.random(),
+          hours: openingtime,
+          days: [groupDay.day]
+        })
 
 
-        }, [])
+      }, [])
     )
 
 
 
 
-}, [Horario]);
+  }, [Horario]);
 
-const militaryTimeTo12Hour = (s) => {
+  const militaryTimeTo12Hour = (s) => {
 
-   
 
-    if(s.toString().length == 4) s = `${s.toString()}`; // 930 -> 0930
-    if(s.toString().length == 3) s = `0${s.toString()}`; // 930 -> 0930
-    if(s.toString().length == 1) s = `000${s.toString()}`; // 930 -> 0930
+
+    if (s.toString().length == 4) s = `${s.toString()}`; // 930 -> 0930
+    if (s.toString().length == 3) s = `0${s.toString()}`; // 930 -> 0930
+    if (s.toString().length == 1) s = `000${s.toString()}`; // 930 -> 0930
 
     const hour = parseInt(s.toString().substring(0, 2), 10);
     const min = s.toString().substring(2, 4);
-    if(hour < 12) return `${hour % 12}:${min} AM`;
+    if (hour < 12) return `${hour % 12}:${min} AM`;
     return `${hour % 12 || 12}:${min} PM`;
-}
+  }
 
 
 
@@ -192,21 +193,26 @@ const militaryTimeTo12Hour = (s) => {
   }
 
   const onPressOpenNavigationApps = () => {
-    /*let coor = Coordenadas.split(",");
-    let latitude = parseFloat(coor[0]);
-    let longitude = parseFloat(coor[1]);*/
-    navigation.navigate("PointNavigationApp", {
-      id,
-      Nombre_punto,
-      Direccion,
-      latitude,
-      longitude,
+
+
+    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+    const latLng = `${latitude},${longitude}`;
+    const label = 'Custom Label';
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`
     });
+
+
+    Linking.openURL(url);
+
+
+    
   };
 
   return (
     <View style={styles.wrapper}>
-      <HeaderItem   title="Información de punto" id={id} navigation={navigation} nombre={Nombre_punto} from = {from} />
+      <HeaderItem title="Información de punto" id={id} navigation={navigation} nombre={Nombre_punto} from={from} />
 
       <View style={[styles.box, styles.box2]}>
         <ScrollView style={{ flex: 1 }}>
@@ -308,7 +314,7 @@ const militaryTimeTo12Hour = (s) => {
             ))}
           </View>
           <View style={styles.divider}></View>
-          <MenuProvider  skipInstanceCheck={true} style={styles.box5}>
+          <MenuProvider skipInstanceCheck={true} style={styles.box5}>
             <Text style={styles.textComentario}>Tus comentarios</Text>
             {dataComments
               ?.filter((data) => data.pointID === id)
@@ -391,8 +397,8 @@ const styles = StyleSheet.create({
     lineHeight: metrics.HEIGHT * 0.033,
     letterSpacing: 0.0015,
     alignSelf: "stretch",
-    fontFamily:'Dosis-Bold',
-    textTransform:'capitalize'
+    fontFamily: 'Dosis-Bold',
+    textTransform: 'capitalize'
   },
   text: {
     fontWeight: "bold",
@@ -438,7 +444,7 @@ const styles = StyleSheet.create({
   },
   textHorario: {
     fontSize: 17,
-    fontFamily:'Dosis-Bold',
+    fontFamily: 'Dosis-Bold',
     lineHeight: 23,
     color: "#007681",
     letterSpacing: 0.0015,
@@ -446,7 +452,7 @@ const styles = StyleSheet.create({
   },
   textServicio: {
     fontSize: 22,
-    fontFamily:'Dosis-Bold',
+    fontFamily: 'Dosis-Bold',
     lineHeight: 28,
     color: "#007681",
     letterSpacing: 0.0015,
@@ -454,7 +460,7 @@ const styles = StyleSheet.create({
   },
   textComentario: {
     fontSize: 18,
-    fontFamily:'Dosis-Bold',
+    fontFamily: 'Dosis-Bold',
     lineHeight: 23,
     color: "#003031",
     letterSpacing: 0.0015,

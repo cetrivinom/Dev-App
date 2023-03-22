@@ -87,11 +87,12 @@ const Settings = (props) => {
   }, []);
 
   const mapMarkers = () => {
-    if (dataPoint != null) {
+    if (dataPoint !== null && dataPoint !== undefined && dataPoint.length !==0) {
       return dataPoint.map((item, index) => {
-        var icon = (dataMapeoState.find((state) => state.id_estado == item.Estado_id));
         if (item.Coordenadas !== "") {
+          var icon = (dataMapeoState.find((state) => state.id_estado == item.Estado_id));
           let coor = item.Coordenadas.split(",");
+          
           let latitude = parseFloat(coor[0]);
           let longitude = parseFloat(coor[1]);
           return (
@@ -100,10 +101,12 @@ const Settings = (props) => {
               coordinate={{
                 latitude,
                 longitude,
+                
               }}
+              image={{ width: 28, height: 40 , uri: icon?.img_estado_b64} }
               onPress={() => onPressOpenPoint(item.ID, latitude, longitude, icon?.img_estado_b64, item.Nombre_punto)}
             >
-              <Image style={{ width: 28, height: 40 }} source={{ uri: icon?.img_estado_b64 }} />
+              
             </Marker>
           );
         }

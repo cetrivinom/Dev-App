@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   FlatList,
   Platform,
+  Linking
 } from "react-native";
 import IOMContext from "../../../../context/iomData/iomContext";
 import HeaderItem from "../../global/_children/HeaderItem";
@@ -190,13 +191,16 @@ export const ItemCardPoint = (props) => {
     let coor = Coordenadas.split(",");
     let latitude = parseFloat(coor[0]);
     let longitude = parseFloat(coor[1]);
-    props.navigation.navigate("PointNavigationApp", {
-      id,
-      Nombre_punto,
-      Direccion,
-      latitude,
-      longitude,
+    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+    const latLng = `${latitude},${longitude}`;
+    const label = 'Custom Label';
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`
     });
+
+
+    Linking.openURL(url);
   };
 
   var services = [];

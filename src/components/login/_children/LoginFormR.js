@@ -3,7 +3,7 @@ import {
   View,
   Text,
   Image,
-  
+  Alert,
   TouchableHighlight,
   TouchableOpacity,
   ImageBackground
@@ -17,7 +17,10 @@ import { StyleSheet } from "react-native";
 import { useWindowDimensions } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { StackActions, useNavigation } from "@react-navigation/native";
+import database from "@react-native-firebase/database";
 const LoginFormR = (props) => {
+
+  const [usuarios, setUsuarios] = useState([]);
 
   const navigation = useNavigation()
 
@@ -28,7 +31,7 @@ const LoginFormR = (props) => {
 useEffect(() => {
 
     
-  /*database().ref('/users').on('value', snapshot => {
+  database().ref('/users').on('value', snapshot => {
     let res = [];
     snapshot.forEach((value) => {
       const id = value.key;
@@ -36,8 +39,8 @@ useEffect(() => {
       res.push({ id, email });
     });
       
-    console.log(res)
-  });*/
+    setUsuarios(res)
+  });
   }, []);
 
   
@@ -57,7 +60,6 @@ useEffect(() => {
     getConfig,
     passwordEmailRecovery,
     user: userData,
-    getUserByEmail
   } = useContext(AuthContext);
 
 
@@ -71,9 +73,12 @@ useEffect(() => {
       ok = false;
     }
 
-    let a = getUserByEmail(email)
+    let a = usuarios.find(item => item.email === email);
 
-    console.log(a)
+    if(a!==undefined){
+      Alert.alert("Error","El Correo electrónico ya se encuentra registrado");
+      ok = false;
+    }
 
     if (ok) {
       navigation.navigate("Registre", { emailA: email })
