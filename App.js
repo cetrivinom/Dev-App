@@ -4,7 +4,7 @@ import AuthState from "./context/auth/authState";
 import InitialState from "./context/initialData/initialState";
 import IOMState from "./context/iomData/iomState";
 import messaging from '@react-native-firebase/messaging';
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Snackbar } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from '@react-navigation/native';

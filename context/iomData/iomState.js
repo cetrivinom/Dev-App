@@ -24,7 +24,7 @@ import IOMReducer from "./iomReducer";
 import IOMContext from "./iomContext";
 import axios from "axios";
 //import API from "../../config/axios";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import database from "@react-native-firebase/database";
 import _ from 'lodash';
 

@@ -3,7 +3,6 @@ import { View, FlatList, StyleSheet, TouchableOpacity, Text, Image, ActivityIndi
 import Header from "../global/_children/HeaderBack";
 import CardtemFavorite from "./_children/CardtemFavorite";
 import IOMContext from "../../../context/iomData/iomContext";
-import AsyncStorage from '@react-native-community/async-storage'
 import Menu, {
   MenuProvider,
   MenuOptions,

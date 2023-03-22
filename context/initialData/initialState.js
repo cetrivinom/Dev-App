@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 import { GET_DATA, GET_DATA_ERROR, UPDATED_LAST_UPDATE } from "../../types";
 import InitialReducer from "./initialReducer";
 import InitialContext from "./initialContext";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import API from "../../config/axios";
 import moment from "moment";
 
