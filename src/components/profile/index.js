@@ -1,81 +1,103 @@
-import React, { useContext } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import React, { useContext, useState, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Image, TouchableHighlight,ActivityIndicator } from "react-native";
 import CardItemProfile from "./_children/CardItemProfile";
 import AuthContext from "../../../context/auth/authContext";
 import { metrics } from "../../utilities/Metrics";
 
 const Profile = (props) => {
   const { navigation } = props;
-  const { user, signOut,updatePassInputChange } = useContext(AuthContext);
+  const { user, signOut, updatePassInputChange } = useContext(AuthContext);
   const onPressBack = () => {
     navigation.goBack();
   };
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+
+    
+    setLoading(false)
+    }, []);
 
   const onPressLogOff = () => {
-    signOut();
-    navigation.navigate("Login");
+    setLoading(true)
+    signOut()
+    setTimeout(() => {
+      setLoading(false)
+      navigation.navigate("Login");
+    }, 1000);
   };
 
   return (
-      <View style={styles.wrapper}>
-        <View style={styles.statusBarBackground}>
-        </View>
-        <View style={[styles.box, styles.box1]}>
-          <View style={styles.containerHeader}>
-            <View style={styles.containerForm}>
-              <TouchableOpacity onPress={onPressBack} style={styles.iconLeft}>
-                <Image source={require("../../resources/images/left.png")} />
-              </TouchableOpacity>
-              <Text style={styles.labelTitleHeader}>Perfil</Text>
-            </View>
-          </View>
-        </View>
-        <View style={[styles.box, styles.box2]}>
-          <View style={styles.container}>
-            <CardItemProfile
-              title="Correo electrónico"
-              subTitle={user ? user.email : ""}
-            />
-            <CardItemProfile
-              {...props}
-              title="Fecha de nacimiento"
-              field="birthdate"
-              subTitle={user ? user.birdDate : ""}
-              showImge
-              navigation={navigation}
-            />
-            <CardItemProfile
-              {...props}
-              title="Género"
-              field="genero"
-              subTitle={
-                user
-                  ? user.gender == "H"
-                    ? "Hombre"
-                    : user.gender == "M"
-                    ? "Mujer"
-                    : "Otro"
-                  : ""
-              }
-              showImge
-              navigation={navigation}
-            />
-            <CardItemProfile
-              {...props}
-              title="Contraseña"
-              field="password"
-              subTitle="****************"
-              showImge
-              navigation={navigation}
-            />
-            <View style={styles.containerBodyLogOff}>
-              <TouchableOpacity onPress={onPressLogOff}>
-                <Text style={styles.labelTitleLogOff}>Cerrar sesión</Text>
-              </TouchableOpacity>
-            </View>
+    <View style={styles.wrapper}>
+      <View style={styles.statusBarBackground}>
+      </View>
+      <View style={[styles.box, styles.box1]}>
+        <View style={styles.containerHeader}>
+          <View style={styles.containerForm}>
+            <TouchableOpacity onPress={onPressBack} style={styles.iconLeft}>
+              <Image source={require("../../resources/images/left.png")} />
+            </TouchableOpacity>
+            <Text style={styles.labelTitleHeader}>Perfil</Text>
           </View>
         </View>
       </View>
+      <View style={[styles.box, styles.box2]}>
+        <View style={styles.container}>
+          <CardItemProfile
+            title="Correo electrónico"
+            subTitle={user ? user.email : ""}
+          />
+          <CardItemProfile
+            {...props}
+            title="Fecha de nacimiento"
+            field="birthdate"
+            subTitle={user ? user.birdDate : ""}
+            showImge
+            navigation={navigation}
+          />
+          <CardItemProfile
+            {...props}
+            title="Género"
+            field="genero"
+            subTitle={
+              user
+                ? user.gender == "H"
+                  ? "Hombre"
+                  : user.gender == "M"
+                    ? "Mujer"
+                    : "Otro"
+                : ""
+            }
+            showImge
+            navigation={navigation}
+          />
+          <CardItemProfile
+            {...props}
+            title="Contraseña"
+            field="password"
+            subTitle="****************"
+            showImge
+            navigation={navigation}
+          />
+
+          {loading ?
+
+            <ActivityIndicator size="large" />
+
+            :
+            <TouchableHighlight style={styles.btnIniciar} onPress={onPressLogOff} >
+              <Text style={styles.labelLogin}>Cerrar sesión</Text>
+            </TouchableHighlight>
+
+          }
+
+
+
+
+
+        </View>
+      </View>
+    </View>
   );
 };
 
@@ -119,7 +141,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.0015,
     textAlign: "center",
     color: "#FFFFFF",
-    fontFamily:'Dosis-Regular'
+    fontFamily: 'Dosis-Regular'
   },
   labelTitleLogOff: {
     fontSize: 15,
@@ -131,11 +153,25 @@ const styles = StyleSheet.create({
   iconLeft: {
     position: "absolute",
     right: metrics.WIDTH * 0.45,
-  },  
-  statusBarBackground:{
+  },
+  statusBarBackground: {
     height: (Platform.OS === 'ios') ? metrics.WIDTH * 0.06 : 0,
     backgroundColor: "#00AAAD",
   },
+  btnIniciar: {
+    backgroundColor: "#132A3E",
+    borderRadius: 25,
+  },
+  labelLogin: {
+    color: "#FFFFFF",
+    fontSize: 15,
+    fontWeight: "700",
+    lineHeight: 18,
+    letterSpacing: 0.00125,
+    textAlign: "center",
+    paddingVertical: 12,
+    fontFamily: 'Roboto-Regular'
+  }
 });
 
 export default Profile;

@@ -538,7 +538,7 @@ const styles = StyleSheet.create({
   labelTitle2: {
     fontSize: 13,
     fontWeight: "bold",
-    color: "#FEC800",
+    color: "#902857",
     lineHeight: 14,
     letterSpacing: 0.004,
   },
