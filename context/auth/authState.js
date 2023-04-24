@@ -300,11 +300,10 @@ const AuthState = (props) => {
             array.push(data)
           });
 
-          console.log(id)
-          console.log(array)
+
 
           let aa = array.find(item => item.id === id);
-          console.log(aa)
+
 
           if (aa !== undefined && aa.length !== 0) {
 
@@ -346,6 +345,69 @@ const AuthState = (props) => {
       .catch((error) => {
         console.error(error);
       });
+
+
+  }
+
+  const createFavoriteArray = (user, favoriteId) => {
+
+    
+    let data = {
+      id: favoriteId
+    }
+
+    database()
+      .ref("/favorites/" + user.uid)
+      .once("value", (snapshot) => {
+        if (snapshot.hasChildren()) {
+          let dataF = snapshot;
+          let array = [];
+
+          dataF && dataF.forEach((child) => {
+            let data = {};
+            data.id = child.val().id;
+            data.k = child.key;
+            array.push(data)
+          });
+
+          
+          let aa = array.find(item => item.id === favoriteId);
+
+
+          if (aa === undefined) {
+
+            database()
+              .ref("favorites/" + user.uid)
+              .push(data)
+              .then((value) => {
+                dispatch({
+                  type: NEW_FAVORITE,
+                  payload: value,
+                });
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+
+          }
+
+        }else{
+          database()
+              .ref("favorites/" + user.uid)
+              .push(data)
+              .then((value) => {
+                dispatch({
+                  type: NEW_FAVORITE,
+                  payload: value,
+                });
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+        }
+      })
+
+
 
 
   }
@@ -447,6 +509,7 @@ const AuthState = (props) => {
         getDefaultConfig,
         deleteFavoriteF,
         createFavoriteF,
+        createFavoriteArray,
         getDataFavorite
       }}
     >

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import { View, StyleSheet, TouchableOpacity, Text, Image, Platform, PermissionsAndroid, Dimensions, BackHandler } from "react-native";
-import Header from "../global/_children/Header";
+import Header from "../global/_children/HeaderBack";
 import LastUpdate from "../global/_children/LastUpdate";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Geolocation from "@react-native-community/geolocation";
@@ -33,7 +33,7 @@ const Settings = (props) => {
   }, []);
 
   function handleBackButtonClick() {
-    props.navigation.navigate("Home")
+    props.navigation.goBack();
     return true;
   }
   //Validamos que se tenga permisos de ubicacion en el dispositivo
@@ -202,7 +202,7 @@ const Settings = (props) => {
   return (
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>
-        <Header {...props} showBack={false} title="Puntos de servicio" />
+        <Header {...props} showBack={true} title="Puntos de servicio" />
         <LastUpdate />
       </View>
       <View style={{ flex: 1, flex: Platform.OS === "ios" ? 5.8 : 7.3, marginBottom: marginBottomV, marginTop:0 }}>

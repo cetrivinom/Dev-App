@@ -5,8 +5,8 @@ import IOMContext from "../../../../context/iomData/iomContext";
 import AuthContext from "../../../../context/auth/authContext";
 import database from "@react-native-firebase/database";
 import analytics from '@react-native-firebase/analytics';
-
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import NetInfo from '@react-native-community/netinfo';
 const HeaderPointItem = (props) => {
   const { id = "", nombre = "" } = props || {};
   const { createFavorite, dataFavorite, deleteFavoriteId } = useContext(IOMContext);
@@ -18,9 +18,12 @@ const HeaderPointItem = (props) => {
   const onPressSave = () => {
     if (isFavorite) {
 
-      deleteFavoriteF(user, id);
-
-    } else {
+      NetInfo.fetch().then(state => {
+        if (state.isConnected) {
+      deleteFavoriteF(user,id);
+        }})
+      deleteFavoriteId(id)
+    }else{
 
       let nombreA = nombre.replace(/ /g, "_") + "|Crear_Favorito";
 
@@ -30,13 +33,32 @@ const HeaderPointItem = (props) => {
         screen_name: nombreA,
         screen_class: nombreA,
       });
-
-
-      createFavoriteF(user, id);
-
+      NetInfo.fetch().then(state => {
+        if (state.isConnected) {
+      createFavoriteF(user,id);
+        }})
+      storeData(id);
+      
     }
     setIsFavorite(!isFavorite);
   };
+
+  const storeData = async (id) => {
+
+    let item = {
+      id: id
+    };
+    
+    var value = JSON.parse(await AsyncStorage.getItem("favorites"));
+      if (!value)
+        value = [];
+      let index = value.findIndex(favorite => favorite.id == item.id);
+      if (index == -1 && item.id >= 0) {
+        value.push(item);
+        AsyncStorage.setItem("favorites", JSON.stringify(value));
+        
+      }
+  }
 
   useEffect(() => {
     setInformacion()
@@ -44,33 +66,19 @@ const HeaderPointItem = (props) => {
 
   const setInformacion = async () => {
 
-
-    await database()
-      .ref("/favorites/" + user.uid)
-      .once("value", (snapshot) => {
-        if (snapshot.hasChildren()) {
-          let dataF = snapshot;
-          let array = [];
-
-          dataF && dataF.forEach((child) => {
-            let data = {};
-            data.id = child.val().id;
-            data.k = child.key;
-            array.push(data)
-          });
-
-          let a = array.find(item => item.id === id);
+    const value = await AsyncStorage.getItem('favorites');
+    console.log(value)
+        if (value !== null) {
+          
+          var favoritosL = JSON.parse(value);
+          let a = favoritosL.find(item => item.id === id);
 
           if (a !== undefined && a.length !== 0) {
             setFavorito(a)
             setIsFavorite(true)
           }
-          else {
-            setIsFavorite(false)
-          }
 
         }
-      })
 
 
   }
@@ -79,7 +87,10 @@ const HeaderPointItem = (props) => {
 
 
     <View style={styles.containerFormTitle}>
-      <Text style={styles.textTitle}>{nombre}</Text>
+      <View style={{flex:1}}>
+      <Text  style={styles.textTitle}>{nombre}</Text>
+      </View>
+      <View >
       <TouchableOpacity onPress={onPressSave}>
         
           <Image
@@ -87,6 +98,7 @@ const HeaderPointItem = (props) => {
           />
         
       </TouchableOpacity>
+      </View>
     </View>
 
 
@@ -128,6 +140,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingBottom: 10,
+    width:metrics.WIDTH*0.70
   },
 });
 

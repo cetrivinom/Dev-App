@@ -16,7 +16,7 @@ const Login = (props) => {
 
     NetInfo.fetch().then(state => {
       if (!state.isConnected)
-        props.navigation.navigate("Home");
+        props.navigation.navigate("Main");
     });
 
     getConfig().then((config) => {
@@ -39,7 +39,7 @@ const Login = (props) => {
     });
 
     if (auth) {
-      props.navigation.replace("Home");
+      props.navigation.replace("Main");
     }
   }, [auth]);
 
@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     marginTop: metrics.HEIGHT * 0.03,
     height: metrics.HEIGHT * 0.19,
+    shadowColor: "#000",
   },
   labelInicio: {
     fontSize: 27,

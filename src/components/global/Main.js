@@ -1,18 +1,217 @@
-import React, { useContext, useEffect }  from "react";
+import React, { useContext, useEffect } from "react";
 import { ImageBackground, Text, View, StyleSheet, BackHandler, ScrollView } from "react-native";
 import { ItemMain } from "./_children/Card";
 import LastUpdate from "./_children/LastUpdate";
 import HeaderHome from "./_children/HeaderHome";
 import AuthContext from "../../../context/auth/authContext";
+import IOMContext from "../../../context/iomData/iomContext";
 import { metrics } from "../../utilities/Metrics";
-
+import database from "@react-native-firebase/database";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import NetInfo from '@react-native-community/netinfo';
+import { useState } from "react";
 const Main = (props) => {
   const { navigation } = props;
-  const { user, signOut, config } = useContext(AuthContext);
+  const { user, signOut, config, createFavoriteArray, deleteFavoriteF, createFavoriteF } = useContext(AuthContext);
+  const { createFavorite, dataFavorite, deleteFavoriteId } = useContext(IOMContext);
+  const [dataFirebase, setDataFirebase] = useState([]);
+  useEffect(() => {
+    NetInfo.fetch().then(state => {
+      if (state.isConnected) {
+
+
+        getDataFirebase()
+        
+         sincronizarFirebaseToStorage();
+        
+
+
+      }
+    })
+  }, [])
+
+
+
+  const sincronizarFirebaseToStorage = async () => {
+
+    database()
+      .ref("/favorites/" + user.uid)
+      .once("value", (snapshot) => {
+        if (snapshot.hasChildren()) {
+          let dataF = snapshot;
+
+          var array = [];
+          dataF && dataF.forEach((child) => {
+            var a ={}
+            a.id=child.val().id;
+            array.push(a);
+            
+          });
+          
+          storeData(array)
+
+        }
+      })
+
+
+  }
+
+  const sincronizarFirebaseToStorage2 = async () => {
+
+    database()
+      .ref("/favorites/" + user.uid)
+      .once("value", (snapshot) => {
+        if (snapshot.hasChildren()) {
+          let dataF = snapshot;
+
+          var array = [];
+          dataF && dataF.forEach((child) => {
+            var a ={}
+            a.id=child.val().id;
+            array.push(a);
+            
+          });
+          
+          storeData2(array)
+
+        }
+      })
+
+
+  }
+
+  const getDataFirebase = async () => {
+
+    var array = [];
+    database()
+      .ref("/favorites/" + user.uid)
+      .once("value", (snapshot) => {
+        if (snapshot.hasChildren()) {
+          let dataF = snapshot;
+
+
+          dataF && dataF.forEach((child) => {
+            var a = {}
+            a.id = child.val().id;
+            array.push(a)
+          });
+
+          setDataFirebase(array)
+          
+           
+        } 
+
+        
+      })
+  }
+
+  const sincronizarStorageToFirebase = async (array) => {
+
+
+
+
+
+    const value = await AsyncStorage.getItem('favorites');
+
+   
+
+      var favoritosL = JSON.parse(value);
+      var count = Object.keys(favoritosL).length;
+      var count_firebase = array.length;
+
+      console.log("count favo",count)
+      console.log("count_firebase",count_firebase)
+      
+
+      if (count > 0 && count_firebase === 0) {
+        favoritosL.forEach(obj => {
+          Object.entries(obj).forEach(([key, value]) => {
+
+            createFavoriteArray(user, value);
+          });
+
+        });
+      }
+
+      if (count === 0 && count_firebase > 0) {
+
+        sincronizarFirebaseToStorage2()
+      }
+
+      if (count > 0 && count_firebase > 0) {
+
+        if (count > count_firebase) {
+
+          favoritosL.forEach(obj => {
+            Object.entries(obj).forEach(([key, value]) => {
+              let a = array.find(item => item.id === value);
+              if (a === undefined) {
+                createFavoriteF(user, value);
+              }
+            });
+
+          });
+
+        } else {
+
+          array && array.forEach(sto => {
+
+            let a = favoritosL.find(item => item.id === sto.id);
+           
+            if (a === undefined) {
+              deleteFavoriteF(user, sto.id);
+            }
+
+
+          });
+
+        }
+
+      
+
+    }
+
+
+
+
+
+
+  }
+
+  const storeData = async (item) => {
+
+    
+    var value = JSON.parse(await AsyncStorage.getItem("favorites"));
+    if (!value){
+      
+    
+      AsyncStorage.setItem("favorites", JSON.stringify(item));
+
+    }else{
+      console.log("dataFirebase",item)
+      sincronizarStorageToFirebase(item);
+    }
+
+
+  
+  }
+
+  const storeData2 = async (item) => {
+
+    
+      
+    
+      AsyncStorage.setItem("favorites", JSON.stringify(item));
+
+    
+
+
+  
+  }
 
   useEffect(() => {
 
-    
+
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
     return () => {
       BackHandler.removeEventListener("hardwareBackPress", handleBackButtonClick);
@@ -24,14 +223,16 @@ const Main = (props) => {
 
   }
 
+
+
   return (
     <ScrollView style={styles.container}>
-      
-      <View style = {{height:metrics.HEIGHT * 0.30, width:metrics.WIDTH}}>
-    <HeaderHome/>
+
+      <View style={{ height: metrics.HEIGHT * 0.30, width: metrics.WIDTH }}>
+        <HeaderHome />
       </View>
-      <View style = {{height:metrics.HEIGHT * 0.70, width:metrics.WIDTH}}>
-      <Text style={styles.labelTitle}>¡Te damos la bienvenida!</Text>
+      <View style={{ height: metrics.HEIGHT * 0.70, width: metrics.WIDTH }}>
+        <Text style={styles.labelTitle}>¡Te damos la bienvenida!</Text>
         <Text style={styles.labelDescripcion}>
           Queremos brindarte la mejor ayuda, por eso hemos preparado las
           siguientes funciones para ti:
@@ -45,7 +246,7 @@ const Main = (props) => {
           />
           <ItemMain
             {...props}
-            name="Directory"
+            name="DirectoryStack"
             title="Líneas Telefónicas"
             image="2"
           />
@@ -53,32 +254,32 @@ const Main = (props) => {
         <View style={styles.containerForm2}>
           <ItemMain
             {...props}
-            name="Links"
+            name="LinksStack"
             title="Contenido de interés"
             image="3"
           />
           <ItemMain
             {...props}
-            name="Favorites"
+            name="FavoritesStack"
             title="Puntos guardados"
             image="4"
           />
           {!config.anonymousAuth && (
-          <ItemMain
-            {...props}
-            name="Profile"
-            title="Mi Perfil"
-            image="5"
-          />
+            <ItemMain
+              {...props}
+              name="Profile"
+              title="Mi Perfil"
+              image="5"
+            />
           )}
-          
+
         </View>
-        
+
       </View>
       <View style={styles.containerFooter}>
         <LastUpdate />
-        </View>
-      
+      </View>
+
     </ScrollView>
   );
 };
@@ -87,24 +288,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    height:metrics.HEIGHT,
-    width:metrics.WIDTH
-    
+    height: metrics.HEIGHT,
+    width: metrics.WIDTH
+
   },
   containerForm: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    height:metrics.HEIGHT * 0.12,
-    marginTop:metrics.HEIGHT * 0.05
+    height: metrics.HEIGHT * 0.12,
+    marginTop: metrics.HEIGHT * 0.05
   },
   containerForm2: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
     height: metrics.HEIGHT * 0.15,
-    marginTop:metrics.HEIGHT * 0.05,
-    marginBottom:10
+    marginTop: metrics.HEIGHT * 0.05,
+    marginBottom: 10
   },
   labelTitle: {
     fontSize: 27,
@@ -114,7 +315,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#007681",
     marginTop: metrics.HEIGHT * 0.05,
-    fontFamily:'Dosis-Regular'
+    fontFamily: 'Dosis-Regular'
   },
   labelDescripcion: {
     fontSize: 15,
@@ -127,7 +328,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    borderWidth:1
+    borderWidth: 1
   },
   logo: {
     top: 25,
@@ -136,12 +337,12 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   containerFooter: {
-    position:'absolute',
-    bottom:0,
-    letft:0,
-    right:0,
-    width:metrics.WIDTH,
-    height:metrics.HEIGHT*0.05
+    position: 'absolute',
+    bottom: 0,
+    letft: 0,
+    right: 0,
+    width: metrics.WIDTH,
+    height: metrics.HEIGHT * 0.05
   },
 });
 

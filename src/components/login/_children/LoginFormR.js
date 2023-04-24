@@ -99,29 +99,24 @@ useEffect(() => {
     >
     <View style={{ padding: 24, width: null, borderBottomLeftRadius:16, borderBottomRightRadius:16 }}>
 
-      <Text style={Styles.labelWelcome}>Ingresa tu correo electrónico para registrarte</Text>
+      <Text style={Styles.labelWelcome}>Si ingresas por primera vez, registrate:</Text>
 
       
        <TextInput
-          mode="outlined"
+          mode="flat"
+          left={<TextInput.Icon icon="email-outline" iconColor="#A1AAB2" />}
+          style={styles.input}
+          theme={{ colors: { primary: '#A1AAB2',underlineColor:'transparent',}}}
+          placeholderTextColor='#A1AAB2'
           label="Correo electrónico"
           value={email}
           onChangeText={(e) => {
             setUser({ ...user, email: e.trim() });
             setErrorEmail("");
           }}
-          outlineColor={errorEmail!==""? "#8F3D40":"#E7EAEC"}
-          activeOutlineColor={errorEmail!==""? "#8F3D40":"#E7EAEC"}
-          style={styles.input}
-          textColor={"#FFFFFF"}
-          placeholderTextColor='#FFFFFF'
-          theme={{
-            colors: {
-              onSurfaceVariant: 'white',
-              placeholder: "#FFFFFF"
-            }
-          }}
-          left={<TextInput.Icon icon="email-outline" iconColor="#FFFFFF" />}
+          
+          
+          
         />
         <HelperText style={Styles.labelError}
            type="error" visible={errorEmail!==""}>
@@ -217,8 +212,8 @@ const styles = StyleSheet.create({
     color: '#A1AAB2'
   },
   input: {
-    backgroundColor: "#00AAAD",
-    fontFamily:'Roboto-Regular'
+    backgroundColor: "#E6F7F7",
+     fontFamily:'Roboto-Regular'
 
   }
 

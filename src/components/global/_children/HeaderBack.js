@@ -13,7 +13,7 @@ const Header = (props) => {
   } = props;
   const { config } = useContext(AuthContext);
   const onPressBack = () => {
-    navigation.goBack();
+    navigation.goBack(null);
   };
 
   const onPressProfile = () => {
@@ -36,7 +36,7 @@ const Header = (props) => {
           <View style={{flex:0.8, alignItems:'center', justifyContent:'center'}}> 
             <Text style={styles.labelTitle}>{title}</Text>
           </View>
-          {!showBack && !config.anonymousAuth &&(
+          
           <View style={{flex:0.2}}> 
             <TouchableOpacity onPress={onPressProfile} style={styles.image}>
               <Image 
@@ -49,7 +49,7 @@ const Header = (props) => {
               <Text style={styles.textPerfil}>Mi Perfil</Text>
             </TouchableOpacity>
           </View>
-          )}
+          
         </View>
       </View>
     </View>

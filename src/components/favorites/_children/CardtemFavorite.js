@@ -32,7 +32,7 @@ const CardItemFavorite = (props) => {
 
       let nombreA = nombre.replace(/ /g, "_") + "|Consultar_Favorito";
 
-      console.log(nombreA)
+    
 
       analytics().logScreenView({
         screen_name: nombreA,
@@ -45,7 +45,7 @@ const CardItemFavorite = (props) => {
       let longitude = parseFloat(coor[1]);
       let icon = (dataMapeoState.find((state) => state.id_estado == fav.Estado_id));
       let uri = icon?.img_estado_b64;
-      props.navigation.navigate("PointItem", { id, latitude, longitude, uri, from:"Favorites" });
+      props.navigation.navigate("PointItem", { id, latitude, longitude, uri, from: "Favorites" });
     }
   };
 
@@ -95,13 +95,26 @@ const CardItemFavorite = (props) => {
       <View style={styles.containerFormTitle}>
         <Text style={styles.textTitle}>{(_Nombre_punto == undefined ? 'Punto no encontrado' : _Nombre_punto) + "..."}</Text>
       </View>
-      <View style={styles.containerForm}>{_.map(services, (val) => {
-        return val.svg
-      })}
+      <View style={styles.containerFormTitle}>
+        <Text style={styles.textDireccion}>
+          {fav?.Direccion.toUpperCase()}
+        </Text>
       </View>
+      <View style={styles.containerForm}>
+        <Image
+          source={require("../../../resources/images/riRoadMapFill.png")}
+        />
+        <Text style={styles.textTitle2}>
+          {(fav?.Departamento.toUpperCase()) +
+            "- " +
+            (fav?.Municipio.toUpperCase())}
+        </Text>
+      </View>
+      
       <View style={styles.containerForm}>
         <Image source={require("../../../resources/images/riMapPinFill.png")} />
         <Text style={styles.textTitle2}>{fav?.Estado}</Text>
+
       </View>
       {/*         {_.map(fav?.Horario,(val,id) => {
           return <View style={styles.containerForm}>
@@ -134,7 +147,7 @@ const styles = StyleSheet.create({
     lineHeight: 23,
     letterSpacing: 0.0015,
     color: "#003031",
-    fontFamily:'Dosis-Bold'
+    fontFamily: 'Dosis-Bold'
   },
   textTitle2: {
     fontSize: 14,
@@ -154,6 +167,12 @@ const styles = StyleSheet.create({
     color: "#003031",
     marginTop: 2,
     marginStart: 10.5,
+  },
+  textDireccion: {
+    fontSize: 15,
+    fontWeight: "normal",
+    lineHeight: 18,
+    letterSpacing: 0.0125,
   },
 });
 

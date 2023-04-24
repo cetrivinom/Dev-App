@@ -6,7 +6,8 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   ImageBackground,
-  ActivityIndicator
+  ActivityIndicator,
+  Alert
 } from "react-native";
 import AuthContext from "../../../../context/auth/authContext";
 import { Snackbar, TextInput, HelperText } from "react-native-paper";
@@ -17,6 +18,7 @@ import { StyleSheet } from "react-native";
 import { useWindowDimensions } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/Ionicons';
+import database from "@react-native-firebase/database";
 const LoginFormD = (props) => {
 
 
@@ -63,6 +65,8 @@ const LoginFormD = (props) => {
       signIn(user).then((uid) => {
         if (uid) {
           getUser(uid);
+        }else{
+          Alert.alert("Error","Usuario o contraseña incorrectos");
         }
       });
       if (message !== null) {
@@ -91,7 +95,6 @@ const LoginFormD = (props) => {
         <Text style={Styles.labelWelcome}>Ingresa con los datos que registraste</Text>
 
         <TextInput
-          mode="outlined"
           label="Correo electrónico"
           value={email}
           onChangeText={(e) => {
@@ -99,18 +102,12 @@ const LoginFormD = (props) => {
             setErrorEmail("");
             setErrorPassword("");
           }}
-          outlineColor={errorEmail !== "" ? "#8F3D40" : "#E7EAEC"}
-          activeOutlineColor={errorEmail !== "" ? "#8F3D40" : "#E7EAEC"}
+          mode="flat"
+          left={<TextInput.Icon icon="email-outline" iconColor="#A1AAB2" />}
           style={styles.input}
-          textColor={"#FFFFFF"}
-          placeholderTextColor='#FFFFFF'
-          theme={{
-            colors: {
-              onSurfaceVariant: 'white',
-              placeholder: "#FFFFFF"
-            }
-          }}
-          left={<TextInput.Icon icon="email-outline" iconColor="#FFFFFF" />}
+          theme={{ colors: { primary: '#A1AAB2',underlineColor:'transparent',}}}
+          placeholderTextColor='#A1AAB2'
+          
         />
         <HelperText type="error" style={Styles.labelError} visible={errorEmail !== ""}>
           {errorEmail}
@@ -125,23 +122,15 @@ const LoginFormD = (props) => {
             setUser({ ...user, password: e });
             setErrorPassword("");
           }}
-          mode="outlined"
           label="Contraseña"
-          outlineColor={errorPassword !== "" ? "#8F3D40" : "#E7EAEC"}
-          activeOutlineColor={errorPassword !== "" ? "#8F3D40" : "#E7EAEC"}
+          mode="flat"
+          left={<TextInput.Icon icon="lock-outline" iconColor="#A1AAB2" />}
           style={styles.input}
-          textColor={"#FFFFFF"}
-          placeholderTextColor='#FFFFFF'
-          theme={{
-            colors: {
-              onSurfaceVariant: 'white',
-              placeholder: "#FFFFFF"
-            }
-          }}
-          left={<TextInput.Icon icon="lock-outline" iconColor="#FFFFFF" />}
+          theme={{ colors: { primary: '#A1AAB2',underlineColor:'transparent',}}}
+          placeholderTextColor='#A1AAB2'
           right={<TextInput.Icon
             icon={passwordVisibility ? "eye" : "eye-off"} // where <Icon /> is any component from vector-icons or anything else
-            iconColor="#FFFFFF"
+            iconColor="#A1AAB2"
             onPress={() => {
               setPasswordVisibility(!passwordVisibility)
             }}
@@ -261,7 +250,8 @@ const styles = StyleSheet.create({
     color: '#A1AAB2'
   },
   input: {
-    backgroundColor: "#00AAAD"
+    backgroundColor: "#E6F7F7",
+    fontFamily:'Roboto-Regular'
 
   }
 

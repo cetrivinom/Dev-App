@@ -217,6 +217,7 @@ const IOMState = (props) => {
   const getDataFavorite = async () => {
     try {
       const value = await AsyncStorage.getItem("favorites");
+    
       if (value !== null) {
         dispatch({
           type: GET_DATA_FAVORITES,
@@ -288,7 +289,7 @@ const IOMState = (props) => {
           throw error;
         }
       ).catch(error => {
-        //console.log('error en login',error)
+       
         axios.get(config.apiDrupalTokenURL).then(
           response => {
             const headers = {
@@ -297,12 +298,12 @@ const IOMState = (props) => {
               'X-Csrf-Token': response.data
             }
 
-            console.log('dataV', JSON.stringify(dataV));
+          
             axios.post(config.apiDrupalCommentURL,
               dataV,
               { headers: headers }).then(
                 response => {
-                  //console.log('response apiDrupalCommentURL',response.data);
+                 
                 }
               ).catch(error => {
                 console.log('error comment', error);
@@ -364,7 +365,9 @@ const IOMState = (props) => {
     try {
       const posts = await AsyncStorage.getItem('favorites');
       let postsFav = JSON.parse(posts);
+     
       const postsItems = postsFav.filter(function (e) { return e.id !== point });
+      
 
       await AsyncStorage.setItem('favorites', JSON.stringify(postsItems));
 

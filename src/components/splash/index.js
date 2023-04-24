@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { StyleSheet, ImageBackground } from "react-native";
+import { StyleSheet, ImageBackground, Platform } from "react-native";
 import InitialContext from "../../../context/initialData/initialContext";
 import IOMContext from "../../../context/iomData/iomContext";
 import AuthContext from "../../../context/auth/authContext";
@@ -8,6 +8,7 @@ import VersionCheck from "react-native-version-check";
 import { Linking } from 'react-native';
 import { StackActions, useNavigation } from "@react-navigation/native";
 import LoginRegisterScreen from "./LoginRegisterScreen";
+import messaging from '@react-native-firebase/messaging';
 const Splash = (props) => {
   const { getDataLink, updateLastUpdate } = useContext(InitialContext);
   const { getConfig, getDefaultConfig } = useContext(AuthContext);
@@ -32,11 +33,18 @@ const Splash = (props) => {
       setAuthLoaded(true);
     }, 2000);
   }, []);
+  
 
 
   useEffect(() => {
 
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+      console.log('Mensaje en splash', remoteMessage);
+    });
+
     if (authLoaded) {
+
+      
 
       let i = 0;
 
@@ -53,9 +61,9 @@ const Splash = (props) => {
           //var current ="1.031";
           getConfig().then((config) => {
 
-
-
-            if (config.versionApp.toString() !== current.toString()) {
+            var versionReal = Platform.OS === 'android' ? config.versionApp : config.versionAppIos;
+            
+            if (versionReal.toString() !== current.toString()) {
 
 
               getConfig().then((config) => {
@@ -92,7 +100,7 @@ const Splash = (props) => {
               NetInfo.fetch().then(state => {
                 if (!state.isConnected) {
                   getDefaultConfig().then((config) => {
-                    props.navigation.navigate("Home");
+                    props.navigation.navigate("Main");
                   });
                 } else {
                   getConfig().then((config) => {

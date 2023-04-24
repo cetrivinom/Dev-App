@@ -48,7 +48,7 @@ export default StyleSheet.create({
     lineHeight: 28,
     letterSpacing:  0.0015,
     fontWeight: "normal",
-    marginBottom: 10,
+    marginBottom: 20,
     marginTop: 10,
     color:"#FFFFFF",
     fontFamily:'Dosis-Regular'
@@ -108,7 +108,7 @@ export default StyleSheet.create({
     marginTop: 5,
     marginBottom: 20,
     paddingLeft: 15,
-    fontFamily:'Dosis-Regular'
+    fontWeight:'700'
   },
   btnIniciar: {
     backgroundColor: "#132A3E",

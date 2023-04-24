@@ -5,8 +5,8 @@ import IOMContext from "../../../../context/iomData/iomContext";
 import AuthContext from "../../../../context/auth/authContext";
 import database from "@react-native-firebase/database";
 import analytics from '@react-native-firebase/analytics';
-
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import NetInfo from '@react-native-community/netinfo';
 const HeaderItem = (props) => {
   const { title = "", id = "", showSaveOpt = true, navigation, nombre="", from="" } = props || {};
   const { createFavorite, dataFavorite, deleteFavoriteId } = useContext(IOMContext);
@@ -24,26 +24,47 @@ const [favorito, setFavorito] = useState({});
   };
   const onPressSave = () => {
     if (isFavorite) {
-
+      NetInfo.fetch().then(state => {
+        if (state.isConnected) {
       deleteFavoriteF(user,id);
-      
+        }});
+      deleteFavoriteId(id)
     }else{
 
       let nombreA = nombre.replace(/ /g, "_") + "|Crear_Favorito";
 
-      console.log(nombreA)
-
+   
       analytics().logScreenView({
         screen_name: nombreA,
         screen_class: nombreA,
       });
 
-
+      NetInfo.fetch().then(state => {
+        if (state.isConnected) {
       createFavoriteF(user,id);
+        }})
+      storeData(id);
       
     }
     setIsFavorite(!isFavorite);
   };
+
+  const storeData = async (id) => {
+
+    let item = {
+      id: id
+    };
+    
+    var value = JSON.parse(await AsyncStorage.getItem("favorites"));
+      if (!value)
+        value = [];
+      let index = value.findIndex(favorite => favorite.id == item.id);
+      if (index == -1 && item.id >= 0) {
+        value.push(item);
+        AsyncStorage.setItem("favorites", JSON.stringify(value));
+        
+      }
+  }
 
   useEffect(() => {
     setInformacion()
@@ -51,33 +72,19 @@ const [favorito, setFavorito] = useState({});
 
   const setInformacion = async () => {
 
+    const value = await AsyncStorage.getItem('favorites');
+    
+        if (value !== null) {
+          
+          var favoritosL = JSON.parse(value);
+          let a = favoritosL.find(item => item.id === id);
 
-    await database()
-      .ref("/favorites/" + user.uid)
-      .once("value", (snapshot) => {
-        if (snapshot.hasChildren()) {
-          let dataF = snapshot;
-          let array = [];
-
-          dataF && dataF.forEach((child) => {
-            let data = {};
-            data.id = child.val().id;
-            data.k = child.key;
-            array.push(data)
-          });
-
-          let a = array.find(item => item.id === id);
-
-          if(a!==undefined && a.length!==0){
+          if (a !== undefined && a.length !== 0) {
             setFavorito(a)
             setIsFavorite(true)
           }
-          else{
-            setIsFavorite(false)
-          }
-          
+
         }
-      })
 
 
   }

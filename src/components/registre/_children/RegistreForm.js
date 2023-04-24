@@ -33,14 +33,14 @@ export const Footer = (props) => {
       signUp(data).then((user) => {
         if (user) {
           updateUser(user);
-          props.navigation.navigate("Home");
+          props.navigation.navigate("Main");
         } else {
           setVisible(true);
         }
       });
       if (auth) {
         //nunca se llama, el useEffect predomina
-        props.navigation.navigate("Home");
+        props.navigation.navigate("Main");
       }
     }
   };

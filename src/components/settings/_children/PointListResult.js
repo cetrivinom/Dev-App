@@ -175,7 +175,7 @@ export const ItemCardPoint = (props) => {
 
 
   const { dataMapeoService, dataMapeoState } = useContext(IOMContext);
-  let _Nombre_punto = Nombre_punto.substring(0, 25);
+  let _Nombre_punto = Nombre_punto;
   const unique = [...new Set(Servicios.map(item => item.Servicio_id))];
   var services = [];
   _.map(unique, (val, id) => {

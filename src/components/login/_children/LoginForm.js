@@ -25,7 +25,7 @@ const LoginForm = (props) => {
   const layout = useWindowDimensions();
   const [routes] = React.useState([
     { key: 'registro', title: 'Regístrarme' },
-    { key: 'ingresar', title: 'Ingresar' },
+    { key: 'ingresar', title: 'Iniciar Sesion' },
   ]);
 
 
@@ -69,7 +69,7 @@ const LoginForm = (props) => {
     <TabBar
       {...props}
       style={{
-        backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: "#00AAAD", elevation: 0,
+        backgroundColor: '#FFFFFF',  elevation: 0,
         shadowOpacity: 0, borderTopLeftRadius: 16, borderTopRightRadius: 16,
         borderBottomWidth: 0
       }}

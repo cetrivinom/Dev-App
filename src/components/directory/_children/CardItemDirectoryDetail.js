@@ -25,8 +25,6 @@ const CardItemDirectoryDetail = (props) => {
 
     let nombreA = departamento.replace(/ /g, "_") +"|"+title.replace(/ /g, "_") + "|Lineas Telefonicas";
 
-      console.log(nombreA)
-
       analytics().logScreenView({
         screen_name: nombreA,
         screen_class: nombreA,
