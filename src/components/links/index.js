@@ -148,7 +148,7 @@ const Links = ({ route, navigation }) => {
               {dataEnlace !== null && dataEnlace.map(index => {
                 return (
                   <CardEnlaceLink
-                  key = {index.titulo}
+                  key = {index.id}
                   title={index.titulo}
                   image={index.img_enlace}
                   links = {index.link}
