@@ -56,7 +56,6 @@ const IOMState = (props) => {
     try {
       const value = await AsyncStorage.getItem("api-enlaces-de-interes.json");
       if (value !== null) {
-        console.log(value)
         dispatch({
           type: GET_DATA_LINK,
           value,
