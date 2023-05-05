@@ -214,10 +214,11 @@ const PointItem = ({ route, navigation }) => {
     <View style={styles.wrapper}>
       <HeaderItem title="Información de punto" id={id} navigation={navigation} nombre={Nombre_punto} from={from} />
 
-      <View style={[styles.box, styles.box2]}>
+      <View style={[styles.box, styles.box2,{marginTop: 25}]}>
         <ScrollView style={{ flex: 1 }}>
           <MapView
             style={{ height: metrics.HEIGHT * 0.2 }}
+            provider={PROVIDER_GOOGLE}
             initialRegion={{
               latitude: latitude,
               longitude: longitude,

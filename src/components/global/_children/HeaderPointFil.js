@@ -2,15 +2,18 @@ import React, { useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { metrics } from "../../../utilities/Metrics";
 import AuthContext from "../../../../context/auth/authContext";
-const HeaderPointFil = (props) => {
+const HeaderPointFil = ({ route, navigation }) => {
 
   const {
-    navigation,
-    title = "",
-  } = props;
+    departamento = "",
+    municipio = "",
+    statusPoint = "",
+    title = "Puntos de Servicio",
+    
+  } = route.params || {};
 
   const onPressBack = () => {
-    navigation.navigate("PointListResult")
+    navigation.navigate("PointListResult",{ departamento, municipio, statusPoint } )
   };
   const { config } = useContext(AuthContext);
   

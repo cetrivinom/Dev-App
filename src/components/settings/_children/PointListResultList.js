@@ -311,17 +311,17 @@ const styles = StyleSheet.create({
   box: {
     flex: 1,
   },
-  //header
-  box1: {
-    flex: 1,
+
+   box1: {
+    flex: 0.15,
   },
   //content
   box2: {
-    flex: Platform.OS === "ios" ? 6.2 : 7.3,
+    flex: 0.85,
     backgroundColor: "#FFFFFF",
   },
   containerHeader: {
-    height: metrics.HEIGHT * 0.06,
+    flex:1,
     backgroundColor: "#FFFFFF",
   },
   containerFormHeader: {
@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
   labelTitle2: {
     fontSize: 13,
     fontWeight: "bold",
-    color: "#FEC800",
+    color: "#902857",
     lineHeight: 14,
     letterSpacing: 0.004,
   },

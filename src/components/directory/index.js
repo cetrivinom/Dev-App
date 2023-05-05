@@ -12,7 +12,7 @@ const Directory = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
   const { dataDirectory, getDataDirectory } = useContext(IOMContext);
   const awesomeChildListRenderItem = (item,index) => (<CardItemDirectory {...props} key={item.item.departamento} title={item.item.departamento} icon={item.item.icon} />)
-  const awesomeChildListKeyExtractor = (item) => item.departamento_id;
+  const awesomeChildListKeyExtractor = (item) => item.departamento;
 
   useEffect(() => {
     getDataDirectory(searchTerm);

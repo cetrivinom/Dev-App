@@ -164,9 +164,32 @@ const Settings = (props) => {
         console.log('entro 2');
       }
       //return true;
-    } else if (Platform.OS === 'ios') {
-      await Geolocation.requestAuthorization('always');
+    } else if (Platform.OS === 'ios') { 
+      console.log('*** 1 ******************')
+      /* TODO: Validar arrojar error que dice Geolocation.requestAuthorization('whenInUse') debe ser funcion
+      await Geolocation.requestAuthorization('whenInUse');
+      /*new Promise((resolve, reject) => {
+        Geolocation.requestAuthorization('whenInUse', (status) => {
+          console.log('*** 2 ******************')
+          resolve(status);
+        }, reject);
+      }).then((status) => {
+        console.log('*** 3 ******************')
+        console.log('ok Solicitando permisos ios', status)
+      }).catch((error) => {
+        console.log('*** 4 ******************')
+        console.log('error Solicitando permisos ios', error)
+      });
+      
+      await Geolocation.requestAuthorization('whenInUse').then((status) => {
+        console.log('*** 3 ******************')
+        console.log('ok Solicitando permisos ios', status)
+      }).catch((error) => {
+        console.log('*** 4 ******************')
+        console.log('error Solicitando permisos ios', error)
+      });*/
       //getLocation(true);
+      console.log('*** 5 ******************')
       console.log('entro 3');
     }
     return true;
@@ -267,7 +290,7 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
-    marginTop: 10,
+    marginTop: 20,
   },
   overlay: {
     position: "absolute",

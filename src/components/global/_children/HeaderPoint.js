@@ -10,7 +10,7 @@ const HeaderPoint = (props) => {
   } = props;
 
   const onPressBack = () => {
-    navigation.navigate("SettingsStack")
+    navigation.navigate("FilterSetting")
   };
   const { config } = useContext(AuthContext);
   

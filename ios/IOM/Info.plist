@@ -22,6 +22,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>Google Maps API Key</key>
+	<string>AIzaSyC7szoUFA5fsECL6dAlpNQIqr7pg5LyOPQ</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -35,8 +37,39 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Se requiere el acceso a la ubicación para mostrar tus puntos cercanos</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Se requiere el acceso a la ubicación para mostrar tus puntos cercanos</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string>Se requiere el acceso a la ubicación para mostrar tus puntos cercanos</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Zocial.ttf</string>
+		<string>SimpleLineIcons.ttf</string>
+		<string>Octicons.ttf</string>
+		<string>MaterialIcons.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>Ionicons.ttf</string>
+		<string>Foundation.ttf</string>
+		<string>Fontisto.ttf</string>
+		<string>FontAwesome5_Solid.ttf</string>
+		<string>FontAwesome5_Regular.ttf</string>
+		<string>FontAwesome5_Brands.ttf</string>
+		<string>FontAwesome.ttf</string>
+		<string>Feather.ttf</string>
+		<string>EvilIcons.ttf</string>
+		<string>Entypo.ttf</string>
+		<string>AntDesing.ttf</string>
+		<string>Dosis-Bold.ttf</string>
+		<string>Dosis-ExtraBold.ttf</string>
+		<string>Dosis-ExtraLight.ttf</string>
+		<string>Dosis-Light.ttf</string>
+		<string>Dosis-Medium.ttf</string>
+		<string>Dosis-Regular.ttf</string>
+		<string>Dosis-SemiBold.ttf</string>
+		<string>Roboto-Regular.ttf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -51,16 +84,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Dosis-Bold.ttf</string>
-		<string>Dosis-ExtraBold.ttf</string>
-		<string>Dosis-ExtraLight.ttf</string>
-		<string>Dosis-Light.ttf</string>
-		<string>Dosis-Medium.ttf</string>
-		<string>Dosis-Regular.ttf</string>
-		<string>Dosis-SemiBold.ttf</string>
-		<string>Roboto-Regular.ttf</string>
-	</array>
 </dict>
 </plist>

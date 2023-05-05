@@ -38,7 +38,7 @@ const Links = ({ route, navigation }) => {
       navigation={navigation}
     />
   );
-  const awesomeChildListKeyExtractor = (item) => item.id;
+  const awesomeChildListKeyExtractor = (item) => item.Titulo;
 
 
   const onPressClose = () => {

@@ -402,15 +402,14 @@ const styles = StyleSheet.create({
   },
   //header
   box1: {
-    flex: 1,
+    flex: 0.15,
   },
   //content
   box2: {
-    flex: Platform.OS === "ios" ? 6.2 : 7.3,
+    flex: 0.85,
   },
   map: {
     ...StyleSheet.absoluteFillObject,
-    //marginTop: 16,
   },
   overlay3: {
     flex: 1,
@@ -512,7 +511,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   containerHeader: {
-    height: metrics.HEIGHT * 0.05,
+    flex:1,
     backgroundColor: "#FFFFFF",
   },
   containerFormHeader: {
