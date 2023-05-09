@@ -191,16 +191,14 @@ export const ItemCardPoint = (props) => {
     let coor = Coordenadas.split(",");
     let latitude = parseFloat(coor[0]);
     let longitude = parseFloat(coor[1]);
-    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+    const scheme = Platform.select({ ios: 'http://maps.apple.com/?ll=', android: 'geo:0,0?q=' });
     const latLng = `${latitude},${longitude}`;
     const label = 'Custom Label';
     const url = Platform.select({
-      ios: `${scheme}${label}@${latLng}`,
+      ios: `${scheme}${latLng}`,
       android: `${scheme}${latLng}(${label})`
     });
-
-
-    Linking.openURL(url);
+    Linking.openURL(url);  
   };
 
   var services = [];

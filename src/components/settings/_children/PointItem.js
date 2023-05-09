@@ -202,14 +202,7 @@ const PointItem = ({ route, navigation }) => {
       ios: `${scheme}${latLng}`,
       android: `${scheme}${latLng}(${label})`
     });
-
-    
-    
-    console.log(url)
-    Linking.openURL(url);
-
-
-    
+    Linking.openURL(url);   
   };
 
   return (
