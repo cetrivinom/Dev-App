@@ -12,9 +12,23 @@ import NetInfo from '@react-native-community/netinfo';
 import { useState } from "react";
 const Main = (props) => {
   const { navigation } = props;
-  const { user, signOut, config, createFavoriteArray, deleteFavoriteF, createFavoriteF } = useContext(AuthContext);
-  const { createFavorite, dataFavorite, deleteFavoriteId } = useContext(IOMContext);
+  const { user, config, createFavoriteArray, deleteFavoriteF, createFavoriteF } = useContext(AuthContext);
   const [dataFirebase, setDataFirebase] = useState([]);
+  const { getDataEnlace } = useContext(IOMContext);
+  const { getDataSocio } = useContext(IOMContext);
+  const { getDataLink} = useContext(IOMContext);
+  const { getDataDirectory, getDataByDepartId} = useContext(IOMContext);
+
+  useEffect(() => {
+
+      getDataLink();
+      getDataEnlace();
+      getDataSocio();
+      getDataDirectory("");
+    
+   
+  }, []);
+
   useEffect(() => {
     NetInfo.fetch().then(state => {
       if (state.isConnected) {

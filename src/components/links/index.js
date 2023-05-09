@@ -19,11 +19,12 @@ import { CardEnlaceLink } from "./_children/CardEnlaceLink";
 import { CardSocioLink } from "./_children/CardSocioLink";
 
 const Links = ({ route, navigation }) => {
+
   const [showFilterOption, setShowFilterOption] = useState(false);
   const [show, setShow] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const { dataEnlace, getDataEnlace } = useContext(IOMContext);
-  const { dataSocio, getDataSocio } = useContext(IOMContext);
+  const { dataEnlace } = useContext(IOMContext);
+  const { dataSocio } = useContext(IOMContext);
   const { dataLink, dataLinkEtiquetas, getDataLink} = useContext(IOMContext);
   const [index, setIndex] = useState(0);
   const awesomeChildListRenderItem = (item, index) => (
@@ -50,15 +51,13 @@ const Links = ({ route, navigation }) => {
     onPressClose();
   };
 
-  useEffect(() => {
-    getDataLink();
-    getDataEnlace();
-    getDataSocio();
-  }, []);
+  
 
   const toggleModal = () => setShow(!show);
+  
   return (
     <View style={styles.container}>
+     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>
         <Header showBack={true} title="Contenido de interés" navigation={navigation} />
 
@@ -183,6 +182,7 @@ const Links = ({ route, navigation }) => {
           </TabView.Item>
         </TabView>
       </View>
+    </View>
     </View>
   );
 };

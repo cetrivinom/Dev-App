@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import CardItemDirectoryDetail from "./CardItemDirectoryDetail";
 import HeaderDirectory from "../../global/_children/HeaderDirectory";
@@ -11,8 +11,10 @@ import _ from 'lodash';
  * @return {Object} <View /> Item del Directorio
  */
 const DirectoryItem = ({ route, navigation }) => {
-  const { dataItem, getDataByDepartId,dataDirectoryService } = useContext(IOMContext);
-  const { otherParam = "" } = route.params || {};
+  
+  const { otherParam = "", dataDirectory } = route.params || {};
+  const [data, setData] = useState([])
+  const { dataDirectoryService } = useContext(IOMContext);
   const awesomeChildListRenderItem = (item, index) => {
     if(item.item.tipo_de_linea_id != undefined && dataDirectoryService.some(val => val.id === item.item.tipo_de_linea_id)){
       //console.log('*',item.item.tipo_de_linea_id,dataItem.LineasTelefonicas.filter(itemLine => itemLine.tipo_de_linea_id.includes(item.item.tipo_de_linea_id)));
@@ -24,22 +26,29 @@ const DirectoryItem = ({ route, navigation }) => {
           subTitle2={item.item.telefono_}
           subTitle3={item.item.horario}
           subTitle={item.item.tipo_de_linea_id}
-          lines={dataItem.LineasTelefonicas.filter(itemLine => itemLine.tipo_de_linea_id.includes(item.item.tipo_de_linea_id))}
+          lines={data.LineasTelefonicas.filter(itemLine => itemLine.tipo_de_linea_id.includes(item.item.tipo_de_linea_id))}
         />
       )
     }
   };
-  const awesomeChildListKeyExtractor = (item) => item.key;
+  const awesomeChildListKeyExtractor = (item) => item.tipo_de_linea;
   useEffect(() => {
-    getDataByDepartId(otherParam);
-  }, [otherParam]);
+    
+    getInfo();
+  }, []);
+
+  const getInfo = () => {
+    
+    setData(dataDirectory.dataDirectory.find((item) => item.departamento === otherParam))
+    
+  }
   return (
     <View style={styles.wrapper}>
       <HeaderDirectory  title={otherParam} showSaveOpt={false} navigation={navigation} />
-      {dataItem !== null && (
+      {data !== null && (
         <View style={[styles.box, styles.box2]}>
           <FlatList
-            data={_.uniqBy(dataItem.LineasTelefonicas,'tipo_de_linea_id')}
+            data={_.uniqBy(data.LineasTelefonicas,'tipo_de_linea_id')}
             renderItem={awesomeChildListRenderItem}
             keyExtractor={awesomeChildListKeyExtractor}
           />
