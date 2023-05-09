@@ -17,6 +17,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		14C5702DA1C247C1ACD97AF3 /* Dosis-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D5C0335C9A34CBCB1054EFF /* Dosis-Medium.ttf */; };
 		426A67C729F9EDAC00FE1A5A /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 426A67C629F9EDAC00FE1A5A /* Fonts */; };
+		427FE5332A09E643008CA4C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 427FE5322A09E643008CA4C4 /* Assets.xcassets */; };
 		4282C9B829F833590047C6D1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4282C9B729F833580047C6D1 /* GoogleService-Info.plist */; };
 		5D810C79DCE1490DB8B79567 /* Dosis-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 613A4D57B49641839ACC32BC /* Dosis-SemiBold.ttf */; };
 		6F57571446D540B9AE9238C5 /* Dosis-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B28E92005804BE9A927D71B /* Dosis-ExtraLight.ttf */; };
@@ -50,6 +51,7 @@
 		3B4392A12AC88292D35C810B /* Pods-iom.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iom.debug.xcconfig"; path = "Target Support Files/Pods-iom/Pods-iom.debug.xcconfig"; sourceTree = "<group>"; };
 		3D5C0335C9A34CBCB1054EFF /* Dosis-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Dosis-Medium.ttf"; path = "../assets/fonts/Dosis-Medium.ttf"; sourceTree = "<group>"; };
 		426A67C629F9EDAC00FE1A5A /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
+		427FE5322A09E643008CA4C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4282C9B729F833580047C6D1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-iom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iom.release.xcconfig"; path = "Target Support Files/Pods-iom/Pods-iom.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-iom-iomTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iom-iomTests.debug.xcconfig"; path = "Target Support Files/Pods-iom-iomTests/Pods-iom-iomTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
+				427FE5322A09E643008CA4C4 /* Assets.xcassets */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = iom;
@@ -287,6 +290,7 @@
 				9B1746C4E4814A498CCED41F /* Dosis-ExtraBold.ttf in Resources */,
 				426A67C729F9EDAC00FE1A5A /* Fonts in Resources */,
 				6F57571446D540B9AE9238C5 /* Dosis-ExtraLight.ttf in Resources */,
+				427FE5332A09E643008CA4C4 /* Assets.xcassets in Resources */,
 				0C481E7072074FD2B10393B0 /* Dosis-Light.ttf in Resources */,
 				14C5702DA1C247C1ACD97AF3 /* Dosis-Medium.ttf in Resources */,
 				0AD17F3DB18A4A5A823A6365 /* Dosis-Regular.ttf in Resources */,
@@ -547,20 +551,23 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 3DRA3FWM2J;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = iom/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.5.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = org.reactjs.native.example.IOM;
 				PRODUCT_NAME = iom;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -574,19 +581,22 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 3DRA3FWM2J;
 				INFOPLIST_FILE = iom/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.5.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = org.reactjs.native.example.IOM;
 				PRODUCT_NAME = iom;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

@@ -2,10 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>ItunesArtwork@2x.png</string>
+		<string>Icon-App-60x60@3x.png</string>
+		<string>Icon-App-60x60@2x.png</string>
+		<string>Icon-App-40x40@3x.png</string>
+		<string>Icon-App-40x40@2x.png</string>
+		<string>Icon-App-29x29@3x.png</string>
+		<string>Icon-App-29x29@2x.png</string>
+		<string>Icon-App-20x20@2x.png</string>
+		<string>Icon-App-20x20@3x.png</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>iom</string>
+	<string>GIFMM Contigo</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +25,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>$(PRODUCT_NAME)</string>
+	<string>org.reactjs.native.example.IOM</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
