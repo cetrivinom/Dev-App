@@ -157,7 +157,6 @@ const AppNavigation = () => {
                     },
                     tabBarLabel: 'Inicio',
                     tabBarStyle: { display: 'none' },
-                    unmountOnBlur: true,
                     
 
                 }} />
