@@ -12,7 +12,7 @@ const CardItemProfile = (props) => {
   } = props || {};
   const onPressOpen = () => {
     if (navigation)
-    navigation.navigate("UpdateProfile", { field:field, navigation:navigation });
+    navigation.navigate("UpdateProfile", { field:field, navigation });
   };
   return (
     <TouchableOpacity style={styles.containerBody} onPress={onPressOpen}>

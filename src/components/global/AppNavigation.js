@@ -14,7 +14,6 @@ import UpdateProfile from "../../components/profile/_children/UpdateProfileForm"
 import DirectoryItem from "../../components/directory/_children/DirectoryItem";
 import LinkItem from "../../components/links/_children/LinkItem";
 import PointItem from "../../components/settings/_children/PointItem";
-
 import PointItemComents from "../../components/settings/_children/PointItemComents";
 import FilterSetting from "../../components/settings/_children/FilterSetting";
 import CardItemFavorite from "../../components/favorites/_children/CardtemFavorite";
@@ -114,6 +113,19 @@ function FavoritesStack() {
 
 }
 
+const Stack7 = createNativeStackNavigator();
+
+function ProfileStack() {
+    return (
+        <Stack7.Navigator screenOptions={{ headerShown: false }}>
+            <Stack7.Screen name="Profile" component={Profile} />
+            <Stack7.Screen name="UpdateProfile" component={UpdateProfile} />
+        </Stack7.Navigator>
+
+    )
+
+}
+
 
 
 const Tab = createBottomTabNavigator();
@@ -127,7 +139,7 @@ const AppNavigation = () => {
         <NavigationContainer ref={navigationRef}>
             <Tab.Navigator backBehavior="history" screenOptions={({ route }) => ({
                 tabBarButton: [
-                    "Profile"
+                    "ProfileStack"
                 ].includes(route.name)
                     ? () => {
                         return null;
@@ -189,7 +201,7 @@ const AppNavigation = () => {
                     tabBarLabel: 'Favoritos',
                 }}
                 />
-                <Tab.Screen name="Profile" component={Profile}
+                <Tab.Screen name="ProfileStack" component={ProfileStack}
                 />
             </Tab.Navigator>
 

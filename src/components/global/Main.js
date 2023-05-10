@@ -281,7 +281,7 @@ const Main = (props) => {
           {!config.anonymousAuth && (
             <ItemMain
               {...props}
-              name="Profile"
+              name="ProfileStack"
               title="Mi Perfil"
               image="5"
             />
