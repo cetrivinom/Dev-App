@@ -107,6 +107,8 @@ function FavoritesStack() {
         <Stack6.Navigator screenOptions={{ headerShown: false }}>
             <Stack6.Screen name="Favorites" component={Favorites} />
             <Stack6.Screen name="CardItemFavorite" component={CardItemFavorite} />
+            <Stack6.Screen name="PointItem" component={PointItem} />
+
         </Stack6.Navigator>
 
     )
