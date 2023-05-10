@@ -32,7 +32,7 @@ const Stack2 = createNativeStackNavigator();
 
 function SettingsStack() {
     return (
-        <Stack2.Navigator screenOptions={{ headerShown: false }}>
+        <Stack2.Navigator screenOptions={{ headerShown: false}} initialRouteName="Settings">
             <Stack2.Screen name="Settings" component={Settings} />
             <Stack2.Screen name="PointListResult" component={PointListResult} />
             <Stack2.Screen name="PointListResultList" component={PointListResultList} />
@@ -137,7 +137,7 @@ const AppNavigation = () => {
     return (
 
         <NavigationContainer ref={navigationRef}>
-            <Tab.Navigator backBehavior="history" screenOptions={({ route }) => ({
+            <Tab.Navigator backBehavior="firstRoute" screenOptions={({ route }) => ({
                 tabBarButton: [
                     "ProfileStack"
                 ].includes(route.name)
@@ -154,16 +154,20 @@ const AppNavigation = () => {
                         );
                     },
                     tabBarLabel: 'Inicio',
-                    tabBarStyle: { display: 'none' }
+                    tabBarStyle: { display: 'none' },
+                    unmountOnBlur: true,
+                    
 
                 }} />
-                <Tab.Screen name="SettingsStack" component={SettingsStack} options={{
+                <Tab.Screen name="SettingsStack" component={SettingsStack}  options={{
                     tabBarIcon: ({ color, number, focused }) => {
                         return (
                             <Icon name={focused ? "md-location" : "md-location-outline"} color={color} size={30} />
                         );
                     },
-                    tabBarLabel: 'Puntos de Servicio'
+                    tabBarLabel: 'Puntos de Servicio',
+                    unmountOnBlur: true,
+
 
                 }}
                 />
@@ -176,6 +180,7 @@ const AppNavigation = () => {
 
                     },
                     tabBarLabel: 'Directorio',
+                    unmountOnBlur: true,
                 }}
                 />
                 <Tab.Screen name="LinksStack" component={LinksStack} options={{
@@ -187,6 +192,7 @@ const AppNavigation = () => {
 
                     },
                     tabBarLabel: 'Contenido',
+                    unmountOnBlur: true,
                 }}
                 />
 
@@ -199,9 +205,10 @@ const AppNavigation = () => {
 
                     },
                     tabBarLabel: 'Favoritos',
+                    unmountOnBlur: true,
                 }}
                 />
-                <Tab.Screen name="ProfileStack" component={ProfileStack}
+                <Tab.Screen name="ProfileStack" component={ProfileStack} options = {{unmountOnBlur: true}}
                 />
             </Tab.Navigator>
 

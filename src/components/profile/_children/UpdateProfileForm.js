@@ -27,7 +27,7 @@ export const Footer = (props) => {
     if(pass && pass.currentPass.length > 1 && pass.newPass.length > 1){
       updatePassword(pass).then((result) => {
         if(result.value){
-          navigation.navigate("Profile");
+          navigation.navigate("ProfileStack");
         }
         else{
           setVisible(true);
@@ -38,7 +38,7 @@ export const Footer = (props) => {
       });
     }else {
       updateUser(user);
-      navigation.navigate("Profile");
+      navigation.navigate("ProfileStack");
     }
   };
 
@@ -221,7 +221,7 @@ const UpdateProfileForm = ({ route, navigation }) => {
   }, []);
 
   const onPressBack = () => {
-    navigation.navigate("Profile");
+    navigation.navigate("ProfileStack");
   };
   return (
     <View style={Styles.wrapper}>

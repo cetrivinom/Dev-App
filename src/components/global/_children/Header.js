@@ -21,7 +21,7 @@ const Header = (props) => {
   };
 
   const onPressProfile = () => {
-    navigation.navigate("Profile");
+    navigation.navigate("ProfileStack");
   };
   return (
     <View>

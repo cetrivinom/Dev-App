@@ -18,7 +18,7 @@ const HeaderPointFil = ({ route, navigation }) => {
   const { config } = useContext(AuthContext);
   
   const onPressProfile = () => {
-    navigation.navigate("Profile");
+    navigation.navigate("ProfileStack");
   };
 
   return (

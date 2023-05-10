@@ -15,7 +15,7 @@ const HeaderDirectory = (props) => {
   const { config } = useContext(AuthContext);
   
   const onPressProfile = () => {
-    navigation.navigate("Profile");
+    navigation.navigate("ProfileStack");
   };
 
   return (
