@@ -10,11 +10,13 @@ import IOMContext from "../../../context/iomData/iomContext";
  */
 const Directory = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const { dataDirectory } = useContext(IOMContext);
+  const { dataDirectory, getDataDirectory } = useContext(IOMContext);
   const awesomeChildListRenderItem = (item,index) => (<CardItemDirectory {...props} key={item.item.departamento} title={item.item.departamento} icon={item.item.icon} dataDirectory= {dataDirectory} />)
   const awesomeChildListKeyExtractor = (item) => item.departamento;
 
-  
+  useEffect(() => {
+    getDataDirectory(searchTerm);
+  }, [searchTerm]);
 
   const compareObjects = (object1, object2, key) => {
     const obj1 = object1[key].toUpperCase()

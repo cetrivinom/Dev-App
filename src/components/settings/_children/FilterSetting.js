@@ -73,7 +73,10 @@ const FilterSetting = (props) => {
   };
 
   const onPressFilter = () => {
-    getDataPointFilter(departamento, municipio, statusPoint, selectedService, searchTerm);
+
+    let textobusqueda = searchTerm.trim();
+
+    getDataPointFilter(departamento, municipio, statusPoint, selectedService, textobusqueda);
     props.navigation.navigate("PointListResult", {
       departamento,
       municipio,

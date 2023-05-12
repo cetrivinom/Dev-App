@@ -52,7 +52,7 @@ export default StyleSheet.create({
   },
   iconLeft: {
     position: "absolute",
-    right: metrics.WIDTH * 0.55,
+    right: metrics.WIDTH * 0.50,
   },
   labelTitle: {
     fontSize: 22,
