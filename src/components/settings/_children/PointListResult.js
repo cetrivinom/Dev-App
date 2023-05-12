@@ -221,9 +221,9 @@ export const ItemCardPoint = (props) => {
     let coor = Coordenadas.split(",");
     let latitude = parseFloat(coor[0]);
     let longitude = parseFloat(coor[1]);
-    const scheme = Platform.select({ ios: 'http://maps.apple.com/?ll=', android: 'geo:0,0?q=' });
+    const scheme = Platform.select({ ios: 'http://maps.apple.com/?q='+_Nombre_punto+'&ll=', android: 'geo:0,0?q=' });
     const latLng = `${latitude},${longitude}`;
-    const label = 'Custom Label';
+    const label = _Nombre_punto;
     const url = Platform.select({
       ios: `${scheme}${latLng}`,
       android: `${scheme}${latLng}(${label})`

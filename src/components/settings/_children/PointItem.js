@@ -195,9 +195,9 @@ const PointItem = ({ route, navigation }) => {
   const onPressOpenNavigationApps = () => {
 
 
-    const scheme = Platform.select({ ios: 'http://maps.apple.com/?ll=', android: 'geo:0,0?q=' });
+    const scheme = Platform.select({ ios: 'http://maps.apple.com/?q='+Nombre_punto+'&ll=', android: 'geo:0,0?q=' });
     const latLng = `${latitude},${longitude}`;
-    const label = 'Custom Label';
+    const label = Nombre_punto;
     const url = Platform.select({
       ios: `${scheme}${latLng}`,
       android: `${scheme}${latLng}(${label})`
