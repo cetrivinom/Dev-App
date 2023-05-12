@@ -139,7 +139,7 @@ const AppNavigation = () => {
     return (
 
         <NavigationContainer ref={navigationRef}>
-            <Tab.Navigator backBehavior="firstRoute" screenOptions={({ route }) => ({
+            <Tab.Navigator backBehavior="history" screenOptions={({ route }) => ({
                 tabBarButton: [
                     "ProfileStack"
                 ].includes(route.name)
