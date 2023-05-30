@@ -58,7 +58,12 @@ const PointItem = ({ route, navigation }) => {
 
 
     let lunesAViernes = [];
-    Horario && Horario.map((i, index) => {
+  let sabadoDomingo = [];
+
+  
+  if(Array.isArray(Horario)){
+
+    Horario?.map((i, index) => {
       if (i.day !== 0 && i.day != 6) {
         let dato = {}
         dato.id = index + 1;
@@ -71,21 +76,57 @@ const PointItem = ({ route, navigation }) => {
       }
 
     })
+  }else{
+    let j = 0;
+    for (let key in Horario) { 
 
-    let sabadoDomingo = [];
-    Horario && Horario.map((i, index) => {
-      if (i.day === 0 || i.day === 6) {
+      if (Horario[key].day !== 0 && Horario[key].day != 6) {
         let dato = {}
-        dato.id = index + 1;
-        dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
-          "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
+        dato.id = j + 1;
+        dato.day = Horario[key].day === 0 ? "Domingo" : Horario[key].day === 1 ? "Lunes" : Horario[key].day === 2 ?
+          "Martes" : Horario[key].day === 3 ? "Miercoles" : Horario[key].day === 4 ? "Jueves" : Horario[key].day === 5 ?
             "Viernes" : "Sabado";
-        dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
-        dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
-        sabadoDomingo.push(dato);
-      }
+        dato.endhours = Horario[key].endhours !== null ? militaryTimeTo12Hour(Horario[key].endhours) : Horario[key].comment;
+        dato.starthours = Horario[key].starthours !== null ? militaryTimeTo12Hour(Horario[key].starthours) : "";
+        lunesAViernes.push(dato);
 
-    })
+    }
+  }
+}
+  
+if(Array.isArray(Horario)){
+
+  Horario?.map((i, index) => {
+    if (i.day === 0 || i.day === 6) {
+      let dato = {}
+      dato.id = index + 1;
+      dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
+        "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
+          "Viernes" : "Sabado";
+      dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
+      dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
+      sabadoDomingo.push(dato);
+    }
+
+  })
+}else{
+  let j = 0;
+  for (let key in Horario) { 
+
+    if (Horario[key].day === 0 || Horario[key].day === 6) {
+      let dato = {}
+      dato.id = j + 1;
+      dato.day = Horario[key].day === 0 ? "Domingo" : Horario[key].day === 1 ? "Lunes" : Horario[key].day === 2 ?
+        "Martes" : Horario[key].day === 3 ? "Miercoles" : Horario[key].day === 4 ? "Jueves" : Horario[key].day === 5 ?
+          "Viernes" : "Sabado";
+      dato.endhours = Horario[key].endhours !== null ? militaryTimeTo12Hour(Horario[key].endhours) : Horario[key].comment;
+      dato.starthours = Horario[key].starthours !== null ? militaryTimeTo12Hour(Horario[key].starthours) : "";
+      sabadoDomingo.push(dato);
+    }
+
+  }
+}
+
 
 
 

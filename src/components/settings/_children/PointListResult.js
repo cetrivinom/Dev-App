@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Header from "../../global/_children/Header";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import {
@@ -36,7 +36,7 @@ export const LastUpdate = ({ route, navigation }) => {
     <View style={styles.containerHeader}>
       <View style={styles.containerFormHeader}>
         <View style={styles.containerFormHeader2}>
-          <Image style={{flex:0.1, resizeMode:'contain'}}
+          <Image style={{ flex: 0.1, resizeMode: 'contain' }}
             source={require("../../../resources/images/riMapPinLine2.png")}
           />
           <Text style={styles.textTitle2}>
@@ -44,7 +44,7 @@ export const LastUpdate = ({ route, navigation }) => {
           </Text>
         </View>
 
-        <View style={{flex:0.25,marginLeft:5}}>
+        <View style={{ flex: 0.25, marginLeft: 5 }}>
           <TouchableOpacity onPress={onPressClose} >
             <Text style={styles.labelTitle2}>Volver a filtrar</Text>
           </TouchableOpacity>
@@ -57,15 +57,15 @@ export const LastUpdate = ({ route, navigation }) => {
 
 const militaryTimeTo12Hour = (s) => {
 
-   
 
-  if(s.toString().length == 4) s = `${s.toString()}`; // 930 -> 0930
-  if(s.toString().length == 3) s = `0${s.toString()}`; // 930 -> 0930
-  if(s.toString().length == 1) s = `000${s.toString()}`; // 930 -> 0930
+
+  if (s.toString().length == 4) s = `${s.toString()}`; // 930 -> 0930
+  if (s.toString().length == 3) s = `0${s.toString()}`; // 930 -> 0930
+  if (s.toString().length == 1) s = `000${s.toString()}`; // 930 -> 0930
 
   const hour = parseInt(s.toString().substring(0, 2), 10);
   const min = s.toString().substring(2, 4);
-  if(hour < 12) return `${hour % 12}:${min} AM`;
+  if (hour < 12) return `${hour % 12}:${min} AM`;
   return `${hour % 12 || 12}:${min} PM`;
 }
 
@@ -82,24 +82,49 @@ export const ItemCardPoint = (props) => {
     Horario = []
   } = props.item || {};
 
+  
+
 
   let lunesAViernes = [];
-  Horario && Horario.map((i, index) => {
-    if (i.day !== 0 && i.day != 6) {
-      let dato = {}
-      dato.id = index + 1;
-      dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
-        "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
-          "Viernes" : "Sabado";
-      dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
-      dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
-      lunesAViernes.push(dato);
-    }
-
-  })
-
   let sabadoDomingo = [];
-  Horario && Horario.map((i, index) => {
+
+  
+  if(Array.isArray(Horario)){
+
+    Horario?.map((i, index) => {
+      if (i.day !== 0 && i.day != 6) {
+        let dato = {}
+        dato.id = index + 1;
+        dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
+          "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
+            "Viernes" : "Sabado";
+        dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
+        dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
+        lunesAViernes.push(dato);
+      }
+
+    })
+  }else{
+    let j = 0;
+    for (let key in Horario) { 
+
+      if (Horario[key].day !== 0 && Horario[key].day != 6) {
+        let dato = {}
+        dato.id = j + 1;
+        dato.day = Horario[key].day === 0 ? "Domingo" : Horario[key].day === 1 ? "Lunes" : Horario[key].day === 2 ?
+          "Martes" : Horario[key].day === 3 ? "Miercoles" : Horario[key].day === 4 ? "Jueves" : Horario[key].day === 5 ?
+            "Viernes" : "Sabado";
+        dato.endhours = Horario[key].endhours !== null ? militaryTimeTo12Hour(Horario[key].endhours) : Horario[key].comment;
+        dato.starthours = Horario[key].starthours !== null ? militaryTimeTo12Hour(Horario[key].starthours) : "";
+        lunesAViernes.push(dato);
+
+    }
+  }
+}
+  
+if(Array.isArray(Horario)){
+
+  Horario?.map((i, index) => {
     if (i.day === 0 || i.day === 6) {
       let dato = {}
       dato.id = index + 1;
@@ -112,9 +137,23 @@ export const ItemCardPoint = (props) => {
     }
 
   })
+}else{
+  let j = 0;
+  for (let key in Horario) { 
 
+    if (Horario[key].day === 0 || Horario[key].day === 6) {
+      let dato = {}
+      dato.id = j + 1;
+      dato.day = Horario[key].day === 0 ? "Domingo" : Horario[key].day === 1 ? "Lunes" : Horario[key].day === 2 ?
+        "Martes" : Horario[key].day === 3 ? "Miercoles" : Horario[key].day === 4 ? "Jueves" : Horario[key].day === 5 ?
+          "Viernes" : "Sabado";
+      dato.endhours = Horario[key].endhours !== null ? militaryTimeTo12Hour(Horario[key].endhours) : Horario[key].comment;
+      dato.starthours = Horario[key].starthours !== null ? militaryTimeTo12Hour(Horario[key].starthours) : "";
+      sabadoDomingo.push(dato);
+    }
 
-
+  }
+}
 
   let timeLV = lunesAViernes.reduce((groups, groupDay) => {
 
@@ -198,11 +237,10 @@ export const ItemCardPoint = (props) => {
     }
   });
 
-  const onPressOpenPoint = (id,nombre) => {
+  const onPressOpenPoint = (id, nombre) => {
 
-    let nombreA = nombre.replace(/ /g, "_")+"|Mapeo_De_Servicios_Colombia_GIFMM";
+    let nombreA = nombre.replace(/ /g, "_") + "|Mapeo_De_Servicios_Colombia_GIFMM";
 
-    console.log(nombreA)
 
     analytics().logScreenView({
       screen_name: nombreA,
@@ -214,29 +252,29 @@ export const ItemCardPoint = (props) => {
     let longitude = parseFloat(coor[1]);
     let icon = (dataMapeoState.find((state) => state.id_estado == Estado_id));
     let uri = icon?.img_estado_b64;
-    props.navigation.navigate("PointItem", { id, latitude, longitude, uri, from:"SettingsStack" });
+    props.navigation.navigate("PointItem", { id, latitude, longitude, uri, from: "SettingsStack" });
   };
 
   const onPressOpenNavigationApps = () => {
     let coor = Coordenadas.split(",");
     let latitude = parseFloat(coor[0]);
     let longitude = parseFloat(coor[1]);
-    const scheme = Platform.select({ ios: 'http://maps.apple.com/?q='+_Nombre_punto+'&ll=', android: 'geo:0,0?q=' });
+    const scheme = Platform.select({ ios: 'http://maps.apple.com/?q=' + _Nombre_punto + '&ll=', android: 'geo:0,0?q=' });
     const latLng = `${latitude},${longitude}`;
     const label = _Nombre_punto;
     const url = Platform.select({
       ios: `${scheme}${latLng}`,
       android: `${scheme}${latLng}(${label})`
     });
-    Linking.openURL(url);  
+    Linking.openURL(url);
   };
 
   return (
-   
+
     <View style={styles.overlay3}>
       <View style={styles.overlay4}>
         <View style={styles.container55}>
-          <HeaderPointItemBox id={id}  nombre={_Nombre_punto}/>
+          <HeaderPointItemBox id={id} nombre={_Nombre_punto} />
           <View style={styles.containerForm}>{_.map(services, (val) => {
             return val.svg
           })}</View>
@@ -249,29 +287,29 @@ export const ItemCardPoint = (props) => {
             </Text>
           </View>
           {timeLV && timeLV.map(group => (
-              <View style={styles.containerForm} key={group.id}>
-                <Image
-                  source={require("../../../resources/images/riTimeFill.png")}
-                />
-                <Text style={styles.textTitle2}>{group.days.length === 1
-                  ? group.days
-                  : group.days[0] + " - " + group.days[group.days.length - 1]}: {group.hours}</Text>
-              </View>
-            ))}
-            {timeSD && timeSD.map(group => (
-              <View style={styles.containerForm} key={group.id}>
-                <Image
-                  source={require("../../../resources/images/riTimeFill.png")}
-                />
-                <Text style={styles.textTitle2}>{group.days.length === 1
-                  ? group.days
-                  : group.days[0] + " - " + group.days[group.days.length - 1]}: {group.hours}</Text>
-              </View>
-            ))}
+            <View style={styles.containerForm} key={group.id}>
+              <Image
+                source={require("../../../resources/images/riTimeFill.png")}
+              />
+              <Text style={styles.textTitle2}>{group.days.length === 1
+                ? group.days
+                : group.days[0] + " - " + group.days[group.days.length - 1]}: {group.hours}</Text>
+            </View>
+          ))}
+          {timeSD && timeSD.map(group => (
+            <View style={styles.containerForm} key={group.id}>
+              <Image
+                source={require("../../../resources/images/riTimeFill.png")}
+              />
+              <Text style={styles.textTitle2}>{group.days.length === 1
+                ? group.days
+                : group.days[0] + " - " + group.days[group.days.length - 1]}: {group.hours}</Text>
+            </View>
+          ))}
           <View style={styles.box7}>
             <TouchableOpacity
               style={[styles.caja1, styles.caja2]}
-              onPress={() => onPressOpenPoint(id,_Nombre_punto)}
+              onPress={() => onPressOpenPoint(id, _Nombre_punto)}
             >
               <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
                 Conocer más
@@ -298,23 +336,27 @@ const PointListResult = (props) => {
     statusPoint = "",
   } = props.route.params || {};
 
+  useEffect(() => {
+
+  }, []);
+
   const onPressOpenPoint = (id, latitude, longitude, uri, nombre) => {
 
-    let nombreA = nombre.replace(/ /g, "_")+"|Mapeo_De_Servicios_Colombia_GIFMM";
+    let nombreA = nombre.replace(/ /g, "_") + "|Mapeo_De_Servicios_Colombia_GIFMM";
 
-    console.log(nombreA)
+  
 
     analytics().logScreenView({
       screen_name: nombreA,
       screen_class: nombreA,
     });
-    
-    props.navigation.navigate("PointItem", { id, latitude, longitude, uri, from:"SettingsStack" });
+
+    props.navigation.navigate("PointItem", { id, latitude, longitude, uri, from: "SettingsStack" });
   };
 
   const onPressSeeAll = () => {
-    
-    props.navigation.navigate("PointListResultList",{departamento,municipio,statusPoint});
+
+    props.navigation.navigate("PointListResultList", { departamento, municipio, statusPoint });
   };
 
   const awesomeChildListRenderItem = ({ item }) => (
@@ -322,7 +364,7 @@ const PointListResult = (props) => {
   );
   const awesomeChildListKeyExtractor = (item) => item.ID;
   const mapMarkers = () => {
-    if (dataPointFilter !== null && dataPointFilter !== undefined && dataPointFilter.length !==0) {
+    if (dataPointFilter !== null && dataPointFilter !== undefined && dataPointFilter.length !== 0) {
       return dataPointFilter.map((item, index) => {
         if (item.Coordenadas !== "") {
           var icon = (dataMapeoState.find((state) => state.id_estado == item.Estado_id));
@@ -336,11 +378,11 @@ const PointListResult = (props) => {
                 latitude,
                 longitude,
               }}
-              image={{ width: 28, height: 40 , uri: icon?.img_estado_b64} }
-              
+              image={{ width: 28, height: 40, uri: icon?.img_estado_b64 }}
+
               onPress={() => onPressOpenPoint(item.ID, latitude, longitude, icon?.img_estado_b64, item.Nombre_punto)}
             >
-              
+
             </Marker>
           );
         }
@@ -351,7 +393,7 @@ const PointListResult = (props) => {
   return (
     <View style={styles.container}>
       <View style={[styles.box, styles.box1]}>
-        <HeaderPoint {...props}  title="Puntos de servicio" />
+        <HeaderPoint {...props} title="Puntos de servicio" />
         <LastUpdate {...props} />
       </View>
       <View style={[styles.box, styles.box2]}>
@@ -413,7 +455,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF",
     borderRadius: 8,
-    
+
     marginHorizontal: 5,
   },
   overlay4: {
@@ -425,7 +467,7 @@ const styles = StyleSheet.create({
   container55: {
     marginVertical: 12,
     marginHorizontal: 12,
-    
+
   },
   containerFormTitle: {
     flexDirection: "row",
@@ -455,7 +497,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     borderColor: "#A1AAB2",
     marginStart: 10,
-    paddingHorizontal:10
+    paddingHorizontal: 10
   },
   caja2: {
     backgroundColor: "#132A3E",
@@ -473,7 +515,7 @@ const styles = StyleSheet.create({
   textTitle2: {
     fontSize: 14,
     fontWeight: "normal",
-    flex:0.9,
+    flex: 0.9,
     lineHeight: 16,
     letterSpacing: 0.0025,
     color: "#003031",
@@ -483,7 +525,7 @@ const styles = StyleSheet.create({
   overlay: {
     position: "relative",
     flexDirection: "row",
-    marginTop:metrics.HEIGHT*0.30,
+    marginTop: metrics.HEIGHT * 0.30,
     height: metrics.HEIGHT * 0.057,
     width: "100%",
     justifyContent: "flex-end",
@@ -509,21 +551,21 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   containerHeader: {
-    flex:1,
+    flex: 1,
     backgroundColor: "#FFFFFF",
   },
   containerFormHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    flex:1,
+    flex: 1,
     //padding: 5,
     //paddingHorizontal: 5,
   },
   containerFormHeader2: {
     flexDirection: "row",
     //alignItems: "center",
-    flex:0.75,
+    flex: 0.75,
   },
   labelTitle1: {
     fontSize: 12,
