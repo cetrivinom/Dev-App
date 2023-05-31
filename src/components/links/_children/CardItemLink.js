@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
     color: "#007681",
     marginRight: 48,
     fontFamily:'Dosis-Bold',
-    textTransform:'capitalize'
   },
   containerDate: {
     flexDirection: "row",
