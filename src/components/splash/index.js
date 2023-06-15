@@ -9,9 +9,11 @@ import { Linking } from 'react-native';
 import { StackActions, useNavigation } from "@react-navigation/native";
 import LoginRegisterScreen from "./LoginRegisterScreen";
 import messaging from '@react-native-firebase/messaging';
+import GetLocation from 'react-native-get-location'
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const Splash = (props) => {
   const { getDataLink, updateLastUpdate } = useContext(InitialContext);
-  const { getConfig, getDefaultConfig } = useContext(AuthContext);
+  const { getConfig, getDefaultConfig, user } = useContext(AuthContext);
   let api = [
     "api-mapeo-estados.json",
     "api-enlaces-de-interes.json",
@@ -34,7 +36,22 @@ const Splash = (props) => {
     }, 2000);
   }, []);
   
+  
 
+  const createCoordenadas = async (coordenadas) => {
+    try {
+      var value = JSON.parse(await AsyncStorage.getItem("coordenadas"));
+      if (!value)
+        value = [];
+      
+        value.push(coordenadas);
+        AsyncStorage.setItem("coordenadas", JSON.stringify(value));
+        
+    
+    } catch (error) {
+      console.log(error)
+    }
+  };
 
   useEffect(() => {
 
@@ -43,6 +60,26 @@ const Splash = (props) => {
     });
 
     if (authLoaded) {
+
+     GetLocation.getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 60000,
+    })
+    .then(location => {
+        
+      
+      var array = {
+        fecha:new Date(),
+        latitud:location.latitude,
+        longitud: location.longitude
+      }
+      
+      createCoordenadas(array)
+    })
+    .catch(error => {
+        const { code, message } = error;
+        console.warn(code, message);
+    })
 
       
 
@@ -57,6 +94,7 @@ const Splash = (props) => {
           });
         } else {
 
+          
 
           //var current ="1.031";
           getConfig().then((config) => {

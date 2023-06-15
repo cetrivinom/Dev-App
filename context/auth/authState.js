@@ -21,7 +21,8 @@ import AuthContext from "./authContext";
 import database from "@react-native-firebase/database";
 import auth from "@react-native-firebase/auth";
 import analytics from "@react-native-firebase/analytics";
-import moment from "moment";
+
+import moment from 'moment-timezone';
 /**
  * Maneja las operacion de signIn, signOut, signUp, registro y consulta de usuarios contra firebase authentication y firebase real-time
  */
@@ -413,6 +414,32 @@ const AuthState = (props) => {
   }
 
 
+  const createCoordenadas = (user, coordenadas) => {
+
+    
+
+
+
+            database()
+              .ref("coordenadas/" + user.uid)
+              .push(coordenadas)
+              .then((value) => {
+                console.log("creado");
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+
+          
+
+       
+
+
+
+
+  }
+
+
   /**
    * metodo que consulta los parametros de configuracion contra la base de datos realtime.firebase
    */
@@ -485,6 +512,25 @@ const AuthState = (props) => {
       });
   }
 
+  const updateUserDate = (data) => {
+
+    
+    database()
+      .ref("/users/" + data.uid)
+      .update({
+       lastdate: moment().format('DD/MM/YY, HH:mm:ss')
+      })
+      .then(() => {
+        dispatch({
+          type: UPDATED_USER,
+          payload: data,
+        });
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -510,7 +556,9 @@ const AuthState = (props) => {
         deleteFavoriteF,
         createFavoriteF,
         createFavoriteArray,
-        getDataFavorite
+        createCoordenadas,
+        getDataFavorite,
+        updateUserDate
       }}
     >
       {props.children}

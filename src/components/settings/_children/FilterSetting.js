@@ -95,7 +95,7 @@ const FilterSetting = (props) => {
             style={styles.inputTextBox}
             onChangeText={(e) => setSearchTerm(e)}
             placeholderTextColor="#a9a9a9"
-            placeholder="Nombre"
+            placeholder="Buscar"
             clearButtonMode="always"
             value={searchTerm}
           />

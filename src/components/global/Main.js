@@ -12,21 +12,22 @@ import NetInfo from '@react-native-community/netinfo';
 import { useState } from "react";
 const Main = (props) => {
   const { navigation } = props;
-  const { user, config, createFavoriteArray, deleteFavoriteF, createFavoriteF } = useContext(AuthContext);
+  const { user, config, createFavoriteArray, deleteFavoriteF, createFavoriteF, createCoordenadas, updateUserDate } = useContext(AuthContext);
   const [dataFirebase, setDataFirebase] = useState([]);
   const { getDataEnlace } = useContext(IOMContext);
   const { getDataSocio } = useContext(IOMContext);
-  const { getDataLink} = useContext(IOMContext);
-  const { getDataDirectory, getDataByDepartId} = useContext(IOMContext);
+  const { getDataLink } = useContext(IOMContext);
+  const { getDataDirectory, getDataByDepartId } = useContext(IOMContext);
 
   useEffect(() => {
 
-      getDataLink();
-      getDataEnlace();
-      getDataSocio();
-      getDataDirectory("");
-    
-   
+    getDataLink();
+    getDataEnlace();
+    getDataSocio();
+    getDataDirectory("");
+    sincronizarCoordenadas();
+    actualizarFecha();
+
   }, []);
 
   useEffect(() => {
@@ -35,15 +36,51 @@ const Main = (props) => {
 
 
         getDataFirebase()
-        
-         sincronizarFirebaseToStorage();
-        
+
+        sincronizarFirebaseToStorage();
+
 
 
       }
     })
   }, [])
 
+  const sincronizarCoordenadas = async () => {
+
+    if (user !== null && user !== undefined) {
+
+
+      const value = await AsyncStorage.getItem("coordenadas");
+
+      var coordenadasL = JSON.parse(value);
+      var count = Object.keys(coordenadasL).length;
+
+      console.log(coordenadasL)
+
+      if (count > 0) {
+        coordenadasL.forEach(obj => {
+
+
+          
+          createCoordenadas(user, obj);
+
+        });
+      }
+
+
+
+      await AsyncStorage.removeItem("coordenadas");
+
+    }
+
+  }
+
+  const actualizarFecha = () =>{
+    if (user !== null && user !== undefined) {
+    updateUserDate(user);
+    }
+
+  }
 
 
   const sincronizarFirebaseToStorage = async () => {
@@ -56,12 +93,12 @@ const Main = (props) => {
 
           var array = [];
           dataF && dataF.forEach((child) => {
-            var a ={}
-            a.id=child.val().id;
+            var a = {}
+            a.id = child.val().id;
             array.push(a);
-            
+
           });
-          
+
           storeData(array)
 
         }
@@ -80,12 +117,12 @@ const Main = (props) => {
 
           var array = [];
           dataF && dataF.forEach((child) => {
-            var a ={}
-            a.id=child.val().id;
+            var a = {}
+            a.id = child.val().id;
             array.push(a);
-            
+
           });
-          
+
           storeData2(array)
 
         }
@@ -111,11 +148,11 @@ const Main = (props) => {
           });
 
           setDataFirebase(array)
-          
-           
-        } 
 
-        
+
+        }
+
+
       })
   }
 
@@ -127,61 +164,61 @@ const Main = (props) => {
 
     const value = await AsyncStorage.getItem('favorites');
 
-   
 
-      var favoritosL = JSON.parse(value);
-      var count = Object.keys(favoritosL).length;
-      var count_firebase = array.length;
 
-      console.log("count favo",count)
-      console.log("count_firebase",count_firebase)
-      
+    var favoritosL = JSON.parse(value);
+    var count = Object.keys(favoritosL).length;
+    var count_firebase = array.length;
 
-      if (count > 0 && count_firebase === 0) {
+    console.log("count favo", count)
+    console.log("count_firebase", count_firebase)
+
+
+    if (count > 0 && count_firebase === 0) {
+      favoritosL.forEach(obj => {
+        Object.entries(obj).forEach(([key, value]) => {
+
+          createFavoriteArray(user, value);
+        });
+
+      });
+    }
+
+    if (count === 0 && count_firebase > 0) {
+
+      sincronizarFirebaseToStorage2()
+    }
+
+    if (count > 0 && count_firebase > 0) {
+
+      if (count > count_firebase) {
+
         favoritosL.forEach(obj => {
           Object.entries(obj).forEach(([key, value]) => {
-
-            createFavoriteArray(user, value);
+            let a = array.find(item => item.id === value);
+            if (a === undefined) {
+              createFavoriteF(user, value);
+            }
           });
 
         });
+
+      } else {
+
+        array && array.forEach(sto => {
+
+          let a = favoritosL.find(item => item.id === sto.id);
+
+          if (a === undefined) {
+            deleteFavoriteF(user, sto.id);
+          }
+
+
+        });
+
       }
 
-      if (count === 0 && count_firebase > 0) {
 
-        sincronizarFirebaseToStorage2()
-      }
-
-      if (count > 0 && count_firebase > 0) {
-
-        if (count > count_firebase) {
-
-          favoritosL.forEach(obj => {
-            Object.entries(obj).forEach(([key, value]) => {
-              let a = array.find(item => item.id === value);
-              if (a === undefined) {
-                createFavoriteF(user, value);
-              }
-            });
-
-          });
-
-        } else {
-
-          array && array.forEach(sto => {
-
-            let a = favoritosL.find(item => item.id === sto.id);
-           
-            if (a === undefined) {
-              deleteFavoriteF(user, sto.id);
-            }
-
-
-          });
-
-        }
-
-      
 
     }
 
@@ -194,33 +231,33 @@ const Main = (props) => {
 
   const storeData = async (item) => {
 
-    
+
     var value = JSON.parse(await AsyncStorage.getItem("favorites"));
-    if (!value){
-      
-    
+    if (!value) {
+
+
       AsyncStorage.setItem("favorites", JSON.stringify(item));
 
-    }else{
-      console.log("dataFirebase",item)
+    } else {
+      console.log("dataFirebase", item)
       sincronizarStorageToFirebase(item);
     }
 
 
-  
+
   }
 
   const storeData2 = async (item) => {
 
-    
-      
-    
-      AsyncStorage.setItem("favorites", JSON.stringify(item));
-
-    
 
 
-  
+
+    AsyncStorage.setItem("favorites", JSON.stringify(item));
+
+
+
+
+
   }
 
   useEffect(() => {

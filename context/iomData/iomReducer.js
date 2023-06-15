@@ -98,16 +98,36 @@ export default (state, action) => {
         };
       }
       else {
-        return {
 
-          ...state,
-          dataPointFilter: state.dataPoint
-            .filter((item) => item.Departamento.toLowerCase().includes(action.departamento.toLowerCase()))
-            .filter((item) => item.Municipio.toLowerCase().includes(action.municipio.toLowerCase()))
-            .filter((item) => item.Estado.toLowerCase().includes(action.estado.toLowerCase()))
-            .filter((item) => item.Nombre_punto.toLowerCase().includes(action.nombre.toLowerCase()))
-          //.filter((item) => item.Servicios.some((o) => o.Servicio.toLowerCase().includes(action.typeService.toLowerCase()))),
-        };
+        let a = state.dataPoint.filter((item) => item.Nombre_punto.toLowerCase().includes(action.nombre.toLowerCase()))
+        
+        if(a.length>0){
+          console.log("entre")
+          return {
+
+            ...state,
+            dataPointFilter: state.dataPoint
+              .filter((item) => item.Departamento.toLowerCase().includes(action.departamento.toLowerCase()))
+              .filter((item) => item.Municipio.toLowerCase().includes(action.municipio.toLowerCase()))
+              .filter((item) => item.Estado.toLowerCase().includes(action.estado.toLowerCase()))
+              .filter((item) => item.Nombre_punto.toLowerCase().includes(action.nombre.toLowerCase()))
+              
+          };
+
+        }else{
+          return {
+
+            ...state,
+            dataPointFilter: state.dataPoint
+              .filter((item) => item.Departamento.toLowerCase().includes(action.departamento.toLowerCase()))
+              .filter((item) => item.Municipio.toLowerCase().includes(action.municipio.toLowerCase()))
+              .filter((item) => item.Estado.toLowerCase().includes(action.estado.toLowerCase()))
+              .filter(product => product.Servicios.some(cat => cat.Descripcion_Servicio.toLowerCase().includes(action.nombre.toLowerCase())))
+              
+          };
+        }
+
+        
       }
     case GET_DATA_POINT_ID:
       return {
