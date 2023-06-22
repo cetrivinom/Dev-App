@@ -51,11 +51,11 @@ const Main = (props) => {
 
 
       const value = await AsyncStorage.getItem("coordenadas");
+      console.log(value)
 
       var coordenadasL = JSON.parse(value);
-      var count = Object.keys(coordenadasL).length;
 
-      console.log(coordenadasL)
+      var count = Object.keys(coordenadasL).length;
 
       if (count > 0) {
         coordenadasL.forEach(obj => {

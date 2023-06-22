@@ -11,6 +11,7 @@ import LoginRegisterScreen from "./LoginRegisterScreen";
 import messaging from '@react-native-firebase/messaging';
 import GetLocation from 'react-native-get-location'
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import moment from "moment";
 const Splash = (props) => {
   const { getDataLink, updateLastUpdate } = useContext(InitialContext);
   const { getConfig, getDefaultConfig, user } = useContext(AuthContext);
@@ -40,6 +41,7 @@ const Splash = (props) => {
 
   const createCoordenadas = async (coordenadas) => {
     try {
+      console.log(coordenadas)
       var value = JSON.parse(await AsyncStorage.getItem("coordenadas"));
       if (!value)
         value = [];
@@ -66,10 +68,12 @@ const Splash = (props) => {
         timeout: 60000,
     })
     .then(location => {
+
+      console.log(location)
         
       
       var array = {
-        fecha:new Date(),
+        fecha:moment().format('DD/MM/YY, HH:mm:ss'),
         latitud:location.latitude,
         longitud: location.longitude
       }

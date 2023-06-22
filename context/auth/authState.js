@@ -352,7 +352,7 @@ const AuthState = (props) => {
 
   const createFavoriteArray = (user, favoriteId) => {
 
-    
+
     let data = {
       id: favoriteId
     }
@@ -371,7 +371,7 @@ const AuthState = (props) => {
             array.push(data)
           });
 
-          
+
           let aa = array.find(item => item.id === favoriteId);
 
 
@@ -392,19 +392,19 @@ const AuthState = (props) => {
 
           }
 
-        }else{
+        } else {
           database()
-              .ref("favorites/" + user.uid)
-              .push(data)
-              .then((value) => {
-                dispatch({
-                  type: NEW_FAVORITE,
-                  payload: value,
-                });
-              })
-              .catch((error) => {
-                console.error(error);
+            .ref("favorites/" + user.uid)
+            .push(data)
+            .then((value) => {
+              dispatch({
+                type: NEW_FAVORITE,
+                payload: value,
               });
+            })
+            .catch((error) => {
+              console.error(error);
+            });
         }
       })
 
@@ -416,9 +416,44 @@ const AuthState = (props) => {
 
   const createCoordenadas = (user, coordenadas) => {
 
-    
+    console.log(user)
+    console.log(coordenadas)
+
+    let fecha = coordenadas.fecha;
+    let fecha1 = fecha.split(',');
+    let fechaDia = fecha1[0];
+    let horaFinal = fecha1[1].split(':')[0].trim();
 
 
+    database()
+      .ref("/coordenadas/" + user.uid)
+      .once("value", (snapshot) => {
+        if (snapshot.hasChildren()) {
+          let dataF = snapshot;
+          let array = [];
+
+          dataF && dataF.forEach((child) => {
+            let data = {};
+            let fecha = child.val().fecha;
+            let fecha1 = fecha.split(',');
+            let fechaDia = fecha1[0];
+            let horaFinal = fecha1[1].split(':')[0].trim();
+            data.fecha = fechaDia;
+            if (Number(horaFinal) + 1 === 25) {
+              horaFinal = 0;
+            }
+            if (Number(horaFinal) - 1 === -1) {
+              horaFinal = 24;
+            }
+            data.horaMax = Number(horaFinal) + 1
+            array.push(data)
+          });
+
+          console.log("array",array);
+
+
+          let aa = array.find(item => item.fecha === fechaDia && horaFinal <= item.horaMax);
+          if (aa === undefined) {
 
             database()
               .ref("coordenadas/" + user.uid)
@@ -430,9 +465,24 @@ const AuthState = (props) => {
                 console.error(error);
               });
 
+
+          }
+
           
 
-       
+        }else{
+          database()
+              .ref("coordenadas/" + user.uid)
+              .push(coordenadas)
+              .then((value) => {
+                console.log("creado");
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+        }
+      })
+
 
 
 
@@ -514,11 +564,11 @@ const AuthState = (props) => {
 
   const updateUserDate = (data) => {
 
-    
+
     database()
       .ref("/users/" + data.uid)
       .update({
-       lastdate: moment().format('DD/MM/YY, HH:mm:ss')
+        lastdate: moment().format('DD/MM/YY, HH:mm:ss')
       })
       .then(() => {
         dispatch({
