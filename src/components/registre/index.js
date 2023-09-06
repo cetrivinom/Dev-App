@@ -27,7 +27,6 @@ const Registre = ({ route, navigation }) => {
 
   useEffect(() => {
 
-    console.log(emailA)
     setData({ ...data, email: emailA });
 
   }, []);

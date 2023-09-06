@@ -10,7 +10,7 @@ export const ItemMain = (props) => {
   };
 
   return (
-    <Pressable onPress={onPressCard} style={image<3?styles.wraper:styles.wraperTwo}>
+    <Pressable onPress={onPressCard} style={styles.wraper}>
       <View style={{ borderRadius: 8 }}>
         <View style={image<3?styles.cardBody:styles.cardBodyTwo}>
           <View style={{ flex: 1 }}>
@@ -25,6 +25,8 @@ export const ItemMain = (props) => {
                   ? require("../../../resources/images/frame.png")
                   : image === "4"
                   ?  require("../../../resources/images/pointSave.png")
+                  : image === "6"
+                  ?  require("../../../resources/images/integracion.png")
                   : image === "5" &&
                     require("../../../resources/images/riUserFill.png")
               }
@@ -76,8 +78,8 @@ const styles = StyleSheet.create({
   cardBodyTwo: {
     backgroundColor: "#132A3E",
     //flexDirection: "column",
-    height: metrics.HEIGHT * 0.134,
-    width: metrics.WIDTH * 0.27,
+    height: metrics.HEIGHT * 0.11,
+    width: metrics.WIDTH * 0.44,
     borderRadius: 8,
     shadowColor: "#030912",
     shadowOffset: {

@@ -16,7 +16,6 @@ export const CardSocioLink = (props) => {
 
     let nombreA = "Socios|"+ title.replace(/ /g, "_")+"|Contenido_Interes";
 
-    console.log(nombreA)
 
     analytics().logScreenView({
       screen_name: nombreA,

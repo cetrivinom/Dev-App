@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
   },
   containerForm: {
     flexDirection: "row",
+    alignItems:"center"
   },
   statusBarBackground:{
     height: (Platform.OS === 'ios') ? metrics.WIDTH * 0.08 : 0,

@@ -21,11 +21,11 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     width:metrics.WIDTH,
-    height:metrics.HEIGHT*0.30,
+    height:metrics.HEIGHT*0.25,
   },
   image: {
     flex: 1,
-    resizeMode: 'cover',
+    resizeMode: 'contain',
     alignContent: 'center',
     alignItems: 'center',
   },

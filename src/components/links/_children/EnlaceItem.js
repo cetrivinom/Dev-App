@@ -34,7 +34,7 @@ const EnlaceItem = ({ route, navigation }) => {
         <Text style={styles.textTitle}>{title}</Text>
         <Text style={styles.textContent}>{_content}</Text>
         
-        
+       
         
         <View style={styles.viewLink}>
           <Text style={styles.textEnlace}>Enlaces:</Text>
@@ -62,6 +62,12 @@ const EnlaceItem = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  containeImage: {
+    width: 32,
+    height: 32,
+    marginTop:10,
+    marginLeft:10
+  },
   wrapper: {
     flex: 1,
     backgroundColor:'white'

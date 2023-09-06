@@ -211,7 +211,6 @@ if(Array.isArray(Horario)){
 
     let nombreA = nombre.replace(/ /g, "_")+"|Mapeo_De_Servicios_Colombia_GIFMM";
 
-    console.log(nombreA)
 
     analytics().logScreenView({
       screen_name: nombreA,

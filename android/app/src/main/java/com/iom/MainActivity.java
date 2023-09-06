@@ -16,8 +16,9 @@ public class MainActivity extends ReactActivity {
 
 
 public void adjustFontScale(Context context, Configuration configuration) {
-
-  configuration.fontScale = (float) 0.8;
+  Float maxFontScale = 0.8f;
+  Float fontScale = configuration.fontScale >= maxFontScale ? maxFontScale : configuration.fontScale;
+  configuration.fontScale = (float) fontScale;
   DisplayMetrics metrics = getResources().getDisplayMetrics();
   WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
   wm.getDefaultDisplay().getMetrics(metrics);

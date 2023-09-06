@@ -27,7 +27,6 @@ const HeaderPointItem = (props) => {
 
       let nombreA = nombre.replace(/ /g, "_") + "|Crear_Favorito";
 
-      console.log(nombreA)
 
       analytics().logScreenView({
         screen_name: nombreA,
@@ -67,7 +66,6 @@ const HeaderPointItem = (props) => {
   const setInformacion = async () => {
 
     const value = await AsyncStorage.getItem('favorites');
-    console.log(value)
         if (value !== null) {
           
           var favoritosL = JSON.parse(value);

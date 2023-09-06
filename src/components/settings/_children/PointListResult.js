@@ -337,6 +337,8 @@ const PointListResult = (props) => {
   } = props.route.params || {};
 
   useEffect(() => {
+    console.log(dataPointFilter.length)
+
 
   }, []);
 

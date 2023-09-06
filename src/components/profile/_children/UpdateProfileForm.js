@@ -217,7 +217,6 @@ const UpdateProfileForm = ({ route, navigation }) => {
   } = route.params || {};
 
   useEffect(() => {
-    console.log(field)
   }, []);
 
   const onPressBack = () => {

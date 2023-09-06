@@ -416,8 +416,6 @@ const AuthState = (props) => {
 
   const createCoordenadas = (user, coordenadas) => {
 
-    console.log(user)
-    console.log(coordenadas)
 
     let fecha = coordenadas.fecha;
     let fecha1 = fecha.split(',');
@@ -449,7 +447,6 @@ const AuthState = (props) => {
             array.push(data)
           });
 
-          console.log("array",array);
 
 
           let aa = array.find(item => item.fecha === fechaDia && horaFinal <= item.horaMax);

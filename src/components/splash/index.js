@@ -41,7 +41,6 @@ const Splash = (props) => {
 
   const createCoordenadas = async (coordenadas) => {
     try {
-      console.log(coordenadas)
       var value = JSON.parse(await AsyncStorage.getItem("coordenadas"));
       if (!value)
         value = [];
@@ -69,7 +68,6 @@ const Splash = (props) => {
     })
     .then(location => {
 
-      console.log(location)
         
       
       var array = {

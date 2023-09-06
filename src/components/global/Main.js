@@ -10,6 +10,7 @@ import database from "@react-native-firebase/database";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import NetInfo from '@react-native-community/netinfo';
 import { useState } from "react";
+import { ItemMainLarge } from "./_children/CardLarge";
 const Main = (props) => {
   const { navigation } = props;
   const { user, config, createFavoriteArray, deleteFavoriteF, createFavoriteF, createCoordenadas, updateUserDate } = useContext(AuthContext);
@@ -51,7 +52,6 @@ const Main = (props) => {
 
 
       const value = await AsyncStorage.getItem("coordenadas");
-      console.log(value)
 
       var coordenadasL = JSON.parse(value);
 
@@ -170,8 +170,6 @@ const Main = (props) => {
     var count = Object.keys(favoritosL).length;
     var count_firebase = array.length;
 
-    console.log("count favo", count)
-    console.log("count_firebase", count_firebase)
 
 
     if (count > 0 && count_firebase === 0) {
@@ -239,7 +237,6 @@ const Main = (props) => {
       AsyncStorage.setItem("favorites", JSON.stringify(item));
 
     } else {
-      console.log("dataFirebase", item)
       sincronizarStorageToFirebase(item);
     }
 
@@ -279,10 +276,10 @@ const Main = (props) => {
   return (
     <ScrollView style={styles.container}>
 
-      <View style={{ height: metrics.HEIGHT * 0.30, width: metrics.WIDTH }}>
+      <View style={{ height: metrics.HEIGHT * 0.25, width: metrics.WIDTH }}>
         <HeaderHome />
       </View>
-      <View style={{ height: metrics.HEIGHT * 0.70, width: metrics.WIDTH }}>
+      <View style={{ height: metrics.HEIGHT * 0.75, width: metrics.WIDTH }}>
         <Text style={styles.labelTitle}>¡Te damos la bienvenida!</Text>
         <Text style={styles.labelDescripcion}>
           Queremos brindarte la mejor ayuda, por eso hemos preparado las
@@ -302,11 +299,11 @@ const Main = (props) => {
             image="2"
           />
         </View>
-        <View style={styles.containerForm2}>
+        <View style={styles.containerForm}>
           <ItemMain
             {...props}
             name="LinksStack"
-            title="Contenido de interés"
+            title="Enlaces de interes"
             image="3"
           />
           <ItemMain
@@ -315,15 +312,24 @@ const Main = (props) => {
             title="Puntos guardados"
             image="4"
           />
-          {!config.anonymousAuth && (
+          {/*!config.anonymousAuth && (
             <ItemMain
               {...props}
               name="ProfileStack"
               title="Mi Perfil"
               image="5"
             />
-          )}
+          )*/}
 
+        </View>
+        <View style={styles.containerForm}>
+            <ItemMainLarge
+             {...props}
+             name="IntegracionStack"
+             title="Información para el empleo y el emprendimiento"
+             image="6"
+            
+            />
         </View>
 
       </View>
@@ -348,7 +354,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     height: metrics.HEIGHT * 0.12,
-    marginTop: metrics.HEIGHT * 0.05
+    marginTop: metrics.HEIGHT * 0.02
   },
   containerForm2: {
     flexDirection: "row",

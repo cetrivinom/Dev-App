@@ -16,6 +16,7 @@ const InitialState = (props) => {
   const [state, dispatch] = useReducer(InitialReducer, initialState);
 
   const getDataLink = async (apiName,baseURL) => {
+    console.log(apiName, baseURL)
     try {
       API.defaults.headers = {
         'Cache-Control': 'no-cache',

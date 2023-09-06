@@ -103,7 +103,7 @@ const Settings = (props) => {
                 longitude,
                 
               }}
-              image={{ width: 28, height: 40 , uri: icon?.img_estado_b64} }
+              image={icon? { width: 28, height: 40 , uri: icon?.img_estado_b64}:require('../../resources/images/hear.png') }
               onPress={() => onPressOpenPoint(item.ID, latitude, longitude, icon?.img_estado_b64, item.Nombre_punto)}
             >
               

@@ -5,17 +5,29 @@ import InitialState from "./context/initialData/initialState";
 import IOMState from "./context/iomData/iomState";
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Snackbar } from "react-native-paper";
+import { Snackbar, TextInput } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AppNavigation from "./src/components/global/AppNavigation";
 import * as RootNavigation from './RootNavigation'
+import { Text, View } from "react-native";
 
 const App = () => {
+
+  Text.defaultProps = Text.defaultProps || {}
+
+  Text.defaultProps.allowFontScaling = false
+
+  TextInput.defaultProps = TextInput.defaultProps || {}
+
+  TextInput.defaultProps.allowFontScaling = false
+
+  View.defaultProps = View.defaultProps || {};
+  
+  
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState('xxx');
   const onDismissSnackBar = () => setVisible(false);
   useEffect(() => {
-    console.log("Entre");
 
     
     

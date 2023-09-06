@@ -16,7 +16,6 @@ export const CardEnlaceLink = (props) => {
 
     let nombreA = "Enlaces|"+ title.replace(/ /g, "_")+"|Contenido_Interes";
 
-      console.log(nombreA)
 
       analytics().logScreenView({
         screen_name: nombreA,

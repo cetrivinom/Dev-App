@@ -20,8 +20,6 @@ const CardItemLink = (props) => {
 
     let nombreA = "Noticias|"+ title.replace(/ /g, "_")+"|Contenido_Interes";
 
-      console.log(nombreA)
-
       analytics().logScreenView({
         screen_name: nombreA,
         screen_class: nombreA,

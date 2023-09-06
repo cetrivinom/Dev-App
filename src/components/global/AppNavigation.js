@@ -26,13 +26,16 @@ import Favorites from "../../components/favorites";
 import Settings from "../../components/settings";
 import PointListResult from "../../components/settings/_children/PointListResult";
 import PointListResultList from "../../components/settings/_children/PointListResultList";
+import Integracion from "../integracion";
+import IntegracionResultFilter from "../integracion/_children/IntegracionResultFilter";
 import { navigationRef } from '../../../RootNavigation';
+import { Image } from "react-native-elements";
 
 const Stack2 = createNativeStackNavigator();
 
 function SettingsStack() {
     return (
-        <Stack2.Navigator screenOptions={{ headerShown: false}} initialRouteName="Settings">
+        <Stack2.Navigator screenOptions={{ headerShown: false }} initialRouteName="Settings">
             <Stack2.Screen name="Settings" component={Settings} />
             <Stack2.Screen name="PointListResult" component={PointListResult} />
             <Stack2.Screen name="PointListResultList" component={PointListResultList} />
@@ -128,6 +131,21 @@ function ProfileStack() {
 
 }
 
+const Stack8 = createNativeStackNavigator();
+
+function IntegracionStack() {
+    return (
+        <Stack8.Navigator screenOptions={{ headerShown: false }}>
+            <Stack8.Screen name="Integracion" component={Integracion} />
+            <Stack8.Screen name="IntegracionResultFilter" component={IntegracionResultFilter} />
+            <Stack8.Screen name="PointItem" component={PointItem} />
+            <Stack8.Screen name="EnlaceItem" component={EnlaceItem} />
+        </Stack8.Navigator>
+
+    )
+
+}
+
 
 
 const Tab = createBottomTabNavigator();
@@ -157,10 +175,10 @@ const AppNavigation = () => {
                     },
                     tabBarLabel: 'Inicio',
                     tabBarStyle: { display: 'none' },
-                    
+
 
                 }} />
-                <Tab.Screen name="SettingsStack" component={SettingsStack}  options={{
+                <Tab.Screen name="SettingsStack" component={SettingsStack} options={{
                     tabBarIcon: ({ color, number, focused }) => {
                         return (
                             <Icon name={focused ? "md-location" : "md-location-outline"} color={color} size={30} />
@@ -209,7 +227,27 @@ const AppNavigation = () => {
                     unmountOnBlur: true,
                 }}
                 />
-                <Tab.Screen name="ProfileStack" component={ProfileStack} options = {{unmountOnBlur: true}}
+                <Tab.Screen name="IntegracionStack" component={IntegracionStack} options={{
+                    tabBarIcon: ({ color, number, focused }) => {
+                        return (
+                            <Image
+                            style={{width: 24,
+                                height: 24}}
+                                source={
+                                    !focused 
+                                        ? require("../../resources/images/inte_gris.png")
+                                        : require("../../resources/images/inte_turq.png")
+                                }
+                            />
+
+                        );
+
+                    },
+                    tabBarLabel: 'Integracion',
+                    unmountOnBlur: true,
+                }}
+                />
+                <Tab.Screen name="ProfileStack" component={ProfileStack} options={{ unmountOnBlur: true }}
                 />
             </Tab.Navigator>
 
