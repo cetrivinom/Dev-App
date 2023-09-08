@@ -263,7 +263,7 @@ const Integracion = ({ route, navigation }) => {
                     buttonStyle={styles.dropdown1BtnStyle}
                     buttonTextStyle={styles.dropdown1BtnTxtStyle}
                     renderDropdownIcon={isOpened => {
-                        return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#444'} size={18} />;
+                        return <FontAwesome name={isOpened ? 'caret-up' : 'caret-down'} color={'#00AAAD'} size={18} />;
                     }}
                     dropdownIconPosition={'right'}
                     dropdownStyle={styles.dropdown1DropdownStyle}
@@ -297,7 +297,7 @@ const Integracion = ({ route, navigation }) => {
                     buttonStyle={styles.dropdown1BtnStyle}
                     buttonTextStyle={styles.dropdown1BtnTxtStyle}
                     renderDropdownIcon={isOpened => {
-                        return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#444'} size={18} />;
+                        return <FontAwesome name={isOpened ? 'caret-up' : 'caret-down'} color={'#00AAAD'} size={18} />;
                     }}
                     dropdownIconPosition={'right'}
                     dropdownStyle={styles.dropdown1DropdownStyle}
@@ -309,7 +309,7 @@ const Integracion = ({ route, navigation }) => {
                     searchPlaceHolder={'Buscar'}
                     searchPlaceHolderColor={'darkgrey'}
                     renderSearchInputLeftIcon={() => {
-                        return <FontAwesome name={'search'} color={'#444'} size={18} />;
+                        return <FontAwesome name={'search'} color={'#00AAAD'} size={18} />;
                     }}
                 />
 
@@ -442,7 +442,7 @@ const styles = StyleSheet.create({
         lineHeight: 23,
         letterSpacing: 0.0015,
         fontFamily: 'Dosis-Regular',
-        textAlign: "left",
+        textAlign: "center",
         marginVertical: 5
     },
     inputTextBox: {
@@ -464,7 +464,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
         borderRadius: 8,
         borderWidth: 1,
-        borderColor: '#A1AAB2',
+        borderColor: '#00AAAD',
+        fontFamily: 'Dosis-Regular'
     },
     dropdown1BtnTxtStyle: {
         fontSize: 16,

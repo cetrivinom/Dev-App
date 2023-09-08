@@ -145,7 +145,7 @@ const IntegracionResultFilter = (props) => {
                 </View>
 
                 <Text style={styles.tituloUbicacion}>{item.Departamento}-{item.Municipio}</Text>
-                <Text style={styles.tituloEmail}>{item.Estado}</Text>
+                <Text style={styles.tituloEmail}>{item.Direccion}</Text>
 
 
             </View>

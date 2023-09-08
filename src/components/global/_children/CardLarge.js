@@ -33,7 +33,7 @@ export const ItemMainLarge = (props) => {
             />
           
           
-            <Text style={styles.titleSection} numberOfLines={2} allowFontScaling={true}>
+            <Text style={styles.titleSection} numberOfLines={2} allowFontScaling={false}>
               {title}
             </Text>
          
@@ -45,13 +45,13 @@ export const ItemMainLarge = (props) => {
 
 const styles = StyleSheet.create({
   titleSection: {
-    fontSize: metrics.HEIGHT*0.018,
+    fontSize: metrics.HEIGHT*0.020,
     //lineHeight: 23,
     letterSpacing: 0.005,
     color: "#FFFFFF",
     textAlign: "center",
     fontFamily:'Dosis-Bold',
-    flex:0.85
+    flex:0.80
   },
   wraper: {
     width: "100%",

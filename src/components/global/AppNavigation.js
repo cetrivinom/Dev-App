@@ -231,8 +231,8 @@ const AppNavigation = () => {
                     tabBarIcon: ({ color, number, focused }) => {
                         return (
                             <Image
-                            style={{width: 24,
-                                height: 24}}
+                            style={{width: 28,
+                                height: 28}}
                                 source={
                                     !focused 
                                         ? require("../../resources/images/inte_gris.png")
@@ -243,7 +243,7 @@ const AppNavigation = () => {
                         );
 
                     },
-                    tabBarLabel: 'Integracion',
+                    tabBarLabel: 'Integración',
                     unmountOnBlur: true,
                 }}
                 />

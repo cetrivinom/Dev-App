@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#00AAAD",
   },
   labelTitle: {
-    fontSize: 22,
+    fontSize: 20,
     lineHeight: 28,
     letterSpacing: 0.0015,
     textAlign: "center",
