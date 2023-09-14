@@ -282,8 +282,7 @@ const Main = (props) => {
       <View style={{ height: metrics.HEIGHT * 0.75, width: metrics.WIDTH }}>
         <Text style={styles.labelTitle}>¡Te damos la bienvenida!</Text>
         <Text style={styles.labelDescripcion}>
-          Queremos brindarte la mejor ayuda, por eso hemos preparado las
-          siguientes funciones para ti:
+          Queremos brindarte la mejor ayuda, por eso hemos preparado las siguientes funciones para ti:
         </Text>
         <View style={styles.containerForm}>
           <ItemMain
@@ -375,13 +374,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Dosis-Regular'
   },
   labelDescripcion: {
-    fontSize: 15,
+    fontSize: 14,
     color: "#425565",
     lineHeight: 19,
     letterSpacing: 0.005,
     marginRight: 19,
     marginLeft: 13,
     textAlign: "center",
+    fontFamily: 'Dosis-Regular',
   },
   image: {
     flex: 1,
