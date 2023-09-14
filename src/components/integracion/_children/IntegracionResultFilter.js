@@ -238,9 +238,9 @@ const IntegracionResultFilter = (props) => {
                 </View>
 
                      
-                <View style={styles.divider}></View>
+               
                 {(servicio !== "" || textobusqueda !== "" || departamento !== "") &&       
-                <View alignItems="center" style={{ backgroundColor: "#E6F7F7", paddingBottom: 5, padding: 10 }}>
+                <View alignItems="center" style={{ backgroundColor: "#E6F7F7", paddingBottom: 5}}>
                     {servicio != "" &&
                         <Text style={styles.labelTitle1}>
                             {servicio}
