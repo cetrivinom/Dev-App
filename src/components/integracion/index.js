@@ -275,7 +275,7 @@ const Integracion = ({ route, navigation }) => {
                     searchPlaceHolder={'Buscar'}
                     searchPlaceHolderColor={'darkgrey'}
                     renderSearchInputLeftIcon={() => {
-                        return <FontAwesome name={'search'} color={'#444'} size={18} />;
+                        return <FontAwesome name={'search'} color={'#00AAAD'} size={18} />;
                     }}
                 />
 
@@ -473,6 +473,7 @@ const styles = StyleSheet.create({
         color: "#425565",
         lineHeight: 19,
         letterSpacing: 0.005,
+        fontFamily: 'Dosis-Regular',
     },
     dropdown1DropdownStyle: { backgroundColor: '#EFEFEF' },
     dropdown1RowStyle: { backgroundColor: '#EFEFEF', borderBottomColor: '#C5C5C5' },
