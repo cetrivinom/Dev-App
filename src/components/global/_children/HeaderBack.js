@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   labelTitle: {
     fontSize: 20,
-    lineHeight: 28,
+    lineHeight: 20,
     letterSpacing: 0.0015,
     textAlign: "center",
     color: "#FFFFFF",    
