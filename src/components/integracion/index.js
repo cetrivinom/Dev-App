@@ -44,13 +44,7 @@ const Integracion = ({ route, navigation }) => {
     const [arregloEnlaces, setArregloEnlaces] = useState([]);
 
     useEffect(() => {
-
         setArregloEnlaces(config.configMenuIntegracion)
-
-
-
-
-
         if (dataPoint && dataPoint.length < 1) {
             getDataPoint(config.activeStates, config.activeVisible, config.activeType);
         }
@@ -59,27 +53,21 @@ const Integracion = ({ route, navigation }) => {
         var arr = [];
         dataMapeoService.map(index => {
             if (index.id_sector === config.idSectorIntegracion) {
-
-
                 arr.push(index.servicio);
             }
-
         })
-
+        arr.sort((a, b) => a.localeCompare(b));   
         setArregloServicios(arr);
-
 
         var arr2 = [];
         dataPointDepartamento && dataPointDepartamento.map(index => {
-
             arr2.push(index);
-
         })
-
+        arr2.sort((a, b) => a.localeCompare(b));
         setArregloDepartamentos(arr2)
-
-
     }, [dataPointDepartamento]);
+
+    
 
     const [show, setShow] = useState(false);
 
@@ -96,12 +84,9 @@ const Integracion = ({ route, navigation }) => {
             let servicioA = dataMapeoService
                 .filter((item) => {
                     return item.servicio.trim() === servicio.trim()
-
                 })
 
-
             servicioA.map(index => {
-
                 array1.push({ item: index.servicio });
 
             })
@@ -113,20 +98,12 @@ const Integracion = ({ route, navigation }) => {
 
             })
         }
-
-
-
-
         getDataPointFilter(departamento, "", "", array1, textobusqueda);
 
         //Obtener Lineas
-
         lineasArray = [];
         dataDirectory.forEach((u) => {
             u.LineasTelefonicas.forEach((t) => {
-
-
-
                 if (t.sector_id === config.idSectorIntegracion) {
                     arra = {
                         departamento: u.departamento,
@@ -135,12 +112,9 @@ const Integracion = ({ route, navigation }) => {
                         tipo_de_linea: t.tipo_de_linea,
                         telefono: t.telefono_[0]?.value,
                         horario: t.horario
-
                     }
                     lineasArray.push(arra)
                 }
-
-
             })
         })
 
@@ -152,28 +126,15 @@ const Integracion = ({ route, navigation }) => {
 
                 })
         }
-
-
-
-
-
         let lineasPorBusqueda = lineasPorDep;
         if (textobusqueda !== "") {
             lineasPorBusqueda = lineasPorDep
                 .filter((item) => {
-
-                    return item.NombreOrganizacion.toLowerCase().includes(textobusqueda.toLowerCase()) || item.tipo_de_linea.toLowerCase().includes(textobusqueda.toLowerCase())
-
+                    return item.NombreOrganizacion.toLowerCase().includes(textobusqueda.toLowerCase()) 
+                    || item.tipo_de_linea.toLowerCase().includes(textobusqueda.toLowerCase())
                 })
 
         }
-
-
-
-
-
-
-
         navigation.navigate("IntegracionResultFilter", {
             servicio,
             departamento,
@@ -205,9 +166,6 @@ const Integracion = ({ route, navigation }) => {
         let contenido = enlace.descripcion;
         let image = enlace.img_enlace;
         let links = enlace.link;
-
-
-
         navigation.navigate("EnlaceItem", { title, contenido, image, links });
     };
 
@@ -330,7 +288,7 @@ const Integracion = ({ route, navigation }) => {
                     <Text style={styles.textBoxCaja}>Enlaces de interés</Text>
                 </View>
                 {arregloEnlaces?.tipo === "filtro" &&
-                    <View style={{ flexDirection: 'row', margin: 20 }}>
+                    <View style={{ flexDirection: 'row', margin: 5 }}>
 
                         {arregloEnlaces.filtro.map((item, index) => {
                             return (
@@ -352,7 +310,7 @@ const Integracion = ({ route, navigation }) => {
                 }
 
                 {arregloEnlaces?.tipo === "enlace" &&
-                    <View style={{ flexDirection: 'row', margin: 20 }}>
+                    <View style={{ flexDirection: 'row', margin: 5 }}>
 
                         {arregloEnlaces.enlace.map((item, index) => {
                             return (
@@ -393,7 +351,7 @@ const styles = StyleSheet.create({
     },
     box2: {
         flex: 10,
-        marginTop: 31,
+        marginTop: 5,
         marginHorizontal: 21,
     },
     box6: {
@@ -497,7 +455,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingVertical: metrics.HEIGHT * 0.01,
         flexDirection: "row",
-        alignItems: "center",
+        alignItems: "flex-start",
         borderRightWidth: 1,
         borderRightColor: "#00AAAD",
         flex: 0.5,
@@ -507,7 +465,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingVertical: metrics.HEIGHT * 0.01,
         flexDirection: "row",
-        alignItems: "center",
+        alignItems: "flex-start",
         flex: 0.5,
         paddingHorizontal: 10
     },
