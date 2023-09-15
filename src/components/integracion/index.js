@@ -169,7 +169,27 @@ const Integracion = ({ route, navigation }) => {
         navigation.navigate("EnlaceItem", { title, contenido, image, links });
     };
 
+const departamentChange = (selectedItem, index) => {
+    
+    setDepartamento(selectedItem)
 
+    let dataPointDpto = [];//Array con los puntos del departamento
+    dataPointDpto = dataPoint.filter((object) => object.Departamento === selectedItem);
+    
+    let serviciosDpto =[]//Array con los id servicios de los puntos del departamento
+    dataPointDpto.forEach((object) => {
+        object.Servicios.map(index => serviciosDpto.push(index.Servicio_id))
+    })
+    //eliminamos los id de servicios repetidos
+    let serviciosFilteredDpto = serviciosDpto.filter((q, idx) => serviciosDpto.indexOf(q) === idx)
+            
+    let serviciosFiltered =[];//Array con los servicios de integracion del departamento
+    serviciosFiltered = dataMapeoService.filter((object) => object.id_sector === config.idSectorIntegracion)
+    .filter((object) => serviciosFilteredDpto.includes(object.id_servicio));
+    
+    setArregloServicios(serviciosFiltered.map((object) => object.servicio))
+    setServicio([])
+}
 
 
     return (
@@ -209,7 +229,7 @@ const Integracion = ({ route, navigation }) => {
                     // defaultValueByIndex={1}
                     // defaultValue={'Egypt'}
                     onSelect={(selectedItem, index) => {
-                        setDepartamento(selectedItem)
+                        departamentChange(selectedItem, index)
                     }}
                     defaultButtonText={'Departamento'}
                     buttonTextAfterSelection={(selectedItem, index) => {
