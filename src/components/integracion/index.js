@@ -50,24 +50,76 @@ const Integracion = ({ route, navigation }) => {
         }
         getDataMapeoService();
 
-        var arr = [];
-        dataMapeoService.map(index => {
-            if (index.id_sector === config.idSectorIntegracion) {
-                arr.push(index.servicio);
-            }
-        })
-        arr.sort((a, b) => a.localeCompare(b));   
-        setArregloServicios(arr);
-
-        var arr2 = [];
-        dataPointDepartamento && dataPointDepartamento.map(index => {
-            arr2.push(index);
-        })
-        arr2.sort((a, b) => a.localeCompare(b));
-        setArregloDepartamentos(arr2)
+        cargarInfoDptos()
+        cargarInfoServicios()        
+        
     }, [dataPointDepartamento]);
 
-    
+    const cargarInfoDptos = () =>{
+        let serviciosIntegracionFiltered =[]//Array con los servicios de integracion
+        serviciosIntegracionFiltered = dataMapeoService.filter((object) => object.id_sector === config.idSectorIntegracion)
+        
+        let poinstWithMatchingServices = []//Array con los puntos que tienen servicios de integracion
+        poinstWithMatchingServices = dataPoint.filter((objectPoint) => {
+            for (const servicio of objectPoint.Servicios) {
+                for (const servicioIntg of serviciosIntegracionFiltered) {
+                    if (servicio.Servicio_id === servicioIntg.id_servicio) {
+                        return true;
+                    }
+                }    
+            }            
+            return false;
+        });
+        let deptosPoinstWithMatchingServices = []//Array con los departamentos de los puntos filtrados
+        deptosPoinstWithMatchingServices = poinstWithMatchingServices.flatMap((object) => [object.Departamento])
+        
+        let dptosFiltered =[]//Array con los departamentos sin repetidos
+        dptosFiltered = deptosPoinstWithMatchingServices.filter((q, idx) => deptosPoinstWithMatchingServices.indexOf(q) === idx)
+        dptosFiltered.sort((a, b) => a.localeCompare(b));//Se ordenan alfabeticamente
+        setArregloDepartamentos(dptosFiltered)
+
+    }
+
+    const cargarInfoServicios = () =>{
+        let serviciosIntegracionFiltered =[]//Array con los servicios de integracion
+        serviciosIntegracionFiltered = dataMapeoService.filter((object) => object.id_sector === config.idSectorIntegracion)
+        
+        let poinstWithMatchingServices = []//Array con los puntos que tienen servicios de integracion
+        poinstWithMatchingServices = dataPoint.filter((objectPoint) => {
+            for (const servicio of objectPoint.Servicios) {
+                for (const servicioIntg of serviciosIntegracionFiltered) {
+                    if (servicio.Servicio_id === servicioIntg.id_servicio) {
+                        return true;
+                    }
+                }    
+            }            
+            return false;
+        });
+
+        let allServicesPoints = [] //Array con todos los servios que hay en los puntos con servicios de integracion
+        allServicesPoints = poinstWithMatchingServices.reduce((acc, object) => acc.concat(object.Servicios), []);
+        
+        let idAllServicesPoints = []//Array con todos los ID de los servios que hay en los puntos con servicios de integracion
+        idAllServicesPoints = allServicesPoints.flatMap((object) => [object.Servicio_id])
+                
+        let idServiosFiltered =[]//Array con los id sin repetidos
+        idServiosFiltered = idAllServicesPoints.filter((q, idx) => idAllServicesPoints.indexOf(q) === idx)
+        
+        let serviciosIntegPointsFiltered = [] //Array con los servicios de integracion presente en los puntos 
+        serviciosIntegPointsFiltered = serviciosIntegracionFiltered.filter((object) =>{
+            for(const idSer of idServiosFiltered){
+                if(object.Servicio_id = idSer){
+                    return true
+                }
+            }
+            return false
+        })
+        let descServiosFiltered = []//nombre del servivio filtrado
+        descServiosFiltered =serviciosIntegPointsFiltered.flatMap((object) => [object.servicio])
+        descServiosFiltered.sort((a, b) => a.localeCompare(b));//Se ordenan alfabeticamente
+        setArregloServicios(descServiosFiltered);
+
+    }
 
     const [show, setShow] = useState(false);
 
@@ -150,6 +202,7 @@ const Integracion = ({ route, navigation }) => {
         dropdownRef1.current.reset()
         dropdownRef2.current.reset()
         setSearchTerm("")
+        cargarInfoServicios()
     };
 
     const abrirEnlace = (textoFiltro) => {
@@ -170,9 +223,8 @@ const Integracion = ({ route, navigation }) => {
     };
 
 const departamentChange = (selectedItem, index) => {
-    
     setDepartamento(selectedItem)
-
+    
     let dataPointDpto = [];//Array con los puntos del departamento
     dataPointDpto = dataPoint.filter((object) => object.Departamento === selectedItem);
     
@@ -182,13 +234,14 @@ const departamentChange = (selectedItem, index) => {
     })
     //eliminamos los id de servicios repetidos
     let serviciosFilteredDpto = serviciosDpto.filter((q, idx) => serviciosDpto.indexOf(q) === idx)
-            
+    
     let serviciosFiltered =[];//Array con los servicios de integracion del departamento
     serviciosFiltered = dataMapeoService.filter((object) => object.id_sector === config.idSectorIntegracion)
     .filter((object) => serviciosFilteredDpto.includes(object.id_servicio));
     
     setArregloServicios(serviciosFiltered.map((object) => object.servicio))
     setServicio([])
+    dropdownRef2.current.reset()
 }
 
 
