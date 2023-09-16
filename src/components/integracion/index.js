@@ -114,7 +114,7 @@ const Integracion = ({ route, navigation }) => {
             }
             return false
         })
-        let descServiosFiltered = []//nombre del servivio filtrado
+        let descServiosFiltered = []//nombre del servicio filtrado
         descServiosFiltered =serviciosIntegPointsFiltered.flatMap((object) => [object.servicio])
         descServiosFiltered.sort((a, b) => a.localeCompare(b));//Se ordenan alfabeticamente
         setArregloServicios(descServiosFiltered);
@@ -131,25 +131,22 @@ const Integracion = ({ route, navigation }) => {
 
         let textobusqueda = searchTerm.trim();
         let array1 = [];
-        if (servicio.length > 0) {
-
-            let servicioA = dataMapeoService
-                .filter((item) => {
+        //Se filtran los servicios por el servicio seleccionado
+        if (servicio.length > 0) {            
+            let servicioA = dataMapeoService.filter((item) => {
                     return item.servicio.trim() === servicio.trim()
                 })
-
             servicioA.map(index => {
-                array1.push({ item: index.servicio });
-
+                array1.push({ item: index.servicio, id: index.id_servicio  });
             })
-        } else {
+        } else {            
             dataMapeoService.map(index => {
                 if (index.id_sector === config.idSectorIntegracion) {
-                    array1.push({ item: index.servicio });
+                    array1.push({ item: index.servicio, id: index.id_servicio });
                 }
-
             })
         }
+        
         getDataPointFilter(departamento, "", "", array1, textobusqueda);
 
         //Obtener Lineas

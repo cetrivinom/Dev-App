@@ -53,82 +53,54 @@ export default (state, action) => {
         messageError: null,
         //dataPointFilter: false,
       };
-    case GET_DATA_DIRECTORY_FILTER:
-
-    
-
+    case GET_DATA_DIRECTORY_FILTER: 
+      
+      let poinstFiltered = [] //Inicialmente filtramos los punto por departamento, municipio y estado
+      poinstFiltered = state.dataPoint
+        .filter((item) => item.Departamento.toLowerCase().includes(action.departamento.toLowerCase()))
+        .filter((item) => item.Municipio.toLowerCase().includes(action.municipio.toLowerCase()))
+        .filter((item) => item.Estado.toLowerCase().includes(action.estado.toLowerCase()))
+      
+      //Si hay lista de servicios, filtramos los puntos que presten algun servicio
       if (action.typeService.length > 0) {
-
-        const array = [];
-        state.dataPoint.map(element => {
-          var todos = false;
-
-          element.Servicios.map(item => {
-
-
-            action.typeService.map(service => {
-
-              if (service.item === item.Servicio) {
-                todos = true;
-              }
-            })
-
-          })
-          if (todos) {
-            array.push(element);
-          }
-
-
-        })
-
-        
-
-        return {
-
-
-
-          ...state,
-          dataPointFilter: array
-            .filter((item) => item.Departamento.toLowerCase().includes(action.departamento.toLowerCase()))
-            .filter((item) => item.Municipio.toLowerCase().includes(action.municipio.toLowerCase()))
-            .filter((item) => item.Estado.toLowerCase().includes(action.estado.toLowerCase()))
-            .filter((item) => item.Nombre_punto.toLowerCase().includes(action.nombre.toLowerCase()))
-            
-
-        };
+        let  arrayFilter = poinstFiltered.filter((objectPoint) => {
+          for (const servicio of objectPoint.Servicios) {//recorremos los servicios del punto
+              for (const servicioFilter of action.typeService) {//recorremos los servicios del filtro
+                  if (servicioFilter.item === servicio.Servicio) {//Validamos que un servicio del punto haga match con el algun servicio del filtro
+                      return true;
+                  }
+              }    
+          }            
+          return false;
+        });
+        poinstFiltered = arrayFilter
       }
-      else {
-
-        let a = state.dataPoint.filter((item) => item.Nombre_punto.toLowerCase().includes(action.nombre.toLowerCase()))
+      
+      //Si en el filtro nombre trae información, hacemos la busqueda por el nombre del punto o la descripcion/nombre de los servicios
+      if(action.nombre !== undefined && action.nombre !== "" && action.nombre.length > 0){
+        let  poinstWithMatchingName = []//Array con los puntos que contienen en el nombre el filtro
+        poinstWithMatchingName = poinstFiltered.filter((item) => item.Nombre_punto.toLowerCase().includes(action.nombre.toLowerCase()))
         
-        if(a.length>0){
-          console.log("entre")
-          return {
-
-            ...state,
-            dataPointFilter: state.dataPoint
-              .filter((item) => item.Departamento.toLowerCase().includes(action.departamento.toLowerCase()))
-              .filter((item) => item.Municipio.toLowerCase().includes(action.municipio.toLowerCase()))
-              .filter((item) => item.Estado.toLowerCase().includes(action.estado.toLowerCase()))
-              .filter((item) => item.Nombre_punto.toLowerCase().includes(action.nombre.toLowerCase()))
-              
-          };
-
-        }else{
-          return {
-
-            ...state,
-            dataPointFilter: state.dataPoint
-              .filter((item) => item.Departamento.toLowerCase().includes(action.departamento.toLowerCase()))
-              .filter((item) => item.Municipio.toLowerCase().includes(action.municipio.toLowerCase()))
-              .filter((item) => item.Estado.toLowerCase().includes(action.estado.toLowerCase()))
-              .filter(product => product.Servicios.some(cat => cat.Descripcion_Servicio.toLowerCase().includes(action.nombre.toLowerCase())))
-              
-          };
-        }
-
+        let  poinstWithMatchingDescServices = []//Array con los puntos que contienen el filtro en la descripcion/nombre del servicio
+        poinstWithMatchingDescServices = poinstFiltered.filter(item => item.Servicios.some(
+                                                  cat => cat.Descripcion_Servicio.toLowerCase().includes(action.nombre.toLowerCase()) ||
+                                                  cat.Servicio.toLowerCase().includes(action.nombre.toLowerCase()) ))
         
+        let  poinstWithMatchingNameAnsServices = []//Array con los puntos que contienen en el nombre el filtro y los servicios la descripcion
+        poinstWithMatchingNameAnsServices = poinstWithMatchingName.concat(poinstWithMatchingDescServices)
+
+        let  poinstFilteredWithMatchingNameAnsServices = []//Array con los puntos sin  repetidos
+        poinstFilteredWithMatchingNameAnsServices 
+        = poinstWithMatchingNameAnsServices.filter((q, idx) => poinstWithMatchingNameAnsServices.indexOf(q) === idx)
+
+        poinstFiltered = poinstFilteredWithMatchingNameAnsServices
+
       }
+      return {
+        ...state,
+        dataPointFilter: poinstFiltered
+      };
+
     case GET_DATA_POINT_ID:
       return {
         ...state,
