@@ -36,7 +36,7 @@ export default (state, action) => {
     case GET_DATA_POINT:
       const dataPoint = action.payload;
       const uniqueState = [...new Set(dataPoint.map((item) => item.Estado))];
-      const uniqueDepartamento = [...new Set(dataPoint.map((item) => item.Departamento)),];
+      const uniqueDepartamento = [...new Set(dataPoint.map((item) => item.Departamento).sort((a, b) => a.localeCompare(b))),];      
       const uniqueMunicipio = [...new Set(dataPoint.map((item) => item.Municipio)),];
       /*const uniqueService = [...new Set(dataPoint.map((item) => item.Servicios.map((item2) => item2.Servicio))),];
       const mergeDedupe1 = (arr) => {

@@ -58,7 +58,7 @@ const ModalFilter = ({
   var dataFilter;
   if (openStatus == "municipio" && departamento !== null && departamento !== "" ) {
     dataFilter = [...new Set(
-      data.filter((item) => item.Departamento==departamento).map((item) => item.Municipio)),];
+      data.filter((item) => item.Departamento==departamento).map((item) => item.Municipio).sort((a, b) => a.localeCompare(b))),];
       dataFilter = dataFilter.filter((item) =>
       item.toLowerCase().includes(searchFilter.toLowerCase()));
   } else if (openStatus == "municipio" && (departamento == null || departamento=="")) {
