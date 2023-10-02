@@ -251,7 +251,7 @@ const departamentChange = (selectedItem, index) => {
                     source={require("../../resources/images/ima_integracion.png")}
                 />
 
-                <Text style={styles.inputText} >En esta sección encontrarás servicios que te ayudarán a fortalecer temas de emprendimiento, empleabilidad e inclusión financiera.</Text>
+                <Text style={styles.inputText} >En esta sección encontrarás información para acceder a apoyos de información, empleabilidad, emprendimiento e inlcusión financiera.</Text>
 
                 <TextInput
                     value={searchTerm}
