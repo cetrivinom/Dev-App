@@ -274,16 +274,19 @@ const Main = (props) => {
 
 
   return (
-    <ScrollView style={styles.container}>
-
-      <View style={{ height: metrics.HEIGHT * 0.25, width: metrics.WIDTH }}>
+    <View style={{ flex: 1 }}>
+      
+      <View style={{ flex: 1, }} >
         <HeaderHome />
       </View>
-      <View style={{ height: metrics.HEIGHT * 0.75, width: metrics.WIDTH }}>
-        <Text style={styles.labelTitle}>¡Te damos la bienvenida!</Text>
-        <Text style={styles.labelDescripcion}>
-          Queremos brindarte la mejor ayuda, por eso hemos preparado las siguientes funciones para ti:
-        </Text>
+      <View style={{ flex: 3,  }} >
+        <View style={{ flex: 1, }}>
+          <Text style={styles.labelTitle}>¡Te damos la bienvenida!</Text>
+          <Text style={styles.labelDescripcion}>
+            Queremos brindarte la mejor ayuda, por eso hemos preparado las siguientes funciones para ti:
+          </Text>
+        </View>
+
         <View style={styles.containerForm}>
           <ItemMain
             {...props}
@@ -311,32 +314,20 @@ const Main = (props) => {
             title="Puntos guardados"
             image="4"
           />
-          {/*!config.anonymousAuth && (
-            <ItemMain
-              {...props}
-              name="ProfileStack"
-              title="Mi Perfil"
-              image="5"
-            />
-          )*/}
-
         </View>
         <View style={styles.containerForm}>
-            <ItemMainLarge
-             {...props}
-             name="IntegracionStack"
-             title="Información para el empleo y el emprendimiento"
-             image="6"
-            
-            />
+          <ItemMainLarge
+            {...props}
+            name="IntegracionStack"
+            title="Información para el empleo y el emprendimiento"
+            image="6"
+          />
         </View>
-
+        <View style={styles.containerFooter}>
+          <LastUpdate />
+        </View>
       </View>
-      <View style={styles.containerFooter}>
-        <LastUpdate />
-      </View>
-
-    </ScrollView>
+    </View>
   );
 };
 
@@ -348,20 +339,11 @@ const styles = StyleSheet.create({
     width: metrics.WIDTH
 
   },
-  containerForm: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+  containerForm: {     
+    flexDirection: "row", 
+    flexWrap: "wrap", 
     justifyContent: "space-between",
-    height: metrics.HEIGHT * 0.12,
-    marginTop: metrics.HEIGHT * 0.02
-  },
-  containerForm2: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    height: metrics.HEIGHT * 0.15,
-    marginTop: metrics.HEIGHT * 0.05,
-    marginBottom: 10
+    flex: 1,
   },
   labelTitle: {
     fontSize: 27,
@@ -394,12 +376,8 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   containerFooter: {
-    position: 'absolute',
-    bottom: 0,
-    letft: 0,
-    right: 0,
     width: metrics.WIDTH,
-    height: metrics.HEIGHT * 0.05
+    marginBottom: 0,
   },
 });
 
