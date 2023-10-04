@@ -6,6 +6,9 @@ import { metrics } from "../../../utilities/Metrics";
 import _ from 'lodash';
 import { width } from "deprecated-react-native-prop-types/DeprecatedImagePropType";
 import analytics from '@react-native-firebase/analytics';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon2 from 'react-native-vector-icons/FontAwesome5';
+import Icon3 from 'react-native-vector-icons/Ionicons';
 
 const CardItemDirectoryDetail = (props) => {
   const { dataItemService, getDataDirectoryItemService } =
@@ -23,16 +26,40 @@ const CardItemDirectoryDetail = (props) => {
 
   const onPressOpen = () => {
 
-    let nombreA = departamento.replace(/ /g, "_") +"|"+title.replace(/ /g, "_") + "|Lineas Telefonicas";
+    let nombreA = departamento.replace(/ /g, "_") + "|" + title.replace(/ /g, "_") + "|Lineas Telefonicas";
 
-      analytics().logScreenView({
-        screen_name: nombreA,
-        screen_class: nombreA,
-      });
+    analytics().logScreenView({
+      screen_name: nombreA,
+      screen_class: nombreA,
+    });
 
     setOpen((prev) => !prev);
     getDataDirectoryItemService(subTitle);
   };
+
+  const abrirWhatsapp = (mobileNumber) => {
+    // Check for perfect 10 digit length
+    if (mobileNumber.length != 10) {
+      alert('El numero es incorrecto para abrir la aplicacion');
+      return;
+    }
+    let whatsAppMsg = "";
+    // Using 91 for India
+    // You can change 91 with your country code
+    let url =
+      'whatsapp://send?text=' +
+      whatsAppMsg +
+      '&phone=57' + mobileNumber;
+    Linking.openURL(url)
+      .then((data) => {
+        console.log('WhatsApp Opened');
+      })
+      .catch(() => {
+        alert('No esta instalada la aplicacion de WhatsApp');
+      });
+  };
+
+
   const { descripcion = "" } = dataItemService || {};
   return (
     <View style={styles.container}>
@@ -65,23 +92,108 @@ const CardItemDirectoryDetail = (props) => {
                   <Text style={styles.textDescripcion}>{val.descripcion_servicio}</Text>
                 </View>
               )}
-              {val.telefono_.length > 0 && (
-                <View style={styles.form1}>
-                  <Image
-                    source={require("../../../resources/images/phone.png")}
-                    style={styles.image2}
-                  />
-                  <Text style={styles.textTitle2}>{val.telefono_.length > 0 ? val.telefono_[0].value : ''}</Text>
+              {val.telefono_ !== "" && val.telefono_.length > 0 && (
+                <View style={styles.form2}>
+
+
+                  {val.telefono_ && val.telefono_.map((element, index) => {
+                    let telefono = element.value.trim().replace(" ", "")
+                    if (telefono !== "") {
+
+                      return (
+                        <View style={{ display: "flex", flexDirection: "row", marginVertical: 10 }}>
+
+                          <Icon2 name="phone-alt" size={15} color="black" />
+                          <TouchableOpacity
+                            key={index}
+                            onPress={() => Linking.openURL(`tel:${telefono}`)}
+                          >
+                            <Text key={index} style={styles.textOpenWhatsapp}>{telefono}</Text>
+                          </TouchableOpacity>
+                        </View>
+                      )
+
+                    }
+                  })
+                  }
+
+
                 </View>)}
+              {val.telefono !== "" && val.telefono.length > 0 && (
+                <View style={styles.form2}>
+                  {val.telefono && val.telefono.map((element, index) => {
+
+                    let telefono = element.value.trim().replace(" ", "")
+
+                    if (telefono.trim() !== "") {
+
+                      return (
+                        <View style={{ display: "flex", flexDirection: "row", marginVertical: 10 }}>
+                          <Icon2 name="phone-alt" size={15} color="black" />
+                          <TouchableOpacity
+                            key={index}
+                            onPress={() => Linking.openURL(`tel:${telefono}`)}
+                          >
+                            <Text key={index} style={styles.textOpenWhatsapp}>{telefono}</Text>
+                          </TouchableOpacity>
+
+                        </View>
+                      )
+
+                    }
+                  })
+                  }
+
+                </View>)}
+              {val.whatsapp.length > 0 && (
+                <View style={styles.form1}>
+                  <Icon name="whatsapp" size={20} color="green" />
+                  <View>
+                    {val.whatsapp && val.whatsapp.map((element, index) => {
+
+                      let telefono = element.value.trim().replace(" ", "")
+
+                      return (
+                        <TouchableOpacity
+                          key={index}
+                          onPress={() => abrirWhatsapp(telefono)}
+                        >
+                          <Text key={index} style={styles.textOpenWhatsapp}>{telefono}</Text>
+                        </TouchableOpacity>
+                      )
+
+
+                    })
+                    }
+                  </View>
+
+                </View>)}
+
+
               {val.horario.length > 0 && (
                 <View style={styles.form1}>
-                  <Image
-                    source={require("../../../resources/images/riTimeFill.png")}
-                    style={styles.image2}
-                  />
+                  <Icon3 name="time" size={20} color="black" />
                   <Text style={styles.textTitle2}>{val.horario}</Text>
                 </View>
               )}
+              {val.correo_electronico !== "" && (
+                <View style={styles.form1}>
+
+
+                  <Icon name="envelope-o" size={20} color="black" />
+                  <TouchableOpacity
+                    key={id}
+                    onPress={() => Linking.openURL("mailto:" + val.correo_electronico)}
+                  >
+                    <Text style={styles.textOpenEmail}>{val.correo_electronico}</Text>
+                  </TouchableOpacity>
+                </View>
+
+
+              )
+
+
+              }
               {val.url_servicio.length > 0 && (
                 <View style={styles.form1}>
                   <Text style={styles.textsubTitle1}>Enlaces</Text>
@@ -116,7 +228,7 @@ const styles = StyleSheet.create({
     paddingLeft: metrics.WIDTH * 0.05,
   },
   textOpenLink: {
-    fontSize: 15,
+    fontSize: 13,
     color: "#00AAAD",
     lineHeight: 18,
     letterSpacing: 0.00125,
@@ -126,9 +238,38 @@ const styles = StyleSheet.create({
     textDecorationStyle: "solid",
     textDecorationColor: "#00AAAD",
   },
-  
+
+  textOpenEmail: {
+    fontSize: 15,
+    color: "#00AAAD",
+    lineHeight: 18,
+    letterSpacing: 0.00125,
+    textDecorationLine: "underline",
+    textDecorationStyle: "solid",
+    textDecorationColor: "#00AAAD",
+    marginStart: 15,
+  },
+
+  textOpenWhatsapp: {
+    fontSize: 15,
+    color: "#003031",
+    lineHeight: 18,
+    letterSpacing: 0.00125,
+    textDecorationLine: "underline",
+    textDecorationStyle: "solid",
+    textDecorationColor: "#00AAAD",
+    marginStart: 15,
+  },
+
+
   boxOpenLink: {
     justifyContent: "flex-start",
+    paddingVertical: metrics.HEIGHT * 0.01,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  boxOpenMail: {
+    justifyContent: "space-around",
     paddingVertical: metrics.HEIGHT * 0.01,
     flexDirection: "row",
     alignItems: "center",
@@ -146,7 +287,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.12,
     paddingRight: 20,
     color: "#003031",
-    width:metrics.WIDTH*0.8
+    width: metrics.WIDTH * 0.8
   },
   textDescripcion: {
     fontSize: 18,
@@ -178,11 +319,11 @@ const styles = StyleSheet.create({
   },
   textWrap2: {
     flexDirection: 'row',
-    margin:'auto',
-    width:metrics.WIDTH * 0.9,
+    margin: 'auto',
+    width: metrics.WIDTH * 0.9,
   },
   textsubTitle1: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: "bold",
     lineHeight: 23,
     letterSpacing: 0.0015,
@@ -200,6 +341,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flexDirection: "row",
   },
+  form2: {
+    marginTop: 10,
+    flexDirection: "column",
+  },
   textTitle2: {
     fontSize: 14,
     fontWeight: "normal",
@@ -208,6 +353,15 @@ const styles = StyleSheet.create({
     color: "#003031",
     marginStart: 15,
     flex: 0.95,
+  },
+  textTitle3: {
+    fontSize: 14,
+    fontWeight: "normal",
+    lineHeight: 16,
+    letterSpacing: 0.0025,
+    color: "#003031",
+    flex: 0.95,
+    marginStart: 15,
   },
 });
 
