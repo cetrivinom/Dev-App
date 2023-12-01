@@ -33,16 +33,18 @@ const FilterSetting = (props) => {
   const [openStatus, setOpenStatus] = useState(false);
   const [openMunicipio, setOpenMunicipio] = useState(false);
   const [openDepartamento, setOpenDepartamento] = useState(false);
+  const [openUbicacion, setOpenUbicacion] = useState(false);
   const [typeService, setTypeService] = useState("");
   const [statusPoint, setStatusPoint] = useState("");
   const [municipio, setMunicipio] = useState("");
   const [departamento, setDepartamento] = useState("");
   const [selectedService, setSelectedService] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  
+  const [tipoUbicacion, setTipoUbicacion] = useState("");
+
   const [arregloServicios, setArregloServicios] = useState([]);
 
-  
+  const tipoUbicacionArray = ["MÓVIL", "FIJA", "FIJA_EA"];
 
   useEffect(() => {
     getDataMapeoService();
@@ -57,7 +59,7 @@ const FilterSetting = (props) => {
 
   }, []);
 
-  
+
   function onMultiChange() {
     return (item) => setSelectedService(xorBy(selectedService, [item], 'id'))
   }
@@ -67,8 +69,10 @@ const FilterSetting = (props) => {
     setStatusPoint("");
     setMunicipio("");
     setDepartamento("");
+    setTipoUbicacion("")
     setOpenDepartamento(false);
     setOpenMunicipio(false);
+    setOpenUbicacion(false);
     setSearchTerm("")
   };
 
@@ -76,167 +80,196 @@ const FilterSetting = (props) => {
 
     let textobusqueda = searchTerm.trim();
 
-    getDataPointFilter(departamento, municipio, statusPoint, selectedService, textobusqueda);
+    getDataPointFilter(departamento, municipio, statusPoint, selectedService, textobusqueda, tipoUbicacion);
     props.navigation.navigate("PointListResult", {
       departamento,
       municipio,
       statusPoint,
-      selectedService
+      selectedService,
+      tipoUbicacion
     });
   };
 
   const toggleModal = () => setShow(!show);
 
   return (
-      <ScrollView style={styles.wrapper}>
-        <HeaderPoint {...props} title="Filtrar puntos de servicio" showSaveOpt={false} from={"Settings"} />
-        <View style={[styles.box, styles.box2]}>
+    <ScrollView style={styles.wrapper}>
+      <HeaderPoint {...props} title="Filtrar puntos de servicio" showSaveOpt={false} from={"Settings"} />
+      <View style={[styles.box, styles.box2]}>
         <TextInput
-            style={styles.inputTextBox}
-            onChangeText={(e) => setSearchTerm(e)}
-            placeholderTextColor="#a9a9a9"
-            placeholder="Buscar"
-            clearButtonMode="always"
-            value={searchTerm}
+          style={styles.inputTextBox}
+          onChangeText={(e) => setSearchTerm(e)}
+          placeholderTextColor="#a9a9a9"
+          placeholder="Buscar"
+          clearButtonMode="always"
+          value={searchTerm}
+        />
+
+        <View style={styles.divider}></View>
+        <TouchableOpacity
+          style={styles.box6}
+          onPress={() => {
+            setShow(true);
+            setOpenDepartamento(true);
+            setOpenStatus(false);
+            setOpenMunicipio(false);
+            setOpenUbicacion(false);
+          }}
+        >
+          <Text style={styles.textBox}>
+            {departamento != "" ? departamento : "Departamento"}
+          </Text>
+          <Image
+            source={require("../../../resources/images/trailingIcon.png")}
           />
+        </TouchableOpacity>
 
-<View style={styles.divider}></View>
-          <TouchableOpacity
-            style={styles.box6}
-            onPress={() => {
-              setShow(true);
-              setOpenDepartamento(true);
-              setOpenStatus(false);
-              setOpenMunicipio(false);
-            }}
-          >
-            <Text style={styles.textBox}>
-              {departamento != "" ? departamento : "Departamento"}
-            </Text>
-            <Image
-              source={require("../../../resources/images/trailingIcon.png")}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.box6}
-            onPress={() => {
-              setShow(true);
-              setOpenMunicipio(true);
-              setOpenStatus(false);
-              setOpenDepartamento(false);
-            }}
-          >
-            <Text style={styles.textBox}>
-              {municipio != "" ? municipio : "Municipio"}
-            </Text>
-            <Image
-              source={require("../../../resources/images/trailingIcon.png")}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.box6}
-            onPress={() => {
-              setShow(true);
-              setOpenStatus(true);
-              setOpenMunicipio(false);
-              setOpenDepartamento(false);
-            }}
-          >
-            <Text style={styles.textBox}>
-              {statusPoint != "" ? statusPoint : "Estado de punto"}
-            </Text>
-            <Image
-              source={require("../../../resources/images/trailingIcon.png")}
-            />
-          </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.box6}
+          onPress={() => {
+            setShow(true);
+            setOpenMunicipio(true);
+            setOpenStatus(false);
+            setOpenDepartamento(false);
+            setOpenUbicacion(false);
+          }}
+        >
+          <Text style={styles.textBox}>
+            {municipio != "" ? municipio : "Municipio"}
+          </Text>
+          <Image
+            source={require("../../../resources/images/trailingIcon.png")}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.box6}
+          onPress={() => {
+            setShow(true);
+            setOpenStatus(true);
+            setOpenMunicipio(false);
+            setOpenDepartamento(false);
+            setOpenUbicacion(false);
+          }}
+        >
+          <Text style={styles.textBox}>
+            {statusPoint != "" ? statusPoint : "Estado de punto"}
+          </Text>
+          <Image
+            source={require("../../../resources/images/trailingIcon.png")}
+          />
+        </TouchableOpacity>
 
-          
+        <TouchableOpacity
+          style={styles.box6}
+          onPress={() => {
+            setShow(true);
+            setOpenDepartamento(false);
+            setOpenStatus(false);
+            setOpenMunicipio(false);
+            setOpenUbicacion(true);
+          }}
+        >
+          <Text style={styles.textBox}>
+            {tipoUbicacion != "" ? tipoUbicacion : "Tipo de Ubicacion"}
+          </Text>
+          <Image
+            source={require("../../../resources/images/trailingIcon.png")}
+          />
+        </TouchableOpacity>
 
-          <View style={styles.divider}></View>
+        <View style={styles.divider}></View>
 
 
-          <Text style={styles.textTitle2}>Tipo de servicio</Text>
+        <Text style={styles.textTitle2}>Tipo de servicio</Text>
 
-          <SelectBox
-            label=""
-            inputPlaceholder="Buscar"
-            listOptionProps={{nestedScrollEnabled: true}}
+        <SelectBox
+          label=""
+          inputPlaceholder="Buscar"
+          listOptionProps={{ nestedScrollEnabled: true }}
           options={arregloServicios}
-            selectedValues={selectedService}
-            onMultiSelect={onMultiChange()}
-            onTapClose={onMultiChange()}
-            isMulti
-            placeholder="Buscar"
-            hideInputFilter={false}
-          />
+          selectedValues={selectedService}
+          onMultiSelect={onMultiChange()}
+          onTapClose={onMultiChange()}
+          isMulti
+          placeholder="Buscar"
+          hideInputFilter={false}
+        />
 
 
-          
-      
 
-          <View style={styles.box7}>
-            <TouchableOpacity style={[styles.caja1]} onPress={onPressCancel}>
-              <Text style={styles.textBoxCaja}>Borrar</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.caja1, styles.caja2]}
-              onPress={onPressFilter}
-            >
-              <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
-                Filtrar
-              </Text>
-            </TouchableOpacity>
-          </View>
+
+
+        <View style={styles.box7}>
+          <TouchableOpacity style={[styles.caja1]} onPress={onPressCancel}>
+            <Text style={styles.textBoxCaja}>Borrar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.caja1, styles.caja2]}
+            onPress={onPressFilter}
+          >
+            <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
+              Filtrar
+            </Text>
+          </TouchableOpacity>
         </View>
-        <ModalFilter
-          onClose={() => setShow(false)}
-          show={show}
-          placeholder={
-            openStatus
-              ? "Buscar Estado de Punto"
-              : openDepartamento
+      </View>
+      <ModalFilter
+        onClose={() => setShow(false)}
+        show={show}
+        placeholder={
+          openStatus
+            ? "Buscar Estado de Punto"
+            : openDepartamento
               ? "Buscar Departamento"
               : openMunicipio
-              ? "Buscar Municipio"
-              : ""
-          }
-          data={
-            openStatus
-              ? dataPointState
-              : openDepartamento
+                ? "Buscar Municipio"
+                : openUbicacion
+                  ? "Buscar Tipo de Ubicación"
+                  : null
+        }
+        data={
+          openStatus
+            ? dataPointState
+            : openDepartamento
               ? dataPointDepartamento
               //? dataPointDepartamento.sort((a, b) => a.localeCompare(b))
               : openMunicipio
-              ? dataPoint
-              : []
-          }
-          setSearchTerm={
-            openStatus
-              ? setStatusPoint
-              : openDepartamento
+                ? dataPoint
+                : openUbicacion
+                  ? tipoUbicacionArray
+                  : []
+        }
+        setSearchTerm={
+          openStatus
+            ? setStatusPoint
+            : openDepartamento
               ? setDepartamento
               : openMunicipio
-              ? setMunicipio
-              : null
-          }
-          toggleModal = {toggleModal}
-          departamento = {openStatus
-            ? null
-            : openDepartamento
+                ? setMunicipio
+                : openUbicacion
+                  ? setTipoUbicacion
+                  : null
+        }
+        toggleModal={toggleModal}
+        departamento={openStatus
+          ? null
+          : openDepartamento
             ? null
             : openMunicipio
-            ? departamento
-            : null}
-          openStatus={openStatus
-            ? 'status'
-            : openDepartamento
+              ? departamento
+              : null}
+        openStatus={openStatus
+          ? 'status'
+          : openDepartamento
             ? 'departamento'
             : openMunicipio
-            ? 'municipio'
-            : null}
-        />
-      </ScrollView>
-    
+              ? 'municipio'
+              : openUbicacion
+                ? 'ubicacion'
+                : null}
+      />
+    </ScrollView>
+
   );
 };
 

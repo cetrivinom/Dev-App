@@ -14,7 +14,7 @@ const LastUpdate = () => {
   const api = [
     {name:'api-mapeo-estados.json',val:config.apiMapeoEstados},
     {name:'api-enlaces-de-interes.json',val:config.apiEnlacesInteres},
-    {name:'api-mapeo.json',val:config.apiMapeo},
+    {name:'api-mapeo.json',val:config.apiMapeoM},
     {name:'api-lineas-telefonicas.json',val:config.apiLineasTelefonicas},
     {name:'api-lineas-telefonicas-servicios.json',val:config.apiLineasTelefonicasServicios},
     {name:'api-mapeo-servicios.json',val:config.apiMapeoServicios},
@@ -31,7 +31,7 @@ const LastUpdate = () => {
     
     if (i === api.length) {
       setTimeout(() => {
-        getDataPoint(config.activeStates,config.activeVisible,config.activeType);
+        getDataPoint(config.activeStates,config.activeVisible,config.activeTypeM);
         getDataMapeoService();
         getDataMapeoState();
         getDataSocio();

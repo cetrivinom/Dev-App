@@ -46,7 +46,7 @@ const Integracion = ({ route, navigation }) => {
     useEffect(() => {
         setArregloEnlaces(config.configMenuIntegracion)
         if (dataPoint && dataPoint.length < 1) {
-            getDataPoint(config.activeStates, config.activeVisible, config.activeType);
+            getDataPoint(config.activeStates, config.activeVisible, config.activeTypeM);
         }
         getDataMapeoService();
 
@@ -147,7 +147,7 @@ const Integracion = ({ route, navigation }) => {
             })
         }
         
-        getDataPointFilter(departamento, "", "", array1, textobusqueda);
+        getDataPointFilter(departamento, "", "", array1, textobusqueda,"");
 
         //Obtener Lineas
         lineasArray = [];
