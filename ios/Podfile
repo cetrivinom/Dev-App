@@ -23,34 +23,41 @@ end
 
 target 'iom' do
   config = use_native_modules!
-#  use_frameworks! :linkage => :static
+  use_frameworks! :linkage => :static
+  use_modular_headers!
 #  $RNFirebaseAsStaticFramework = true
 
   # Flags change depending on the env values.
   flags = get_default_flags()
 
-  pod 'Firebase', :modular_headers => true
-  pod 'FirebaseCore', :modular_headers => true
-  pod 'FirebaseCoreInternal', :modular_headers => true
-  pod 'GoogleUtilities', :modular_headers => true
+  #pod 'Firebase', :modular_headers => true
+  #pod 'FirebaseCore', :modular_headers => true
+  #pod 'FirebaseCoreInternal', :modular_headers => true
+  #pod 'GoogleUtilities', :modular_headers => true
+  #rn_maps_path = '../node_modules/react-native-maps'
+  #pod 'react-native-google-maps', :path => rn_maps_path
+  #pod 'GoogleMaps', :modular_headers => true
+  #pod 'Google-Maps-iOS-Utils', :modular_headers => true
+
+  pod 'Google-Maps-iOS-Utils', :git => 'https://github.com/Simon-TechForm/google-maps-ios-utils.git', :branch => 'feat/support-apple-silicon'
+
   rn_maps_path = '../node_modules/react-native-maps'
-  pod 'GoogleMaps'
-  pod 'Google-Maps-iOS-Utils'
   pod 'react-native-google-maps', :path => rn_maps_path
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  #pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   use_react_native!(
     :path => config[:reactNativePath],
     # Hermes is now enabled by default. Disable by setting this flag to false.
     # Upcoming versions of React Native may rely on get_default_flags(), but
     # we make it explicit here to aid in the React Native upgrade process.
-    :hermes_enabled => flags[:hermes_enabled],
+    :hermes_enabled => false,
     :fabric_enabled => flags[:fabric_enabled],
     # Enables Flipper.
     #
     # Note that if you have use_frameworks! enabled, Flipper will not work and
     # you should disable the next line.
-    :flipper_configuration => flipper_config,
+    #:flipper_configuration => flipper_config,
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
@@ -63,8 +70,7 @@ target 'iom' do
   post_install do |installer|
     react_native_post_install(
       installer,
-      # Set `mac_catalyst_enabled` to `true` in order to apply patches
-      # necessary for Mac Catalyst builds
+      config[:reactNativePath],
       :mac_catalyst_enabled => false
     )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
