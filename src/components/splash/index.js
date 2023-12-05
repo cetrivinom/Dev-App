@@ -101,6 +101,8 @@ const Splash = (props) => {
           //var current ="1.031";
           getConfig().then((config) => {
 
+            console.log(config)
+
             var versionReal = Platform.OS === 'android' ? config.versionApp : config.versionAppIos;
             
             if (versionReal.toString() !== current.toString()) {
@@ -110,7 +112,7 @@ const Splash = (props) => {
                 api = [
                   { name: 'api-mapeo-estados.json', val: config.apiMapeoEstados },
                   { name: 'api-enlaces-de-interes.json', val: config.apiEnlacesInteres },
-                  { name: 'api-mapeo.json', val: config.apiMapeo },
+                  { name: 'api-mapeo.json', val: config.apiMapeoM },
                   { name: 'api-lineas-telefonicas.json', val: config.apiLineasTelefonicas },
                   { name: 'api-lineas-telefonicas-servicios.json', val: config.apiLineasTelefonicasServicios },
                   { name: 'api-mapeo-servicios.json', val: config.apiMapeoServicios },
@@ -147,7 +149,7 @@ const Splash = (props) => {
                     api = [
                       { name: 'api-mapeo-estados.json', val: config.apiMapeoEstados },
                       { name: 'api-enlaces-de-interes.json', val: config.apiEnlacesInteres },
-                      { name: 'api-mapeo.json', val: config.apiMapeo },
+                      { name: 'api-mapeo.json', val: config.apiMapeoM },
                       { name: 'api-lineas-telefonicas.json', val: config.apiLineasTelefonicas },
                       { name: 'api-lineas-telefonicas-servicios.json', val: config.apiLineasTelefonicasServicios },
                       { name: 'api-mapeo-servicios.json', val: config.apiMapeoServicios },

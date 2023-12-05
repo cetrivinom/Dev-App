@@ -27,6 +27,7 @@ export const LastUpdate = ({ route, navigation }) => {
     departamento = "",
     municipio = "",
     statusPoint = "",
+    tipoUbicacion = ""
   } = route.params || {};
   const onPressClose = () => {
     navigation.goBack();
@@ -40,7 +41,7 @@ export const LastUpdate = ({ route, navigation }) => {
             source={require("../../../resources/images/riMapPinLine2.png")}
           />
           <Text style={styles.textTitle2}>
-            {departamento + "/" + municipio + "/" + statusPoint}
+            {departamento + "/" + municipio + "/" + statusPoint + "/" + tipoUbicacion}
           </Text>
         </View>
 
@@ -78,18 +79,19 @@ export const ItemCardPoint = (props) => {
     time = "8:00am - 5:00pm",
     Coordenadas = "",
     Direccion = "",
+    Tipo_ubicacion = "",
     Servicios = [],
     Horario = []
   } = props.item || {};
 
-  
+
 
 
   let lunesAViernes = [];
   let sabadoDomingo = [];
 
-  
-  if(Array.isArray(Horario)){
+
+  if (Array.isArray(Horario)) {
 
     Horario?.map((i, index) => {
       if (i.day !== 0 && i.day != 6) {
@@ -104,9 +106,9 @@ export const ItemCardPoint = (props) => {
       }
 
     })
-  }else{
+  } else {
     let j = 0;
-    for (let key in Horario) { 
+    for (let key in Horario) {
 
       if (Horario[key].day !== 0 && Horario[key].day != 6) {
         let dato = {}
@@ -118,42 +120,42 @@ export const ItemCardPoint = (props) => {
         dato.starthours = Horario[key].starthours !== null ? militaryTimeTo12Hour(Horario[key].starthours) : "";
         lunesAViernes.push(dato);
 
+      }
     }
   }
-}
-  
-if(Array.isArray(Horario)){
 
-  Horario?.map((i, index) => {
-    if (i.day === 0 || i.day === 6) {
-      let dato = {}
-      dato.id = index + 1;
-      dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
-        "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
-          "Viernes" : "Sabado";
-      dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
-      dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
-      sabadoDomingo.push(dato);
+  if (Array.isArray(Horario)) {
+
+    Horario?.map((i, index) => {
+      if (i.day === 0 || i.day === 6) {
+        let dato = {}
+        dato.id = index + 1;
+        dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
+          "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
+            "Viernes" : "Sabado";
+        dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
+        dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
+        sabadoDomingo.push(dato);
+      }
+
+    })
+  } else {
+    let j = 0;
+    for (let key in Horario) {
+
+      if (Horario[key].day === 0 || Horario[key].day === 6) {
+        let dato = {}
+        dato.id = j + 1;
+        dato.day = Horario[key].day === 0 ? "Domingo" : Horario[key].day === 1 ? "Lunes" : Horario[key].day === 2 ?
+          "Martes" : Horario[key].day === 3 ? "Miercoles" : Horario[key].day === 4 ? "Jueves" : Horario[key].day === 5 ?
+            "Viernes" : "Sabado";
+        dato.endhours = Horario[key].endhours !== null ? militaryTimeTo12Hour(Horario[key].endhours) : Horario[key].comment;
+        dato.starthours = Horario[key].starthours !== null ? militaryTimeTo12Hour(Horario[key].starthours) : "";
+        sabadoDomingo.push(dato);
+      }
+
     }
-
-  })
-}else{
-  let j = 0;
-  for (let key in Horario) { 
-
-    if (Horario[key].day === 0 || Horario[key].day === 6) {
-      let dato = {}
-      dato.id = j + 1;
-      dato.day = Horario[key].day === 0 ? "Domingo" : Horario[key].day === 1 ? "Lunes" : Horario[key].day === 2 ?
-        "Martes" : Horario[key].day === 3 ? "Miercoles" : Horario[key].day === 4 ? "Jueves" : Horario[key].day === 5 ?
-          "Viernes" : "Sabado";
-      dato.endhours = Horario[key].endhours !== null ? militaryTimeTo12Hour(Horario[key].endhours) : Horario[key].comment;
-      dato.starthours = Horario[key].starthours !== null ? militaryTimeTo12Hour(Horario[key].starthours) : "";
-      sabadoDomingo.push(dato);
-    }
-
   }
-}
 
   let timeLV = lunesAViernes.reduce((groups, groupDay) => {
 
@@ -306,6 +308,9 @@ if(Array.isArray(Horario)){
                 : group.days[0] + " - " + group.days[group.days.length - 1]}: {group.hours}</Text>
             </View>
           ))}
+          <View style={styles.containerForm}>
+            <Text style={styles.textTitle2}>Tipo de ubicación: {Tipo_ubicacion}</Text>
+          </View>
           <View style={styles.box7}>
             <TouchableOpacity
               style={[styles.caja1, styles.caja2]}
@@ -315,12 +320,14 @@ if(Array.isArray(Horario)){
                 Conocer más
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.caja1]}
-              onPress={onPressOpenNavigationApps}
-            >
-              <Text style={[styles.textBoxCaja]}>¿Cómo llegar?</Text>
-            </TouchableOpacity>
+            {Coordenadas !== "" &&
+              <TouchableOpacity
+                style={[styles.caja1]}
+                onPress={onPressOpenNavigationApps}
+              >
+                <Text style={[styles.textBoxCaja]}>¿Cómo llegar?</Text>
+              </TouchableOpacity>
+            }
           </View>
         </View>
       </View>
@@ -334,6 +341,7 @@ const PointListResult = (props) => {
     departamento = "",
     municipio = "",
     statusPoint = "",
+    tipoUbicacion = "",
   } = props.route.params || {};
 
   useEffect(() => {
@@ -346,7 +354,7 @@ const PointListResult = (props) => {
 
     let nombreA = nombre.replace(/ /g, "_") + "|Mapeo_De_Servicios_Colombia_GIFMM";
 
-  
+
 
     analytics().logScreenView({
       screen_name: nombreA,
@@ -358,7 +366,7 @@ const PointListResult = (props) => {
 
   const onPressSeeAll = () => {
 
-    props.navigation.navigate("PointListResultList", { departamento, municipio, statusPoint });
+    props.navigation.navigate("PointListResultList", { departamento, municipio, statusPoint, tipoUbicacion });
   };
 
   const awesomeChildListRenderItem = ({ item }) => (

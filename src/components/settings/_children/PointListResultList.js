@@ -25,6 +25,7 @@ export const LastUpdate = ({ route, navigation }) => {
     departamento = "",
     municipio = "",
     statusPoint = "",
+    tipoUbicacion = "",
   } = route.params || {};
   const onPressClose = () => {
     navigation.navigate("FilterSetting");
@@ -38,7 +39,7 @@ export const LastUpdate = ({ route, navigation }) => {
             source={require("../../../resources/images/riMapPinLine2.png")}
           />
           <Text style={styles.textTitle2}>
-            {departamento + "/" + municipio + "/" + statusPoint}
+            {departamento + "/" + municipio + "/" + statusPoint + "/" + tipoUbicacion}
           </Text>
         </View>
         <TouchableOpacity onPress={onPressClose}>
@@ -74,6 +75,7 @@ export const ItemCardPoint = (props) => {
     Direccion = "",
     point = 5,
     Servicios = [],
+    Tipo_ubicacion="",
     Horario = []
   } = props.item || {};
 
@@ -285,12 +287,15 @@ if(Array.isArray(Horario)){
                 Conocer más
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.caja1, {marginTop:10}]}
-              onPress={onPressOpenNavigationApps}
-            >
-              <Text style={[styles.textBoxCaja]}>¿Cómo llegar?</Text>
-            </TouchableOpacity>
+            {Coordenadas !== "" &&
+              <TouchableOpacity
+                style={[styles.caja1]}
+                onPress={onPressOpenNavigationApps}
+              >
+                <Text style={[styles.textBoxCaja]}>¿Cómo llegar?</Text>
+              </TouchableOpacity>
+            }
+            
           </View>
 
         </View>
@@ -316,6 +321,9 @@ if(Array.isArray(Horario)){
                   : group.days[0] + " - " + group.days[group.days.length - 1]}: {group.hours}</Text>
               </View>
             ))}
+        <View style={styles.containerForm}>
+          <Text style={styles.textTitle2}>Tipo de ubicación: {Tipo_ubicacion}</Text>
+        </View>
     </View>
   ) : null;
 };

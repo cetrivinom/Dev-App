@@ -137,14 +137,15 @@ const IOMState = (props) => {
     }
   };
 
-  const getDataPointFilter = (departamento, municipio, estado, typeService, nombre) => {
+  const getDataPointFilter = (departamento, municipio, estado, typeService, nombre,typeUbication) => {
     dispatch({
       type: GET_DATA_DIRECTORY_FILTER,
       departamento,
       municipio,
       estado,
       typeService,
-      nombre
+      nombre,
+      typeUbication
     });
   }
 

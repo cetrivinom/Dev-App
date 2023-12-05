@@ -60,6 +60,7 @@ export default (state, action) => {
         .filter((item) => item.Departamento.toLowerCase().includes(action.departamento.toLowerCase()))
         .filter((item) => item.Municipio.toLowerCase().includes(action.municipio.toLowerCase()))
         .filter((item) => item.Estado.toLowerCase().includes(action.estado.toLowerCase()))
+        .filter((item) => item.Tipo_ubicacion.toLowerCase().includes(action.typeUbication.toLowerCase()))
       
       //Si hay lista de servicios, filtramos los puntos que presten algun servicio
       if (action.typeService.length > 0) {

@@ -25,6 +25,7 @@ const InitialState = (props) => {
       };
       //API.defaults.baseURL = baseURL;
       const response = await API.get(baseURL);
+      
       if (response.status === 200) {
         AsyncStorage.setItem(apiName, JSON.stringify(response.data));
         

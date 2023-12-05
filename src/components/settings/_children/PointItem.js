@@ -58,74 +58,74 @@ const PointItem = ({ route, navigation }) => {
 
 
     let lunesAViernes = [];
-  let sabadoDomingo = [];
+    let sabadoDomingo = [];
 
-  
-  if(Array.isArray(Horario)){
 
-    Horario?.map((i, index) => {
-      if (i.day !== 0 && i.day != 6) {
-        let dato = {}
-        dato.id = index + 1;
-        dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
-          "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
-            "Viernes" : "Sabado";
-        dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
-        dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
-        lunesAViernes.push(dato);
+    if (Array.isArray(Horario)) {
+
+      Horario?.map((i, index) => {
+        if (i.day !== 0 && i.day != 6) {
+          let dato = {}
+          dato.id = index + 1;
+          dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
+            "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
+              "Viernes" : "Sabado";
+          dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
+          dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
+          lunesAViernes.push(dato);
+        }
+
+      })
+    } else {
+      let j = 0;
+      for (let key in Horario) {
+
+        if (Horario[key].day !== 0 && Horario[key].day != 6) {
+          let dato = {}
+          dato.id = j + 1;
+          dato.day = Horario[key].day === 0 ? "Domingo" : Horario[key].day === 1 ? "Lunes" : Horario[key].day === 2 ?
+            "Martes" : Horario[key].day === 3 ? "Miercoles" : Horario[key].day === 4 ? "Jueves" : Horario[key].day === 5 ?
+              "Viernes" : "Sabado";
+          dato.endhours = Horario[key].endhours !== null ? militaryTimeTo12Hour(Horario[key].endhours) : Horario[key].comment;
+          dato.starthours = Horario[key].starthours !== null ? militaryTimeTo12Hour(Horario[key].starthours) : "";
+          lunesAViernes.push(dato);
+
+        }
       }
-
-    })
-  }else{
-    let j = 0;
-    for (let key in Horario) { 
-
-      if (Horario[key].day !== 0 && Horario[key].day != 6) {
-        let dato = {}
-        dato.id = j + 1;
-        dato.day = Horario[key].day === 0 ? "Domingo" : Horario[key].day === 1 ? "Lunes" : Horario[key].day === 2 ?
-          "Martes" : Horario[key].day === 3 ? "Miercoles" : Horario[key].day === 4 ? "Jueves" : Horario[key].day === 5 ?
-            "Viernes" : "Sabado";
-        dato.endhours = Horario[key].endhours !== null ? militaryTimeTo12Hour(Horario[key].endhours) : Horario[key].comment;
-        dato.starthours = Horario[key].starthours !== null ? militaryTimeTo12Hour(Horario[key].starthours) : "";
-        lunesAViernes.push(dato);
-
-    }
-  }
-}
-  
-if(Array.isArray(Horario)){
-
-  Horario?.map((i, index) => {
-    if (i.day === 0 || i.day === 6) {
-      let dato = {}
-      dato.id = index + 1;
-      dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
-        "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
-          "Viernes" : "Sabado";
-      dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
-      dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
-      sabadoDomingo.push(dato);
     }
 
-  })
-}else{
-  let j = 0;
-  for (let key in Horario) { 
+    if (Array.isArray(Horario)) {
 
-    if (Horario[key].day === 0 || Horario[key].day === 6) {
-      let dato = {}
-      dato.id = j + 1;
-      dato.day = Horario[key].day === 0 ? "Domingo" : Horario[key].day === 1 ? "Lunes" : Horario[key].day === 2 ?
-        "Martes" : Horario[key].day === 3 ? "Miercoles" : Horario[key].day === 4 ? "Jueves" : Horario[key].day === 5 ?
-          "Viernes" : "Sabado";
-      dato.endhours = Horario[key].endhours !== null ? militaryTimeTo12Hour(Horario[key].endhours) : Horario[key].comment;
-      dato.starthours = Horario[key].starthours !== null ? militaryTimeTo12Hour(Horario[key].starthours) : "";
-      sabadoDomingo.push(dato);
+      Horario?.map((i, index) => {
+        if (i.day === 0 || i.day === 6) {
+          let dato = {}
+          dato.id = index + 1;
+          dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
+            "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
+              "Viernes" : "Sabado";
+          dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
+          dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
+          sabadoDomingo.push(dato);
+        }
+
+      })
+    } else {
+      let j = 0;
+      for (let key in Horario) {
+
+        if (Horario[key].day === 0 || Horario[key].day === 6) {
+          let dato = {}
+          dato.id = j + 1;
+          dato.day = Horario[key].day === 0 ? "Domingo" : Horario[key].day === 1 ? "Lunes" : Horario[key].day === 2 ?
+            "Martes" : Horario[key].day === 3 ? "Miercoles" : Horario[key].day === 4 ? "Jueves" : Horario[key].day === 5 ?
+              "Viernes" : "Sabado";
+          dato.endhours = Horario[key].endhours !== null ? militaryTimeTo12Hour(Horario[key].endhours) : Horario[key].comment;
+          dato.starthours = Horario[key].starthours !== null ? militaryTimeTo12Hour(Horario[key].starthours) : "";
+          sabadoDomingo.push(dato);
+        }
+
+      }
     }
-
-  }
-}
 
 
 
@@ -236,50 +236,54 @@ if(Array.isArray(Horario)){
   const onPressOpenNavigationApps = () => {
 
 
-    const scheme = Platform.select({ ios: 'http://maps.apple.com/?q='+Nombre_punto+'&ll=', android: 'geo:0,0?q=' });
+    const scheme = Platform.select({ ios: 'http://maps.apple.com/?q=' + Nombre_punto + '&ll=', android: 'geo:0,0?q=' });
     const latLng = `${latitude},${longitude}`;
     const label = Nombre_punto;
     const url = Platform.select({
       ios: `${scheme}${latLng}`,
       android: `${scheme}${latLng}(${label})`
     });
-    Linking.openURL(url);   
+    Linking.openURL(url);
   };
 
   return (
     <View style={styles.wrapper}>
       <HeaderItem title="Información de punto" id={id} navigation={navigation} nombre={Nombre_punto} from={from} />
 
-      <View style={[styles.box, styles.box2,{marginTop: 25}]}>
+      <View style={[styles.box, styles.box2, { marginTop: 25 }]}>
         <ScrollView style={{ flex: 1 }}>
-          <MapView
-            style={{ height: metrics.HEIGHT * 0.2 }}
-            provider={PROVIDER_GOOGLE}
-            initialRegion={{
-              latitude: latitude,
-              longitude: longitude,
-              latitudeDelta: 0.006,
-              longitudeDelta: 0.006,
-            }}>
-            <Marker
-              key={1}
-              coordinate={{
-                latitude,
-                longitude,
+          {Coordenadas !== "" &&
+            <MapView
+              style={{ height: metrics.HEIGHT * 0.2 }}
+              provider={PROVIDER_GOOGLE}
+              initialRegion={{
+                latitude: latitude,
+                longitude: longitude,
+                latitudeDelta: 0.006,
+                longitudeDelta: 0.006,
               }}>
-              <Image style={{ width: 28, height: 40 }} source={{ uri: uri }} />
-            </Marker>
-          </MapView>
+              <Marker
+                key={1}
+                coordinate={{
+                  latitude,
+                  longitude,
+                }}>
+                <Image style={{ width: 28, height: 40 }} source={{ uri: uri }} />
+              </Marker>
+            </MapView>
+          }
           <View style={styles.divider}></View>
           <View style={styles.box5}>
             <View style={styles.caja1}>
               <Text style={styles.caja1Text}>{Nombre_punto}</Text>
-              <TouchableOpacity
-                style={styles.overlay}
-                onPress={onPressOpenNavigationApps}
-              >
-                <Text style={styles.text}>¿Cómo llegar?</Text>
-              </TouchableOpacity>
+              {Coordenadas !== "" &&
+                <TouchableOpacity
+                  style={styles.overlay}
+                  onPress={onPressOpenNavigationApps}
+                >
+                  <Text style={styles.text}>¿Cómo llegar?</Text>
+                </TouchableOpacity>
+              }
             </View>
           </View>
           <View style={styles.divider}></View>
