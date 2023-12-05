@@ -439,7 +439,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.0015,
     alignSelf: "stretch",
     fontFamily: 'Dosis-Bold',
-    textTransform: 'capitalize'
   },
   text: {
     fontWeight: "bold",

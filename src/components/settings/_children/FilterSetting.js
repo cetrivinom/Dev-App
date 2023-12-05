@@ -159,6 +159,7 @@ const FilterSetting = (props) => {
           />
         </TouchableOpacity>
 
+        {/*
         <TouchableOpacity
           style={styles.box6}
           onPress={() => {
@@ -176,7 +177,7 @@ const FilterSetting = (props) => {
             source={require("../../../resources/images/trailingIcon.png")}
           />
         </TouchableOpacity>
-
+        */}
         <View style={styles.divider}></View>
 
 
@@ -289,7 +290,7 @@ const styles = StyleSheet.create({
   //content
   box2: {
     flex: 10,
-    marginTop: 31,
+    marginTop: 21,
     marginHorizontal: 21,
   },
   box6: {

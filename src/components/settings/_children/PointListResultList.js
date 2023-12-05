@@ -52,15 +52,15 @@ export const LastUpdate = ({ route, navigation }) => {
 
 const militaryTimeTo12Hour = (s) => {
 
-   
 
-  if(s.toString().length == 4) s = `${s.toString()}`; // 930 -> 0930
-  if(s.toString().length == 3) s = `0${s.toString()}`; // 930 -> 0930
-  if(s.toString().length == 1) s = `000${s.toString()}`; // 930 -> 0930
+
+  if (s.toString().length == 4) s = `${s.toString()}`; // 930 -> 0930
+  if (s.toString().length == 3) s = `0${s.toString()}`; // 930 -> 0930
+  if (s.toString().length == 1) s = `000${s.toString()}`; // 930 -> 0930
 
   const hour = parseInt(s.toString().substring(0, 2), 10);
   const min = s.toString().substring(2, 4);
-  if(hour < 12) return `${hour % 12}:${min} AM`;
+  if (hour < 12) return `${hour % 12}:${min} AM`;
   return `${hour % 12 || 12}:${min} PM`;
 }
 
@@ -75,15 +75,15 @@ export const ItemCardPoint = (props) => {
     Direccion = "",
     point = 5,
     Servicios = [],
-    Tipo_ubicacion="",
+    Tipo_ubicacion = "",
     Horario = []
   } = props.item || {};
 
   let lunesAViernes = [];
   let sabadoDomingo = [];
 
-  
-  if(Array.isArray(Horario)){
+
+  if (Array.isArray(Horario)) {
 
     Horario?.map((i, index) => {
       if (i.day !== 0 && i.day != 6) {
@@ -98,9 +98,9 @@ export const ItemCardPoint = (props) => {
       }
 
     })
-  }else{
+  } else {
     let j = 0;
-    for (let key in Horario) { 
+    for (let key in Horario) {
 
       if (Horario[key].day !== 0 && Horario[key].day != 6) {
         let dato = {}
@@ -112,42 +112,42 @@ export const ItemCardPoint = (props) => {
         dato.starthours = Horario[key].starthours !== null ? militaryTimeTo12Hour(Horario[key].starthours) : "";
         lunesAViernes.push(dato);
 
+      }
     }
   }
-}
-  
-if(Array.isArray(Horario)){
 
-  Horario?.map((i, index) => {
-    if (i.day === 0 || i.day === 6) {
-      let dato = {}
-      dato.id = index + 1;
-      dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
-        "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
-          "Viernes" : "Sabado";
-      dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
-      dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
-      sabadoDomingo.push(dato);
+  if (Array.isArray(Horario)) {
+
+    Horario?.map((i, index) => {
+      if (i.day === 0 || i.day === 6) {
+        let dato = {}
+        dato.id = index + 1;
+        dato.day = i.day === 0 ? "Domingo" : i.day === 1 ? "Lunes" : i.day === 2 ?
+          "Martes" : i.day === 3 ? "Miercoles" : i.day === 4 ? "Jueves" : i.day === 5 ?
+            "Viernes" : "Sabado";
+        dato.endhours = i.endhours !== null ? militaryTimeTo12Hour(i.endhours) : i.comment;
+        dato.starthours = i.starthours !== null ? militaryTimeTo12Hour(i.starthours) : "";
+        sabadoDomingo.push(dato);
+      }
+
+    })
+  } else {
+    let j = 0;
+    for (let key in Horario) {
+
+      if (Horario[key].day === 0 || Horario[key].day === 6) {
+        let dato = {}
+        dato.id = j + 1;
+        dato.day = Horario[key].day === 0 ? "Domingo" : Horario[key].day === 1 ? "Lunes" : Horario[key].day === 2 ?
+          "Martes" : Horario[key].day === 3 ? "Miercoles" : Horario[key].day === 4 ? "Jueves" : Horario[key].day === 5 ?
+            "Viernes" : "Sabado";
+        dato.endhours = Horario[key].endhours !== null ? militaryTimeTo12Hour(Horario[key].endhours) : Horario[key].comment;
+        dato.starthours = Horario[key].starthours !== null ? militaryTimeTo12Hour(Horario[key].starthours) : "";
+        sabadoDomingo.push(dato);
+      }
+
     }
-
-  })
-}else{
-  let j = 0;
-  for (let key in Horario) { 
-
-    if (Horario[key].day === 0 || Horario[key].day === 6) {
-      let dato = {}
-      dato.id = j + 1;
-      dato.day = Horario[key].day === 0 ? "Domingo" : Horario[key].day === 1 ? "Lunes" : Horario[key].day === 2 ?
-        "Martes" : Horario[key].day === 3 ? "Miercoles" : Horario[key].day === 4 ? "Jueves" : Horario[key].day === 5 ?
-          "Viernes" : "Sabado";
-      dato.endhours = Horario[key].endhours !== null ? militaryTimeTo12Hour(Horario[key].endhours) : Horario[key].comment;
-      dato.starthours = Horario[key].starthours !== null ? militaryTimeTo12Hour(Horario[key].starthours) : "";
-      sabadoDomingo.push(dato);
-    }
-
   }
-}
 
 
 
@@ -205,58 +205,58 @@ if(Array.isArray(Horario)){
 
 
   const { dataMapeoService, getDataMapeoService, dataMapeoState } = useContext(IOMContext);
-  let _Nombre_punto = Nombre_punto.substring(0, 80);  
+  let _Nombre_punto = Nombre_punto.substring(0, 80);
   const unique = [...new Set(Servicios.map(item => item.Servicio_id))];
 
 
   const onPressOpenPoint = (id, nombre) => {
 
-    let nombreA = nombre.replace(/ /g, "_")+"|Mapeo_De_Servicios_Colombia_GIFMM";
+    let nombreA = nombre.replace(/ /g, "_") + "|Mapeo_De_Servicios_Colombia_GIFMM";
 
 
     analytics().logScreenView({
       screen_name: nombreA,
       screen_class: nombreA,
     });
-    
+
     let coor = Coordenadas.split(",");
     let latitude = parseFloat(coor[0]);
     let longitude = parseFloat(coor[1]);
     let icon = (dataMapeoState.find((state) => state.id_estado == Estado_id));
     let uri = icon?.img_estado_b64;
-    props.navigation.navigate("PointItem", { id, latitude, longitude, uri, from:"SettingsStack"});
+    props.navigation.navigate("PointItem", { id, latitude, longitude, uri, from: "SettingsStack" });
   };
 
   const onPressOpenNavigationApps = () => {
     let coor = Coordenadas.split(",");
     let latitude = parseFloat(coor[0]);
     let longitude = parseFloat(coor[1]);
-    const scheme = Platform.select({ ios: 'http://maps.apple.com/?q='+_Nombre_punto+'&ll=', android: 'geo:0,0?q=' });
+    const scheme = Platform.select({ ios: 'http://maps.apple.com/?q=' + _Nombre_punto + '&ll=', android: 'geo:0,0?q=' });
     const latLng = `${latitude},${longitude}`;
     const label = _Nombre_punto;
     const url = Platform.select({
       ios: `${scheme}${latLng}`,
       android: `${scheme}${latLng}(${label})`
     });
-    Linking.openURL(url);  
+    Linking.openURL(url);
   };
 
   var services = [];
-  _.map(unique,(val,id) => {
+  _.map(unique, (val, id) => {
     var service = dataMapeoService.find((element) => {
       return element.id_servicio === val;
     });
 
     //let index = services.findIndex(item => item.b64 == service.img_servicio_b64);
 
-    if(service && services.findIndex(item => item.b64 == service.img_servicio_b64) < 0){
+    if (service && services.findIndex(item => item.b64 == service.img_servicio_b64) < 0) {
       services.push({
-        b64:service.img_servicio_b64,
-        svg:<SvgCssUri
-            key={service.id_servicio}
-            height='32'
-            width='32'
-            uri={Platform.OS==='ios'?service.img_servicio_b64:'https://mapeo-de-servicios.gifmm-colombia.site'+service.img_servicio}
+        b64: service.img_servicio_b64,
+        svg: <SvgCssUri
+          key={service.id_servicio}
+          height='32'
+          width='32'
+          uri={Platform.OS === 'ios' ? service.img_servicio_b64 : 'https://mapeo-de-servicios.gifmm-colombia.site' + service.img_servicio}
         />
       });
     }
@@ -264,12 +264,12 @@ if(Array.isArray(Horario)){
 
   return Nombre_punto !== "" ? (
     <View style={styles.container1}>
-      <HeaderPointItem id={id}  nombre={_Nombre_punto}/>
-          
+      <HeaderPointItem id={id} nombre={_Nombre_punto} />
 
-      <View style={{flex : 1, flexDirection:'row'}}>
-        <View style={{flex:0.6}}>
-          <View style={styles.containerForm}>{_.map(services,(val) => {
+
+      <View style={{ flex: 1, flexDirection: 'row' }}>
+        <View style={{ flex: 0.6 }}>
+          <View style={styles.containerForm}>{_.map(services, (val) => {
             return val.svg
           })}</View>
           <View style={styles.containerForm}>
@@ -277,53 +277,56 @@ if(Array.isArray(Horario)){
             <Text numberOfLines={1} style={styles.textTitle2}>{Estado}</Text>
           </View>
         </View>
-        <View style={{flex:0.4, alignItems:'flex-end'}}>
-          <View style={styles.box7}>
-            <TouchableOpacity
-              style={[styles.caja1, styles.caja2]}
-              onPress={() => onPressOpenPoint(id, Nombre_punto)}
-            >
-              <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
-                Conocer más
-              </Text>
-            </TouchableOpacity>
-            {Coordenadas !== "" &&
-              <TouchableOpacity
-                style={[styles.caja1]}
-                onPress={onPressOpenNavigationApps}
-              >
-                <Text style={[styles.textBoxCaja]}>¿Cómo llegar?</Text>
-              </TouchableOpacity>
-            }
-            
-          </View>
 
-        </View>
       </View>
 
       {timeLV && timeLV.map(group => (
-              <View style={styles.containerForm} key={group.id}>
-                <Image
-                  source={require("../../../resources/images/riTimeFill.png")}
-                />
-                <Text style={styles.textTitle2}>{group.days.length === 1
-                  ? group.days
-                  : group.days[0] + " - " + group.days[group.days.length - 1]}: {group.hours}</Text>
-              </View>
-            ))}
-            {timeSD && timeSD.map(group => (
-              <View style={styles.containerForm} key={group.id}>
-                <Image
-                  source={require("../../../resources/images/riTimeFill.png")}
-                />
-                <Text style={styles.textTitle2}>{group.days.length === 1
-                  ? group.days
-                  : group.days[0] + " - " + group.days[group.days.length - 1]}: {group.hours}</Text>
-              </View>
-            ))}
+        <View style={styles.containerForm} key={group.id}>
+          <Image
+            source={require("../../../resources/images/riTimeFill.png")}
+          />
+          <Text style={styles.textTitle2}>{group.days.length === 1
+            ? group.days
+            : group.days[0] + " - " + group.days[group.days.length - 1]}: {group.hours}</Text>
+        </View>
+      ))}
+      {timeSD && timeSD.map(group => (
+        <View style={styles.containerForm} key={group.id}>
+          <Image
+            source={require("../../../resources/images/riTimeFill.png")}
+          />
+          <Text style={styles.textTitle2}>{group.days.length === 1
+            ? group.days
+            : group.days[0] + " - " + group.days[group.days.length - 1]}: {group.hours}</Text>
+        </View>
+      ))}
+      {/*
         <View style={styles.containerForm}>
           <Text style={styles.textTitle2}>Tipo de ubicación: {Tipo_ubicacion}</Text>
         </View>
+                */}
+      <View style={{display:"flex", flexDirection:"row", justifyContent:"space-between", margin:10, alignItems: 'center' }}>
+        
+          <TouchableOpacity
+            style={[styles.caja1, styles.caja2]}
+            onPress={() => onPressOpenPoint(id, Nombre_punto)}
+          >
+            <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
+              Conocer más
+            </Text>
+          </TouchableOpacity>
+          {Coordenadas !== "" &&
+            <TouchableOpacity
+              style={[styles.caja1]}
+              onPress={onPressOpenNavigationApps}
+            >
+              <Text style={[styles.textBoxCaja]}>¿Cómo llegar?</Text>
+            </TouchableOpacity>
+          }
+
+       
+
+      </View>
     </View>
   ) : null;
 };
@@ -356,7 +359,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-   box1: {
+  box1: {
     flex: 0.15,
   },
   //content
@@ -365,7 +368,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   containerHeader: {
-    flex:1,
+    flex: 1,
     backgroundColor: "#FFFFFF",
   },
   containerFormHeader: {
