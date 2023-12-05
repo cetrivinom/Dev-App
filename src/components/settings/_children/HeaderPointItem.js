@@ -129,7 +129,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.0015,
     fontFamily:'Dosis-Bold',
     color: "#003031",
-    textTransform:'capitalize',
     width:metrics.WIDTH*0.8
   },
   box4: {

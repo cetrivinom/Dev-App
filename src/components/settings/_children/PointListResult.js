@@ -308,9 +308,11 @@ export const ItemCardPoint = (props) => {
                 : group.days[0] + " - " + group.days[group.days.length - 1]}: {group.hours}</Text>
             </View>
           ))}
+          {/*
           <View style={styles.containerForm}>
             <Text style={styles.textTitle2}>Tipo de ubicación: {Tipo_ubicacion}</Text>
           </View>
+              */}
           <View style={styles.box7}>
             <TouchableOpacity
               style={[styles.caja1, styles.caja2]}
