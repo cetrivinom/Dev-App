@@ -73,7 +73,7 @@ useEffect(() => {
       ok = false;
     }
 
-    let a = usuarios.find(item => item.email === email);
+    let a = usuarios.find(item => item.email === email.toLowerCase().trim());
 
     if(a!==undefined){
       Alert.alert("Error","El Correo electrónico ya se encuentra registrado");
