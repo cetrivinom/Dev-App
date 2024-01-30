@@ -20,6 +20,8 @@ import _ from 'lodash';
 import HeaderPoint from "../../global/_children/HeaderPoint";
 import analytics from '@react-native-firebase/analytics';
 import HeaderPointItemBox from "./HeaderPointItemBox";
+import AuthContext from "../../../../context/auth/authContext";
+import moment from "moment";
 
 
 export const LastUpdate = ({ route, navigation }) => {
@@ -86,6 +88,7 @@ export const ItemCardPoint = (props) => {
 
 
 
+  const { user, getUser, deleteFavoriteF, createFavoriteF,createAnalytics } = useContext(AuthContext);
 
   let lunesAViernes = [];
   let sabadoDomingo = [];
@@ -239,9 +242,31 @@ export const ItemCardPoint = (props) => {
     }
   });
 
+  const guardarLogAnalytics = (nombre) => {
+
+    if (user !== null && user !== undefined) {
+
+
+      var array = {
+        fecha: moment().format('DD/MM/YY, HH:mm:ss'),
+        evento: "consultar_punto",
+        value: nombre
+      }
+
+      createAnalytics(user, array)
+
+
+    }
+
+
+  }
+
   const onPressOpenPoint = (id, nombre) => {
 
     let nombreA = nombre.replace(/ /g, "_") + "|Mapeo_De_Servicios_Colombia_GIFMM";
+    let nombreB = nombre;
+
+    guardarLogAnalytics(nombreB)
 
 
     analytics().logScreenView({
@@ -347,8 +372,7 @@ const PointListResult = (props) => {
   } = props.route.params || {};
 
   useEffect(() => {
-    console.log(dataPointFilter.length)
-
+    
 
   }, []);
 

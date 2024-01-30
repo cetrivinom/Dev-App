@@ -19,7 +19,8 @@ import _ from 'lodash';
 import HeaderPoint from "../../global/_children/HeaderPointFil";
 import analytics from '@react-native-firebase/analytics';
 import HeaderPointItem from "./HeaderPointItem";
-
+import moment from "moment";
+import AuthContext from "../../../../context/auth/authContext";
 export const LastUpdate = ({ route, navigation }) => {
   const {
     departamento = "",
@@ -78,6 +79,9 @@ export const ItemCardPoint = (props) => {
     Tipo_ubicacion = "",
     Horario = []
   } = props.item || {};
+
+  const { user, getUser, deleteFavoriteF, createFavoriteF,createAnalytics } = useContext(AuthContext);
+
 
   let lunesAViernes = [];
   let sabadoDomingo = [];
@@ -209,10 +213,31 @@ export const ItemCardPoint = (props) => {
   const unique = [...new Set(Servicios.map(item => item.Servicio_id))];
 
 
+  const guardarLogAnalytics = (nombre) => {
+
+    if (user !== null && user !== undefined) {
+
+
+      var array = {
+        fecha: moment().format('DD/MM/YY, HH:mm:ss'),
+        evento: "consultar_punto",
+        value: nombre
+      }
+
+      createAnalytics(user, array)
+
+
+    }
+
+
+  }
+
   const onPressOpenPoint = (id, nombre) => {
 
     let nombreA = nombre.replace(/ /g, "_") + "|Mapeo_De_Servicios_Colombia_GIFMM";
+    let nombreB = nombre;
 
+    guardarLogAnalytics(nombreB)
 
     analytics().logScreenView({
       screen_name: nombreA,

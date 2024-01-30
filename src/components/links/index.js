@@ -18,8 +18,10 @@ import { metrics } from "../../utilities/Metrics";
 import { CardEnlaceLink } from "./_children/CardEnlaceLink";
 import { CardSocioLink } from "./_children/CardSocioLink";
 
+import moment from "moment";
+import AuthContext from "../../../context/auth/authContext";
 const Links = ({ route, navigation }) => {
-
+  const { user,createAnalytics } = useContext(AuthContext);
   const [showFilterOption, setShowFilterOption] = useState(false);
   const [show, setShow] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -39,6 +41,32 @@ const Links = ({ route, navigation }) => {
       navigation={navigation}
     />
   );
+
+  useEffect(() => {
+
+
+    guardarLogAnalytics("contenido_interes")
+
+  }, [searchTerm]);
+
+  const guardarLogAnalytics = (nombre) => {
+
+    if (user !== null && user !== undefined) {
+
+
+      var array = {
+        fecha: moment().format('DD/MM/YY, HH:mm:ss'),
+        evento: "ingreso_modulo",
+        value: nombre
+      }
+
+      createAnalytics(user, array)
+
+
+    }
+
+
+  }
   const awesomeChildListKeyExtractor = (item) => item.Titulo;
 
 

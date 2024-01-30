@@ -49,7 +49,7 @@ const AuthState = (props) => {
         .signInWithEmailAndPassword(data.email, data.password)
         .then((response) => {
           var user = { ...data, uid: response.user.uid };
-
+          guardarLogAnalytics(user)
           analytics().logEvent("signIn", { email: data.email, result: "true" });
           dispatch({
             type: LOG_IN,
@@ -106,11 +106,34 @@ const AuthState = (props) => {
    * metodo que valida si el usuario tiene una sesion activa y no le pide loggin
    * @return {Promise} devuelve una promesa al terminar la operacion, se utiliza para controlar un llamado sincrono
    */
+
+  const guardarLogAnalytics = (user) => {
+
+    
+
+
+      var array = {
+        fecha: moment().format('DD/MM/YY, HH:mm:ss'),
+        evento: "login",
+        value: ""
+      }
+
+      createAnalytics(user, array)
+
+
+    
+
+
+  }
+
   const isSignIn = async () => {
     return new Promise((resolve, reject) => {
       auth().onAuthStateChanged((response) => {
         if (response) {
           var user = { email: response.email, uid: response.uid };
+
+          
+
           analytics().logEvent("isSignIn", {
             email: response.email,
             result: "true",
@@ -486,6 +509,85 @@ const AuthState = (props) => {
 
   }
 
+  const createAnalytics = (user, analytics) => {
+
+
+    let fecha = analytics.fecha;
+    console.log(fecha)
+    let fecha1 = fecha.split(',');
+    let fechaDia = fecha1[0];
+    let horaFinal = Number(fecha1[1].split(':')[0].trim());
+    let evento = analytics.evento;
+    let value = analytics.data
+
+
+    database()
+      .ref("/analytics/" + user.uid)
+      .once("value", (snapshot) => {
+        if (snapshot.hasChildren()) {
+          let dataF = snapshot;
+          let array = [];
+
+          dataF && dataF.forEach((child) => {
+            let data = {};
+            let fecha = child.val().fecha;
+            let fecha1 = fecha.split(',');
+            let fechaDia = fecha1[0];
+            let horaFinal = fecha1[1].split(':')[0].trim();
+            data.fecha = fechaDia;
+            if (Number(horaFinal) + 1 === 25) {
+              horaFinal = 0;
+            }
+            if (Number(horaFinal) - 1 === -1) {
+              horaFinal = 24;
+            }
+            data.horaMax = Number(horaFinal) + 1
+            array.push(data)
+          });
+
+          console.log(array)
+
+          console.log(horaFinal)
+
+
+
+          let aa = array.find(item => item.fecha === fechaDia && horaFinal <= Number(item.horaMax) && item.evento === evento && item.value === value) ;
+          if (aa === undefined) {
+
+            database()
+              .ref("analytics/" + user.uid)
+              .push(analytics)
+              .then((value) => {
+                console.log("creado");
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+
+
+          }
+
+          
+
+        }else{
+          database()
+              .ref("analytics/" + user.uid)
+              .push(analytics)
+              .then((value) => {
+                console.log("creado");
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+        }
+      })
+
+
+
+
+
+  }
+
 
   /**
    * metodo que consulta los parametros de configuracion contra la base de datos realtime.firebase
@@ -604,6 +706,7 @@ const AuthState = (props) => {
         createFavoriteF,
         createFavoriteArray,
         createCoordenadas,
+        createAnalytics,
         getDataFavorite,
         updateUserDate
       }}

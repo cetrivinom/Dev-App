@@ -7,14 +7,34 @@ import database from "@react-native-firebase/database";
 import analytics from '@react-native-firebase/analytics';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import NetInfo from '@react-native-community/netinfo';
+import moment from "moment";
 const HeaderPointItem = (props) => {
   const { id = "", nombre = "" } = props || {};
   const { createFavorite, dataFavorite, deleteFavoriteId } = useContext(IOMContext);
-  const { user, getUser, deleteFavoriteF, createFavoriteF } = useContext(AuthContext);
+  const { user, getUser, deleteFavoriteF, createFavoriteF,createAnalytics } = useContext(AuthContext);
   const [isFavorite, setIsFavorite] = useState(false);
   const [favorito, setFavorito] = useState({});
 
   
+  const guardarLogAnalytics = (nombre) => {
+
+    if (user !== null && user !== undefined) {
+
+
+      var array = {
+        fecha: moment().format('DD/MM/YY, HH:mm:ss'),
+        evento: "crear_favorito",
+        value: nombre
+      }
+
+      createAnalytics(user, array)
+
+
+    }
+
+
+  }
+
   const onPressSave = () => {
     if (isFavorite) {
 
@@ -26,7 +46,8 @@ const HeaderPointItem = (props) => {
     }else{
 
       let nombreA = nombre.replace(/ /g, "_") + "|Crear_Favorito";
-
+      let nombreB = nombre;
+      guardarLogAnalytics(nombreB)
 
       analytics().logScreenView({
         screen_name: nombreA,

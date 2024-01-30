@@ -9,6 +9,9 @@ import analytics from '@react-native-firebase/analytics';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/FontAwesome5';
 import Icon3 from 'react-native-vector-icons/Ionicons';
+import AuthContext from "../../../../context/auth/authContext";
+
+import moment from "moment";
 
 const CardItemDirectoryDetail = (props) => {
   const { dataItemService, getDataDirectoryItemService } =
@@ -23,11 +26,37 @@ const CardItemDirectoryDetail = (props) => {
     lines = [],
   } = props || {};
   const [open, setOpen] = useState(false);
+  
+  const { user, createAnalytics } = useContext(AuthContext);
+
+
+  const guardarLogAnalytics = (nombre) => {
+
+    if (user !== null && user !== undefined) {
+
+
+      var array = {
+        fecha:moment().format('DD/MM/YY, HH:mm:ss'),
+        evento:"consultar_linea",
+        value:nombre
+      }
+
+      createAnalytics(user,array)
+
+
+    }
+
+
+  }
+
 
   const onPressOpen = () => {
 
     let nombreA = departamento.replace(/ /g, "_") + "|" + title.replace(/ /g, "_") + "|Lineas Telefonicas";
+    let nombreB = departamento + "|" + title ;
 
+    guardarLogAnalytics(nombreB)
+    
     analytics().logScreenView({
       screen_name: nombreA,
       screen_class: nombreA,

@@ -5,6 +5,7 @@ import React, { useContext } from "react";
 import AuthContext from "../../../../context/auth/authContext";
 import analytics from '@react-native-firebase/analytics';
 
+import moment from "moment";
 const CardItemLink = (props) => {
   const {
     title = "",
@@ -16,14 +17,40 @@ const CardItemLink = (props) => {
     navigation
   } = props || {};
 
+
+
+  const { user, createAnalytics, config } = useContext(AuthContext);
+
+  const guardarLogAnalytics = (nombre) => {
+
+    if (user !== null && user !== undefined) {
+
+
+      var array = {
+        fecha: moment().format('DD/MM/YY, HH:mm:ss'),
+        evento: "consultar_noticias",
+        value: nombre
+      }
+
+      createAnalytics(user, array)
+
+
+    }
+
+
+  }
+
   const onPressOpen = () => {
 
-    let nombreA = "Noticias|"+ title.replace(/ /g, "_")+"|Contenido_Interes";
+    let nombreA = "Noticias|" + title.replace(/ /g, "_") + "|Contenido_Interes";
+    let nombreB = title;
 
-      analytics().logScreenView({
-        screen_name: nombreA,
-        screen_class: nombreA,
-      });
+    guardarLogAnalytics(nombreB)
+
+    analytics().logScreenView({
+      screen_name: nombreA,
+      screen_class: nombreA,
+    });
 
     analytics().logSelectContent({
       content_type: 'news_opened',
@@ -31,17 +58,17 @@ const CardItemLink = (props) => {
     })
     props.navigation.navigate("LinkItem", { title, resume, date, content, image, links });
   };
-  const { config } = useContext(AuthContext);
+
   const regex = /(<([^>]+)>)/gi;
   const result = resume.replace(regex, "");
   let _resume = result.substring(0, 60);
 
   function unescapeHtml(safe) {
     return safe.replace(/&amp;/g, '&')
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')
-        .replace(/&quot;/g, '"')
-        .replace(/&#039;/g, "'"); 
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#039;/g, "'");
 
   }
   return (
@@ -50,11 +77,11 @@ const CardItemLink = (props) => {
         <Image
           style={styles.containeImage}
           source={{
-            uri: config.photoBaseURL+image,
+            uri: config.photoBaseURL + image,
           }}
         />
         <View style={styles.containeImageText}>
-        <Text style={styles.titleSection}>{unescapeHtml(title) + "..."}</Text>
+          <Text style={styles.titleSection}>{unescapeHtml(title) + "..."}</Text>
           {/*           <View style={styles.containerDate}>
             <Image source={require("../../../resources/images/calendar.png")} />
             <Text style={styles.titleDate}>{date}</Text>
@@ -87,7 +114,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.0015,
     color: "#007681",
     marginRight: 48,
-    fontFamily:'Dosis-Bold',
+    fontFamily: 'Dosis-Bold',
   },
   containerDate: {
     flexDirection: "row",
@@ -100,7 +127,7 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     color: "#A1AAB2",
     paddingTop: 2,
-    fontFamily:'Dosis-Regular'
+    fontFamily: 'Dosis-Regular'
   },
   titleUpdateDate: {
     paddingStart: 6,
@@ -109,7 +136,7 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     color: "#A1AAB2",
     paddingTop: 2,
-    fontFamily:'Dosis-Regular'
+    fontFamily: 'Dosis-Regular'
   },
 
 });

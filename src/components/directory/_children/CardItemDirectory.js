@@ -1,15 +1,44 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, Image, View } from "react-native";
 import { metrics } from "../../../utilities/Metrics";
 import analytics from '@react-native-firebase/analytics';
+import AuthContext from "../../../../context/auth/authContext";
+
+import moment from "moment";
+
 
 const CardItemDirectory = (props) => {
   const { title = "", icon = "", dataDirectory } = props || {};
+
+  const { user, createAnalytics } = useContext(AuthContext);
+
+  const guardarLogAnalytics = (nombre) => {
+
+    if (user !== null && user !== undefined) {
+
+
+      var array = {
+        fecha:moment().format('DD/MM/YY, HH:mm:ss'),
+        evento:"consultar_linea",
+        value:nombre
+      }
+
+      createAnalytics(user,array)
+
+
+    }
+
+
+  }
+
+
   const onPressOpen = () => {
     
     let nombreA = title.replace(/ /g, "_") + "|Lineas Telefonicas";
+    let nombreB = title;
 
+    guardarLogAnalytics(nombreB)
      
       analytics().logScreenView({
         screen_name: nombreA,
@@ -17,6 +46,8 @@ const CardItemDirectory = (props) => {
       });
     
     
+
+
     props.navigation.navigate("DirectoryItem", {
       otherParam: title, dataDirectory : {dataDirectory}
     });

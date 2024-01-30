@@ -3,10 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, TouchableHighlight,Act
 import CardItemProfile from "./_children/CardItemProfile";
 import AuthContext from "../../../context/auth/authContext";
 import { metrics } from "../../utilities/Metrics";
+import moment from "moment";
 
 const Profile = (props) => {
   const { navigation } = props;
-  const { user, signOut, updatePassInputChange } = useContext(AuthContext);
+  const { user, signOut, updatePassInputChange, createAnalytics } = useContext(AuthContext);
   const onPressBack = () => {
     navigation.goBack();
   };
@@ -26,6 +27,43 @@ const Profile = (props) => {
       navigation.navigate("Login");
     }, 1000);
   };
+
+  useEffect(() => {
+
+    let loop = setInterval(() => {
+      getData();
+    }, 1000);
+    return () => clearInterval(loop);
+
+
+
+  }, []);
+
+  useEffect(() => {
+
+
+    guardarLogAnalytics("perfil")
+
+  }, []);
+
+  const guardarLogAnalytics = (nombre) => {
+
+    if (user !== null && user !== undefined) {
+
+
+      var array = {
+        fecha: moment().format('DD/MM/YY, HH:mm:ss'),
+        evento: "ingreso_modulo",
+        value: nombre
+      }
+
+      createAnalytics(user, array)
+
+
+    }
+
+
+  }
 
   return (
     <View style={styles.wrapper}>

@@ -7,33 +7,61 @@ import database from "@react-native-firebase/database";
 import analytics from '@react-native-firebase/analytics';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import NetInfo from '@react-native-community/netinfo';
+
+import moment from "moment";
 const HeaderItem = (props) => {
-  const { title = "", id = "", showSaveOpt = true, navigation, nombre="", from="" } = props || {};
+  const { title = "", id = "", showSaveOpt = true, navigation, nombre = "", from = "" } = props || {};
   const { createFavorite, dataFavorite, deleteFavoriteId } = useContext(IOMContext);
-  const {user,  getUser, deleteFavoriteF, createFavoriteF } = useContext(AuthContext);
+  const { user, getUser, deleteFavoriteF, createFavoriteF, createAnalytics } = useContext(AuthContext);
   const [isFavorite, setIsFavorite] = useState(false);
-const [favorito, setFavorito] = useState({});
+  const [favorito, setFavorito] = useState({});
 
   const onPressClose = () => {
-    if(from==="Favorites"){
+    if (from === "Favorites") {
       navigation.navigate(from)
-    }else{
+    } else {
       navigation.goBack();
     }
-    
+
   };
+
+
+  const guardarLogAnalytics = (nombre) => {
+
+    if (user !== null && user !== undefined) {
+
+
+      var array = {
+        fecha: moment().format('DD/MM/YY, HH:mm:ss'),
+        evento: "crear_favorito",
+        value: nombre
+      }
+
+      createAnalytics(user, array)
+
+
+    }
+
+
+  }
+
   const onPressSave = () => {
     if (isFavorite) {
       NetInfo.fetch().then(state => {
         if (state.isConnected) {
-      deleteFavoriteF(user,id);
-        }});
+          deleteFavoriteF(user, id);
+        }
+      });
       deleteFavoriteId(id)
-    }else{
+    } else {
 
       let nombreA = nombre.replace(/ /g, "_") + "|Crear_Favorito";
+      let nombreB = nombre;
 
-   
+
+      guardarLogAnalytics(nombreB)
+
+
       analytics().logScreenView({
         screen_name: nombreA,
         screen_class: nombreA,
@@ -41,10 +69,11 @@ const [favorito, setFavorito] = useState({});
 
       NetInfo.fetch().then(state => {
         if (state.isConnected) {
-      createFavoriteF(user,id);
-        }})
+          createFavoriteF(user, id);
+        }
+      })
       storeData(id);
-      
+
     }
     setIsFavorite(!isFavorite);
   };
@@ -54,16 +83,16 @@ const [favorito, setFavorito] = useState({});
     let item = {
       id: id
     };
-    
+
     var value = JSON.parse(await AsyncStorage.getItem("favorites"));
-      if (!value)
-        value = [];
-      let index = value.findIndex(favorite => favorite.id == item.id);
-      if (index == -1 && item.id >= 0) {
-        value.push(item);
-        AsyncStorage.setItem("favorites", JSON.stringify(value));
-        
-      }
+    if (!value)
+      value = [];
+    let index = value.findIndex(favorite => favorite.id == item.id);
+    if (index == -1 && item.id >= 0) {
+      value.push(item);
+      AsyncStorage.setItem("favorites", JSON.stringify(value));
+
+    }
   }
 
   useEffect(() => {
@@ -73,18 +102,18 @@ const [favorito, setFavorito] = useState({});
   const setInformacion = async () => {
 
     const value = await AsyncStorage.getItem('favorites');
-    
-        if (value !== null) {
-          
-          var favoritosL = JSON.parse(value);
-          let a = favoritosL.find(item => item.id === id);
 
-          if (a !== undefined && a.length !== 0) {
-            setFavorito(a)
-            setIsFavorite(true)
-          }
+    if (value !== null) {
 
-        }
+      var favoritosL = JSON.parse(value);
+      let a = favoritosL.find(item => item.id === id);
+
+      if (a !== undefined && a.length !== 0) {
+        setFavorito(a)
+        setIsFavorite(true)
+      }
+
+    }
 
 
   }
@@ -135,7 +164,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     //lineHeight: 28,
     letterSpacing: 0.0015,
-    fontFamily:'Dosis-Medium',
+    fontFamily: 'Dosis-Medium',
   },
   box4: {
     flexDirection: "row",

@@ -13,11 +13,12 @@ import Menu, {
   renderers
 } from 'react-native-popup-menu';
 import NetInfo from '@react-native-community/netinfo';
+import moment from "moment";
 const { SlideInMenu } = renderers;
 
 const Favorites = (props) => {
   const { createFavorite, dataFavorite, deleteFavoriteId } = useContext(IOMContext);
-  const { user, getUser, deleteFavoriteF, createFavoriteF } = useContext(AuthContext);
+  const { user, getUser, deleteFavoriteF, createFavoriteF,createAnalytics } = useContext(AuthContext);
 
   const [dataFavoriteAsync, setDataFavoriteAsync] = useState([]);
 
@@ -31,6 +32,32 @@ const Favorites = (props) => {
 
 
   }, []);
+
+  useEffect(() => {
+
+
+    guardarLogAnalytics("favoritos")
+
+  }, []);
+
+  const guardarLogAnalytics = (nombre) => {
+
+    if (user !== null && user !== undefined) {
+
+
+      var array = {
+        fecha: moment().format('DD/MM/YY, HH:mm:ss'),
+        evento: "ingreso_modulo",
+        value: nombre
+      }
+
+      createAnalytics(user, array)
+
+
+    }
+
+
+  }
 
 
 

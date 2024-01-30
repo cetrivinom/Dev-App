@@ -11,9 +11,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import NetInfo from '@react-native-community/netinfo';
 import { useState } from "react";
 import { ItemMainLarge } from "./_children/CardLarge";
+import moment from "moment";
 const Main = (props) => {
   const { navigation } = props;
-  const { user, config, createFavoriteArray, deleteFavoriteF, createFavoriteF, createCoordenadas, updateUserDate } = useContext(AuthContext);
+  const { user, config, createFavoriteArray, deleteFavoriteF, createFavoriteF, createCoordenadas, updateUserDate, createAnalytics } = useContext(AuthContext);
   const [dataFirebase, setDataFirebase] = useState([]);
   const { getDataEnlace } = useContext(IOMContext);
   const { getDataSocio } = useContext(IOMContext);
@@ -28,6 +29,7 @@ const Main = (props) => {
     getDataDirectory("");
     sincronizarCoordenadas();
     actualizarFecha();
+    guardarLogAnalytics()
 
   }, []);
 
@@ -79,6 +81,25 @@ const Main = (props) => {
     if (user !== null && user !== undefined) {
     updateUserDate(user);
     }
+
+  }
+
+  const guardarLogAnalytics = (nombre) => {
+
+    if (user !== null && user !== undefined) {
+
+
+      var array = {
+        fecha: moment().format('DD/MM/YY, HH:mm:ss'),
+        evento: "ingreso",
+        value: user.email
+      }
+
+      createAnalytics(user, array)
+
+
+    }
+
 
   }
 

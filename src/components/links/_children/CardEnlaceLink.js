@@ -1,26 +1,55 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, Pressable, Image, View } from "react-native";
 import { metrics } from "../../../utilities/Metrics";
 import analytics from '@react-native-firebase/analytics';
+import AuthContext from "../../../../context/auth/authContext";
+import moment from "moment";
 export const CardEnlaceLink = (props) => {
 
-    const {
-        title = "",
-        contenido = "",
-        image = "",
-        links = [],
-        navigation
-      } = props || {};
+  
+  const { user, createAnalytics } = useContext(AuthContext);
+
+  const {
+    title = "",
+    contenido = "",
+    image = "",
+    links = [],
+    navigation
+  } = props || {};
+
+
+  const guardarLogAnalytics = (nombre) => {
+
+    if (user !== null && user !== undefined) {
+
+
+      var array = {
+        fecha: moment().format('DD/MM/YY, HH:mm:ss'),
+        evento: "consultar_enlaces",
+        value: nombre
+      }
+
+      createAnalytics(user, array)
+
+
+    }
+
+
+  }
+
   const onPressCard = () => {
 
-    let nombreA = "Enlaces|"+ title.replace(/ /g, "_")+"|Contenido_Interes";
+    let nombreA = "Enlaces|" + title.replace(/ /g, "_") + "|Contenido_Interes";
+    let nombreB = title;
 
 
-      analytics().logScreenView({
-        screen_name: nombreA,
-        screen_class: nombreA,
-      });
+    guardarLogAnalytics(nombreB)
+
+    analytics().logScreenView({
+      screen_name: nombreA,
+      screen_class: nombreA,
+    });
 
     navigation.navigate("EnlaceItem", { title, contenido, image, links });
   };
@@ -41,12 +70,12 @@ export const CardEnlaceLink = (props) => {
               }}
             />
           </View>
-          <View style={{flex: 0.6, alignItems: 'center', justifyContent: 'center', alignItems:'center' }}>
+          <View style={{ flex: 0.6, alignItems: 'center', justifyContent: 'center', alignItems: 'center' }}>
             <Text style={styles.titleSection} allowFontScaling={false}>
               {_title}
             </Text>
           </View>
-          <View style={{   backgroundColor:"#000000", bottom:-10, paddingTop:5,paddingBottom:5,paddingLeft:10,paddingRight:10, borderRadius:10, marginLeft:30, marginRight:30}}>
+          <View style={{ backgroundColor: "#000000", bottom: -10, paddingTop: 5, paddingBottom: 5, paddingLeft: 10, paddingRight: 10, borderRadius: 10, marginLeft: 30, marginRight: 30 }}>
             <Text style={styles.verMas} allowFontScaling={false}>
               {"+ Conocer más"}
             </Text>
@@ -59,23 +88,23 @@ export const CardEnlaceLink = (props) => {
 
 const styles = StyleSheet.create({
   titleSection: {
-    fontSize: metrics.HEIGHT*0.018,
-    fontFamily:'Dosis-Bold',
+    fontSize: metrics.HEIGHT * 0.018,
+    fontFamily: 'Dosis-Bold',
     //lineHeight: 23,
     letterSpacing: 0.005,
     color: "#003031",
     textAlign: "center",
-    textAlignVertical:"center",
-    padding:5
+    textAlignVertical: "center",
+    padding: 5
   },
   verMas: {
-    fontSize: metrics.HEIGHT*0.015,
+    fontSize: metrics.HEIGHT * 0.015,
     //lineHeight: 23,
     letterSpacing: 0.005,
     fontWeight: "700",
     color: "#FFFFFF",
     textAlign: "center",
-    fontFamily:'Roboto'
+    fontFamily: 'Roboto'
   },
   wraper: {
     width: "50%",
@@ -118,7 +147,7 @@ const styles = StyleSheet.create({
   containeImage: {
     width: 32,
     height: 32,
-    marginTop:10,
-    marginLeft:10
+    marginTop: 10,
+    marginLeft: 10
   },
 });

@@ -3,6 +3,9 @@ import { View, StyleSheet, TextInput, FlatList } from "react-native";
 import Header from "../global/_children/HeaderBack";
 import CardItemDirectory from "./_children/CardItemDirectory";
 import IOMContext from "../../../context/iomData/iomContext";
+
+import moment from "moment";
+import AuthContext from "../../../context/auth/authContext";
 /**
  * Componente que construye el Directorio, hace el llamado al action que devuelve la informacion del API
  * @param {Object} this.props - objeto de propiedades heredados de la clase padre.
@@ -13,10 +16,33 @@ const Directory = (props) => {
   const { dataDirectory, getDataDirectory } = useContext(IOMContext);
   const awesomeChildListRenderItem = (item,index) => (<CardItemDirectory {...props} key={item.item.departamento} title={item.item.departamento} icon={item.item.icon} dataDirectory= {dataDirectory} />)
   const awesomeChildListKeyExtractor = (item) => item.departamento;
-
+  const { user,createAnalytics } = useContext(AuthContext);
   useEffect(() => {
+
+
+    guardarLogAnalytics("lineas_telefonicas")
+
     getDataDirectory(searchTerm);
   }, [searchTerm]);
+
+  const guardarLogAnalytics = (nombre) => {
+
+    if (user !== null && user !== undefined) {
+
+
+      var array = {
+        fecha: moment().format('DD/MM/YY, HH:mm:ss'),
+        evento: "ingreso_modulo",
+        value: nombre
+      }
+
+      createAnalytics(user, array)
+
+
+    }
+
+
+  }
 
   const compareObjects = (object1, object2, key) => {
     const obj1 = object1[key].toUpperCase()

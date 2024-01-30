@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import analytics from '@react-native-firebase/analytics';
 import HeaderPoint from "../global/_children/HeaderPoint";
 import { metrics } from "../../utilities/Metrics";
+import moment from "moment";
 
 const Settings = (props) => {
   const [position, setPosition] = useState({
@@ -21,7 +22,7 @@ const Settings = (props) => {
   });
   const [marginBottomV, setMarginBottomV] = useState(0);
   const { dataPoint, getDataPoint, dataMapeoService, getDataMapeoService, dataMapeoState, getDataMapeoState } = useContext(IOMContext);
-  const { config } = useContext(AuthContext);
+  const { config, createAnalytics, user } = useContext(AuthContext);
 
   const mapRef = React.createRef();
 
@@ -60,8 +61,12 @@ const Settings = (props) => {
     
   }, []);
 
+    useEffect( () => {
+      guardarLogAnalyticsI("puntos_servicio")
+    
+  }, []);
+
   useEffect(() => {
-    console.log(dataPoint)
     if (dataPoint && dataPoint.length < 1) {
       getDataPoint(config.activeStates, config.activeVisible, config.activeTypeM);
     }
@@ -115,11 +120,52 @@ const Settings = (props) => {
     }
   };
 
+  const guardarLogAnalytics = (nombre) => {
+
+    if (user !== null && user !== undefined) {
+
+
+      var array = {
+        fecha: moment().format('DD/MM/YY, HH:mm:ss'),
+        evento: "consultar_punto",
+        value: nombre
+      }
+
+      createAnalytics(user, array)
+
+
+    }
+
+
+  }
+
+  const guardarLogAnalyticsI = (nombre) => {
+
+    if (user !== null && user !== undefined) {
+
+
+      var array = {
+        fecha: moment().format('DD/MM/YY, HH:mm:ss'),
+        evento: "ingreso_modulo",
+        value: nombre
+      }
+
+      createAnalytics(user, array)
+
+
+    }
+
+
+  }
+
   const onPressOpenPoint = (id, latitude, longitude, uri, nombre) => {
 
     let nombreA = nombre.replace(/ /g, "_")+"|Mapeo_De_Servicios_Colombia_GIFMM";
+    let nombreB = nombre;
 
-    console.log(nombreA)
+   
+
+    guardarLogAnalytics(nombreB)
 
     analytics().logScreenView({
       screen_name: nombreA,

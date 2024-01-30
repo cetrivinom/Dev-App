@@ -101,7 +101,6 @@ const Splash = (props) => {
           //var current ="1.031";
           getConfig().then((config) => {
 
-            console.log(config)
 
             var versionReal = Platform.OS === 'android' ? config.versionApp : config.versionAppIos;
             

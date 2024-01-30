@@ -10,6 +10,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { Snackbar, HelperText, TextInput } from "react-native-paper";
+import moment from "moment";
+import AuthContext from "../../../../context/auth/authContext";
 
 
 
@@ -67,10 +69,10 @@ const IntegracionResultFilter = (props) => {
     } = props.route.params || {};
 
     const { dataPointFilter, dataMapeoState, getDataPointFilter } = useContext(IOMContext);
+    const { user,createAnalytics } = useContext(AuthContext);
 
     useEffect(() => {
 
-        console.log(dataPointFilter.length)
         setResultadoLineas(lineasPorBusqueda);
         setResultadoLineasI(lineasPorBusqueda);
         setResultadoServicios(dataPointFilter);
@@ -113,8 +115,39 @@ const IntegracionResultFilter = (props) => {
 
     };
 
-    const onPressOpenPoint = (id, Coordenadas, Estado_id) => {
 
+    const guardarLogAnalytics = (nombre) => {
+
+        if (user !== null && user !== undefined) {
+    
+    
+          var array = {
+            fecha: moment().format('DD/MM/YY, HH:mm:ss'),
+            evento: "consultar_punto_integracion",
+            value: nombre
+          }
+    
+          createAnalytics(user, array)
+    
+    
+        }
+    
+    
+      }
+
+
+
+    const onPressOpenPoint = (id, Coordenadas, Estado_id, nombre) => {
+
+        let nombreA = nombre.replace(/ /g, "_") + "|Mapeo_De_Servicios_Colombia_GIFMM";
+        let nombreB = nombre;
+
+        guardarLogAnalytics(nombreB)
+
+        /*analytics().logScreenView({
+            screen_name: nombreA,
+            screen_class: nombreA,
+        });*/
 
 
         let coor = Coordenadas.split(",");
@@ -136,7 +169,7 @@ const IntegracionResultFilter = (props) => {
                     <Text style={styles.tituloTexto}>{item.Nombre_punto}</Text>
                     <TouchableOpacity
                         style={[styles.caja1, styles.caja2]}
-                        onPress={() => onPressOpenPoint(item.ID, item.Coordenadas, item.Estado_id)}
+                        onPress={() => onPressOpenPoint(item.ID, item.Coordenadas, item.Estado_id, item.Nombre_punto)}
                     >
                         <Text style={[styles.textBoxCaja, styles.textBoxCajaNegra]}>
                             Conocer más
@@ -237,25 +270,25 @@ const IntegracionResultFilter = (props) => {
                     </TouchableOpacity>
                 </View>
 
-                     
-               
-                {(servicio !== "" || textobusqueda !== "" || departamento !== "") &&       
-                <View alignItems="center" style={{ backgroundColor: "#E6F7F7", paddingBottom: 5}}>
-                    {servicio != "" &&
-                        <Text style={styles.labelTitle1}>
-                            {servicio}
-                        </Text>
-                    }
-                    {textobusqueda !== "" &&
-                        <Text style={styles.labelTitle1}>
-                            {textobusqueda}
-                        </Text>
-                    }{departamento !== "" &&
-                        <Text style={styles.labelTitle1}>
-                            {departamento}
-                        </Text>
-                    }
-                </View>
+
+
+                {(servicio !== "" || textobusqueda !== "" || departamento !== "") &&
+                    <View alignItems="center" style={{ backgroundColor: "#E6F7F7", paddingBottom: 5 }}>
+                        {servicio != "" &&
+                            <Text style={styles.labelTitle1}>
+                                {servicio}
+                            </Text>
+                        }
+                        {textobusqueda !== "" &&
+                            <Text style={styles.labelTitle1}>
+                                {textobusqueda}
+                            </Text>
+                        }{departamento !== "" &&
+                            <Text style={styles.labelTitle1}>
+                                {departamento}
+                            </Text>
+                        }
+                    </View>
                 }
 
                 <TabView

@@ -6,10 +6,12 @@ import { SvgCssUri } from 'react-native-svg';
 import _ from 'lodash';
 import AuthContext from "../../../../context/auth/authContext";
 import analytics from '@react-native-firebase/analytics';
+
+import moment from "moment";
 const CardItemFavorite = (props) => {
   const { id = "" } = props || {};
   const { dataPoint, dataMapeoService, getDataPoint, dataMapeoState, getDataMapeoService } = useContext(IOMContext);
-  const { config } = useContext(AuthContext);
+  const { user, createAnalytics, config } = useContext(AuthContext);
   useEffect(() => {
     if (dataPoint && dataPoint.length < 1) {
       getDataPoint(config.activeStates, config.activeVisible, config.activeTypeM);
@@ -27,13 +29,34 @@ const CardItemFavorite = (props) => {
     Servicios = [],
   } = dataPoint !== null ? dataPoint.find((item) => item.ID == id) : {};*/
   const fav = dataPoint !== null ? dataPoint.find((item) => item.ID == id) : {};
+
+  const guardarLogAnalytics = (nombre) => {
+
+    if (user !== null && user !== undefined) {
+
+
+      var array = {
+        fecha:moment().format('DD/MM/YY, HH:mm:ss'),
+        evento:"consultar_favorito",
+        value:nombre
+      }
+
+      createAnalytics(user,array)
+
+
+    }
+
+
+  }
+
   const onPressOpenPoint = (id, nombre) => {
     if (fav != undefined) {
 
       let nombreA = nombre.replace(/ /g, "_") + "|Consultar_Favorito";
 
+      let nombreB = nombre;
     
-
+      guardarLogAnalytics(nombreB)
       analytics().logScreenView({
         screen_name: nombreA,
         screen_class: nombreA,

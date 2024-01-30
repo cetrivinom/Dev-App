@@ -17,7 +17,11 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import IOMContext from "../../../context/iomData/iomContext";
 import AuthContext from "../../../context/auth/authContext";
 import { TextInput } from "react-native-paper";
+import moment from "moment";
 const Integracion = ({ route, navigation }) => {
+
+
+
     const [searchTerm, setSearchTerm] = useState("");
     const [arregloServicios, setArregloServicios] = useState([]);
     const [arregloDepartamentos, setArregloDepartamentos] = useState([]);
@@ -39,7 +43,7 @@ const Integracion = ({ route, navigation }) => {
     } = useContext(IOMContext);
     const { dataDirectory, getDataDirectory } = useContext(IOMContext);
     const { dataEnlace } = useContext(IOMContext);
-    const { config } = useContext(AuthContext);
+    const { config, user, createAnalytics } = useContext(AuthContext);
 
     const [arregloEnlaces, setArregloEnlaces] = useState([]);
 
@@ -51,14 +55,38 @@ const Integracion = ({ route, navigation }) => {
         getDataMapeoService();
 
         cargarInfoDptos()
-        cargarInfoServicios()        
-        
+        cargarInfoServicios()
+        guardarLogAnalytics("integracion")
+
     }, [dataPointDepartamento]);
 
-    const cargarInfoDptos = () =>{
-        let serviciosIntegracionFiltered =[]//Array con los servicios de integracion
+    
+
+    
+
+    const guardarLogAnalytics = (nombre) => {
+
+        if (user !== null && user !== undefined) {
+
+
+            var array = {
+                fecha: moment().format('DD/MM/YY, HH:mm:ss'),
+                evento: "ingreso_modulo",
+                value: nombre
+            }
+
+            createAnalytics(user, array)
+
+
+        }
+
+
+    }
+
+    const cargarInfoDptos = () => {
+        let serviciosIntegracionFiltered = []//Array con los servicios de integracion
         serviciosIntegracionFiltered = dataMapeoService.filter((object) => object.id_sector === config.idSectorIntegracion)
-        
+
         let poinstWithMatchingServices = []//Array con los puntos que tienen servicios de integracion
         poinstWithMatchingServices = dataPoint.filter((objectPoint) => {
             for (const servicio of objectPoint.Servicios) {
@@ -66,24 +94,24 @@ const Integracion = ({ route, navigation }) => {
                     if (servicio.Servicio_id === servicioIntg.id_servicio) {
                         return true;
                     }
-                }    
-            }            
+                }
+            }
             return false;
         });
         let deptosPoinstWithMatchingServices = []//Array con los departamentos de los puntos filtrados
         deptosPoinstWithMatchingServices = poinstWithMatchingServices.flatMap((object) => [object.Departamento])
-        
-        let dptosFiltered =[]//Array con los departamentos sin repetidos
+
+        let dptosFiltered = []//Array con los departamentos sin repetidos
         dptosFiltered = deptosPoinstWithMatchingServices.filter((q, idx) => deptosPoinstWithMatchingServices.indexOf(q) === idx)
         dptosFiltered.sort((a, b) => a.localeCompare(b));//Se ordenan alfabeticamente
         setArregloDepartamentos(dptosFiltered)
 
     }
 
-    const cargarInfoServicios = () =>{
-        let serviciosIntegracionFiltered =[]//Array con los servicios de integracion
+    const cargarInfoServicios = () => {
+        let serviciosIntegracionFiltered = []//Array con los servicios de integracion
         serviciosIntegracionFiltered = dataMapeoService.filter((object) => object.id_sector === config.idSectorIntegracion)
-        
+
         let poinstWithMatchingServices = []//Array con los puntos que tienen servicios de integracion
         poinstWithMatchingServices = dataPoint.filter((objectPoint) => {
             for (const servicio of objectPoint.Servicios) {
@@ -91,31 +119,31 @@ const Integracion = ({ route, navigation }) => {
                     if (servicio.Servicio_id === servicioIntg.id_servicio) {
                         return true;
                     }
-                }    
-            }            
+                }
+            }
             return false;
         });
 
         let allServicesPoints = [] //Array con todos los servios que hay en los puntos con servicios de integracion
         allServicesPoints = poinstWithMatchingServices.reduce((acc, object) => acc.concat(object.Servicios), []);
-        
+
         let idAllServicesPoints = []//Array con todos los ID de los servios que hay en los puntos con servicios de integracion
         idAllServicesPoints = allServicesPoints.flatMap((object) => [object.Servicio_id])
-                
-        let idServiosFiltered =[]//Array con los id sin repetidos
+
+        let idServiosFiltered = []//Array con los id sin repetidos
         idServiosFiltered = idAllServicesPoints.filter((q, idx) => idAllServicesPoints.indexOf(q) === idx)
-        
+
         let serviciosIntegPointsFiltered = [] //Array con los servicios de integracion presente en los puntos 
-        serviciosIntegPointsFiltered = serviciosIntegracionFiltered.filter((object) =>{
-            for(const idSer of idServiosFiltered){
-                if(object.Servicio_id = idSer){
+        serviciosIntegPointsFiltered = serviciosIntegracionFiltered.filter((object) => {
+            for (const idSer of idServiosFiltered) {
+                if (object.Servicio_id = idSer) {
                     return true
                 }
             }
             return false
         })
         let descServiosFiltered = []//nombre del servicio filtrado
-        descServiosFiltered =serviciosIntegPointsFiltered.flatMap((object) => [object.servicio])
+        descServiosFiltered = serviciosIntegPointsFiltered.flatMap((object) => [object.servicio])
         descServiosFiltered.sort((a, b) => a.localeCompare(b));//Se ordenan alfabeticamente
         setArregloServicios(descServiosFiltered);
 
@@ -132,22 +160,22 @@ const Integracion = ({ route, navigation }) => {
         let textobusqueda = searchTerm.trim();
         let array1 = [];
         //Se filtran los servicios por el servicio seleccionado
-        if (servicio.length > 0) {            
+        if (servicio.length > 0) {
             let servicioA = dataMapeoService.filter((item) => {
-                    return item.servicio.trim() === servicio.trim()
-                })
-            servicioA.map(index => {
-                array1.push({ item: index.servicio, id: index.id_servicio  });
+                return item.servicio.trim() === servicio.trim()
             })
-        } else {            
+            servicioA.map(index => {
+                array1.push({ item: index.servicio, id: index.id_servicio });
+            })
+        } else {
             dataMapeoService.map(index => {
                 if (index.id_sector === config.idSectorIntegracion) {
                     array1.push({ item: index.servicio, id: index.id_servicio });
                 }
             })
         }
-        
-        getDataPointFilter(departamento, "", "", array1, textobusqueda,"");
+
+        getDataPointFilter(departamento, "", "", array1, textobusqueda, "");
 
         //Obtener Lineas
         lineasArray = [];
@@ -179,8 +207,8 @@ const Integracion = ({ route, navigation }) => {
         if (textobusqueda !== "") {
             lineasPorBusqueda = lineasPorDep
                 .filter((item) => {
-                    return item.NombreOrganizacion.toLowerCase().includes(textobusqueda.toLowerCase()) 
-                    || item.tipo_de_linea.toLowerCase().includes(textobusqueda.toLowerCase())
+                    return item.NombreOrganizacion.toLowerCase().includes(textobusqueda.toLowerCase())
+                        || item.tipo_de_linea.toLowerCase().includes(textobusqueda.toLowerCase())
                 })
 
         }
@@ -219,27 +247,27 @@ const Integracion = ({ route, navigation }) => {
         navigation.navigate("EnlaceItem", { title, contenido, image, links });
     };
 
-const departamentChange = (selectedItem, index) => {
-    setDepartamento(selectedItem)
-    
-    let dataPointDpto = [];//Array con los puntos del departamento
-    dataPointDpto = dataPoint.filter((object) => object.Departamento === selectedItem);
-    
-    let serviciosDpto =[]//Array con los id servicios de los puntos del departamento
-    dataPointDpto.forEach((object) => {
-        object.Servicios.map(index => serviciosDpto.push(index.Servicio_id))
-    })
-    //eliminamos los id de servicios repetidos
-    let serviciosFilteredDpto = serviciosDpto.filter((q, idx) => serviciosDpto.indexOf(q) === idx)
-    
-    let serviciosFiltered =[];//Array con los servicios de integracion del departamento
-    serviciosFiltered = dataMapeoService.filter((object) => object.id_sector === config.idSectorIntegracion)
-    .filter((object) => serviciosFilteredDpto.includes(object.id_servicio));
-    
-    setArregloServicios(serviciosFiltered.map((object) => object.servicio))
-    setServicio([])
-    dropdownRef2.current.reset()
-}
+    const departamentChange = (selectedItem, index) => {
+        setDepartamento(selectedItem)
+
+        let dataPointDpto = [];//Array con los puntos del departamento
+        dataPointDpto = dataPoint.filter((object) => object.Departamento === selectedItem);
+
+        let serviciosDpto = []//Array con los id servicios de los puntos del departamento
+        dataPointDpto.forEach((object) => {
+            object.Servicios.map(index => serviciosDpto.push(index.Servicio_id))
+        })
+        //eliminamos los id de servicios repetidos
+        let serviciosFilteredDpto = serviciosDpto.filter((q, idx) => serviciosDpto.indexOf(q) === idx)
+
+        let serviciosFiltered = [];//Array con los servicios de integracion del departamento
+        serviciosFiltered = dataMapeoService.filter((object) => object.id_sector === config.idSectorIntegracion)
+            .filter((object) => serviciosFilteredDpto.includes(object.id_servicio));
+
+        setArregloServicios(serviciosFiltered.map((object) => object.servicio))
+        setServicio([])
+        dropdownRef2.current.reset()
+    }
 
 
     return (
@@ -385,7 +413,7 @@ const departamentChange = (selectedItem, index) => {
                         {arregloEnlaces.enlace.map((item, index) => {
                             return (
                                 <TouchableOpacity
-                                key={index}
+                                    key={index}
                                     style={index < arregloEnlaces.filtro.length - 1 ? styles.boxOpenLink : styles.boxOpenLink2}
                                     onPress={() => Linking.openURL(item.enlace)}
                                 >

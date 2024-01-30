@@ -1,8 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, Pressable, Image, View } from "react-native";
 import { metrics } from "../../../utilities/Metrics";
 import analytics from '@react-native-firebase/analytics';
+import AuthContext from "../../../../context/auth/authContext";
+import moment from "moment";
 export const CardSocioLink = (props) => {
 
   const {
@@ -12,10 +14,36 @@ export const CardSocioLink = (props) => {
     links = "",
     navigation
   } = props || {};
+
+  
+  
+  const { user, createAnalytics } = useContext(AuthContext);
+
+  const guardarLogAnalytics = (nombre) => {
+
+    if (user !== null && user !== undefined) {
+
+
+      var array = {
+        fecha: moment().format('DD/MM/YY, HH:mm:ss'),
+        evento: "consultar_socios",
+        value: nombre
+      }
+
+      createAnalytics(user, array)
+
+
+    }
+
+
+  }
+
   const onPressCard = () => {
 
     let nombreA = "Socios|"+ title.replace(/ /g, "_")+"|Contenido_Interes";
+    let nombreB = title;
 
+    guardarLogAnalytics(nombreB)
 
     analytics().logScreenView({
       screen_name: nombreA,
