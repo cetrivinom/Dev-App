@@ -28,16 +28,7 @@ const Profile = (props) => {
     }, 1000);
   };
 
-  useEffect(() => {
-
-    let loop = setInterval(() => {
-      getData();
-    }, 1000);
-    return () => clearInterval(loop);
-
-
-
-  }, []);
+ 
 
   useEffect(() => {
 

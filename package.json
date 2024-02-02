@@ -29,6 +29,7 @@
     "react-native": "0.71.7",
     "react-native-date-picker": "^4.2.12",
     "react-native-elements": "^3.4.3",
+    "react-native-flexi-radio-button": "^0.2.2",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-get-location": "^3.0.1",
     "react-native-google-maps": "^1.0.0",

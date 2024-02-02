@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useContext } from "react";
-import { StyleSheet, Text, TouchableOpacity, Image, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, Image, View, Button } from "react-native";
 import { metrics } from "../../../utilities/Metrics";
 import analytics from '@react-native-firebase/analytics';
 import AuthContext from "../../../../context/auth/authContext";

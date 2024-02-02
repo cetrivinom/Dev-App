@@ -14,7 +14,8 @@ import {
   GET_CONFIG, DEFAULT_CONFIG,
   NEW_FAVORITE,
   GET_DATA_FAVORITES,
-  GET_DATA_ERROR
+  GET_DATA_ERROR,
+  GET_CUESTIONARIO
 } from "../../types";
 import AuthReducer from "./authReducer";
 import AuthContext from "./authContext";
@@ -512,6 +513,9 @@ const AuthState = (props) => {
   const createAnalytics = (user, analytics) => {
 
 
+    
+
+
     let fecha = analytics.fecha;
     console.log(fecha)
     let fecha1 = fecha.split(',');
@@ -545,10 +549,6 @@ const AuthState = (props) => {
             array.push(data)
           });
 
-          console.log(array)
-
-          console.log(horaFinal)
-
 
 
           let aa = array.find(item => item.fecha === fechaDia && horaFinal <= Number(item.horaMax) && item.evento === evento && item.value === value) ;
@@ -579,10 +579,10 @@ const AuthState = (props) => {
               .catch((error) => {
                 console.error(error);
               });
+
+
         }
       })
-
-
 
 
 
@@ -610,6 +610,26 @@ const AuthState = (props) => {
         });
     });
   };
+
+  const getCuestionario = () => {
+    return new Promise((resolve, reject) => {
+      database()
+        .ref("/forms/")
+        .once("value", (snapshot) => {
+          if (snapshot.hasChildren())
+            dispatch({
+              type: GET_CUESTIONARIO,
+              payload: snapshot.val(),
+            });
+          resolve(snapshot.val());
+        })
+        .catch((error) => {
+          alert(error);
+          resolve(false);
+        });
+    });
+  };
+
   /**
    * metodo que consulta los parametros de configuracion contra la base de datos por default
    */
@@ -708,7 +728,8 @@ const AuthState = (props) => {
         createCoordenadas,
         createAnalytics,
         getDataFavorite,
-        updateUserDate
+        updateUserDate,
+        getCuestionario
       }}
     >
       {props.children}

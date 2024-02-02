@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     width:metrics.WIDTH,
-    height:metrics.HEIGHT*0.25,
+    height:metrics.HEIGHT*0.30,
   },
   image: {
     flex: 1,
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   logo2: {
     width: metrics.WIDTH * 0.64,
-    height:metrics.HEIGHT*0.20,
+    height:metrics.HEIGHT*0.25,
     //position: 'absolute',
     resizeMode: 'contain',
     //left: 78,
