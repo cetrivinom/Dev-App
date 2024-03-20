@@ -35,6 +35,7 @@ export const GET_DATA_SOCIO = "GET_DATA_SOCIO";
 export const DEFAULT_CONFIG = { anonymousAuth: false, 
     activeStates: "135,137",
     activeType: "FIJA,MÓVIL,FIJA_EA",
+    activeTypeM: "FIJA,MÓVIL,FIJA_EA",
     activeVisible: "✔",
     anonymousAuth: false,
     apiBaseURL: "https://mapeo-de-servicios.gifmm-colombia.site/sites/default/files/appgifmm/",

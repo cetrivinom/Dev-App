@@ -67,8 +67,9 @@ const Settings = (props) => {
   }, []);
 
   useEffect(() => {
+    console.log(config)
     if (dataPoint && dataPoint.length < 1) {
-      getDataPoint(config.activeStates, config.activeVisible, config.activeTypeM);
+      getDataPoint(config.activeStates, config.activeVisible, config.activeType);
     }
     if (dataMapeoService && dataMapeoService.length < 1) {
       getDataMapeoService();

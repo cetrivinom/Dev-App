@@ -31,7 +31,14 @@ const Main = (props) => {
   const [answersArray, setAnswersArray] = useState([])
   useEffect(() => {
 
+    NetInfo.fetch().then(state => {
+      if (state.isConnected) {
     getCuestionarioU();
+      }else{
+        setComplete(true)
+      }
+    })
+    
     getDataLink();
     getDataEnlace();
     getDataSocio();

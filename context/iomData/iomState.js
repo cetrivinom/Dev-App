@@ -71,12 +71,14 @@ const IOMState = (props) => {
   };
 
   const getDataPoint = async (state, visible, type) => {
+    console.log(type)
     try {
       const data = await AsyncStorage.getItem("api-mapeo.json");
       const object = JSON.parse(data);
       const value = object.filter(function (item) {
         const textState = item.Estado_id;
         const textType = item.Tipo_ubicacion;
+        console.log(textType)
         const textVisible = item.Visible_publico;
         return (state.indexOf(textState) > -1 && type.indexOf(textType) > -1 && visible.indexOf(textVisible) > -1 && item.Departamento != undefined);
       });
