@@ -11,7 +11,8 @@ import {
   UPDATED_USER_INPUT_CHANGE,
   UPDATED_PASS_INPUT_CHANGE,
   GET_CONFIG,
-  GET_CUESTIONARIO
+  GET_CUESTIONARIO,
+  GET_PREGUNTAS
 } from "../../types";
 
 /**
@@ -113,6 +114,11 @@ export default (state, action) => {
       return {
         ...state,
         cuestionario: action.payload,
+      };
+      case GET_PREGUNTAS:
+      return {
+        ...state,
+        preguntas: action.payload,
       };
     case USER_PASSWORD_RECOVERY:
       return state;

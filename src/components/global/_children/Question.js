@@ -47,7 +47,7 @@ const Question = (props) => {
     }
 
     const renderOptions = (question) => {
-        console.log(question)
+        console.log(question.respuestas)
         if (question.type === "simple") {
             return (
 
@@ -87,13 +87,13 @@ const Question = (props) => {
 
             question.respuestas && question.respuestas.forEach((item, index) => {
                 let key = `${question.id}-${index}`;
-
+                console.log(item)
 
 
                 result.push(
                     <View style={{ flexDirection: 'row', alignItems: 'center' }} key={key}>
-                        <RadioButton value={item.desc} />
-                        <Text style={styles.labelTitle}>{item.desc}</Text>
+                        <RadioButton value={item} onValueChange={(value) => setAnswer(value)}/>
+                        <Text style={styles.labelTitle}>{item}</Text>
                     </View>
                 );
             });

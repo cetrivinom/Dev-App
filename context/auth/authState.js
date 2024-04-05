@@ -15,7 +15,9 @@ import {
   NEW_FAVORITE,
   GET_DATA_FAVORITES,
   GET_DATA_ERROR,
-  GET_CUESTIONARIO
+  GET_CUESTIONARIO,
+  GET_PREGUNTAS
+
 } from "../../types";
 import AuthReducer from "./authReducer";
 import AuthContext from "./authContext";
@@ -614,14 +616,33 @@ const AuthState = (props) => {
   const getCuestionario = () => {
     return new Promise((resolve, reject) => {
       database()
-        .ref("/forms/")
+        .ref("/forms/questionnaire")
         .once("value", (snapshot) => {
           if (snapshot.hasChildren())
             dispatch({
               type: GET_CUESTIONARIO,
-              payload: snapshot.val(),
+              payload: snapshot,
             });
-          resolve(snapshot.val());
+          resolve(snapshot);
+        })
+        .catch((error) => {
+          alert(error);
+          resolve(false);
+        });
+    });
+  };
+
+  const getPreguntas = () => {
+    return new Promise((resolve, reject) => {
+      database()
+        .ref("/forms/questions")
+        .once("value", (snapshot) => {
+          if (snapshot.hasChildren())
+            dispatch({
+              type: GET_PREGUNTAS,
+              payload: snapshot,
+            });
+          resolve(snapshot);
         })
         .catch((error) => {
           alert(error);
@@ -729,7 +750,8 @@ const AuthState = (props) => {
         createAnalytics,
         getDataFavorite,
         updateUserDate,
-        getCuestionario
+        getCuestionario,
+        getPreguntas
       }}
     >
       {props.children}

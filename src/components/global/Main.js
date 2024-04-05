@@ -16,7 +16,7 @@ import { Modal, TextInput } from "react-native-paper";
 import Question from "./_children/Question";
 const Main = (props) => {
   const { navigation } = props;
-  const { user, config, createFavoriteArray, deleteFavoriteF, createFavoriteF, createCoordenadas, updateUserDate, createAnalytics, getCuestionario } = useContext(AuthContext);
+  const { user, config, createFavoriteArray, deleteFavoriteF, createFavoriteF, createCoordenadas, updateUserDate, createAnalytics, getCuestionario, getPreguntas } = useContext(AuthContext);
   const [dataFirebase, setDataFirebase] = useState([]);
   const { getDataEnlace } = useContext(IOMContext);
   const { getDataSocio } = useContext(IOMContext);
@@ -31,14 +31,15 @@ const Main = (props) => {
   const [answersArray, setAnswersArray] = useState([])
   useEffect(() => {
 
+
     NetInfo.fetch().then(state => {
       if (state.isConnected) {
-    getCuestionarioU();
-      }else{
+        getCuestionarioU();
+      } else {
         setComplete(true)
       }
     })
-    
+
     getDataLink();
     getDataEnlace();
     getDataSocio();
@@ -85,54 +86,99 @@ const Main = (props) => {
     getCuestionario().then((cuestionario) => {
 
 
-      let active_questionnaire = cuestionario.questionnaire.filter(item => item.active === true)
 
-      let preguntasForm2 = cuestionario.questions
+      var arrayCuestionario = [];
 
-      if (active_questionnaire !== undefined) {
+      cuestionario && cuestionario.forEach((child) => {
 
-
-
-        let first_active_questionnaire = active_questionnaire[0];
-
-        let id = first_active_questionnaire.id;
-        let date_i = new Date(first_active_questionnaire.date_i);
-        let date_f = new Date(first_active_questionnaire.date_f);
-        let repeticiones = first_active_questionnaire.repetitions;
-        let interval = first_active_questionnaire.validation_interval;
-        setActual(id)
-
-        let fecha_hoy = new Date();
-
-        let validarFecha = validarFechaEnRango(date_i, date_f, fecha_hoy)
-
-        if (validarFecha) {
+        let data = {};
+        data.id = child.val().id;
+        data.descripcion = child.val().descripcion !== undefined ? child.val().descripcion : "";
+        data.active = child.val().active !== undefined ? child.val().active : false;
+        data.date_i = child.val().date_i !== undefined ? child.val().date_i : "";
+        data.date_f = child.val().date_f !== undefined ? child.val().date_f : "";
+        data.repetitions = child.val().repetitions !== undefined ? child.val().repetitions : "";
+        data.validation_interval = child.val().validation_interval !== undefined ? child.val().validation_interval : "";
+        let preguntasQ = child.child("questions");
 
 
-          let arrayQ = {
-            id: id,
-            descripcion: first_active_questionnaire.descripcion,
-            date_f: date_f,
-            date_i: date_i,
-            repeticiones: repeticiones,
-            interval: interval,
-            preguntas: first_active_questionnaire.questions
+        data.questions = preguntasQ;
+        arrayCuestionario.push(data);
+      })
 
+
+
+      let active_questionnaire = arrayCuestionario.filter(item => item.active === true)
+
+
+
+      getPreguntas().then((preguntas) => {
+
+        var arrayPreguntas = [];
+
+        preguntas && preguntas.forEach((child) => {
+          let data = {};
+          data.id = child.val().id;
+          data.enunciado = child.val().enunciado !== undefined ? child.val().enunciado : "";
+          data.type = child.val().type !== undefined ? child.val().type : "";
+          let respuestasQ = child.child("respuestas");
+
+
+          data.respuestas = respuestasQ;
+          arrayPreguntas.push(data)
+        })
+
+
+        if (active_questionnaire !== undefined) {
+
+
+
+          let first_active_questionnaire = active_questionnaire[0];
+
+
+          let id = first_active_questionnaire.id;
+          let date_i = new Date(first_active_questionnaire.date_i);
+          let date_f = new Date(first_active_questionnaire.date_f);
+          let repeticiones = first_active_questionnaire.repetitions;
+          let interval = first_active_questionnaire.validation_interval;
+          setActual(id)
+
+          let fecha_hoy = new Date();
+
+          let validarFecha = validarFechaEnRango(date_i, date_f, fecha_hoy)
+
+          if (validarFecha) {
+
+
+            let arrayQ = {
+              id: id,
+              descripcion: first_active_questionnaire.descripcion,
+              date_f: date_f,
+              date_i: date_i,
+              repeticiones: repeticiones,
+              interval: interval,
+              preguntas: first_active_questionnaire.questions
+
+            }
+
+            validar(arrayQ, arrayPreguntas)
+
+          } else {
+            setComplete(true)
           }
 
-          validar(arrayQ, preguntasForm2)
 
-        } else {
-          setComplete(true)
+
+
         }
 
+      })
 
 
 
-      }
+
 
     })
-
 
 
 
@@ -141,7 +187,6 @@ const Main = (props) => {
   }
 
   const validar = (arrayQ, preguntasForm2) => {
-
 
 
 
@@ -222,19 +267,48 @@ const Main = (props) => {
   const llenarFormulario = (arrayQ, preguntasForm2) => {
 
 
+    let preguntasAa = []
+    preguntasForm2.forEach(element => {
 
-    let preguntas = []
-    arrayQ.preguntas.forEach(element => {
+      let respuestasAAA = [];
+      element.respuestas.val()!==null && element.respuestas.val().forEach(element2 => {
 
-      let pregunta = preguntasForm2.find(item => item.id === element)
+        respuestasAAA.push(element2)
 
-      preguntas.push(pregunta)
+
+
+      });
+
+      let a = {
+        enunciado: element.enunciado,
+        id: `${element.id}`,
+        type: element.type,
+        respuestas: respuestasAAA
+      }
+      preguntasAa.push(a)
 
     });
+
+
+
+    let preguntasAAA = [];
+    arrayQ.preguntas.val().forEach(element => {
+
+      preguntasAa.forEach(element2 => {
+        if (element === element2.id) {
+          preguntasAAA.push(element2)
+        }
+      })
+
+
+
+    });
+
+
     let formulario = {
       id: arrayQ.id,
       descripcion: arrayQ.descripcion,
-      preguntas: preguntas
+      preguntas: preguntasAAA
     }
 
 
