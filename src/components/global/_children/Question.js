@@ -6,6 +6,7 @@ import { TextInput } from "react-native-paper";
 import { xorBy } from 'lodash'
 import SelectBox from 'react-native-multi-selectbox'
 
+import DropdownSelect from 'react-native-input-select';
 import { metrics } from "../../../utilities/Metrics";
 const Question = (props) => {
     const [selectedService, setSelectedService] = useState([]);
@@ -15,10 +16,32 @@ const Question = (props) => {
     const [answer, setAnswer] = useState("")
     const [error, setError] = useState("")
     const [visible, setVisible] = useState(false);
+    const [respuestas, setRespuestas] = useState([]);
+
     const onDismissSnackBar = () => setVisible(false);
     useEffect(() => {
 
-    })
+        console.log(question)
+        
+        if(question.type==="multiple"){
+
+            let array = [];
+
+            question.respuestas.forEach((element,index) => {
+                
+                let a={
+                    id:index+1,
+                    name:element
+                }
+
+                array.push(a)
+            });
+
+            setRespuestas(array)
+            
+        }
+
+    },[question])
 
     function onMultiChange() {
         return (item) => setSelectedService(xorBy(selectedService, [item], 'id'))
@@ -26,14 +49,19 @@ const Question = (props) => {
 
     const guardar = () => {
 
-        
-        
-        
+
+
+
         let respuesta = answer;
 
         if (question.type === "multiple_answer") {
             respuesta = selectedService
         }
+        if (question.type === "multiple") {
+            respuesta = respuestas.find(item=>item.id===answer).name
+        }
+
+
 
 
         if (respuesta === "") {
@@ -43,6 +71,7 @@ const Question = (props) => {
             setError("")
             onSubmit(respuesta)
             setAnswer("")
+            setRespuestas([])
         }
     }
 
@@ -59,12 +88,28 @@ const Question = (props) => {
                     placeholderTextColor='#A1AAB2' />
             );
         }
-        if (question.type === "multiple_answer") {
+
+        if (question.type === "multiple") {
+            return (
+                <DropdownSelect
+                    label=""
+                    placeholder="Seleccione una opcion"
+                    options={respuestas}
+                    optionLabel={'name'}
+                    optionValue={'id'}
+                    selectedValue={answer}
+                    onValueChange={(itemValue) => setAnswer(itemValue)}
+                    
+                />
+            )
+        }
+
+        if (question.type === "multiple") {
             return (
 
                 <SelectBox
-                multiOptionContainerStyle={styles.dropdown}
-                multiOptionsLabelStyle={styles.dropdownL}
+                    multiOptionContainerStyle={styles.dropdown}
+                    multiOptionsLabelStyle={styles.dropdownL}
                     label=""
                     inputPlaceholder="Seleccione"
                     options={question.respuestas}
@@ -76,9 +121,10 @@ const Question = (props) => {
                     hideInputFilter={true}
                     toggleIconColor="#132A3E"
                     arrowIconColor="#132A3E"
-                    listOptionProps={{nestedScrollEnabled: true,
-                        style: { backgroundColor:"white", paddingHorizontal:10},
-                     }}
+                    listOptionProps={{
+                        nestedScrollEnabled: true,
+                        style: { backgroundColor: "white", paddingHorizontal: 10 },
+                    }}
                 />
             );
         }
@@ -92,7 +138,7 @@ const Question = (props) => {
 
                 result.push(
                     <View style={{ flexDirection: 'row', alignItems: 'center' }} key={key}>
-                        <RadioButton value={item} onValueChange={(value) => setAnswer(value)}/>
+                        <RadioButton value={item} onValueChange={(value) => setAnswer(value)} />
                         <Text style={styles.labelTitle}>{item}</Text>
                     </View>
                 );
@@ -110,17 +156,8 @@ const Question = (props) => {
                 <Text style={styles.labelTitle}>
                     {question.enunciado}
                 </Text>
+                {renderOptions(question)}
 
-                {question.type === "simple" ?
-                    renderOptions(question)
-                    :
-                    <RadioButton.Group
-                        onValueChange={(value) => setAnswer(value)} value={answer}
-
-                    >
-                        {renderOptions(question)}
-                    </RadioButton.Group>
-                }
             </View>
 
             <View style={{ padding: 10 }}>
@@ -231,9 +268,9 @@ const styles = StyleSheet.create({
         shadowRadius: 1.41,
 
         elevation: 2,
-        
+
     },
-    dropdownL:{
+    dropdownL: {
         color: "#FFFFFF",
         fontSize: 15,
         fontWeight: "bold",
