@@ -56,6 +56,8 @@ const Splash = (props) => {
 
   useEffect(() => {
 
+    console.log('Mensaje en splash ingrese a splash');
+
     messaging().setBackgroundMessageHandler(async remoteMessage => {
       console.log('Mensaje en splash', remoteMessage);
     });
@@ -83,11 +85,14 @@ const Splash = (props) => {
         console.warn(code, message);
     })
 
+      console.log("pase aca")
       
 
       let i = 0;
 
       var current = VersionCheck.getCurrentVersion().toString();
+
+      console.log("pase aca current",current)
 
       NetInfo.fetch().then(state => {
         if (!state.isConnected) {
@@ -96,11 +101,11 @@ const Splash = (props) => {
           });
         } else {
 
-          
+          console.log("pase aca conectado")
 
           //var current ="1.031";
           getConfig().then((config) => {
-
+            console.log("pase aca 2")
 
             var versionReal = Platform.OS === 'android' ? config.versionApp : config.versionAppIos;
             

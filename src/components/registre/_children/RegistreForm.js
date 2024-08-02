@@ -16,14 +16,17 @@ import Styles from "./styles";
 import database from '@react-native-firebase/database'
 import { CheckBox } from 'react-native-elements'
 import { metrics } from "../../../utilities/Metrics";
+
+import { StackActions, useNavigation } from "@react-navigation/native";
 /**
  * Componente Footer del registro, se llama la accion de signUp al terminar el registro
  * @param {Object} this.props - objeto de propiedades heredados de la clase padre.
  * @return {Object} <View /> Footer del registro.
  */
 export const Footer = (props) => {
-  const { auth, user, message, signUp, updateUser } = useContext(AuthContext);
+  const { auth, user, message, signUp, updateUser, signOut } = useContext(AuthContext);
   const { setForm, formValue, title, data, setError, error } = props;
+  const navigation = useNavigation()
   const [visible, setVisible] = useState(false);
   const onDismissSnackBar = () => setVisible(false);
   const onPressNext = () => {
@@ -33,14 +36,19 @@ export const Footer = (props) => {
       signUp(data).then((user) => {
         if (user) {
           updateUser(user);
-          props.navigation.navigate("Main");
+          console.log("pase el update")
+          signOut()
+          setTimeout(() => {
+           
+            navigation.navigate("Login");
+          }, 1000);
         } else {
           setVisible(true);
         }
       });
       if (auth) {
         //nunca se llama, el useEffect predomina
-        props.navigation.navigate("Main");
+        navigation.navigate("Main");
       }
     }
   };

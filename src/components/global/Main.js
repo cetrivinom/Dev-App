@@ -85,7 +85,9 @@ const Main = (props) => {
 
     getCuestionario().then((cuestionario) => {
 
+      console.log("entre")
 
+      console.log(cuestionario)
 
       var arrayCuestionario = [];
 
@@ -128,6 +130,8 @@ const Main = (props) => {
           arrayPreguntas.push(data)
         })
 
+        console.log(active_questionnaire)
+
 
         if (active_questionnaire !== undefined) {
 
@@ -146,6 +150,8 @@ const Main = (props) => {
           let fecha_hoy = new Date();
 
           let validarFecha = validarFechaEnRango(date_i, date_f, fecha_hoy)
+
+          console.log(validarFecha)
 
           if (validarFecha) {
 
@@ -188,6 +194,7 @@ const Main = (props) => {
 
   const validar = (arrayQ, preguntasForm2) => {
 
+    console.log("validar")
 
 
     let flag = false;
@@ -197,7 +204,7 @@ const Main = (props) => {
       .once("value", (snapshot) => {
         if (snapshot.hasChildren()) {
 
-
+          
 
           let repeticiones = arrayQ.repeticiones;
 
@@ -267,6 +274,7 @@ const Main = (props) => {
   const llenarFormulario = (arrayQ, preguntasForm2) => {
 
 
+    console.log("llenar formulario")
     let preguntasAa = []
     preguntasForm2.forEach(element => {
 
