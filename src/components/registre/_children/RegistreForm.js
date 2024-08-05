@@ -36,19 +36,17 @@ export const Footer = (props) => {
       signUp(data).then((user) => {
         if (user) {
           updateUser(user);
-          console.log("pase el update")
-          signOut()
-          setTimeout(() => {
-           
-            navigation.navigate("Login");
-          }, 1000);
+                    
+          
+           navigation.replace("Main");
+         
         } else {
           setVisible(true);
         }
       });
       if (auth) {
         //nunca se llama, el useEffect predomina
-        navigation.navigate("Main");
+        navigation.replace("Main");
       }
     }
   };

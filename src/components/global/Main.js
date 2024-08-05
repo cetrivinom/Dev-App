@@ -12,7 +12,7 @@ import NetInfo from '@react-native-community/netinfo';
 import { useState } from "react";
 import { ItemMainLarge } from "./_children/CardLarge";
 import moment from "moment";
-import { Modal, TextInput } from "react-native-paper";
+import { ActivityIndicator, Modal, TextInput } from "react-native-paper";
 import Question from "./_children/Question";
 const Main = (props) => {
   const { navigation } = props;
@@ -27,10 +27,12 @@ const Main = (props) => {
   const [current, setCurrent] = useState(0)
   const [actual, setActual] = useState("")
   const [complete, setComplete] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [preguntasForm, setPreguntasForm] = useState([])
   const [answersArray, setAnswersArray] = useState([])
   useEffect(() => {
 
+    setLoading(true)
 
     NetInfo.fetch().then(state => {
       if (state.isConnected) {
@@ -47,6 +49,7 @@ const Main = (props) => {
     sincronizarCoordenadas();
     actualizarFecha();
     guardarLogAnalytics()
+    setLoading(false)
 
   }, []);
 
@@ -170,6 +173,7 @@ const Main = (props) => {
             validar(arrayQ, arrayPreguntas)
 
           } else {
+            setLoading(false)
             setComplete(true)
           }
 
@@ -204,7 +208,7 @@ const Main = (props) => {
       .once("value", (snapshot) => {
         if (snapshot.hasChildren()) {
 
-          
+
 
           let repeticiones = arrayQ.repeticiones;
 
@@ -249,6 +253,7 @@ const Main = (props) => {
             if (diferenciaFecha >= arrayQ.interval) {
               llenarFormulario(arrayQ, preguntasForm2)
             } else {
+              setLoading(false)
               setComplete(true)
             }
 
@@ -256,6 +261,7 @@ const Main = (props) => {
           }
           else {
             setComplete(true)
+            setLoading(false)
           }
 
 
@@ -279,7 +285,7 @@ const Main = (props) => {
     preguntasForm2.forEach(element => {
 
       let respuestasAAA = [];
-      element.respuestas.val()!==null && element.respuestas.val().forEach(element2 => {
+      element.respuestas.val() !== null && element.respuestas.val().forEach(element2 => {
 
         respuestasAAA.push(element2)
 
@@ -321,6 +327,7 @@ const Main = (props) => {
 
 
     setFormulario(formulario);
+    setLoading(false)
 
   }
 
@@ -632,91 +639,97 @@ const Main = (props) => {
 
 
   return (
-    <View style={{ flex: 1 }}>
+    <>
+      {loading === true ?
+        <ActivityIndicator size="large" />
+        :
+        <View style={{ flex: 1 }}>
 
 
-      <HeaderHome />
+          <HeaderHome />
 
-      {complete === true && (
+          {complete === true && (
 
-        <View style={{ flex: 3, }} >
-          <View style={{ flex: 1, }}>
-            <Text style={styles.labelTitle}>¡Te damos la bienvenida!</Text>
-            <Text style={styles.labelDescripcion}>
-              Queremos brindarte la mejor ayuda, por eso hemos preparado las siguientes funciones para ti:
-            </Text>
-          </View>
+            <View style={{ flex: 3, }} >
+              <View style={{ flex: 1, }}>
+                <Text style={styles.labelTitle}>¡Te damos la bienvenida!</Text>
+                <Text style={styles.labelDescripcion}>
+                  Queremos brindarte la mejor ayuda, por eso hemos preparado las siguientes funciones para ti:
+                </Text>
+              </View>
 
-          <View style={styles.containerForm}>
-            <ItemMain
-              {...props}
-              name="SettingsStack"
-              title="Puntos de servicio"
-              image="1"
-            />
-            <ItemMain
-              {...props}
-              name="DirectoryStack"
-              title="Líneas Telefónicas"
-              image="2"
-            />
-          </View>
-          <View style={styles.containerForm}>
-            <ItemMain
-              {...props}
-              name="LinksStack"
-              title="Enlaces de interes"
-              image="3"
-            />
-            <ItemMain
-              {...props}
-              name="FavoritesStack"
-              title="Puntos guardados"
-              image="4"
-            />
-          </View>
-          <View style={styles.containerForm}>
-            <ItemMainLarge
-              {...props}
-              name="IntegracionStack"
-              title="Información para el empleo y el emprendimiento"
-              image="6"
-            />
-          </View>
-          <View style={styles.containerFooter}>
-            <LastUpdate />
-          </View>
+              <View style={styles.containerForm}>
+                <ItemMain
+                  {...props}
+                  name="SettingsStack"
+                  title="Puntos de servicio"
+                  image="1"
+                />
+                <ItemMain
+                  {...props}
+                  name="DirectoryStack"
+                  title="Líneas Telefónicas"
+                  image="2"
+                />
+              </View>
+              <View style={styles.containerForm}>
+                <ItemMain
+                  {...props}
+                  name="LinksStack"
+                  title="Enlaces de interes"
+                  image="3"
+                />
+                <ItemMain
+                  {...props}
+                  name="FavoritesStack"
+                  title="Puntos guardados"
+                  image="4"
+                />
+              </View>
+              <View style={styles.containerForm}>
+                <ItemMainLarge
+                  {...props}
+                  name="IntegracionStack"
+                  title="Información para el empleo y el emprendimiento"
+                  image="6"
+                />
+              </View>
+              <View style={styles.containerFooter}>
+                <LastUpdate />
+              </View>
+            </View>
+
+          )}
+
+
+          {formulario && formulario.preguntas && formulario.preguntas.length > 0 && !complete && (
+
+            <View style={{ flex: 2, marginTop: 20 }} >
+
+              <View >
+
+                <Text style={styles.labelDescripcionForm}>{formulario.descripcion}</Text>
+              </View>
+              <View style={styles.containerForm2}>
+
+                {formulario && formulario.preguntas && formulario.preguntas.length > 0 && (
+
+                  <Question
+                    onSubmit={onSubmit}
+                    question={formulario?.preguntas[current]}
+                    current={current}
+                  />
+
+                )}
+              </View>
+            </View>
+
+          )}
+
+
         </View>
-
-      )}
-
-
-      {formulario && formulario.preguntas && formulario.preguntas.length > 0 && !complete && (
-
-        <View style={{ flex: 2, marginTop: 20 }} >
-
-          <View >
-
-            <Text style={styles.labelDescripcionForm}>{formulario.descripcion}</Text>
-          </View>
-          <View style={styles.containerForm2}>
-
-            {formulario && formulario.preguntas && formulario.preguntas.length > 0 && (
-
-              <Question
-                onSubmit={onSubmit}
-                question={formulario?.preguntas[current]}
-                current={current}
-              />
-
-            )}
-          </View>
-        </View>
-
-      )}
-
-
-    </View>
+      }
+    </>
   );
 };
 

@@ -111,8 +111,10 @@ const Splash = (props) => {
             
             if (versionReal.toString() !== current.toString()) {
 
+              console.log("pase aca 3")
 
               getConfig().then((config) => {
+                console.log("pase aca 3",config)
                 api = [
                   { name: 'api-mapeo-estados.json', val: config.apiMapeoEstados },
                   { name: 'api-enlaces-de-interes.json', val: config.apiEnlacesInteres },
