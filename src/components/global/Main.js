@@ -27,7 +27,7 @@ const Main = (props) => {
   const [current, setCurrent] = useState(0)
   const [actual, setActual] = useState("")
   const [complete, setComplete] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [preguntasForm, setPreguntasForm] = useState([])
   const [answersArray, setAnswersArray] = useState([])
   useEffect(() => {
@@ -38,6 +38,7 @@ const Main = (props) => {
       if (state.isConnected) {
         getCuestionarioU();
       } else {
+        setLoading(false)
         setComplete(true)
       }
     })
@@ -49,7 +50,7 @@ const Main = (props) => {
     sincronizarCoordenadas();
     actualizarFecha();
     guardarLogAnalytics()
-    setLoading(false)
+
 
   }, []);
 
@@ -641,7 +642,12 @@ const Main = (props) => {
   return (
     <>
       {loading === true ?
-        <ActivityIndicator size="large" />
+        <View style={{ flex: 1, margin:20 }}>
+
+
+          <HeaderHome />
+          <ActivityIndicator size="large"  color = "#007681"  />
+        </View>
         :
         <View style={{ flex: 1 }}>
 
