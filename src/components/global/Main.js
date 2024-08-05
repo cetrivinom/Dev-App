@@ -642,7 +642,7 @@ const Main = (props) => {
   return (
     <>
       {loading === true ?
-        <View style={{ flex: 1, margin:20 }}>
+        <View style={{ flex: 1}}>
 
 
           <HeaderHome />
